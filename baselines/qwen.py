@@ -3,17 +3,16 @@
 Baseline evaluation of Qwen3-Embedding-8B on MessIRve (Spanish IR).
 Metrics: nDCG@10, Recall@100 via ranx.
 
-Embeddings are cached to disk so subsequent runs skip the encoding step.
+Embeddings are cached to disk as Parquet (zstd) so subsequent runs skip encoding.
 """
 
-import json
 import logging
-import os
 from collections import defaultdict
 from pathlib import Path
 
 import datasets
 import numpy as np
+import pandas as pd
 import torch
 from ranx import Qrels, Run, evaluate
 from sentence_transformers import SentenceTransformer
@@ -34,8 +33,12 @@ DOC_BATCH_SIZE = 32
 # Retrieval
 TOP_K = 100
 
-# Cache directory — all embeddings and ID mappings are stored here
+# Cache directory on external disk
 CACHE_DIR = Path("/media/discoexterno/jmendoza/embeddings_cache")
+
+# Parquet compression
+PARQUET_COMPRESSION = "zstd"
+PARQUET_COMPRESSION_LEVEL = 3  # zstd level 1-22; 3 is a good speed/ratio balance
 
 # Reproducibility
 SEED = 42
@@ -62,11 +65,79 @@ def _cache_paths(model_name: str, country: str, version: str) -> dict[str, Path]
     base = CACHE_DIR / slug / f"{country}_v{version}"
     return {
         "dir": base,
-        "doc_embeddings": base / "doc_embeddings.npy",
-        "doc_ids": base / "doc_ids.json",
-        "query_embeddings": base / "query_embeddings.npy",
-        "query_ids": base / "query_ids.json",
+        "doc_embeddings": base / "doc_embeddings.parquet",
+        "query_embeddings": base / "query_embeddings.parquet",
     }
+
+
+# ---------------------------------------------------------------------------
+# Helpers: Parquet I/O for embeddings
+# ---------------------------------------------------------------------------
+def save_embeddings_parquet(
+    ids: list[str],
+    embeddings: np.ndarray,
+    path: Path,
+) -> None:
+    """
+    Save (ids, embeddings) as a Parquet file with zstd compression.
+
+    Schema:
+        id: string
+        emb_0, emb_1, ..., emb_{d-1}: float16 columns
+
+    Using per-dimension columns lets Parquet compress each dimension
+    independently with dictionary/RLE encoding, which is very effective
+    for float16 values that cluster around similar magnitudes.
+    """
+    n, d = embeddings.shape
+    log.info(
+        "Saving %d embeddings (dim=%d) to %s [%s] …",
+        n, d, path, PARQUET_COMPRESSION,
+    )
+
+    # Build a dict: {"id": [...], "emb_0": [...], "emb_1": [...], ...}
+    data: dict[str, np.ndarray | list[str]] = {"id": ids}
+    for col_idx in range(d):
+        data[f"emb_{col_idx}"] = embeddings[:, col_idx]
+
+    df = pd.DataFrame(data)
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    df.to_parquet(
+        path,
+        engine="fastparquet",
+        compression=PARQUET_COMPRESSION,
+        # fastparquet doesn't use compression_level the same way;
+        # zstd default level in fastparquet is already efficient
+    )
+
+    size_mb = path.stat().st_size / (1024 * 1024)
+    raw_mb = (n * d * 2) / (1024 * 1024)  # float16 = 2 bytes
+    log.info(
+        "Saved: %.1f MB on disk (raw float16 would be %.1f MB, ratio %.2f×)",
+        size_mb, raw_mb, raw_mb / size_mb if size_mb > 0 else 0,
+    )
+
+
+def load_embeddings_parquet(path: Path) -> tuple[list[str], np.ndarray]:
+    """
+    Load (ids, embeddings) from a Parquet file.
+    Returns ids as list[str] and embeddings as float16 numpy array.
+    """
+    log.info("Loading cached embeddings from %s …", path)
+
+    df = pd.read_parquet(path, engine="fastparquet")
+
+    ids = df["id"].tolist()
+
+    emb_cols = [c for c in df.columns if c.startswith("emb_")]
+    # Sort by index to guarantee correct dimension order
+    emb_cols.sort(key=lambda c: int(c.split("_")[1]))
+
+    embeddings = df[emb_cols].to_numpy(dtype=np.float16)
+
+    log.info("Loaded %d embeddings (dim=%d)", embeddings.shape[0], embeddings.shape[1])
+    return ids, embeddings
 
 
 # ---------------------------------------------------------------------------
@@ -147,7 +218,7 @@ def load_model():
 # 4. Encode with disk caching
 # ---------------------------------------------------------------------------
 def encode_documents(
-    model: SentenceTransformer,
+    model: SentenceTransformer | None,
     doc_ids: list[str],
     doc_texts: list[str],
     paths: dict[str, Path],
@@ -156,18 +227,12 @@ def encode_documents(
     Encode corpus documents. If a cache exists on disk, load it instead.
     Returns (doc_ids, doc_embeddings) where embeddings is float16 numpy.
     """
-    if paths["doc_embeddings"].exists() and paths["doc_ids"].exists():
-        log.info("Loading cached document embeddings from %s", paths["dir"])
-        doc_embeddings = np.load(paths["doc_embeddings"])
-        with open(paths["doc_ids"], "r") as f:
-            cached_doc_ids = json.load(f)
-        log.info(
-            "Loaded %d document embeddings (dim=%d)",
-            doc_embeddings.shape[0],
-            doc_embeddings.shape[1],
-        )
-        return cached_doc_ids, doc_embeddings
+    cache_path = paths["doc_embeddings"]
 
+    if cache_path.exists():
+        return load_embeddings_parquet(cache_path)
+
+    assert model is not None, "Model required for encoding but not loaded"
     num_docs = len(doc_ids)
     log.info("Encoding %d corpus documents (no cache found) …", num_docs)
 
@@ -191,18 +256,12 @@ def encode_documents(
         )
         doc_embeddings[start:end] = embs.astype(np.float16)
 
-    # Save to disk
-    paths["dir"].mkdir(parents=True, exist_ok=True)
-    np.save(paths["doc_embeddings"], doc_embeddings)
-    with open(paths["doc_ids"], "w") as f:
-        json.dump(doc_ids, f)
-    log.info("Document embeddings cached to %s", paths["dir"])
-
+    save_embeddings_parquet(doc_ids, doc_embeddings, cache_path)
     return doc_ids, doc_embeddings
 
 
 def encode_queries(
-    model: SentenceTransformer,
+    model: SentenceTransformer | None,
     query_id_to_text: dict[str, str],
     paths: dict[str, Path],
 ) -> tuple[list[str], np.ndarray]:
@@ -210,18 +269,12 @@ def encode_queries(
     Encode queries. If a cache exists on disk, load it instead.
     Returns (query_ids, query_embeddings) where embeddings is float16 numpy.
     """
-    if paths["query_embeddings"].exists() and paths["query_ids"].exists():
-        log.info("Loading cached query embeddings from %s", paths["dir"])
-        query_embeddings = np.load(paths["query_embeddings"])
-        with open(paths["query_ids"], "r") as f:
-            cached_query_ids = json.load(f)
-        log.info(
-            "Loaded %d query embeddings (dim=%d)",
-            query_embeddings.shape[0],
-            query_embeddings.shape[1],
-        )
-        return cached_query_ids, query_embeddings
+    cache_path = paths["query_embeddings"]
 
+    if cache_path.exists():
+        return load_embeddings_parquet(cache_path)
+
+    assert model is not None, "Model required for encoding but not loaded"
     query_ids = list(query_id_to_text.keys())
     query_texts = [query_id_to_text[qid] for qid in query_ids]
     num_queries = len(query_ids)
@@ -249,13 +302,7 @@ def encode_queries(
         )
         query_embeddings[start:end] = embs.astype(np.float16)
 
-    # Save to disk
-    paths["dir"].mkdir(parents=True, exist_ok=True)
-    np.save(paths["query_embeddings"], query_embeddings)
-    with open(paths["query_ids"], "w") as f:
-        json.dump(query_ids, f)
-    log.info("Query embeddings cached to %s", paths["dir"])
-
+    save_embeddings_parquet(query_ids, query_embeddings, cache_path)
     return query_ids, query_embeddings
 
 
@@ -331,8 +378,7 @@ def main():
 
     # 2. Check if we can skip model loading entirely
     all_cached = all(
-        paths[k].exists()
-        for k in ["doc_embeddings", "doc_ids", "query_embeddings", "query_ids"]
+        paths[k].exists() for k in ["doc_embeddings", "query_embeddings"]
     )
 
     if all_cached:
@@ -341,13 +387,13 @@ def main():
     else:
         model = load_model()
 
-    # 3. Corpus (only load texts if we need to encode)
-    if paths["doc_embeddings"].exists() and paths["doc_ids"].exists():
+    # 3. Corpus
+    if paths["doc_embeddings"].exists():
         doc_ids, doc_embeddings = encode_documents(model, [], [], paths)
     else:
         doc_ids_raw, doc_texts = load_corpus()
         doc_ids, doc_embeddings = encode_documents(model, doc_ids_raw, doc_texts, paths)
-        del doc_texts  # free memory
+        del doc_texts
 
     # 4. Queries
     query_ids, query_embeddings = encode_queries(model, query_id_to_text, paths)
