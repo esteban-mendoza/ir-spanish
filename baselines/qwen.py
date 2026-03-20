@@ -92,7 +92,10 @@ def save_embeddings_parquet(
     n, d = embeddings.shape
     log.info(
         "Saving %d embeddings (dim=%d) to %s [%s] …",
-        n, d, path, PARQUET_COMPRESSION,
+        n,
+        d,
+        path,
+        PARQUET_COMPRESSION,
     )
 
     # Build a dict: {"id": [...], "emb_0": [...], "emb_1": [...], ...}
@@ -115,7 +118,9 @@ def save_embeddings_parquet(
     raw_mb = (n * d * 2) / (1024 * 1024)  # float16 = 2 bytes
     log.info(
         "Saved: %.1f MB on disk (raw float16 would be %.1f MB, ratio %.2f×)",
-        size_mb, raw_mb, raw_mb / size_mb if size_mb > 0 else 0,
+        size_mb,
+        raw_mb,
+        raw_mb / size_mb if size_mb > 0 else 0,
     )
 
 
@@ -146,9 +151,7 @@ def load_embeddings_parquet(path: Path) -> tuple[list[str], np.ndarray]:
 def load_messirve_qrels(country: str, version: str):
     """Return test split of MessIRve and build ranx Qrels."""
     log.info("Loading MessIRve dataset (country=%s, version=%s) …", country, version)
-    ds = datasets.load_dataset(
-        "spanish-ir/messirve", country, revision=version
-    )
+    ds = datasets.load_dataset("spanish-ir/messirve", country, revision=version)
     test_ds = ds["test"]
     log.info("Test split: %d query-document pairs", len(test_ds))
 
@@ -204,7 +207,7 @@ def load_model():
     model = SentenceTransformer(
         MODEL_NAME,
         model_kwargs={
-            "attn_implementation": "flash_attention_2",
+            "attn_implementation": "sdpa",
             "device_map": "auto",
             "torch_dtype": torch.float16,
         },
@@ -243,9 +246,7 @@ def encode_documents(
 
     doc_embeddings = np.zeros((num_docs, emb_dim), dtype=np.float16)
 
-    for start in tqdm(
-        range(0, num_docs, DOC_BATCH_SIZE), desc="Encoding docs", unit="batch"
-    ):
+    for start in tqdm(range(0, num_docs, DOC_BATCH_SIZE), desc="Encoding docs", unit="batch"):
         end = min(start + DOC_BATCH_SIZE, num_docs)
         embs = model.encode(
             doc_texts[start:end],
@@ -281,16 +282,12 @@ def encode_queries(
     log.info("Encoding %d queries (no cache found) …", num_queries)
 
     # Probe for embedding dimension
-    probe = model.encode(
-        ["probe"], batch_size=1, prompt_name="query", normalize_embeddings=True
-    )
+    probe = model.encode(["probe"], batch_size=1, prompt_name="query", normalize_embeddings=True)
     emb_dim = probe.shape[1]
 
     query_embeddings = np.zeros((num_queries, emb_dim), dtype=np.float16)
 
-    for start in tqdm(
-        range(0, num_queries, QUERY_BATCH_SIZE), desc="Encoding queries", unit="batch"
-    ):
+    for start in tqdm(range(0, num_queries, QUERY_BATCH_SIZE), desc="Encoding queries", unit="batch"):
         end = min(start + QUERY_BATCH_SIZE, num_queries)
         embs = model.encode(
             query_texts[start:end],
@@ -325,23 +322,16 @@ def retrieve(
 
     log.info("Retrieving top-%d documents for %d queries …", top_k, num_queries)
 
-    for q_start in tqdm(
-        range(0, num_queries, QUERY_CHUNK), desc="Retrieving", unit="chunk"
-    ):
+    for q_start in tqdm(range(0, num_queries, QUERY_CHUNK), desc="Retrieving", unit="chunk"):
         q_end = min(q_start + QUERY_CHUNK, num_queries)
-        q_emb = torch.from_numpy(
-            query_embeddings[q_start:q_end].astype(np.float32)
-        )
+        q_emb = torch.from_numpy(query_embeddings[q_start:q_end].astype(np.float32))
         scores = q_emb @ doc_emb_tensor.T
-        topk_scores, topk_indices = torch.topk(
-            scores, k=min(top_k, len(doc_ids)), dim=1
-        )
+        topk_scores, topk_indices = torch.topk(scores, k=min(top_k, len(doc_ids)), dim=1)
 
         for i in range(q_end - q_start):
             qid = query_ids[q_start + i]
             run_dict[qid] = {
-                doc_ids[topk_indices[i, j].item()]: float(topk_scores[i, j].item())
-                for j in range(topk_scores.shape[1])
+                doc_ids[topk_indices[i, j].item()]: float(topk_scores[i, j].item()) for j in range(topk_scores.shape[1])
             }
 
     log.info("Retrieval complete.")
@@ -377,9 +367,7 @@ def main():
     qrels, query_id_to_text = load_messirve_qrels(COUNTRY, DATASET_VERSION)
 
     # 2. Check if we can skip model loading entirely
-    all_cached = all(
-        paths[k].exists() for k in ["doc_embeddings", "query_embeddings"]
-    )
+    all_cached = all(paths[k].exists() for k in ["doc_embeddings", "query_embeddings"])
 
     if all_cached:
         log.info("All embeddings are cached — skipping model loading.")
