@@ -50,7 +50,7 @@ CORPUS_NAME = "spanish-ir/eswiki_20240401_corpus"
 
 # Memory & Sequence parameters
 QUERY_BATCH_SIZE = 128  # Increased for smaller model
-DOC_BATCH_SIZE = 64  # Increased for smaller model
+DOC_BATCH_SIZE = 128  # Increased for smaller model
 MAX_SEQ_LENGTH = 512  # e5 max token limit
 MAX_WORD_COUNT = 400  # Filters corpus to better match the 512 token limit
 

@@ -51,8 +51,8 @@ CORPUS_NAME = "spanish-ir/eswiki_20240401_corpus"
 # Memory & Sequence parameters
 QUERY_BATCH_SIZE = 32
 DOC_BATCH_SIZE = 8
-MAX_SEQ_LENGTH = 1024
-MAX_WORD_COUNT = 800  # Filters corpus to ~1000 tokens max
+MAX_SEQ_LENGTH = 512
+MAX_WORD_COUNT = 400  # Filters corpus to ~1000 tokens max
 
 DOC_CHUNK_SIZE = 50_000
 TOP_K = 100
@@ -210,8 +210,7 @@ def prune_qrels_and_queries(
         pruned_dict = {qid: judgs for qid, judgs in pruned_dict.items() if judgs}
         pruned_q_map = {qid: original_q_map[qid] for qid in pruned_dict.keys()}
 
-        log.info("Original queries: %d", len(qrels_dict))
-        log.info("Queries retained:   %d", len(pruned_dict))
+        log.info("Filtered queries: %d / %d", len(pruned_dict), len(qrels_dict))
 
     return Qrels(pruned_dict), pruned_q_map
 
