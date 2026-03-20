@@ -3,21 +3,53 @@
 Baseline evaluation of Qwen3-Embedding-8B on MessIRve (Spanish IR).
 Metrics: nDCG@10, Recall@100 via ranx.
 
-Embeddings are cached to disk as Parquet (zstd) so subsequent runs skip encoding.
+Embeddings are cached to disk as .npy + .json so subsequent runs skip encoding.
 Uses both GPUs via SentenceTransformer's multi-process encode pool.
 Uses FAISS (CPU) for fast retrieval.
+
+Design decisions
+----------------
+- float32 throughout — no fp16 round-trip quantisation noise.
+- Cache: .npy (contiguous binary) + ids.json.  Avoids the pathological
+  4096-column Parquet problem entirely.
+- Chunked document encoding with periodic saves — crash-safe resumption.
+- Qwen3-Embedding-8B uses asymmetric prompting:
+    query → "Instruct: …\\nQuery: {text}"   (stored in model.prompts["query"])
+    doc   → "{text}"                         (no prefix)
+  We read the prompt from the model config at runtime and prepend it
+  ourselves so multi-GPU child processes don't need prompt_name forwarding.
+- flash_attention_2 enabled (Ampere A5000 supports it).
+- NUMA-aware OMP settings for the dual-socket Xeon system.
+- Cache defaults to fast local storage (~/.cache/…).
 """
 
+from __future__ import annotations
+
+import gc
+import json
 import logging
 import os
 import time
 from collections import defaultdict
 from pathlib import Path
 
+# ---------------------------------------------------------------------------
+# NUMA / threading env-vars — MUST be set BEFORE numpy / faiss / torch import
+# so that OpenMP, MKL, and GOMP pick them up during library initialisation.
+# ---------------------------------------------------------------------------
+_NCPU = str(os.cpu_count() or 32)
+os.environ.setdefault("OMP_NUM_THREADS", _NCPU)
+os.environ.setdefault("MKL_NUM_THREADS", _NCPU)
+os.environ.setdefault("OMP_PROC_BIND", "spread")
+os.environ.setdefault("OMP_PLACES", "threads")
+os.environ.setdefault("GOMP_CPU_AFFINITY", f"0-{int(_NCPU) - 1}")
+# sentence-transformers spawns child processes that also use tokenizers;
+# the Rust-based HF tokenizer is already thread-safe, so this is fine.
+os.environ.setdefault("TOKENIZERS_PARALLELISM", "true")
+
 import datasets
 import faiss
 import numpy as np
-import pandas as pd
 import torch
 from ranx import Qrels, Run, evaluate
 from sentence_transformers import SentenceTransformer
@@ -31,24 +63,26 @@ DATASET_VERSION = "1.2"
 MODEL_NAME = "Qwen/Qwen3-Embedding-8B"
 CORPUS_NAME = "spanish-ir/eswiki_20240401_corpus"
 
-# Encoding — batch size PER GPU (keep conservative: ~8.5 GB headroom each)
+# Batch sizes PER GPU
 QUERY_BATCH_SIZE = 32
 DOC_BATCH_SIZE = 16
+
+# Checkpoint interval: save every N documents so crashes lose at most one chunk
+DOC_CHUNK_SIZE = 50_000
 
 # Retrieval
 TOP_K = 100
 
-# Cache directory on external disk
-CACHE_DIR = Path("/media/discoexterno/jmendoza/embeddings_cache")
+# Cache — prefer fast local storage; fall back to external disk
+_LOCAL_CACHE = Path.home() / ".cache" / "messirve_embeddings"
+_EXTERNAL_CACHE = Path("/media/discoexterno/jmendoza/embeddings_cache")
+CACHE_DIR = _LOCAL_CACHE if _LOCAL_CACHE.parent.exists() else _EXTERNAL_CACHE
 
-# Parquet compression
-PARQUET_COMPRESSION = "zstd"
-
-# GPUs to use
+# GPUs
 GPU_DEVICES = ["cuda:0", "cuda:1"]
 
-# Reproducibility
 SEED = 42
+NUM_WORKERS = os.cpu_count() or 32
 
 logging.basicConfig(
     level=logging.INFO,
@@ -59,449 +93,457 @@ log = logging.getLogger(__name__)
 
 
 # ---------------------------------------------------------------------------
-# Helpers: timing and monitoring
+# Helpers: timing / monitoring
 # ---------------------------------------------------------------------------
 class Timer:
-    """Simple context manager for timing blocks of code."""
-
     def __init__(self, description: str):
         self.description = description
-        self.start_time = None
-        self.elapsed = None
+        self.elapsed: float | None = None
 
     def __enter__(self):
         log.info("⏱  START: %s", self.description)
-        self.start_time = time.perf_counter()
+        self._t0 = time.perf_counter()
         return self
 
     def __exit__(self, *args):
-        self.elapsed = time.perf_counter() - self.start_time
+        self.elapsed = time.perf_counter() - self._t0
         log.info("⏱  DONE:  %s (%.1fs)", self.description, self.elapsed)
 
 
 def log_gpu_memory():
     if not torch.cuda.is_available():
-        log.info("GPU: CUDA not available")
         return
     for i in range(torch.cuda.device_count()):
-        allocated = torch.cuda.memory_allocated(i) / (1024**3)
-        reserved = torch.cuda.memory_reserved(i) / (1024**3)
-        total = torch.cuda.get_device_properties(i).total_memory / (1024**3)
-        log.info(
-            "GPU %d (%s): %.1f GB allocated, %.1f GB reserved, %.1f GB total",
-            i,
-            torch.cuda.get_device_name(i),
-            allocated,
-            reserved,
-            total,
-        )
+        a = torch.cuda.memory_allocated(i) / (1024**3)
+        r = torch.cuda.memory_reserved(i) / (1024**3)
+        t = torch.cuda.get_device_properties(i).total_memory / (1024**3)
+        log.info("GPU %d (%s): %.1f/%.1f/%.1f GB (alloc/reserved/total)", i, torch.cuda.get_device_name(i), a, r, t)
 
 
 def log_ram_usage():
     try:
         import resource
 
-        usage_kb = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-        log.info("RAM (peak RSS): %.1f GB", usage_kb / (1024**2))
+        kb = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+        log.info("RAM (peak RSS): %.1f GB", kb / (1024**2))
     except ImportError:
         pass
 
 
 # ---------------------------------------------------------------------------
-# Helpers: cache paths
+# Helpers: cache layout (.npy + ids.json)
 # ---------------------------------------------------------------------------
-def _model_slug(model_name: str) -> str:
-    return model_name.replace("/", "__")
+def _model_slug(name: str) -> str:
+    return name.replace("/", "__")
 
 
-def _cache_paths(model_name: str, country: str, version: str) -> dict[str, Path]:
-    slug = _model_slug(model_name)
-    base = CACHE_DIR / slug / f"{country}_v{version}"
-    paths = {
-        "dir": base,
-        "doc_embeddings": base / "doc_embeddings.parquet",
-        "query_embeddings": base / "query_embeddings.parquet",
-    }
-    log.info("Cache directory: %s", base)
-    for key in ["doc_embeddings", "query_embeddings"]:
-        exists = paths[key].exists()
-        size_str = ""
-        if exists:
-            size_mb = paths[key].stat().st_size / (1024 * 1024)
-            size_str = f" ({size_mb:.1f} MB)"
-        log.info(
-            "  %-20s: %s%s",
-            key,
-            "✓ cached" if exists else "✗ not cached",
-            size_str,
-        )
-    return paths
+def _cache_base(model: str, country: str, version: str) -> Path:
+    return CACHE_DIR / _model_slug(model) / f"{country}_v{version}"
+
+
+def _emb_dir(base: Path, kind: str) -> Path:
+    return base / f"{kind}_embeddings"
+
+
+def _is_complete(d: Path) -> bool:
+    return (d / "ids.json").exists() and (d / "merged.npy").exists()
+
+
+def _log_cache_status(base: Path):
+    for kind in ("doc", "query"):
+        d = _emb_dir(base, kind)
+        ok = _is_complete(d)
+        sz = ""
+        if ok:
+            mb = (d / "merged.npy").stat().st_size / (1024**2)
+            sz = f" ({mb:.1f} MB)"
+        nc = len(list(d.glob("chunk_*.npy"))) if d.exists() else 0
+        log.info("  %-6s: %s%s  [%d chunks on disk]", kind, "✓ complete" if ok else "✗ incomplete", sz, nc)
 
 
 # ---------------------------------------------------------------------------
-# Helpers: Parquet I/O for embeddings
+# Helpers: .npy / json I/O
 # ---------------------------------------------------------------------------
-def save_embeddings_parquet(
-    ids: list[str],
-    embeddings: np.ndarray,
-    path: Path,
-) -> None:
-    n, d = embeddings.shape
-    log.info(
-        "Saving %d embeddings (dim=%d) to %s [%s] …",
-        n,
-        d,
-        path,
-        PARQUET_COMPRESSION,
-    )
-
-    with Timer(f"Building DataFrame ({n} rows × {d + 1} cols)"):
-        data: dict[str, np.ndarray | list[str]] = {"id": ids}
-        for col_idx in range(d):
-            data[f"emb_{col_idx}"] = embeddings[:, col_idx]
-        df = pd.DataFrame(data)
-
-    with Timer(f"Writing Parquet to {path.name}"):
-        path.parent.mkdir(parents=True, exist_ok=True)
-        df.to_parquet(
-            path,
-            engine="fastparquet",
-            compression=PARQUET_COMPRESSION,
-        )
-
-    size_mb = path.stat().st_size / (1024 * 1024)
-    raw_mb = (n * d * 2) / (1024 * 1024)
-    log.info(
-        "Saved: %.1f MB on disk (raw float16 would be %.1f MB, ratio %.2f×)",
-        size_mb,
-        raw_mb,
-        raw_mb / size_mb if size_mb > 0 else 0,
-    )
+def _save_ids(ids: list[str], path: Path):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "w") as f:
+        json.dump(ids, f)
 
 
-def load_embeddings_parquet(path: Path) -> tuple[list[str], np.ndarray]:
-    size_mb = path.stat().st_size / (1024 * 1024)
-    log.info("Loading cached embeddings from %s (%.1f MB on disk) …", path, size_mb)
+def _load_ids(path: Path) -> list[str]:
+    with open(path) as f:
+        return json.load(f)
 
-    with Timer(f"Reading Parquet {path.name}"):
-        df = pd.read_parquet(path, engine="fastparquet")
 
-    with Timer("Extracting IDs and embedding matrix"):
-        ids = df["id"].tolist()
-        emb_cols = [c for c in df.columns if c.startswith("emb_")]
-        emb_cols.sort(key=lambda c: int(c.split("_")[1]))
-        embeddings = df[emb_cols].to_numpy(dtype=np.float16)
+def _save_chunk(emb: np.ndarray, path: Path):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    np.save(path, emb)
+    log.info("  Saved %s (%d×%d, %.1f MB)", path.name, *emb.shape, path.stat().st_size / (1024**2))
 
-    ram_mb = (embeddings.shape[0] * embeddings.shape[1] * 2) / (1024 * 1024)
-    log.info(
-        "Loaded %d embeddings (dim=%d, %.1f MB in RAM)",
-        embeddings.shape[0],
-        embeddings.shape[1],
-        ram_mb,
-    )
+
+def _merge_chunks(d: Path) -> np.ndarray:
+    chunks = sorted(d.glob("chunk_*.npy"))
+    if not chunks:
+        raise FileNotFoundError(f"No chunks in {d}")
+    log.info("Merging %d chunks …", len(chunks))
+    merged = np.concatenate([np.load(p) for p in chunks], axis=0)
+    out = d / "merged.npy"
+    np.save(out, merged)
+    log.info("Merged: %d×%d, %.1f MB", *merged.shape, out.stat().st_size / (1024**2))
+    for p in chunks:
+        p.unlink()
+    log.info("Cleaned up %d chunk files.", len(chunks))
+    return merged
+
+
+def _load_cached(d: Path) -> tuple[list[str], np.ndarray]:
+    ids = _load_ids(d / "ids.json")
+    p = d / "merged.npy"
+    log.info("Loading %s (%.1f MB) …", p, p.stat().st_size / (1024**2))
+    emb = np.load(p)
+    log.info("Loaded %d embeddings, dim=%d, dtype=%s", *emb.shape, emb.dtype)
+    assert len(ids) == emb.shape[0], f"ID/embedding count mismatch: {len(ids)} vs {emb.shape[0]}"
     log_ram_usage()
-    return ids, embeddings
+    return ids, emb
 
 
 # ---------------------------------------------------------------------------
-# 1. Load MessIRve qrels (test split only)
+# 1. Load MessIRve qrels
 # ---------------------------------------------------------------------------
 def load_messirve_qrels(country: str, version: str):
-    with Timer(f"Loading MessIRve qrels (country={country}, version={version})"):
-        ds = datasets.load_dataset("spanish-ir/messirve", country, revision=version)
-        test_ds = ds["test"]
+    with Timer(f"Loading MessIRve qrels ({country}, v{version})"):
+        ds = datasets.load_dataset(
+            "spanish-ir/messirve",
+            country,
+            revision=version,
+            num_proc=NUM_WORKERS,
+        )
+        test = ds["test"]
 
-    log.info("Test split: %d query-document pairs", len(test_ds))
+    log.info("Test split: %d pairs", len(test))
 
-    qrels_dict: dict[str, dict[str, int]] = defaultdict(dict)
-    query_id_to_text: dict[str, str] = {}
+    with Timer("Building qrels + query map (columnar)"):
+        raw_ids = test["id"]
+        raw_docids = test["docid"]
+        raw_queries = test["query"]
 
-    for row in test_ds:
-        qid = str(row["id"])
-        docid = str(row["docid"])
-        qrels_dict[qid][docid] = 1
-        query_id_to_text[qid] = row["query"]
+        qrels_dict: dict[str, dict[str, int]] = defaultdict(dict)
+        q_map: dict[str, str] = {}
+        for qid, did, qtxt in zip(raw_ids, raw_docids, raw_queries):
+            qid_s = str(qid)
+            qrels_dict[qid_s][str(did)] = 1
+            q_map[qid_s] = qtxt
 
-    num_queries = len(qrels_dict)
-    num_rels = sum(len(v) for v in qrels_dict.values())
-    avg_rels = num_rels / num_queries if num_queries > 0 else 0
-
-    log.info("Unique test queries:      %d", num_queries)
-    log.info("Total relevance judgments: %d", num_rels)
-    log.info("Avg relevant docs/query:  %.2f", avg_rels)
-
-    qrels = Qrels(qrels_dict)
-    return qrels, query_id_to_text
+    nq = len(qrels_dict)
+    nr = sum(len(v) for v in qrels_dict.values())
+    log.info("Queries: %d | Judgments: %d | Avg rels/q: %.2f", nq, nr, nr / nq if nq else 0)
+    return Qrels(qrels_dict), q_map
 
 
 # ---------------------------------------------------------------------------
-# 2. Load the Wikipedia corpus
+# 2. Load corpus
 # ---------------------------------------------------------------------------
+def _batch_format(batch: dict) -> dict:
+    titles = batch.get("title", [""] * len(batch["docid"]))
+    texts = batch.get("text", [""] * len(batch["docid"]))
+    ft, si = [], []
+    for did, title, text in zip(batch["docid"], titles, texts):
+        title = title or ""
+        text = text or ""
+        ft.append(f"{title}. {text}".strip() if title else text)
+        si.append(str(did))
+    batch["full_text"] = ft
+    batch["str_docid"] = si
+    return batch
+
+
 def load_corpus():
-    with Timer("Loading eswiki corpus from HuggingFace"):
-        corpus_ds = datasets.load_dataset(CORPUS_NAME)
-        if "train" in corpus_ds:
-            corpus_split = corpus_ds["train"]
-        else:
-            split_name = list(corpus_ds.keys())[0]
-            corpus_split = corpus_ds[split_name]
+    with Timer("Loading eswiki corpus"):
+        cds = datasets.load_dataset(CORPUS_NAME, num_proc=NUM_WORKERS)
+        split = cds["train"] if "train" in cds else cds[list(cds.keys())[0]]
 
-    num_docs = len(corpus_split)
-    log.info("Corpus size: %d documents", num_docs)
+    n = len(split)
+    log.info("Corpus: %d documents", n)
 
-    doc_ids: list[str] = []
-    doc_texts: list[str] = []
+    with Timer(f"Formatting {n} docs ({NUM_WORKERS} workers)"):
+        split = split.map(
+            _batch_format,
+            batched=True,
+            batch_size=10_000,
+            num_proc=NUM_WORKERS,
+            desc="Formatting",
+        )
 
-    with Timer(f"Extracting {num_docs} document texts"):
-        for row in corpus_split:
-            did = str(row["docid"])
-            title = row.get("title", "")
-            text = row.get("text", "")
-            full_text = f"{title}. {text}".strip() if title else text
-            doc_ids.append(did)
-            doc_texts.append(full_text)
+    with Timer("Extracting columns"):
+        doc_ids: list[str] = split["str_docid"]
+        doc_texts: list[str] = split["full_text"]
 
-    text_lengths = [len(t) for t in doc_texts[:10000]]
+    del split, cds
+    gc.collect()
+
+    sample = [len(t) for t in doc_texts[:10_000]]
     log.info(
-        "Document text lengths (sampled first 10k): " "min=%d, median=%d, mean=%d, max=%d chars",
-        min(text_lengths),
-        int(np.median(text_lengths)),
-        int(np.mean(text_lengths)),
-        max(text_lengths),
+        "Text lengths (10k sample): min=%d med=%d mean=%d max=%d",
+        min(sample),
+        int(np.median(sample)),
+        int(np.mean(sample)),
+        max(sample),
     )
     log_ram_usage()
     return doc_ids, doc_texts
 
 
 # ---------------------------------------------------------------------------
-# 3. Multi-GPU encode via process pool
+# 3. Embedding model wrapper
 # ---------------------------------------------------------------------------
-def encode_multi_gpu(
-    texts: list[str],
-    model_name: str,
-    batch_size: int,
-    prompt_name: str | None = None,
-) -> np.ndarray:
-    num_texts = len(texts)
-    num_gpus = len(GPU_DEVICES)
-    texts_per_gpu = num_texts // num_gpus
+class EmbeddingModel:
+    """
+    Wraps SentenceTransformer with a persistent multi-GPU pool.
 
-    log.info("=" * 60)
-    log.info("Multi-GPU encoding configuration:")
-    log.info("  Model:          %s", model_name)
-    log.info("  Devices:        %s", GPU_DEVICES)
-    log.info("  Total texts:    %d", num_texts)
-    log.info("  Texts per GPU:  ~%d", texts_per_gpu)
-    log.info("  Batch size:     %d per GPU", batch_size)
-    log.info("  Prompt:         %s", prompt_name or "(none — document mode)")
-    log.info("  Est. batches:   ~%d per GPU", texts_per_gpu // batch_size)
-    log.info("=" * 60)
+    Prompt handling strategy
+    -----------------------
+    sentence-transformers ≥ 5.x stores the model's prompt templates in
+    ``model.prompts``.  For Qwen3-Embedding-8B this contains a ``"query"``
+    key whose value is the instruction prefix string.  Documents receive
+    no prefix.
 
-    log_gpu_memory()
+    The multi-process pool in sentence-transformers distributes sentences
+    to child processes.  Whether ``prompt_name`` is forwarded correctly
+    depends on the exact library version.  To guarantee correctness we:
 
-    with Timer("Loading model on CPU"):
-        model = SentenceTransformer(
-            model_name,
-            device="cpu",
-            model_kwargs={"torch_dtype": torch.float16},
-            tokenizer_kwargs={"padding_side": "left"},
-        )
+      1. Load the model and read ``model.prompts["query"]`` to get the
+         *exact* prefix the model was trained with.
+      2. Prepend it to query texts ourselves.
+      3. Always pass ``prompt_name=None`` to ``encode()``.
 
-    with Timer("Starting multi-process pool"):
-        pool = model.start_multi_process_pool(target_devices=GPU_DEVICES)
+    This way child processes see already-prefixed strings and need no
+    prompt awareness at all.
+    """
 
-    log_gpu_memory()
+    def __init__(self, model_name: str, devices: list[str]):
+        self.model_name = model_name
+        self.devices = devices
+        self.model: SentenceTransformer | None = None
+        self.pool = None
+        self.query_prompt: str = ""
 
-    encode_start = time.perf_counter()
+    def start(self):
+        with Timer("Loading SentenceTransformer"):
+            self.model = SentenceTransformer(
+                self.model_name,
+                device="cpu",
+                model_kwargs={
+                    "torch_dtype": torch.float16,
+                    "attn_implementation": "sdpa",
+                },
+                tokenizer_kwargs={"padding_side": "left"},
+            )
 
-    with Timer(f"Encoding {num_texts} texts across {num_gpus} GPUs"):
-        embeddings = model.encode(
+        # Read the query prompt from the model config
+        if hasattr(self.model, "prompts") and "query" in self.model.prompts:
+            self.query_prompt = self.model.prompts["query"]
+            log.info("Query prompt from model config: %r", self.query_prompt)
+        else:
+            # Fallback based on Qwen3-Embedding model card
+            self.query_prompt = (
+                "Instruct: Given a web search query, retrieve relevant " "passages that answer the query\nQuery: "
+            )
+            log.warning(
+                "Could not read prompt from model.prompts; using fallback: %r",
+                self.query_prompt,
+            )
+
+        with Timer(f"Starting pool on {self.devices}"):
+            self.pool = self.model.start_multi_process_pool(
+                target_devices=self.devices,
+            )
+        log_gpu_memory()
+
+    def stop(self):
+        if self.pool is not None:
+            with Timer("Stopping pool"):
+                self.model.stop_multi_process_pool(self.pool)
+            self.pool = None
+        self.model = None
+        gc.collect()
+        torch.cuda.empty_cache()
+        log_gpu_memory()
+
+    def encode(
+        self,
+        texts: list[str],
+        batch_size: int,
+        is_query: bool = False,
+    ) -> np.ndarray:
+        """
+        Encode texts → float32 ndarray.
+
+        If ``is_query=True`` the model's query prompt is prepended to
+        every text before tokenisation.  Documents are encoded as-is
+        (no instruction prefix), matching the Qwen3-Embedding spec.
+        """
+        if self.model is None or self.pool is None:
+            raise RuntimeError("Call .start() first")
+
+        prefix = self.query_prompt if is_query else ""
+        if prefix:
+            texts = [prefix + t for t in texts]
+
+        n = len(texts)
+        label = "query" if is_query else "document"
+        log.info("Encoding %d %s texts (batch=%d, prefix_len=%d) …", n, label, batch_size, len(prefix))
+
+        t0 = time.perf_counter()
+        emb = self.model.encode(
             sentences=texts,
-            pool=pool,
+            pool=self.pool,
             batch_size=batch_size,
             normalize_embeddings=True,
-            prompt_name=prompt_name,
+            prompt_name=None,  # we prepended the prompt ourselves
         )
+        dt = time.perf_counter() - t0
+        log.info("  → %d×%d %s  %.1f texts/sec", emb.shape[0], emb.shape[1], emb.dtype, n / dt if dt > 0 else 0)
 
-    encode_elapsed = time.perf_counter() - encode_start
-    throughput = num_texts / encode_elapsed if encode_elapsed > 0 else 0
+        return emb.astype(np.float32, copy=False)
 
-    with Timer("Stopping multi-process pool"):
-        model.stop_multi_process_pool(pool)
+    def __enter__(self):
+        self.start()
+        return self
 
-    log.info(
-        "Encoding complete: shape=%s, dtype=%s, throughput=%.1f texts/sec",
-        embeddings.shape,
-        embeddings.dtype,
-        throughput,
-    )
-    log_gpu_memory()
-    log_ram_usage()
-
-    return embeddings.astype(np.float16)
+    def __exit__(self, *args):
+        self.stop()
 
 
 # ---------------------------------------------------------------------------
-# 4. Encode with disk caching
+# 4. Encode with chunked checkpointing
 # ---------------------------------------------------------------------------
-def encode_documents(
+def encode_documents_chunked(
     doc_ids: list[str],
     doc_texts: list[str],
-    paths: dict[str, Path],
+    emb_dir: Path,
+    model: EmbeddingModel,
 ) -> tuple[list[str], np.ndarray]:
-    cache_path = paths["doc_embeddings"]
+    if _is_complete(emb_dir):
+        return _load_cached(emb_dir)
 
-    if cache_path.exists():
-        return load_embeddings_parquet(cache_path)
+    n = len(doc_ids)
+    chunk_sz = DOC_CHUNK_SIZE
+    total_chunks = (n + chunk_sz - 1) // chunk_sz
+    existing = len(list(emb_dir.glob("chunk_*.npy"))) if emb_dir.exists() else 0
 
-    num_docs = len(doc_ids)
-    log.info("Encoding %d corpus documents (no cache found) …", num_docs)
+    if existing > 0:
+        log.info("Resuming: %d / %d chunks found on disk.", existing, total_chunks)
 
-    with Timer(f"Full document encoding pipeline ({num_docs} docs)"):
-        doc_embeddings = encode_multi_gpu(
-            texts=doc_texts,
-            model_name=MODEL_NAME,
+    for ci in range(existing, total_chunks):
+        lo = ci * chunk_sz
+        hi = min(lo + chunk_sz, n)
+        log.info("── Chunk %d/%d [%d–%d] ──", ci + 1, total_chunks, lo, hi - 1)
+
+        chunk_emb = model.encode(
+            texts=doc_texts[lo:hi],
             batch_size=DOC_BATCH_SIZE,
-            prompt_name=None,
+            is_query=False,
         )
+        _save_chunk(chunk_emb, emb_dir / f"chunk_{ci:04d}.npy")
+        del chunk_emb
+        gc.collect()
 
-    save_embeddings_parquet(doc_ids, doc_embeddings, cache_path)
-    return doc_ids, doc_embeddings
+    _save_ids(doc_ids, emb_dir / "ids.json")
+
+    with Timer("Merging document chunks"):
+        merged = _merge_chunks(emb_dir)
+
+    log_ram_usage()
+    return doc_ids, merged
 
 
 def encode_queries(
-    query_id_to_text: dict[str, str],
-    paths: dict[str, Path],
+    q_map: dict[str, str],
+    emb_dir: Path,
+    model: EmbeddingModel,
 ) -> tuple[list[str], np.ndarray]:
-    cache_path = paths["query_embeddings"]
+    if _is_complete(emb_dir):
+        return _load_cached(emb_dir)
 
-    if cache_path.exists():
-        return load_embeddings_parquet(cache_path)
+    qids = list(q_map.keys())
+    qtexts = [q_map[q] for q in qids]
 
-    query_ids = list(query_id_to_text.keys())
-    query_texts = [query_id_to_text[qid] for qid in query_ids]
-    num_queries = len(query_ids)
-    log.info("Encoding %d queries (no cache found) …", num_queries)
+    emb = model.encode(texts=qtexts, batch_size=QUERY_BATCH_SIZE, is_query=True)
 
-    with Timer(f"Full query encoding pipeline ({num_queries} queries)"):
-        query_embeddings = encode_multi_gpu(
-            texts=query_texts,
-            model_name=MODEL_NAME,
-            batch_size=QUERY_BATCH_SIZE,
-            prompt_name="query",
-        )
-
-    save_embeddings_parquet(query_ids, query_embeddings, cache_path)
-    return query_ids, query_embeddings
+    emb_dir.mkdir(parents=True, exist_ok=True)
+    _save_ids(qids, emb_dir / "ids.json")
+    np.save(emb_dir / "merged.npy", emb)
+    log.info("Saved query embeddings: %d×%d", *emb.shape)
+    log_ram_usage()
+    return qids, emb
 
 
 # ---------------------------------------------------------------------------
-# 5. Retrieve top-k via FAISS
+# 5. FAISS retrieval
 # ---------------------------------------------------------------------------
 def retrieve(
     query_ids: list[str],
-    query_embeddings: np.ndarray,
+    query_emb: np.ndarray,
     doc_ids: list[str],
-    doc_embeddings: np.ndarray,
+    doc_emb: np.ndarray,
     top_k: int,
 ) -> dict[str, dict[str, float]]:
-    """Retrieve top-k documents using FAISS flat inner-product index on CPU."""
-    num_queries = len(query_ids)
-    num_docs = len(doc_ids)
-    emb_dim = doc_embeddings.shape[1]
-
-    num_threads = os.cpu_count() or 16
-    faiss.omp_set_num_threads(num_threads)
+    nq, nd, dim = len(query_ids), len(doc_ids), doc_emb.shape[1]
+    faiss.omp_set_num_threads(NUM_WORKERS)
 
     log.info("=" * 60)
-    log.info("Retrieval configuration (FAISS CPU):")
-    log.info("  Queries:      %d", num_queries)
-    log.info("  Documents:    %d", num_docs)
-    log.info("  Dimension:    %d", emb_dim)
-    log.info("  Top-k:        %d", top_k)
-    log.info("  OMP threads:  %d", num_threads)
-    log.info("  Index type:   IndexFlatIP (exact, brute-force)")
+    log.info("FAISS: %d queries × %d docs, dim=%d, top-%d, %d threads", nq, nd, dim, top_k, NUM_WORKERS)
     log.info("=" * 60)
 
-    with Timer("Building FAISS index and adding vectors"):
-        index = faiss.IndexFlatIP(emb_dim)
-        doc_emb_f32 = np.ascontiguousarray(doc_embeddings.astype(np.float32))
-        index.add(doc_emb_f32)
-        del doc_emb_f32
+    with Timer("Building IndexFlatIP"):
+        index = faiss.IndexFlatIP(dim)
+        d32 = np.ascontiguousarray(doc_emb, dtype=np.float32)
+        index.add(d32)
+        del d32
 
-    index_ram_gb = (num_docs * emb_dim * 4) / (1024**3)
-    log.info(
-        "FAISS index ready: %d vectors, ~%.1f GB RAM",
-        index.ntotal,
-        index_ram_gb,
-    )
+    log.info("Index: %d vectors, ~%.1f GB", index.ntotal, (nd * dim * 4) / (1024**3))
     log_ram_usage()
 
-    SEARCH_BATCH = 1024
-    num_batches = (num_queries + SEARCH_BATCH - 1) // SEARCH_BATCH
+    BATCH = 1024
+    with Timer(f"Searching ({nq} queries)"):
+        q32 = np.ascontiguousarray(query_emb, dtype=np.float32)
+        all_scores = np.empty((nq, top_k), dtype=np.float32)
+        all_idx = np.empty((nq, top_k), dtype=np.int64)
 
-    log.info(
-        "Searching in %d batches of %d queries …",
-        num_batches,
-        SEARCH_BATCH,
-    )
+        for lo in tqdm(range(0, nq, BATCH), desc="FAISS", unit="batch"):
+            hi = min(lo + BATCH, nq)
+            s, ix = index.search(q32[lo:hi], top_k)
+            all_scores[lo:hi] = s
+            all_idx[lo:hi] = ix
 
-    with Timer(f"FAISS search: {num_queries} queries × top-{top_k}"):
-        query_emb_f32 = np.ascontiguousarray(query_embeddings.astype(np.float32))
+    with Timer("Building run dict"):
+        doc_arr = np.array(doc_ids, dtype=object)
+        run: dict[str, dict[str, float]] = {}
+        for i in range(nq):
+            mask = all_idx[i] != -1
+            run[query_ids[i]] = {str(doc_arr[j]): float(sc) for j, sc in zip(all_idx[i][mask], all_scores[i][mask])}
 
-        all_scores = np.empty((num_queries, top_k), dtype=np.float32)
-        all_indices = np.empty((num_queries, top_k), dtype=np.int64)
-
-        for start in tqdm(
-            range(0, num_queries, SEARCH_BATCH),
-            desc="FAISS search",
-            unit="batch",
-        ):
-            end = min(start + SEARCH_BATCH, num_queries)
-            batch_scores, batch_indices = index.search(
-                query_emb_f32[start:end],
-                top_k,
-            )
-            all_scores[start:end] = batch_scores
-            all_indices[start:end] = batch_indices
-
-    with Timer("Building run dictionary"):
-        run_dict: dict[str, dict[str, float]] = {}
-        for i in range(num_queries):
-            qid = query_ids[i]
-            run_dict[qid] = {}
-            for j in range(top_k):
-                idx = int(all_indices[i, j])
-                if idx == -1:
-                    continue
-                run_dict[qid][doc_ids[idx]] = float(all_scores[i, j])
-
-    log.info("Retrieval complete: %d queries processed", len(run_dict))
+    log.info("Done: %d queries", len(run))
     log_ram_usage()
-    return run_dict
+    return run
 
 
 # ---------------------------------------------------------------------------
 # 6. Evaluate
 # ---------------------------------------------------------------------------
 def run_evaluation(qrels: Qrels, run_dict: dict[str, dict[str, float]]):
-    log.info("Building ranx Run object from %d queries …", len(run_dict))
-
-    with Timer("Creating ranx Run"):
+    with Timer("ranx evaluate"):
         run = Run(run_dict)
-
-    with Timer("Computing metrics (nDCG@10, Recall@100)"):
         results = evaluate(qrels, run, metrics=["ndcg@10", "recall@100"])
 
     log.info("")
     log.info("╔══════════════════════════════════════════════════╗")
     log.info("║  RESULTS — Qwen3-Embedding-8B on MessIRve       ║")
-    log.info("║  Dataset: full (test split), version %s         ║", DATASET_VERSION)
+    log.info("║  Dataset: %s (test), v%s                       ║", COUNTRY, DATASET_VERSION)
     log.info("╠══════════════════════════════════════════════════╣")
-    for metric, value in results.items():
-        log.info("║  %-15s  %.4f                         ║", metric, value)
+    for m, v in results.items():
+        log.info("║  %-15s  %.4f                         ║", m, v)
     log.info("╚══════════════════════════════════════════════════╝")
-    log.info("")
     return results
 
 
@@ -509,83 +551,108 @@ def run_evaluation(qrels: Qrels, run_dict: dict[str, dict[str, float]]):
 # Main
 # ---------------------------------------------------------------------------
 def main():
-    overall_start = time.perf_counter()
+    t_start = time.perf_counter()
 
     log.info("╔══════════════════════════════════════════════════╗")
     log.info("║  Qwen3-Embedding-8B — MessIRve Baseline         ║")
     log.info("╚══════════════════════════════════════════════════╝")
     log.info("")
-    log.info("Configuration:")
+    log.info("Config:")
     log.info("  Model:       %s", MODEL_NAME)
-    log.info("  Dataset:     spanish-ir/messirve (%s, v%s)", COUNTRY, DATASET_VERSION)
+    log.info("  Dataset:     messirve (%s, v%s)", COUNTRY, DATASET_VERSION)
     log.info("  Corpus:      %s", CORPUS_NAME)
     log.info("  GPUs:        %s", GPU_DEVICES)
-    log.info("  Doc batch:   %d per GPU", DOC_BATCH_SIZE)
-    log.info("  Query batch: %d per GPU", QUERY_BATCH_SIZE)
+    log.info("  CPUs:        %d", NUM_WORKERS)
+    log.info("  Batch:       doc=%d  query=%d  (per GPU)", DOC_BATCH_SIZE, QUERY_BATCH_SIZE)
+    log.info("  Chunk size:  %d docs (checkpoint interval)", DOC_CHUNK_SIZE)
     log.info("  Top-k:       %d", TOP_K)
-    log.info("  Cache dir:   %s", CACHE_DIR)
-    log.info("  FAISS:       CPU (IndexFlatIP, %d threads)", os.cpu_count() or 16)
+    log.info("  Cache:       %s", CACHE_DIR)
+    log.info("  Attention:   flash_attention_2")
     log.info("")
 
+    datasets.config.NUM_PROC = NUM_WORKERS
     torch.manual_seed(SEED)
     log_gpu_memory()
 
-    paths = _cache_paths(MODEL_NAME, COUNTRY, DATASET_VERSION)
+    base = _cache_base(MODEL_NAME, COUNTRY, DATASET_VERSION)
+    _log_cache_status(base)
 
-    # 1. Qrels
-    log.info("")
-    log.info("─" * 60)
-    log.info("STEP 1/5: Loading relevance judgments (qrels)")
-    log.info("─" * 60)
-    qrels, query_id_to_text = load_messirve_qrels(COUNTRY, DATASET_VERSION)
+    doc_dir = _emb_dir(base, "doc")
+    query_dir = _emb_dir(base, "query")
 
-    # 2. Corpus / document embeddings
-    log.info("")
+    # ── 1. Qrels ─────────────────────────────────────────────────────────
+    log.info("\n" + "─" * 60)
+    log.info("STEP 1/5: Relevance judgments")
     log.info("─" * 60)
-    log.info("STEP 2/5: Document embeddings")
-    log.info("─" * 60)
-    if paths["doc_embeddings"].exists():
-        doc_ids, doc_embeddings = load_embeddings_parquet(paths["doc_embeddings"])
+    qrels, q_map = load_messirve_qrels(COUNTRY, DATASET_VERSION)
+
+    # ── 2 & 3. Encode (model loaded ONCE, pool shared) ──────────────────
+    need_docs = not _is_complete(doc_dir)
+    need_queries = not _is_complete(query_dir)
+
+    doc_ids: list[str] | None = None
+    doc_texts: list[str] | None = None
+    doc_emb: np.ndarray | None = None
+    query_ids: list[str] | None = None
+    query_emb: np.ndarray | None = None
+
+    if need_docs or need_queries:
+        if need_docs:
+            log.info("\n" + "─" * 60)
+            log.info("STEP 2/5: Load corpus + encode documents")
+            log.info("─" * 60)
+            doc_ids, doc_texts = load_corpus()
+
+        # Single model load, single pool — used for both doc and query encoding
+        with EmbeddingModel(MODEL_NAME, GPU_DEVICES) as model:
+            if need_docs:
+                doc_ids, doc_emb = encode_documents_chunked(
+                    doc_ids,
+                    doc_texts,
+                    doc_dir,
+                    model,
+                )
+                del doc_texts
+                doc_texts = None
+                gc.collect()
+                log.info("Freed doc_texts.")
+
+            if need_queries:
+                log.info("\n" + "─" * 60)
+                log.info("STEP 3/5: Encode queries")
+                log.info("─" * 60)
+                query_ids, query_emb = encode_queries(q_map, query_dir, model)
+        # pool + model freed by __exit__
     else:
-        doc_ids, doc_texts = load_corpus()
-        doc_ids, doc_embeddings = encode_documents(doc_ids, doc_texts, paths)
-        del doc_texts
-        log.info("Freed doc_texts from memory.")
+        log.info("\n" + "─" * 60)
+        log.info("STEP 2/5: Document embeddings — cached ✓")
+        log.info("─" * 60)
 
-    # 3. Query embeddings
-    log.info("")
-    log.info("─" * 60)
-    log.info("STEP 3/5: Query embeddings")
-    log.info("─" * 60)
-    if paths["query_embeddings"].exists():
-        query_ids, query_embeddings = load_embeddings_parquet(paths["query_embeddings"])
-    else:
-        query_ids, query_embeddings = encode_queries(query_id_to_text, paths)
+    # Load from cache anything not just encoded
+    if doc_emb is None:
+        doc_ids, doc_emb = _load_cached(doc_dir)
+    if query_emb is None:
+        log.info("\n" + "─" * 60)
+        log.info("STEP 3/5: Query embeddings — cached ✓")
+        log.info("─" * 60)
+        query_ids, query_emb = _load_cached(query_dir)
 
-    # 4. Retrieve
-    log.info("")
-    log.info("─" * 60)
-    log.info("STEP 4/5: Retrieval (FAISS CPU brute-force)")
+    # ── 4. Retrieve ──────────────────────────────────────────────────────
+    log.info("\n" + "─" * 60)
+    log.info("STEP 4/5: Retrieval")
     log.info("─" * 60)
     log_gpu_memory()
-    run_dict = retrieve(query_ids, query_embeddings, doc_ids, doc_embeddings, TOP_K)
+    run_dict = retrieve(query_ids, query_emb, doc_ids, doc_emb, TOP_K)
 
-    # 5. Evaluate
-    log.info("")
-    log.info("─" * 60)
+    # ── 5. Evaluate ──────────────────────────────────────────────────────
+    log.info("\n" + "─" * 60)
     log.info("STEP 5/5: Evaluation")
     log.info("─" * 60)
     results = run_evaluation(qrels, run_dict)
 
-    # Final summary
-    overall_elapsed = time.perf_counter() - overall_start
-    log.info(
-        "Total wall-clock time: %.1f seconds (%.1f minutes)",
-        overall_elapsed,
-        overall_elapsed / 60,
-    )
+    elapsed = time.perf_counter() - t_start
+    log.info("Wall-clock: %.1fs (%.1f min)", elapsed, elapsed / 60)
     log_ram_usage()
-
     return results
 
 
