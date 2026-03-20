@@ -5,14 +5,17 @@ Metrics: nDCG@10, Recall@100 via ranx.
 
 Embeddings are cached to disk as Parquet (zstd) so subsequent runs skip encoding.
 Uses both GPUs via SentenceTransformer's multi-process encode pool.
+Uses FAISS (CPU) for fast retrieval.
 """
 
 import logging
+import os
 import time
 from collections import defaultdict
 from pathlib import Path
 
 import datasets
+import faiss
 import numpy as np
 import pandas as pd
 import torch
@@ -56,7 +59,7 @@ log = logging.getLogger(__name__)
 
 
 # ---------------------------------------------------------------------------
-# Helpers: timing
+# Helpers: timing and monitoring
 # ---------------------------------------------------------------------------
 class Timer:
     """Simple context manager for timing blocks of code."""
@@ -77,14 +80,13 @@ class Timer:
 
 
 def log_gpu_memory():
-    """Log current GPU memory usage for all visible devices."""
     if not torch.cuda.is_available():
         log.info("GPU: CUDA not available")
         return
     for i in range(torch.cuda.device_count()):
         allocated = torch.cuda.memory_allocated(i) / (1024**3)
         reserved = torch.cuda.memory_reserved(i) / (1024**3)
-        total = torch.cuda.get_device_properties(i).total_mem / (1024**3)
+        total = torch.cuda.get_device_properties(i).total_memory / (1024**3)
         log.info(
             "GPU %d (%s): %.1f GB allocated, %.1f GB reserved, %.1f GB total",
             i,
@@ -96,7 +98,6 @@ def log_gpu_memory():
 
 
 def log_ram_usage():
-    """Log current process RAM usage."""
     try:
         import resource
 
@@ -225,7 +226,7 @@ def load_messirve_qrels(country: str, version: str):
     num_rels = sum(len(v) for v in qrels_dict.values())
     avg_rels = num_rels / num_queries if num_queries > 0 else 0
 
-    log.info("Unique test queries:     %d", num_queries)
+    log.info("Unique test queries:      %d", num_queries)
     log.info("Total relevance judgments: %d", num_rels)
     log.info("Avg relevant docs/query:  %.2f", avg_rels)
 
@@ -260,18 +261,15 @@ def load_corpus():
             doc_ids.append(did)
             doc_texts.append(full_text)
 
-    # Log some corpus statistics
-    text_lengths = [len(t) for t in doc_texts[:10000]]  # sample for speed
+    text_lengths = [len(t) for t in doc_texts[:10000]]
     log.info(
-        "Document text lengths (sampled first 10k): "
-        "min=%d, median=%d, mean=%d, max=%d chars",
+        "Document text lengths (sampled first 10k): " "min=%d, median=%d, mean=%d, max=%d chars",
         min(text_lengths),
         int(np.median(text_lengths)),
         int(np.mean(text_lengths)),
         max(text_lengths),
     )
     log_ram_usage()
-
     return doc_ids, doc_texts
 
 
@@ -284,9 +282,6 @@ def encode_multi_gpu(
     batch_size: int,
     prompt_name: str | None = None,
 ) -> np.ndarray:
-    """
-    Encode texts using both GPUs via SentenceTransformer's multi-process pool.
-    """
     num_texts = len(texts)
     num_gpus = len(GPU_DEVICES)
     texts_per_gpu = num_texts // num_gpus
@@ -317,6 +312,8 @@ def encode_multi_gpu(
 
     log_gpu_memory()
 
+    encode_start = time.perf_counter()
+
     with Timer(f"Encoding {num_texts} texts across {num_gpus} GPUs"):
         embeddings = model.encode(
             sentences=texts,
@@ -326,11 +323,18 @@ def encode_multi_gpu(
             prompt_name=prompt_name,
         )
 
+    encode_elapsed = time.perf_counter() - encode_start
+    throughput = num_texts / encode_elapsed if encode_elapsed > 0 else 0
+
     with Timer("Stopping multi-process pool"):
         model.stop_multi_process_pool(pool)
 
-    throughput = num_texts / (time.perf_counter() - time.perf_counter())  # placeholder
-    log.info("Encoding complete: shape=%s, dtype=%s", embeddings.shape, embeddings.dtype)
+    log.info(
+        "Encoding complete: shape=%s, dtype=%s, throughput=%.1f texts/sec",
+        embeddings.shape,
+        embeddings.dtype,
+        throughput,
+    )
     log_gpu_memory()
     log_ram_usage()
 
@@ -392,7 +396,7 @@ def encode_queries(
 
 
 # ---------------------------------------------------------------------------
-# 5. Retrieve top-k
+# 5. Retrieve top-k via FAISS
 # ---------------------------------------------------------------------------
 def retrieve(
     query_ids: list[str],
@@ -401,67 +405,78 @@ def retrieve(
     doc_embeddings: np.ndarray,
     top_k: int,
 ) -> dict[str, dict[str, float]]:
+    """Retrieve top-k documents using FAISS flat inner-product index on CPU."""
     num_queries = len(query_ids)
     num_docs = len(doc_ids)
+    emb_dim = doc_embeddings.shape[1]
+
+    num_threads = os.cpu_count() or 16
+    faiss.omp_set_num_threads(num_threads)
 
     log.info("=" * 60)
-    log.info("Retrieval configuration:")
-    log.info("  Queries:        %d", num_queries)
-    log.info("  Documents:      %d", num_docs)
-    log.info("  Top-k:          %d", top_k)
-    log.info("  Query chunks:   %d queries per chunk", 256)
+    log.info("Retrieval configuration (FAISS CPU):")
+    log.info("  Queries:      %d", num_queries)
+    log.info("  Documents:    %d", num_docs)
+    log.info("  Dimension:    %d", emb_dim)
+    log.info("  Top-k:        %d", top_k)
+    log.info("  OMP threads:  %d", num_threads)
+    log.info("  Index type:   IndexFlatIP (exact, brute-force)")
+    log.info("=" * 60)
+
+    with Timer("Building FAISS index and adding vectors"):
+        index = faiss.IndexFlatIP(emb_dim)
+        doc_emb_f32 = np.ascontiguousarray(doc_embeddings.astype(np.float32))
+        index.add(doc_emb_f32)
+        del doc_emb_f32
+
+    index_ram_gb = (num_docs * emb_dim * 4) / (1024**3)
     log.info(
-        "  Score matrix:   %d × %d per chunk (%.1f MB float32)",
-        256,
-        num_docs,
-        (256 * num_docs * 4) / (1024 * 1024),
+        "FAISS index ready: %d vectors, ~%.1f GB RAM",
+        index.ntotal,
+        index_ram_gb,
     )
-    log.info("=" * 60)
+    log_ram_usage()
 
-    with Timer("Converting doc embeddings to float32 tensor"):
-        doc_emb_tensor = torch.from_numpy(doc_embeddings.astype(np.float32))
-        log.info(
-            "Doc embedding tensor: shape=%s, dtype=%s, %.1f GB",
-            doc_emb_tensor.shape,
-            doc_emb_tensor.dtype,
-            doc_emb_tensor.nelement() * 4 / (1024**3),
-        )
+    SEARCH_BATCH = 1024
+    num_batches = (num_queries + SEARCH_BATCH - 1) // SEARCH_BATCH
 
-    QUERY_CHUNK = 256
-    run_dict: dict[str, dict[str, float]] = {}
-    total_comparisons = 0
+    log.info(
+        "Searching in %d batches of %d queries …",
+        num_batches,
+        SEARCH_BATCH,
+    )
 
-    with Timer(f"Retrieving top-{top_k} for {num_queries} queries"):
-        for q_start in tqdm(
-            range(0, num_queries, QUERY_CHUNK), desc="Retrieving", unit="chunk"
+    with Timer(f"FAISS search: {num_queries} queries × top-{top_k}"):
+        query_emb_f32 = np.ascontiguousarray(query_embeddings.astype(np.float32))
+
+        all_scores = np.empty((num_queries, top_k), dtype=np.float32)
+        all_indices = np.empty((num_queries, top_k), dtype=np.int64)
+
+        for start in tqdm(
+            range(0, num_queries, SEARCH_BATCH),
+            desc="FAISS search",
+            unit="batch",
         ):
-            q_end = min(q_start + QUERY_CHUNK, num_queries)
-            chunk_size = q_end - q_start
-
-            q_emb = torch.from_numpy(
-                query_embeddings[q_start:q_end].astype(np.float32)
+            end = min(start + SEARCH_BATCH, num_queries)
+            batch_scores, batch_indices = index.search(
+                query_emb_f32[start:end],
+                top_k,
             )
-            scores = q_emb @ doc_emb_tensor.T
-            topk_scores, topk_indices = torch.topk(
-                scores, k=min(top_k, num_docs), dim=1
-            )
+            all_scores[start:end] = batch_scores
+            all_indices[start:end] = batch_indices
 
-            for i in range(chunk_size):
-                qid = query_ids[q_start + i]
-                run_dict[qid] = {
-                    doc_ids[topk_indices[i, j].item()]: float(
-                        topk_scores[i, j].item()
-                    )
-                    for j in range(topk_scores.shape[1])
-                }
+    with Timer("Building run dictionary"):
+        run_dict: dict[str, dict[str, float]] = {}
+        for i in range(num_queries):
+            qid = query_ids[i]
+            run_dict[qid] = {}
+            for j in range(top_k):
+                idx = int(all_indices[i, j])
+                if idx == -1:
+                    continue
+                run_dict[qid][doc_ids[idx]] = float(all_scores[i, j])
 
-            total_comparisons += chunk_size * num_docs
-
-    log.info(
-        "Retrieval complete: %d queries, %.1f billion similarity comparisons",
-        len(run_dict),
-        total_comparisons / 1e9,
-    )
+    log.info("Retrieval complete: %d queries processed", len(run_dict))
     log_ram_usage()
     return run_dict
 
@@ -497,7 +512,7 @@ def main():
     overall_start = time.perf_counter()
 
     log.info("╔══════════════════════════════════════════════════╗")
-    log.info("║  Qwen3-Embedding-8B — MessIRve Baseline          ║")
+    log.info("║  Qwen3-Embedding-8B — MessIRve Baseline         ║")
     log.info("╚══════════════════════════════════════════════════╝")
     log.info("")
     log.info("Configuration:")
@@ -509,6 +524,7 @@ def main():
     log.info("  Query batch: %d per GPU", QUERY_BATCH_SIZE)
     log.info("  Top-k:       %d", TOP_K)
     log.info("  Cache dir:   %s", CACHE_DIR)
+    log.info("  FAISS:       CPU (IndexFlatIP, %d threads)", os.cpu_count() or 16)
     log.info("")
 
     torch.manual_seed(SEED)
@@ -517,6 +533,7 @@ def main():
     paths = _cache_paths(MODEL_NAME, COUNTRY, DATASET_VERSION)
 
     # 1. Qrels
+    log.info("")
     log.info("─" * 60)
     log.info("STEP 1/5: Loading relevance judgments (qrels)")
     log.info("─" * 60)
@@ -541,16 +558,14 @@ def main():
     log.info("STEP 3/5: Query embeddings")
     log.info("─" * 60)
     if paths["query_embeddings"].exists():
-        query_ids, query_embeddings = load_embeddings_parquet(
-            paths["query_embeddings"]
-        )
+        query_ids, query_embeddings = load_embeddings_parquet(paths["query_embeddings"])
     else:
         query_ids, query_embeddings = encode_queries(query_id_to_text, paths)
 
     # 4. Retrieve
     log.info("")
     log.info("─" * 60)
-    log.info("STEP 4/5: Retrieval (brute-force cosine similarity)")
+    log.info("STEP 4/5: Retrieval (FAISS CPU brute-force)")
     log.info("─" * 60)
     log_gpu_memory()
     run_dict = retrieve(query_ids, query_embeddings, doc_ids, doc_embeddings, TOP_K)
@@ -564,7 +579,11 @@ def main():
 
     # Final summary
     overall_elapsed = time.perf_counter() - overall_start
-    log.info("Total wall-clock time: %.1f seconds (%.1f minutes)", overall_elapsed, overall_elapsed / 60)
+    log.info(
+        "Total wall-clock time: %.1f seconds (%.1f minutes)",
+        overall_elapsed,
+        overall_elapsed / 60,
+    )
     log_ram_usage()
 
     return results
