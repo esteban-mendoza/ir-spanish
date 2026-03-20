@@ -1,7 +1,7 @@
 [project]
 name = "proyecto"
 version = "0.1.0"
-description = "Add your description here"
+description = "Evaluating rank fusion for Information Retrieval in Spanish"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -9,6 +9,7 @@ dependencies = [
     "ranx>=0.3.21",
     "sentence-transformers>=5.3.0",
     "fastparquet<2026",
+    "accelerate>=1.13.0",
 ]
 
 [tool.uv]
