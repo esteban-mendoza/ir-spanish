@@ -2,12 +2,18 @@
 """
 Baseline evaluation of Qwen3-Embedding-8B on MessIRve (Spanish IR).
 Metrics: nDCG@10, Recall@100 via ranx.
+
+Embeddings are cached to disk so subsequent runs skip the encoding step.
 """
 
+import json
 import logging
+import os
 from collections import defaultdict
+from pathlib import Path
 
 import datasets
+import numpy as np
 import torch
 from ranx import Qrels, Run, evaluate
 from sentence_transformers import SentenceTransformer
@@ -24,14 +30,15 @@ CORPUS_NAME = "spanish-ir/eswiki_20240401_corpus"
 # Encoding
 QUERY_BATCH_SIZE = 64
 DOC_BATCH_SIZE = 32
-MAX_SEQ_LENGTH = 512  # keep moderate to fit in VRAM; increase if needed
 
 # Retrieval
-TOP_K = 100  # we need top-100 for Recall@100; nDCG@10 uses top-10 subset
+TOP_K = 100
 
-# Reproducibility / performance
+# Cache directory — all embeddings and ID mappings are stored here
+CACHE_DIR = Path("/media/discoexterno/jmendoza/embeddings_cache")
+
+# Reproducibility
 SEED = 42
-FAISS_ON_GPU = True  # use GPU for FAISS index if available
 
 logging.basicConfig(
     level=logging.INFO,
@@ -42,17 +49,38 @@ log = logging.getLogger(__name__)
 
 
 # ---------------------------------------------------------------------------
+# Helpers: cache paths
+# ---------------------------------------------------------------------------
+def _model_slug(model_name: str) -> str:
+    """Turn 'Qwen/Qwen3-Embedding-8B' into 'Qwen__Qwen3-Embedding-8B'."""
+    return model_name.replace("/", "__")
+
+
+def _cache_paths(model_name: str, country: str, version: str) -> dict[str, Path]:
+    """Return all cache file paths for a given model + dataset combo."""
+    slug = _model_slug(model_name)
+    base = CACHE_DIR / slug / f"{country}_v{version}"
+    return {
+        "dir": base,
+        "doc_embeddings": base / "doc_embeddings.npy",
+        "doc_ids": base / "doc_ids.json",
+        "query_embeddings": base / "query_embeddings.npy",
+        "query_ids": base / "query_ids.json",
+    }
+
+
+# ---------------------------------------------------------------------------
 # 1. Load MessIRve qrels (test split only)
 # ---------------------------------------------------------------------------
 def load_messirve_qrels(country: str, version: str):
     """Return test split of MessIRve and build ranx Qrels."""
     log.info("Loading MessIRve dataset (country=%s, version=%s) …", country, version)
-    ds = datasets.load_dataset("spanish-ir/messirve", country, revision=version, trust_remote_code=True)
+    ds = datasets.load_dataset(
+        "spanish-ir/messirve", country, revision=version, trust_remote_code=True
+    )
     test_ds = ds["test"]
     log.info("Test split: %d query-document pairs", len(test_ds))
 
-    # Build qrels dict: {query_id: {doc_id: relevance}}
-    # MessIRve has binary relevance (1 = relevant)
     qrels_dict: dict[str, dict[str, int]] = defaultdict(dict)
     query_id_to_text: dict[str, str] = {}
 
@@ -71,14 +99,12 @@ def load_messirve_qrels(country: str, version: str):
 # 2. Load the Wikipedia corpus
 # ---------------------------------------------------------------------------
 def load_corpus():
-    """Load the eswiki corpus and return id->text mapping + ordered lists."""
+    """Load the eswiki corpus and return ordered id and text lists."""
     log.info("Loading eswiki corpus …")
     corpus_ds = datasets.load_dataset(CORPUS_NAME, trust_remote_code=True)
-    # The corpus dataset typically has a single split
     if "train" in corpus_ds:
         corpus_split = corpus_ds["train"]
     else:
-        # take the first available split
         split_name = list(corpus_ds.keys())[0]
         corpus_split = corpus_ds[split_name]
 
@@ -89,7 +115,6 @@ def load_corpus():
 
     for row in corpus_split:
         did = str(row["docid"])
-        # Combine title + text if title is available
         title = row.get("title", "")
         text = row.get("text", "")
         full_text = f"{title}. {text}".strip() if title else text
@@ -103,11 +128,12 @@ def load_corpus():
 # 3. Load model
 # ---------------------------------------------------------------------------
 def load_model():
-    """Load Qwen3-Embedding-8B with SentenceTransformers across 2 GPUs."""
+    """Load Qwen3-Embedding-8B across available GPUs."""
     log.info("Loading model %s …", MODEL_NAME)
     model = SentenceTransformer(
         MODEL_NAME,
         model_kwargs={
+            "attn_implementation": "flash_attention_2",
             "device_map": "auto",
             "torch_dtype": torch.float16,
         },
@@ -118,39 +144,46 @@ def load_model():
 
 
 # ---------------------------------------------------------------------------
-# 4. Encode corpus in batches and build FAISS index
+# 4. Encode with disk caching
 # ---------------------------------------------------------------------------
-def encode_and_index(
+def encode_documents(
     model: SentenceTransformer,
     doc_ids: list[str],
     doc_texts: list[str],
-    query_id_to_text: dict[str, str],
-    top_k: int,
-) -> dict[str, dict[str, float]]:
+    paths: dict[str, Path],
+) -> tuple[list[str], np.ndarray]:
     """
-    Encode all documents, encode queries, retrieve top-k via cosine similarity.
-    Uses batched numpy/torch computation to avoid OOM on large corpora.
-    Returns run_dict: {qid: {docid: score}}.
+    Encode corpus documents. If a cache exists on disk, load it instead.
+    Returns (doc_ids, doc_embeddings) where embeddings is float16 numpy.
     """
-    import numpy as np
+    if paths["doc_embeddings"].exists() and paths["doc_ids"].exists():
+        log.info("Loading cached document embeddings from %s", paths["dir"])
+        doc_embeddings = np.load(paths["doc_embeddings"])
+        with open(paths["doc_ids"], "r") as f:
+            cached_doc_ids = json.load(f)
+        log.info(
+            "Loaded %d document embeddings (dim=%d)",
+            doc_embeddings.shape[0],
+            doc_embeddings.shape[1],
+        )
+        return cached_doc_ids, doc_embeddings
 
     num_docs = len(doc_ids)
-    log.info("Encoding %d corpus documents …", num_docs)
+    log.info("Encoding %d corpus documents (no cache found) …", num_docs)
 
-    # --- Encode documents in batches, store as fp16 numpy on CPU ---
-    # We'll compute the embedding dimension from a tiny probe
-    probe_emb = model.encode(["probe"], batch_size=1, normalize_embeddings=True)
-    emb_dim = probe_emb.shape[1]
+    # Probe for embedding dimension
+    probe = model.encode(["probe"], batch_size=1, normalize_embeddings=True)
+    emb_dim = probe.shape[1]
     log.info("Embedding dimension: %d", emb_dim)
 
-    # Pre-allocate memmap-like array (float16 to save RAM)
     doc_embeddings = np.zeros((num_docs, emb_dim), dtype=np.float16)
 
-    for start in tqdm(range(0, num_docs, DOC_BATCH_SIZE), desc="Encoding docs", unit="batch"):
+    for start in tqdm(
+        range(0, num_docs, DOC_BATCH_SIZE), desc="Encoding docs", unit="batch"
+    ):
         end = min(start + DOC_BATCH_SIZE, num_docs)
-        batch_texts = doc_texts[start:end]
         embs = model.encode(
-            batch_texts,
+            doc_texts[start:end],
             batch_size=DOC_BATCH_SIZE,
             normalize_embeddings=True,
             show_progress_bar=False,
@@ -158,20 +191,56 @@ def encode_and_index(
         )
         doc_embeddings[start:end] = embs.astype(np.float16)
 
-    log.info("Corpus encoding complete.")
+    # Save to disk
+    paths["dir"].mkdir(parents=True, exist_ok=True)
+    np.save(paths["doc_embeddings"], doc_embeddings)
+    with open(paths["doc_ids"], "w") as f:
+        json.dump(doc_ids, f)
+    log.info("Document embeddings cached to %s", paths["dir"])
 
-    # --- Encode queries ---
+    return doc_ids, doc_embeddings
+
+
+def encode_queries(
+    model: SentenceTransformer,
+    query_id_to_text: dict[str, str],
+    paths: dict[str, Path],
+) -> tuple[list[str], np.ndarray]:
+    """
+    Encode queries. If a cache exists on disk, load it instead.
+    Returns (query_ids, query_embeddings) where embeddings is float16 numpy.
+    """
+    if paths["query_embeddings"].exists() and paths["query_ids"].exists():
+        log.info("Loading cached query embeddings from %s", paths["dir"])
+        query_embeddings = np.load(paths["query_embeddings"])
+        with open(paths["query_ids"], "r") as f:
+            cached_query_ids = json.load(f)
+        log.info(
+            "Loaded %d query embeddings (dim=%d)",
+            query_embeddings.shape[0],
+            query_embeddings.shape[1],
+        )
+        return cached_query_ids, query_embeddings
+
     query_ids = list(query_id_to_text.keys())
     query_texts = [query_id_to_text[qid] for qid in query_ids]
     num_queries = len(query_ids)
-    log.info("Encoding %d queries …", num_queries)
+    log.info("Encoding %d queries (no cache found) …", num_queries)
+
+    # Probe for embedding dimension
+    probe = model.encode(
+        ["probe"], batch_size=1, prompt_name="query", normalize_embeddings=True
+    )
+    emb_dim = probe.shape[1]
 
     query_embeddings = np.zeros((num_queries, emb_dim), dtype=np.float16)
-    for start in tqdm(range(0, num_queries, QUERY_BATCH_SIZE), desc="Encoding queries", unit="batch"):
+
+    for start in tqdm(
+        range(0, num_queries, QUERY_BATCH_SIZE), desc="Encoding queries", unit="batch"
+    ):
         end = min(start + QUERY_BATCH_SIZE, num_queries)
-        batch_texts = query_texts[start:end]
         embs = model.encode(
-            batch_texts,
+            query_texts[start:end],
             batch_size=QUERY_BATCH_SIZE,
             prompt_name="query",
             normalize_embeddings=True,
@@ -180,49 +249,66 @@ def encode_and_index(
         )
         query_embeddings[start:end] = embs.astype(np.float16)
 
-    log.info("Query encoding complete.")
+    # Save to disk
+    paths["dir"].mkdir(parents=True, exist_ok=True)
+    np.save(paths["query_embeddings"], query_embeddings)
+    with open(paths["query_ids"], "w") as f:
+        json.dump(query_ids, f)
+    log.info("Query embeddings cached to %s", paths["dir"])
 
-    # --- Retrieval: batched cosine similarity ---
-    # Process queries in chunks to avoid huge score matrices
+    return query_ids, query_embeddings
+
+
+# ---------------------------------------------------------------------------
+# 5. Retrieve top-k
+# ---------------------------------------------------------------------------
+def retrieve(
+    query_ids: list[str],
+    query_embeddings: np.ndarray,
+    doc_ids: list[str],
+    doc_embeddings: np.ndarray,
+    top_k: int,
+) -> dict[str, dict[str, float]]:
+    """Brute-force cosine retrieval via batched matrix multiplication."""
+    num_queries = len(query_ids)
+    doc_emb_tensor = torch.from_numpy(doc_embeddings.astype(np.float32))
+
     QUERY_CHUNK = 256
     run_dict: dict[str, dict[str, float]] = {}
 
-    log.info("Retrieving top-%d documents per query …", top_k)
-    # Convert doc embeddings to float32 torch tensor on CPU for matmul
-    doc_emb_tensor = torch.from_numpy(doc_embeddings.astype(np.float32))
+    log.info("Retrieving top-%d documents for %d queries …", top_k, num_queries)
 
-    for q_start in tqdm(range(0, num_queries, QUERY_CHUNK), desc="Retrieving", unit="chunk"):
+    for q_start in tqdm(
+        range(0, num_queries, QUERY_CHUNK), desc="Retrieving", unit="chunk"
+    ):
         q_end = min(q_start + QUERY_CHUNK, num_queries)
-        q_emb = torch.from_numpy(query_embeddings[q_start:q_end].astype(np.float32))
-        # Cosine similarity (already normalized)
-        # Shape: (chunk_size, num_docs)
-        scores = q_emb @ doc_emb_tensor.T  # on CPU
-
-        # Top-k per query
-        topk_scores, topk_indices = torch.topk(scores, k=min(top_k, num_docs), dim=1)
+        q_emb = torch.from_numpy(
+            query_embeddings[q_start:q_end].astype(np.float32)
+        )
+        scores = q_emb @ doc_emb_tensor.T
+        topk_scores, topk_indices = torch.topk(
+            scores, k=min(top_k, len(doc_ids)), dim=1
+        )
 
         for i in range(q_end - q_start):
             qid = query_ids[q_start + i]
-            run_dict[qid] = {}
-            for rank_j in range(topk_scores.shape[1]):
-                did = doc_ids[topk_indices[i, rank_j].item()]
-                run_dict[qid][did] = float(topk_scores[i, rank_j].item())
+            run_dict[qid] = {
+                doc_ids[topk_indices[i, j].item()]: float(topk_scores[i, j].item())
+                for j in range(topk_scores.shape[1])
+            }
 
     log.info("Retrieval complete.")
     return run_dict
 
 
 # ---------------------------------------------------------------------------
-# 5. Evaluate
+# 6. Evaluate
 # ---------------------------------------------------------------------------
 def run_evaluation(qrels: Qrels, run_dict: dict[str, dict[str, float]]):
     """Compute nDCG@10 and Recall@100 with ranx."""
     run = Run(run_dict)
-    results = evaluate(
-        qrels,
-        run,
-        metrics=["ndcg@10", "recall@100"],
-    )
+    results = evaluate(qrels, run, metrics=["ndcg@10", "recall@100"])
+
     log.info("=" * 50)
     log.info("RESULTS — Qwen3-Embedding-8B on MessIRve (full, test)")
     log.info("=" * 50)
@@ -238,21 +324,44 @@ def run_evaluation(qrels: Qrels, run_dict: dict[str, dict[str, float]]):
 def main():
     torch.manual_seed(SEED)
 
+    paths = _cache_paths(MODEL_NAME, COUNTRY, DATASET_VERSION)
+
     # 1. Qrels
     qrels, query_id_to_text = load_messirve_qrels(COUNTRY, DATASET_VERSION)
 
-    # 2. Corpus
-    doc_ids, doc_texts = load_corpus()
+    # 2. Check if we can skip model loading entirely
+    all_cached = all(
+        paths[k].exists()
+        for k in ["doc_embeddings", "doc_ids", "query_embeddings", "query_ids"]
+    )
 
-    # 3. Model
-    model = load_model()
+    if all_cached:
+        log.info("All embeddings are cached — skipping model loading.")
+        model = None
+    else:
+        model = load_model()
 
-    # 4. Encode + Retrieve
-    run_dict = encode_and_index(model, doc_ids, doc_texts, query_id_to_text, TOP_K)
+    # 3. Corpus (only load texts if we need to encode)
+    if paths["doc_embeddings"].exists() and paths["doc_ids"].exists():
+        doc_ids, doc_embeddings = encode_documents(model, [], [], paths)
+    else:
+        doc_ids_raw, doc_texts = load_corpus()
+        doc_ids, doc_embeddings = encode_documents(model, doc_ids_raw, doc_texts, paths)
+        del doc_texts  # free memory
 
-    # 5. Evaluate
+    # 4. Queries
+    query_ids, query_embeddings = encode_queries(model, query_id_to_text, paths)
+
+    # Free model from GPU memory before retrieval
+    if model is not None:
+        del model
+        torch.cuda.empty_cache()
+
+    # 5. Retrieve
+    run_dict = retrieve(query_ids, query_embeddings, doc_ids, doc_embeddings, TOP_K)
+
+    # 6. Evaluate
     results = run_evaluation(qrels, run_dict)
-
     return results
 
 
