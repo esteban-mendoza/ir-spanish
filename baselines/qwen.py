@@ -76,7 +76,7 @@ def load_messirve_qrels(country: str, version: str):
     """Return test split of MessIRve and build ranx Qrels."""
     log.info("Loading MessIRve dataset (country=%s, version=%s) …", country, version)
     ds = datasets.load_dataset(
-        "spanish-ir/messirve", country, revision=version, trust_remote_code=True
+        "spanish-ir/messirve", country, revision=version
     )
     test_ds = ds["test"]
     log.info("Test split: %d query-document pairs", len(test_ds))
@@ -101,7 +101,7 @@ def load_messirve_qrels(country: str, version: str):
 def load_corpus():
     """Load the eswiki corpus and return ordered id and text lists."""
     log.info("Loading eswiki corpus …")
-    corpus_ds = datasets.load_dataset(CORPUS_NAME, trust_remote_code=True)
+    corpus_ds = datasets.load_dataset(CORPUS_NAME)
     if "train" in corpus_ds:
         corpus_split = corpus_ds["train"]
     else:
