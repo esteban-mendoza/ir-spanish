@@ -4,6 +4,7 @@ Baseline evaluation of Qwen3-Embedding-8B on MessIRve (Spanish IR).
 Metrics: nDCG@10, Recall@100 via ranx.
 
 Embeddings are cached to disk as Parquet (zstd) so subsequent runs skip encoding.
+Uses both GPUs via SentenceTransformer's multi-process encode pool.
 """
 
 import logging
@@ -26,9 +27,9 @@ DATASET_VERSION = "1.2"
 MODEL_NAME = "Qwen/Qwen3-Embedding-8B"
 CORPUS_NAME = "spanish-ir/eswiki_20240401_corpus"
 
-# Encoding
-QUERY_BATCH_SIZE = 64
-DOC_BATCH_SIZE = 32
+# Encoding — batch size PER GPU (keep conservative: ~8.5 GB headroom each)
+QUERY_BATCH_SIZE = 32
+DOC_BATCH_SIZE = 16
 
 # Retrieval
 TOP_K = 100
@@ -38,7 +39,9 @@ CACHE_DIR = Path("/media/discoexterno/jmendoza/embeddings_cache")
 
 # Parquet compression
 PARQUET_COMPRESSION = "zstd"
-PARQUET_COMPRESSION_LEVEL = 3  # zstd level 1-22; 3 is a good speed/ratio balance
+
+# GPUs to use
+GPU_DEVICES = ["cuda:0", "cuda:1"]
 
 # Reproducibility
 SEED = 42
@@ -55,12 +58,10 @@ log = logging.getLogger(__name__)
 # Helpers: cache paths
 # ---------------------------------------------------------------------------
 def _model_slug(model_name: str) -> str:
-    """Turn 'Qwen/Qwen3-Embedding-8B' into 'Qwen__Qwen3-Embedding-8B'."""
     return model_name.replace("/", "__")
 
 
 def _cache_paths(model_name: str, country: str, version: str) -> dict[str, Path]:
-    """Return all cache file paths for a given model + dataset combo."""
     slug = _model_slug(model_name)
     base = CACHE_DIR / slug / f"{country}_v{version}"
     return {
@@ -78,27 +79,12 @@ def save_embeddings_parquet(
     embeddings: np.ndarray,
     path: Path,
 ) -> None:
-    """
-    Save (ids, embeddings) as a Parquet file with zstd compression.
-
-    Schema:
-        id: string
-        emb_0, emb_1, ..., emb_{d-1}: float16 columns
-
-    Using per-dimension columns lets Parquet compress each dimension
-    independently with dictionary/RLE encoding, which is very effective
-    for float16 values that cluster around similar magnitudes.
-    """
     n, d = embeddings.shape
     log.info(
         "Saving %d embeddings (dim=%d) to %s [%s] …",
-        n,
-        d,
-        path,
-        PARQUET_COMPRESSION,
+        n, d, path, PARQUET_COMPRESSION,
     )
 
-    # Build a dict: {"id": [...], "emb_0": [...], "emb_1": [...], ...}
     data: dict[str, np.ndarray | list[str]] = {"id": ids}
     for col_idx in range(d):
         data[f"emb_{col_idx}"] = embeddings[:, col_idx]
@@ -110,25 +96,17 @@ def save_embeddings_parquet(
         path,
         engine="fastparquet",
         compression=PARQUET_COMPRESSION,
-        # fastparquet doesn't use compression_level the same way;
-        # zstd default level in fastparquet is already efficient
     )
 
     size_mb = path.stat().st_size / (1024 * 1024)
-    raw_mb = (n * d * 2) / (1024 * 1024)  # float16 = 2 bytes
+    raw_mb = (n * d * 2) / (1024 * 1024)
     log.info(
         "Saved: %.1f MB on disk (raw float16 would be %.1f MB, ratio %.2f×)",
-        size_mb,
-        raw_mb,
-        raw_mb / size_mb if size_mb > 0 else 0,
+        size_mb, raw_mb, raw_mb / size_mb if size_mb > 0 else 0,
     )
 
 
 def load_embeddings_parquet(path: Path) -> tuple[list[str], np.ndarray]:
-    """
-    Load (ids, embeddings) from a Parquet file.
-    Returns ids as list[str] and embeddings as float16 numpy array.
-    """
     log.info("Loading cached embeddings from %s …", path)
 
     df = pd.read_parquet(path, engine="fastparquet")
@@ -136,7 +114,6 @@ def load_embeddings_parquet(path: Path) -> tuple[list[str], np.ndarray]:
     ids = df["id"].tolist()
 
     emb_cols = [c for c in df.columns if c.startswith("emb_")]
-    # Sort by index to guarantee correct dimension order
     emb_cols.sort(key=lambda c: int(c.split("_")[1]))
 
     embeddings = df[emb_cols].to_numpy(dtype=np.float16)
@@ -149,7 +126,6 @@ def load_embeddings_parquet(path: Path) -> tuple[list[str], np.ndarray]:
 # 1. Load MessIRve qrels (test split only)
 # ---------------------------------------------------------------------------
 def load_messirve_qrels(country: str, version: str):
-    """Return test split of MessIRve and build ranx Qrels."""
     log.info("Loading MessIRve dataset (country=%s, version=%s) …", country, version)
     ds = datasets.load_dataset("spanish-ir/messirve", country, revision=version)
     test_ds = ds["test"]
@@ -173,7 +149,6 @@ def load_messirve_qrels(country: str, version: str):
 # 2. Load the Wikipedia corpus
 # ---------------------------------------------------------------------------
 def load_corpus():
-    """Load the eswiki corpus and return ordered id and text lists."""
     log.info("Loading eswiki corpus …")
     corpus_ds = datasets.load_dataset(CORPUS_NAME)
     if "train" in corpus_ds:
@@ -199,105 +174,97 @@ def load_corpus():
 
 
 # ---------------------------------------------------------------------------
-# 3. Load model
+# 3. Multi-GPU encode via process pool
 # ---------------------------------------------------------------------------
-def load_model():
-    """Load Qwen3-Embedding-8B across available GPUs."""
-    log.info("Loading model %s …", MODEL_NAME)
+def encode_multi_gpu(
+    texts: list[str],
+    model_name: str,
+    batch_size: int,
+    prompt_name: str | None = None,
+) -> np.ndarray:
+    """
+    Encode texts using both GPUs via SentenceTransformer.start_multi_process_pool().
+
+    Each GPU gets its own model replica. The input texts are split evenly
+    across processes, encoded in parallel, and the results are concatenated.
+    """
+    log.info(
+        "Starting multi-GPU encode pool on %s (%d texts, batch_size=%d) …",
+        GPU_DEVICES, len(texts), batch_size,
+    )
+
+    # Create a model instance on CPU first — the pool will move copies to each GPU
     model = SentenceTransformer(
-        MODEL_NAME,
-        model_kwargs={
-            "attn_implementation": "sdpa",
-            "device_map": "auto",
-            "torch_dtype": torch.float16,
-        },
+        model_name,
+        device="cpu",
+        model_kwargs={"torch_dtype": torch.float16},
         tokenizer_kwargs={"padding_side": "left"},
     )
-    log.info("Model loaded successfully.")
-    return model
+
+    pool = model.start_multi_process_pool(target_devices=GPU_DEVICES)
+
+    # encode_multi_process handles splitting, encoding, and gathering
+    embeddings = model.encode(
+        sentences=texts,
+        pool=pool,
+        batch_size=batch_size,
+        normalize_embeddings=True,
+        prompt_name=prompt_name,
+    )
+
+    model.stop_multi_process_pool(pool)
+
+    log.info("Multi-GPU encoding complete: shape=%s", embeddings.shape)
+    return embeddings.astype(np.float16)
 
 
 # ---------------------------------------------------------------------------
 # 4. Encode with disk caching
 # ---------------------------------------------------------------------------
 def encode_documents(
-    model: SentenceTransformer | None,
     doc_ids: list[str],
     doc_texts: list[str],
     paths: dict[str, Path],
 ) -> tuple[list[str], np.ndarray]:
-    """
-    Encode corpus documents. If a cache exists on disk, load it instead.
-    Returns (doc_ids, doc_embeddings) where embeddings is float16 numpy.
-    """
     cache_path = paths["doc_embeddings"]
 
     if cache_path.exists():
         return load_embeddings_parquet(cache_path)
 
-    assert model is not None, "Model required for encoding but not loaded"
     num_docs = len(doc_ids)
     log.info("Encoding %d corpus documents (no cache found) …", num_docs)
 
-    # Probe for embedding dimension
-    probe = model.encode(["probe"], batch_size=1, normalize_embeddings=True)
-    emb_dim = probe.shape[1]
-    log.info("Embedding dimension: %d", emb_dim)
-
-    doc_embeddings = np.zeros((num_docs, emb_dim), dtype=np.float16)
-
-    for start in tqdm(range(0, num_docs, DOC_BATCH_SIZE), desc="Encoding docs", unit="batch"):
-        end = min(start + DOC_BATCH_SIZE, num_docs)
-        embs = model.encode(
-            doc_texts[start:end],
-            batch_size=DOC_BATCH_SIZE,
-            normalize_embeddings=True,
-            show_progress_bar=False,
-            convert_to_numpy=True,
-        )
-        doc_embeddings[start:end] = embs.astype(np.float16)
+    doc_embeddings = encode_multi_gpu(
+        texts=doc_texts,
+        model_name=MODEL_NAME,
+        batch_size=DOC_BATCH_SIZE,
+        prompt_name=None,  # no prompt for documents
+    )
 
     save_embeddings_parquet(doc_ids, doc_embeddings, cache_path)
     return doc_ids, doc_embeddings
 
 
 def encode_queries(
-    model: SentenceTransformer | None,
     query_id_to_text: dict[str, str],
     paths: dict[str, Path],
 ) -> tuple[list[str], np.ndarray]:
-    """
-    Encode queries. If a cache exists on disk, load it instead.
-    Returns (query_ids, query_embeddings) where embeddings is float16 numpy.
-    """
     cache_path = paths["query_embeddings"]
 
     if cache_path.exists():
         return load_embeddings_parquet(cache_path)
 
-    assert model is not None, "Model required for encoding but not loaded"
     query_ids = list(query_id_to_text.keys())
     query_texts = [query_id_to_text[qid] for qid in query_ids]
     num_queries = len(query_ids)
     log.info("Encoding %d queries (no cache found) …", num_queries)
 
-    # Probe for embedding dimension
-    probe = model.encode(["probe"], batch_size=1, prompt_name="query", normalize_embeddings=True)
-    emb_dim = probe.shape[1]
-
-    query_embeddings = np.zeros((num_queries, emb_dim), dtype=np.float16)
-
-    for start in tqdm(range(0, num_queries, QUERY_BATCH_SIZE), desc="Encoding queries", unit="batch"):
-        end = min(start + QUERY_BATCH_SIZE, num_queries)
-        embs = model.encode(
-            query_texts[start:end],
-            batch_size=QUERY_BATCH_SIZE,
-            prompt_name="query",
-            normalize_embeddings=True,
-            show_progress_bar=False,
-            convert_to_numpy=True,
-        )
-        query_embeddings[start:end] = embs.astype(np.float16)
+    query_embeddings = encode_multi_gpu(
+        texts=query_texts,
+        model_name=MODEL_NAME,
+        batch_size=QUERY_BATCH_SIZE,
+        prompt_name="query",
+    )
 
     save_embeddings_parquet(query_ids, query_embeddings, cache_path)
     return query_ids, query_embeddings
@@ -313,7 +280,6 @@ def retrieve(
     doc_embeddings: np.ndarray,
     top_k: int,
 ) -> dict[str, dict[str, float]]:
-    """Brute-force cosine retrieval via batched matrix multiplication."""
     num_queries = len(query_ids)
     doc_emb_tensor = torch.from_numpy(doc_embeddings.astype(np.float32))
 
@@ -322,16 +288,25 @@ def retrieve(
 
     log.info("Retrieving top-%d documents for %d queries …", top_k, num_queries)
 
-    for q_start in tqdm(range(0, num_queries, QUERY_CHUNK), desc="Retrieving", unit="chunk"):
+    for q_start in tqdm(
+        range(0, num_queries, QUERY_CHUNK), desc="Retrieving", unit="chunk"
+    ):
         q_end = min(q_start + QUERY_CHUNK, num_queries)
-        q_emb = torch.from_numpy(query_embeddings[q_start:q_end].astype(np.float32))
+        q_emb = torch.from_numpy(
+            query_embeddings[q_start:q_end].astype(np.float32)
+        )
         scores = q_emb @ doc_emb_tensor.T
-        topk_scores, topk_indices = torch.topk(scores, k=min(top_k, len(doc_ids)), dim=1)
+        topk_scores, topk_indices = torch.topk(
+            scores, k=min(top_k, len(doc_ids)), dim=1
+        )
 
         for i in range(q_end - q_start):
             qid = query_ids[q_start + i]
             run_dict[qid] = {
-                doc_ids[topk_indices[i, j].item()]: float(topk_scores[i, j].item()) for j in range(topk_scores.shape[1])
+                doc_ids[topk_indices[i, j].item()]: float(
+                    topk_scores[i, j].item()
+                )
+                for j in range(topk_scores.shape[1])
             }
 
     log.info("Retrieval complete.")
@@ -342,7 +317,6 @@ def retrieve(
 # 6. Evaluate
 # ---------------------------------------------------------------------------
 def run_evaluation(qrels: Qrels, run_dict: dict[str, dict[str, float]]):
-    """Compute nDCG@10 and Recall@100 with ranx."""
     run = Run(run_dict)
     results = evaluate(qrels, run, metrics=["ndcg@10", "recall@100"])
 
@@ -366,35 +340,26 @@ def main():
     # 1. Qrels
     qrels, query_id_to_text = load_messirve_qrels(COUNTRY, DATASET_VERSION)
 
-    # 2. Check if we can skip model loading entirely
-    all_cached = all(paths[k].exists() for k in ["doc_embeddings", "query_embeddings"])
-
-    if all_cached:
-        log.info("All embeddings are cached — skipping model loading.")
-        model = None
-    else:
-        model = load_model()
-
-    # 3. Corpus
+    # 2. Corpus
     if paths["doc_embeddings"].exists():
-        doc_ids, doc_embeddings = encode_documents(model, [], [], paths)
+        doc_ids, doc_embeddings = load_embeddings_parquet(paths["doc_embeddings"])
     else:
-        doc_ids_raw, doc_texts = load_corpus()
-        doc_ids, doc_embeddings = encode_documents(model, doc_ids_raw, doc_texts, paths)
+        doc_ids, doc_texts = load_corpus()
+        doc_ids, doc_embeddings = encode_documents(doc_ids, doc_texts, paths)
         del doc_texts
 
-    # 4. Queries
-    query_ids, query_embeddings = encode_queries(model, query_id_to_text, paths)
+    # 3. Queries
+    if paths["query_embeddings"].exists():
+        query_ids, query_embeddings = load_embeddings_parquet(
+            paths["query_embeddings"]
+        )
+    else:
+        query_ids, query_embeddings = encode_queries(query_id_to_text, paths)
 
-    # Free model from GPU memory before retrieval
-    if model is not None:
-        del model
-        torch.cuda.empty_cache()
-
-    # 5. Retrieve
+    # 4. Retrieve
     run_dict = retrieve(query_ids, query_embeddings, doc_ids, doc_embeddings, TOP_K)
 
-    # 6. Evaluate
+    # 5. Evaluate
     results = run_evaluation(qrels, run_dict)
     return results
 
