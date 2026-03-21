@@ -27,8 +27,11 @@ def _build_search_index(doc_embeddings: np.ndarray, num_workers: int) -> faiss.I
     if num_gpus > 0:
         log.info("Transferring FAISS index to %d GPU(s) ...", num_gpus)
         try:
-            gpu_index = faiss.index_cpu_to_all_gpus(cpu_index)
-            log.info("FAISS index placed on GPU(s).")
+            co = faiss.GpuMultipleClonerOptions()
+            co.shard = True      # split vectors across GPUs instead of replicating
+            co.useFloat16 = True  # halve VRAM: ~13.7 GB/GPU instead of ~27.4 GB/GPU
+            gpu_index = faiss.index_cpu_to_all_gpus(cpu_index, co=co)
+            log.info("FAISS index placed on GPU(s) (sharded, float16).")
             return gpu_index
         except Exception as gpu_error:
             log.warning(
