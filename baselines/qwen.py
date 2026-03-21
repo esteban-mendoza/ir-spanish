@@ -4,10 +4,10 @@ Baseline evaluation of Qwen3-Embedding-8B on MessIRve (Spanish IR).
 Metrics: nDCG@10, Recall@100 via ranx.
 
 Features:
-- Filters out documents > 800 words to prevent truncation & OOM.
-- Prunes qrels/queries missing from the filtered corpus to maintain metric validity.
+- Filters out documents > 400 words to prevent truncation & OOM.
+- Prunes qrels/queries missing from the filtered corpus to maintain metric validity (Cached).
 - Chunked document encoding with crash-safe resumption.
-- float32 `.npy` caching to avoid Parquet bottleneck.
+- float32 `.npy` caching to avoid Parquet bottleneck (Model & Sequence length aware).
 - SDPA attention & NUMA-aware multi-processing.
 """
 
@@ -115,8 +115,13 @@ def _model_slug(name: str) -> str:
     return name.replace("/", "__")
 
 
+def _dataset_cache_base(country: str, version: str, max_words: int) -> Path:
+    """Model-agnostic cache directory for the filtered qrels."""
+    return CACHE_DIR / "shared_datasets" / f"{country}_v{version}_filt{max_words}w"
+
+
 def _cache_base(model: str, country: str, version: str) -> Path:
-    return CACHE_DIR / _model_slug(model) / f"{country}_v{version}_filtered_{MAX_WORD_COUNT}w"
+    return CACHE_DIR / _model_slug(model) / f"{country}_v{version}_seq{MAX_SEQ_LENGTH}_filt{MAX_WORD_COUNT}w"
 
 
 def _emb_dir(base: Path, kind: str) -> Path:
@@ -127,7 +132,9 @@ def _is_complete(d: Path) -> bool:
     return (d / "ids.json").exists() and (d / "merged.npy").exists()
 
 
-def _log_cache_status(base: Path):
+def _log_cache_status(base: Path, dataset_dir: Path):
+    qrels_ok = (dataset_dir / "pruned_qrels.json").exists()
+    log.info("  %-6s: %s", "qrels", "✓ cached" if qrels_ok else "✗ not cached")
     for kind in ("doc", "query"):
         d = _emb_dir(base, kind)
         ok = _is_complete(d)
@@ -176,10 +183,10 @@ def _load_cached(d: Path) -> tuple[list[str], np.ndarray]:
 
 
 # ---------------------------------------------------------------------------
-# Data Loading & Filtering
+# Data Loading & Filtering (With Dataset Caching)
 # ---------------------------------------------------------------------------
 def load_messirve_qrels(country: str, version: str):
-    with Timer(f"Loading MessIRve qrels ({country}, v{version})"):
+    with Timer(f"Loading raw MessIRve qrels ({country}, v{version})"):
         ds = datasets.load_dataset("spanish-ir/messirve", country, revision=version, num_proc=NUM_WORKERS)
         test = ds["test"]
 
@@ -194,9 +201,26 @@ def load_messirve_qrels(country: str, version: str):
     return Qrels(qrels_dict), q_map
 
 
-def prune_qrels_and_queries(
-    original_qrels: Qrels, original_q_map: dict[str, str], kept_doc_ids: list[str]
-) -> tuple[Qrels, dict[str, str]]:
+def get_pruned_qrels_and_queries(country: str, version: str, kept_doc_ids: list[str] | None = None) -> tuple[Qrels, dict[str, str]]:
+    cache_dir = _dataset_cache_base(country, version, MAX_WORD_COUNT)
+    qrels_path = cache_dir / "pruned_qrels.json"
+    qmap_path = cache_dir / "pruned_q_map.json"
+
+    # 1. Quick load from cache if available
+    if qrels_path.exists() and qmap_path.exists():
+        with Timer(f"Loading cached pruned qrels (Max Words: {MAX_WORD_COUNT})"):
+            with open(qrels_path, "r") as f:
+                pruned_dict = json.load(f)
+            with open(qmap_path, "r") as f:
+                pruned_q_map = json.load(f)
+        return Qrels(pruned_dict), pruned_q_map
+
+    # 2. Compute it if cache is missing
+    if kept_doc_ids is None:
+        raise RuntimeError("Cache miss for pruned qrels, but kept_doc_ids were not provided to build it.")
+
+    original_qrels, original_q_map = load_messirve_qrels(country, version)
+
     with Timer("Pruning qrels against filtered corpus"):
         kept_set = set(kept_doc_ids)
         qrels_dict = original_qrels.to_dict()
@@ -211,6 +235,13 @@ def prune_qrels_and_queries(
         pruned_q_map = {qid: original_q_map[qid] for qid in pruned_dict.keys()}
 
         log.info("Filtered queries: %d / %d", len(pruned_dict), len(qrels_dict))
+
+    # 3. Save to cache for the next run / other models
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    with open(qrels_path, "w") as f:
+        json.dump(pruned_dict, f)
+    with open(qmap_path, "w") as f:
+        json.dump(pruned_q_map, f)
 
     return Qrels(pruned_dict), pruned_q_map
 
@@ -411,28 +442,35 @@ def main():
 
     base = _cache_base(MODEL_NAME, COUNTRY, DATASET_VERSION)
     doc_dir, query_dir = _emb_dir(base, "doc"), _emb_dir(base, "query")
+    dataset_cache_dir = _dataset_cache_base(COUNTRY, DATASET_VERSION, MAX_WORD_COUNT)
 
-    _log_cache_status(base)
-
-    # 1. Load initial qrels and queries
-    qrels, q_map = load_messirve_qrels(COUNTRY, DATASET_VERSION)
+    _log_cache_status(base, dataset_cache_dir)
 
     need_docs = not _is_complete(doc_dir)
     need_queries = not _is_complete(query_dir)
+    need_pruned_qrels = not (
+        (dataset_cache_dir / "pruned_qrels.json").exists() and
+        (dataset_cache_dir / "pruned_q_map.json").exists()
+    )
 
     doc_ids, doc_emb, query_ids, query_emb = None, None, None, None
+    doc_texts = None
 
-    # 2. Get the filtered document IDs
-    if need_docs:
-        doc_ids, doc_texts = load_corpus()
+    # 1. Handle Document IDs & Texts
+    if need_docs or need_pruned_qrels:
+        if need_docs:
+            doc_ids, doc_texts = load_corpus()
+        else:
+            doc_ids = _load_ids(doc_dir / "ids.json")
     else:
         doc_ids = _load_ids(doc_dir / "ids.json")
-        doc_texts = None
 
-    # 3. Prune the queries using the valid document IDs
-    qrels, q_map = prune_qrels_and_queries(qrels, q_map, doc_ids)
+    # 2. Get the pruned Qrels & Queries
+    qrels, q_map = get_pruned_qrels_and_queries(
+        COUNTRY, DATASET_VERSION, doc_ids if need_pruned_qrels else None
+    )
 
-    # 4. Model Encoding Phase
+    # 3. Model Encoding Phase
     if need_docs or need_queries:
         with EmbeddingModel(MODEL_NAME, GPU_DEVICES) as model:
             if need_docs:
@@ -443,13 +481,13 @@ def main():
             if need_queries:
                 query_ids, query_emb = encode_queries(q_map, query_dir, model)
 
-    # 5. Load anything that was cached and skipped
+    # 4. Load anything that was cached and skipped
     if doc_emb is None:
         doc_ids, doc_emb = _load_cached(doc_dir)
     if query_emb is None:
         query_ids, query_emb = _load_cached(query_dir)
 
-    # 6. Retrieve and Evaluate
+    # 5. Retrieve and Evaluate
     run_dict = retrieve(query_ids, query_emb, doc_ids, doc_emb, TOP_K)
     run_evaluation(qrels, run_dict)
 
