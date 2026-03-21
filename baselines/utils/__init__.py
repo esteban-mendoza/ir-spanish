@@ -11,12 +11,14 @@ import os
 # ---------------------------------------------------------------------------
 # NUMA / threading env-vars — MUST be set BEFORE other imports
 # ---------------------------------------------------------------------------
-_NCPU = str(os.cpu_count() or 32)
-os.environ.setdefault("OMP_NUM_THREADS", _NCPU)
-os.environ.setdefault("MKL_NUM_THREADS", _NCPU)
+_num_cpus: int = os.cpu_count() or 32
+_num_cpus_str: str = str(_num_cpus)
+
+os.environ.setdefault("OMP_NUM_THREADS", _num_cpus_str)
+os.environ.setdefault("MKL_NUM_THREADS", _num_cpus_str)
 os.environ.setdefault("OMP_PROC_BIND", "spread")
 os.environ.setdefault("OMP_PLACES", "threads")
-os.environ.setdefault("GOMP_CPU_AFFINITY", f"0-{int(_NCPU) - 1}")
+os.environ.setdefault("GOMP_CPU_AFFINITY", f"0-{_num_cpus - 1}")
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "true")
 
 logging.basicConfig(

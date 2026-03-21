@@ -46,13 +46,19 @@ class BaseEmbeddingModel:
     # ------------------------------------------------------------------
 
     def get_model_kwargs(self) -> dict:
+        """Return extra kwargs to pass as model_kwargs= when loading SentenceTransformer."""
         return {"torch_dtype": torch.float16}
 
     def get_tokenizer_kwargs(self) -> dict:
+        """Return extra kwargs to pass as tokenizer_kwargs= when loading SentenceTransformer."""
         return {}
 
     def setup_prompts(self):
-        """Set self.query_prompt after the model has been loaded."""
+        """Set self.query_prompt after the model has been loaded.
+
+        Called automatically by start(). Override this in subclasses to configure
+        model-specific query instructions.
+        """
         pass
 
     # ------------------------------------------------------------------
@@ -60,15 +66,16 @@ class BaseEmbeddingModel:
     # ------------------------------------------------------------------
 
     def start(self):
+        """Load the model onto CPU and start the multi-GPU process pool."""
         tokenizer_kwargs = self.get_tokenizer_kwargs()
-        extra = {"tokenizer_kwargs": tokenizer_kwargs} if tokenizer_kwargs else {}
+        optional_tokenizer_kwargs = {"tokenizer_kwargs": tokenizer_kwargs} if tokenizer_kwargs else {}
 
         with Timer("Loading SentenceTransformer"):
             self.model = SentenceTransformer(
                 self.model_name,
                 device="cpu",
                 model_kwargs=self.get_model_kwargs(),
-                **extra,
+                **optional_tokenizer_kwargs,
             )
             self.model.max_seq_length = self.max_seq_length
 
@@ -78,6 +85,7 @@ class BaseEmbeddingModel:
             self.pool = self.model.start_multi_process_pool(target_devices=self.devices)
 
     def stop(self):
+        """Shut down the GPU pool and free all model memory."""
         if self.pool is not None:
             self.model.stop_multi_process_pool(self.pool)
             self.pool = None
@@ -90,18 +98,25 @@ class BaseEmbeddingModel:
     # ------------------------------------------------------------------
 
     def encode(self, texts: list[str], batch_size: int, is_query: bool = False) -> np.ndarray:
-        prefix = self.query_prompt if is_query else ""
-        if prefix:
-            texts = [prefix + t for t in texts]
+        """Encode a list of texts into normalized float32 embeddings.
 
-        emb = self.model.encode(
+        Args:
+            texts: Raw strings to encode (documents or queries).
+            batch_size: Number of texts per encoding batch.
+            is_query: If True, prepend self.query_prompt to each text before encoding.
+        """
+        query_prefix = self.query_prompt if is_query else ""
+        if query_prefix:
+            texts = [query_prefix + text for text in texts]
+
+        embeddings = self.model.encode(
             sentences=texts,
             pool=self.pool,
             batch_size=batch_size,
             normalize_embeddings=True,
             prompt_name=None,
         )
-        return emb.astype(np.float32, copy=False)
+        return embeddings.astype(np.float32, copy=False)
 
     # ------------------------------------------------------------------
     # Context manager
