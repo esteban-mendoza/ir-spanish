@@ -99,7 +99,7 @@ class BaseWorkflow:
         # Embeddings exist — we only need the IDs for potential qrels pruning
         return cache.load_ids(self.doc_embedding_dir / "ids.json"), None
 
-    def load_qrels(self, doc_ids: list[str], need_pruned_qrels: bool):
+    def load_qrels(self, doc_ids: list[str] | None, need_pruned_qrels: bool):
         """Load pruned qrels and the query-id-to-text map, building the cache if required.
 
         Returns:
