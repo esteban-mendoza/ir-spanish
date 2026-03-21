@@ -143,7 +143,7 @@ def load_corpus(num_workers: int):
         (n_filtered / n_original) * 100 if n_original else 0,
     )
 
-    doc_ids, doc_texts = list(split["str_docid"]), list(split["full_text"])
+    doc_ids, doc_texts = split["str_docid"], split["full_text"]
     del split, cds
     gc.collect()
     return doc_ids, doc_texts

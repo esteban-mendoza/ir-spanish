@@ -100,8 +100,10 @@ def log_cache_status(base: Path, dataset_dir: Path):
 # ---------------------------------------------------------------------------
 # Embedding I/O
 # ---------------------------------------------------------------------------
-def save_ids(ids: list[str], path: Path):
+def save_ids(ids, path: Path):
     path.parent.mkdir(parents=True, exist_ok=True)
+    if not isinstance(ids, list):
+        ids = list(ids)
     with open(path, "w") as f:
         json.dump(ids, f)
 
