@@ -33,7 +33,9 @@ def encode_documents_chunked(doc_ids: list[str], doc_texts: list[str], emb_dir: 
         lo, hi = ci * chunk_sz, min((ci + 1) * chunk_sz, n)
         log.info("── Chunk %d/%d [%d–%d] ──", ci + 1, total_chunks, lo, hi - 1)
 
-        chunk_emb = model.encode(texts=doc_texts[lo:hi], batch_size=model.doc_batch_size, is_query=False)
+        chunk_texts = list(doc_texts[lo:hi])
+        chunk_emb = model.encode(texts=chunk_texts, batch_size=model.doc_batch_size, is_query=False)
+        del chunk_texts
         save_chunk(chunk_emb, emb_dir / f"chunk_{ci:04d}.npy")
         del chunk_emb
         gc.collect()
