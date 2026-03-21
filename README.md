@@ -86,6 +86,7 @@ We evaluate on [**MessIRve**](https://huggingface.co/datasets/spanish-ir/messirv
 | [`sentence-transformers`](https://www.sbert.net/) | Dense and sparse embedding models |
 | [`pyserini`](https://github.com/castorini/pyserini) | BM25 indexing and retrieval |
 | [`datasets`](https://huggingface.co/docs/datasets) | Loading MessIRve and the Wikipedia corpus from HuggingFace |
+| [`faiss-gpu`](https://github.com/facebookresearch/faiss) | GPU-accelerated exact nearest-neighbour search |
 
 ## Hardware
 
@@ -98,9 +99,45 @@ We evaluate on [**MessIRve**](https://huggingface.co/datasets/spanish-ir/messirv
 
 ## Setup
 
-Requires Python ≥ 3.12 and [`uv`](https://docs.astral.sh/uv/).
+Requires [Miniconda](https://docs.anaconda.com/miniconda/) (or any conda distribution).
+
+**Create and populate the environment:**
 
 ```bash
 git clone <repo-url>
 cd proyecto
-uv sync
+bash setup_env.sh
+```
+
+This creates a conda environment named `proyecto`, installs `faiss-gpu` via conda,
+and installs all remaining dependencies via pip from `requirements.txt`.
+
+**Activate the environment:**
+
+```bash
+conda activate proyecto
+```
+
+**Run a baseline:**
+
+```bash
+python baselines/e5_large.py
+```
+
+**Add a new dependency:**
+
+```bash
+# If available on pip:
+pip install <package>
+# Then pin it:
+echo "<package>>=<version>" >> requirements.txt
+
+# If it requires conda (e.g. another GPU library):
+conda install -c <channel> <package>
+```
+
+**Remove the environment entirely:**
+
+```bash
+conda remove -n proyecto --all -y
+```
