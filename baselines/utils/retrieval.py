@@ -9,15 +9,32 @@ import logging
 import faiss
 import numpy as np
 from ranx import Qrels, Run, evaluate
-from tqdm import tqdm
 
 log = logging.getLogger(__name__)
 
 TOP_K = 100
 
-# Number of query vectors to search in a single FAISS batch.
-# Batching avoids materializing a huge score matrix all at once.
-_FAISS_SEARCH_BATCH_SIZE = 1024
+
+def _build_search_index(doc_embeddings: np.ndarray, num_workers: int) -> faiss.Index:
+    """Build an IndexFlatIP, then move it to all available GPUs."""
+    embedding_dimension = doc_embeddings.shape[1]
+    faiss.omp_set_num_threads(num_workers)
+
+    cpu_index = faiss.IndexFlatIP(embedding_dimension)
+    cpu_index.add(np.ascontiguousarray(doc_embeddings, dtype=np.float32))
+
+    num_gpus = faiss.get_num_gpus()
+    if num_gpus > 0:
+        log.info("Transferring FAISS index to %d GPU(s) ...", num_gpus)
+        try:
+            gpu_index = faiss.index_cpu_to_all_gpus(cpu_index)
+            log.info("FAISS index placed on GPU(s).")
+            return gpu_index
+        except Exception as gpu_error:
+            log.warning(
+                "GPU transfer failed (%s); falling back to CPU search.", gpu_error
+            )
+    return cpu_index
 
 
 def retrieve(
@@ -36,26 +53,14 @@ def retrieve(
         A run dict mapping each query ID to a {doc_id: score} dict of its top-k results.
     """
     num_queries = len(query_ids)
-    embedding_dimension = doc_embeddings.shape[1]
 
-    faiss.omp_set_num_threads(num_workers)
-
-    # Build a flat (exact) inner-product index and add all document vectors
-    index = faiss.IndexFlatIP(embedding_dimension)
-    index.add(np.ascontiguousarray(doc_embeddings, dtype=np.float32))
+    index = _build_search_index(doc_embeddings, num_workers)
 
     queries_as_float32 = np.ascontiguousarray(query_embeddings, dtype=np.float32)
 
-    # Pre-allocate output arrays for scores and document indices
-    top_k_scores = np.empty((num_queries, top_k), dtype=np.float32)
-    top_k_doc_indices = np.empty((num_queries, top_k), dtype=np.int64)
-
-    # Search in batches to keep peak memory usage bounded
-    for batch_start in tqdm(range(0, num_queries, _FAISS_SEARCH_BATCH_SIZE), desc="FAISS", unit="batch"):
-        batch_end = min(batch_start + _FAISS_SEARCH_BATCH_SIZE, num_queries)
-        top_k_scores[batch_start:batch_end], top_k_doc_indices[batch_start:batch_end] = (
-            index.search(queries_as_float32[batch_start:batch_end], top_k)
-        )
+    # Single search call — entire query matrix (0.64 GB) fits in VRAM
+    log.info("Running FAISS search (%d queries x top-%d) ...", num_queries, top_k)
+    top_k_scores, top_k_doc_indices = index.search(queries_as_float32, top_k)
 
     # Convert numpy index positions to document ID strings.
     # FAISS returns -1 for padded slots when fewer than top_k results exist.
