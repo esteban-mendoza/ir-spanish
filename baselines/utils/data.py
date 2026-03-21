@@ -12,7 +12,7 @@ from collections import defaultdict
 import datasets
 from ranx import Qrels
 
-from .cache import Timer
+from .observability import Timer
 
 log = logging.getLogger(__name__)
 

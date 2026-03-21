@@ -18,7 +18,7 @@ import numpy as np
 import torch
 from sentence_transformers import SentenceTransformer
 
-from .cache import Timer
+from .observability import Timer
 
 log = logging.getLogger(__name__)
 
