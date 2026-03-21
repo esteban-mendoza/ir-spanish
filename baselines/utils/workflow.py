@@ -177,12 +177,12 @@ class BaseWorkflow:
         need_doc_embeddings, need_query_embeddings, need_pruned_qrels, need_retrieval_run = (
             self._check_cache()
         )
-        doc_ids, doc_texts = self.load_corpus(need_doc_embeddings, need_pruned_qrels)
-        qrels, query_id_to_text = self.load_qrels(doc_ids, need_pruned_qrels)
 
         run_path = cache.run_cache_path(self.model_cache_base)
 
         if need_retrieval_run:
+            doc_ids, doc_texts = self.load_corpus(need_doc_embeddings, need_pruned_qrels)
+            qrels, query_id_to_text = self.load_qrels(doc_ids, need_pruned_qrels)
             doc_ids, doc_embeddings, query_ids, query_embeddings = self.encode(
                 need_doc_embeddings, need_query_embeddings, doc_ids, doc_texts, query_id_to_text
             )
@@ -193,5 +193,6 @@ class BaseWorkflow:
         else:
             log.info("Loading cached retrieval run from %s", run_path)
             ranx_run = retrieval.load_run(run_path)
+            qrels, _ = self.load_qrels(None, need_pruned_qrels)
 
         self.evaluate(qrels, ranx_run)
