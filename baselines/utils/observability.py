@@ -2,10 +2,13 @@
 Timing and logging utilities
 """
 
-from logging import log
+import logging
+import logging
 import time
 
 import torch
+
+log = logging.getLogger(__name__)
 
 
 class Timer:
@@ -30,7 +33,14 @@ def log_gpu_memory():
         a = torch.cuda.memory_allocated(i) / (1024**3)
         r = torch.cuda.memory_reserved(i) / (1024**3)
         t = torch.cuda.get_device_properties(i).total_memory / (1024**3)
-        log.info("GPU %d (%s): %.1f/%.1f/%.1f GB (alloc/reserved/total)", i, torch.cuda.get_device_name(i), a, r, t)
+        log.info(
+            "GPU %d (%s): %.1f/%.1f/%.1f GB (alloc/reserved/total)",
+            i,
+            torch.cuda.get_device_name(i),
+            a,
+            r,
+            t,
+        )
 
 
 def log_ram_usage():
