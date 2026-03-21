@@ -34,6 +34,8 @@ def _build_search_index(doc_embeddings: np.ndarray, num_workers: int) -> faiss.I
             log.warning(
                 "GPU transfer failed (%s); falling back to CPU search.", gpu_error
             )
+    else:
+        log.info("No GPUs detected; using CPU search.")
     return cpu_index
 
 
