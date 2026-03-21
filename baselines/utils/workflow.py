@@ -66,13 +66,14 @@ class BaseWorkflow:
         torch.manual_seed(self.seed)
         cache.log_cache_status(self.model_cache_base, self.dataset_cache_dir)
 
-    def _check_cache(self) -> tuple[bool, bool, bool]:
+    def _check_cache(self) -> tuple[bool, bool, bool, bool]:
         """Check which pipeline outputs still need to be computed.
 
         Returns:
             need_doc_embeddings:   True if document embeddings are not yet cached.
             need_query_embeddings: True if query embeddings are not yet cached.
             need_pruned_qrels:     True if the pruned qrels JSON files are not yet cached.
+            need_retrieval_run:    True if the retrieval run file is not yet cached.
         """
         need_doc_embeddings = not cache.is_complete(self.doc_embedding_dir)
         need_query_embeddings = not cache.is_complete(self.query_embedding_dir)
@@ -80,7 +81,8 @@ class BaseWorkflow:
             (self.dataset_cache_dir / "pruned_qrels.json").exists()
             and (self.dataset_cache_dir / "pruned_q_map.json").exists()
         )
-        return need_doc_embeddings, need_query_embeddings, need_pruned_qrels
+        need_retrieval_run = not cache.run_cache_path(self.model_cache_base).exists()
+        return need_doc_embeddings, need_query_embeddings, need_pruned_qrels, need_retrieval_run
 
     def load_corpus(self, need_doc_embeddings: bool, need_pruned_qrels: bool):
         """Load the filtered corpus texts, or just the cached doc IDs if embeddings already exist.
@@ -172,11 +174,24 @@ class BaseWorkflow:
         """Execute the full evaluation pipeline end-to-end."""
         self.setup()
 
-        need_doc_embeddings, need_query_embeddings, need_pruned_qrels = self._check_cache()
+        need_doc_embeddings, need_query_embeddings, need_pruned_qrels, need_retrieval_run = (
+            self._check_cache()
+        )
         doc_ids, doc_texts = self.load_corpus(need_doc_embeddings, need_pruned_qrels)
         qrels, query_id_to_text = self.load_qrels(doc_ids, need_pruned_qrels)
-        doc_ids, doc_embeddings, query_ids, query_embeddings = self.encode(
-            need_doc_embeddings, need_query_embeddings, doc_ids, doc_texts, query_id_to_text
-        )
-        retrieval_run = self.retrieve(query_ids, query_embeddings, doc_ids, doc_embeddings)
-        self.evaluate(qrels, retrieval_run)
+
+        run_path = cache.run_cache_path(self.model_cache_base)
+
+        if need_retrieval_run:
+            doc_ids, doc_embeddings, query_ids, query_embeddings = self.encode(
+                need_doc_embeddings, need_query_embeddings, doc_ids, doc_texts, query_id_to_text
+            )
+            retrieval_run = self.retrieve(query_ids, query_embeddings, doc_ids, doc_embeddings)
+            run_path.parent.mkdir(parents=True, exist_ok=True)
+            ranx_run = retrieval.save_run(retrieval_run, self.model_name, run_path)
+            log.info("Saved retrieval run to %s", run_path)
+        else:
+            log.info("Loading cached retrieval run from %s", run_path)
+            ranx_run = retrieval.load_run(run_path)
+
+        self.evaluate(qrels, ranx_run)

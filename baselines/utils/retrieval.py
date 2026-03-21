@@ -85,9 +85,21 @@ def retrieve(
     return retrieval_run
 
 
+def save_run(retrieval_run: dict[str, dict[str, float]], model_name: str, path) -> Run:
+    """Persist a retrieval run to disk and return the Run object."""
+    run = Run(retrieval_run, name=model_name)
+    run.save(str(path))
+    return run
+
+
+def load_run(path) -> Run:
+    """Load a previously saved ranx Run file from disk."""
+    return Run.from_file(str(path))
+
+
 def run_evaluation(
     qrels: Qrels,
-    retrieval_run: dict[str, dict[str, float]],
+    run: Run,
     model_name: str,
 ) -> dict:
     """Evaluate the retrieval run against ground-truth qrels and log the results.
@@ -97,7 +109,6 @@ def run_evaluation(
     Returns:
         A dict mapping metric names to their computed float values.
     """
-    run = Run(retrieval_run)
     results = evaluate(qrels, run, metrics=["ndcg@10", "recall@100"])
 
     model_short_name = model_name.split("/")[-1]

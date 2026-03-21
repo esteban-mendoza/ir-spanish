@@ -71,6 +71,11 @@ def emb_dir(base_cache_dir: Path, embedding_type: str) -> Path:
     return base_cache_dir / f"{embedding_type}_embeddings"
 
 
+def run_cache_path(model_cache_base: Path) -> Path:
+    """Return the path for the saved ranx Run file inside a model's cache directory."""
+    return model_cache_base / "retrieval_run.lz4"
+
+
 # ---------------------------------------------------------------------------
 # Cache completeness & status
 # ---------------------------------------------------------------------------
