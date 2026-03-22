@@ -25,7 +25,7 @@ from utils.workflow import BaseWorkflow
 # ---------------------------------------------------------------------------
 MODEL_NAME = "BAAI/bge-m3"
 QUERY_BATCH_SIZE = 256
-DOC_BATCH_SIZE = 512
+DOC_BATCH_SIZE = 1024
 MAX_SEQ_LENGTH = 512
 
 GPU_DEVICES = ["cuda:0", "cuda:1"]
