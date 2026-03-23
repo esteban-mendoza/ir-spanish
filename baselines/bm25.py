@@ -9,22 +9,18 @@ No neural model or GPU required.
 
 from __future__ import annotations
 
-import logging
 import os
 from pathlib import Path
 
-from pyserini.index.lucene import LuceneIndexer
-from pyserini.search.lucene import LuceneSearcher
-
+# utils.__init__ configures logging and NUMA env-vars — must import before pyserini
 from utils import cache, data, retrieval
 from utils.observability import Timer
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s  %(levelname)-8s  %(name)s — %(message)s",
-    datefmt="%H:%M:%S",
-)
+import logging
 log = logging.getLogger(__name__)
+
+from pyserini.index.lucene import LuceneIndexer
+from pyserini.search.lucene import LuceneSearcher
 
 # ---------------------------------------------------------------------------
 # Configuration
