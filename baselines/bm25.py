@@ -90,7 +90,7 @@ def search(query_ids: list[str], query_texts: list[str]) -> dict[str, dict[str, 
 # ---------------------------------------------------------------------------
 if __name__ == "__main__":
     need_retrieval_run = not RUN_PATH.exists()
-    need_index = not INDEX_DIR.exists()
+    need_index = not any(INDEX_DIR.glob("segments_*"))
 
     if need_retrieval_run:
         qrels_cached = (DATASET_CACHE_DIR / "pruned_qrels.json").exists()
