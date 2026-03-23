@@ -54,7 +54,7 @@ def build_index(doc_ids: list[str], doc_texts: list[str]) -> None:
     INDEX_DIR.mkdir(parents=True, exist_ok=True)
 
     with Timer(f"Building Lucene index ({len(doc_ids)} docs)"):
-        indexer = LuceneIndexer(str(INDEX_DIR), args=["-language", "es"])
+        indexer = LuceneIndexer(str(INDEX_DIR), args=["-index", str(INDEX_DIR), "-language", "es"])
         for doc_id, doc_text in zip(doc_ids, doc_texts):
             indexer.add_doc_dict({"id": doc_id, "contents": doc_text})
         indexer.close()
