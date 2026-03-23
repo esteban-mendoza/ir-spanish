@@ -109,13 +109,13 @@ cd proyecto
 bash setup_env.sh
 ```
 
-This creates a conda environment named `proyecto`, installs `faiss-gpu` via conda,
+This creates a conda environment named `ir-messirve`, installs `faiss-gpu` via conda,
 and installs all remaining dependencies via pip from `requirements.txt`.
 
 **Activate the environment:**
 
 ```bash
-conda activate proyecto
+conda activate ir-messirve
 ```
 
 **Run a baseline:**
@@ -139,5 +139,5 @@ conda install -c <channel> <package>
 **Remove the environment entirely:**
 
 ```bash
-conda remove -n proyecto --all -y
+conda remove -n ir-messirve --all -y
 ```

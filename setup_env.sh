@@ -5,7 +5,7 @@
 
 set -euo pipefail
 
-ENV_NAME="proyecto"
+ENV_NAME="ir-messirve"
 PYTHON_VERSION="3.12"
 FAISS_VERSION="1.14.1"
 
