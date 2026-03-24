@@ -21,7 +21,6 @@ log = logging.getLogger(__name__)
 
 from pyserini.index.lucene import LuceneIndexer
 from pyserini.search.lucene import LuceneSearcher
-from transformers import AutoTokenizer
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -29,6 +28,7 @@ from transformers import AutoTokenizer
 MODEL_SLUG = "bm25_pyserini"
 NUM_WORKERS = os.cpu_count() or 32
 TOP_K = 100
+USE_TOKENIZER = False
 TOKENIZER_NAME = "intfloat/multilingual-e5-large-instruct"
 MAX_QUERY_TOKENS = 64
 MAX_DOC_TOKENS = 256
@@ -36,8 +36,9 @@ MAX_DOC_TOKENS = 256
 CACHE_DIR = Path.home() / ".cache" / "messirve_embeddings"
 
 # BM25 has no seq length, so path only reflects dataset config
+_trunc_suffix = f"_q{MAX_QUERY_TOKENS}d{MAX_DOC_TOKENS}" if USE_TOKENIZER else ""
 MODEL_CACHE_BASE = (
-    CACHE_DIR / MODEL_SLUG / f"{data.COUNTRY}_v{data.DATASET_VERSION}_{cache._filter_suffix(data.MAX_WORD_COUNT)}"
+    CACHE_DIR / MODEL_SLUG / f"{data.COUNTRY}_v{data.DATASET_VERSION}_{cache._filter_suffix(data.MAX_WORD_COUNT)}{_trunc_suffix}"
 )
 INDEX_DIR = MODEL_CACHE_BASE / "lucene_index"
 RUN_PATH = cache.run_cache_path(MODEL_CACHE_BASE)
@@ -47,15 +48,16 @@ DATASET_CACHE_DIR = cache.dataset_cache_base(
 
 
 # ---------------------------------------------------------------------------
-# Tokenizer-based truncation
+# Tokenizer-based truncation (optional)
 # ---------------------------------------------------------------------------
-_tokenizer = AutoTokenizer.from_pretrained(TOKENIZER_NAME)
+if USE_TOKENIZER:
+    from transformers import AutoTokenizer
+    _tokenizer = AutoTokenizer.from_pretrained(TOKENIZER_NAME)
 
-
-def truncate_tokens(text: str, max_tokens: int) -> str:
-    """Truncate *text* to at most *max_tokens* subword tokens using the HuggingFace tokenizer."""
-    token_ids = _tokenizer.encode(text, add_special_tokens=False, truncation=True, max_length=max_tokens)
-    return _tokenizer.decode(token_ids, skip_special_tokens=True)
+    def truncate_tokens(text: str, max_tokens: int) -> str:
+        """Truncate *text* to at most *max_tokens* subword tokens using the HuggingFace tokenizer."""
+        token_ids = _tokenizer.encode(text, add_special_tokens=False, truncation=True, max_length=max_tokens)
+        return _tokenizer.decode(token_ids, skip_special_tokens=True)
 
 
 # ---------------------------------------------------------------------------
@@ -68,7 +70,8 @@ def build_index(doc_ids: list[str], doc_texts: list[str]) -> None:
     with Timer(f"Building Lucene index ({len(doc_ids)} docs)"):
         indexer = LuceneIndexer(str(INDEX_DIR), args=["-index", str(INDEX_DIR), "-language", "es"], threads=NUM_WORKERS)
         for doc_id, doc_text in zip(doc_ids, doc_texts):
-            indexer.add_doc_dict({"id": doc_id, "contents": truncate_tokens(doc_text, MAX_DOC_TOKENS)})
+            contents = truncate_tokens(doc_text, MAX_DOC_TOKENS) if USE_TOKENIZER else doc_text
+            indexer.add_doc_dict({"id": doc_id, "contents": contents})
         indexer.close()
 
     log.info("Lucene index saved to %s", INDEX_DIR)
@@ -82,7 +85,7 @@ def search(query_ids: list[str], query_texts: list[str]) -> dict[str, dict[str, 
     searcher = LuceneSearcher(str(INDEX_DIR))
     searcher.set_language("es")
 
-    truncated_queries = [truncate_tokens(q, MAX_QUERY_TOKENS) for q in query_texts]
+    truncated_queries = [truncate_tokens(q, MAX_QUERY_TOKENS) for q in query_texts] if USE_TOKENIZER else query_texts
 
     with Timer(f"BM25 search ({len(query_ids)} queries x top-{TOP_K})"):
         hits = searcher.batch_search(
