@@ -21,6 +21,7 @@ log = logging.getLogger(__name__)
 
 from pyserini.index.lucene import LuceneIndexer
 from pyserini.search.lucene import LuceneSearcher
+from transformers import AutoTokenizer
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -28,8 +29,9 @@ from pyserini.search.lucene import LuceneSearcher
 MODEL_SLUG = "bm25_pyserini"
 NUM_WORKERS = os.cpu_count() or 32
 TOP_K = 100
-MAX_QUERY_WORDS = 64
-MAX_DOC_WORDS = 256
+TOKENIZER_NAME = "intfloat/multilingual-e5-large-instruct"
+MAX_QUERY_TOKENS = 64
+MAX_DOC_TOKENS = 256
 
 CACHE_DIR = Path.home() / ".cache" / "messirve_embeddings"
 
@@ -45,27 +47,28 @@ DATASET_CACHE_DIR = cache.dataset_cache_base(
 
 
 # ---------------------------------------------------------------------------
-# Helpers
+# Tokenizer-based truncation
 # ---------------------------------------------------------------------------
-def truncate_words(text: str, max_words: int) -> str:
-    """Truncate text to at most *max_words* whitespace-separated tokens."""
-    words = text.split()
-    if len(words) <= max_words:
-        return text
-    return " ".join(words[:max_words])
+_tokenizer = AutoTokenizer.from_pretrained(TOKENIZER_NAME)
+
+
+def truncate_tokens(text: str, max_tokens: int) -> str:
+    """Truncate *text* to at most *max_tokens* subword tokens using the HuggingFace tokenizer."""
+    token_ids = _tokenizer.encode(text, add_special_tokens=False, truncation=True, max_length=max_tokens)
+    return _tokenizer.decode(token_ids, skip_special_tokens=True)
 
 
 # ---------------------------------------------------------------------------
 # Indexing
 # ---------------------------------------------------------------------------
 def build_index(doc_ids: list[str], doc_texts: list[str]) -> None:
-    """Build a Lucene index from the corpus, truncating documents to MAX_DOC_WORDS."""
+    """Build a Lucene index from the corpus, truncating documents to MAX_DOC_TOKENS."""
     INDEX_DIR.mkdir(parents=True, exist_ok=True)
 
     with Timer(f"Building Lucene index ({len(doc_ids)} docs)"):
         indexer = LuceneIndexer(str(INDEX_DIR), args=["-index", str(INDEX_DIR), "-language", "es"], threads=NUM_WORKERS)
         for doc_id, doc_text in zip(doc_ids, doc_texts):
-            indexer.add_doc_dict({"id": doc_id, "contents": truncate_words(doc_text, MAX_DOC_WORDS)})
+            indexer.add_doc_dict({"id": doc_id, "contents": truncate_tokens(doc_text, MAX_DOC_TOKENS)})
         indexer.close()
 
     log.info("Lucene index saved to %s", INDEX_DIR)
@@ -79,7 +82,7 @@ def search(query_ids: list[str], query_texts: list[str]) -> dict[str, dict[str, 
     searcher = LuceneSearcher(str(INDEX_DIR))
     searcher.set_language("es")
 
-    truncated_queries = [truncate_words(q, MAX_QUERY_WORDS) for q in query_texts]
+    truncated_queries = [truncate_tokens(q, MAX_QUERY_TOKENS) for q in query_texts]
 
     with Timer(f"BM25 search ({len(query_ids)} queries x top-{TOP_K})"):
         hits = searcher.batch_search(
