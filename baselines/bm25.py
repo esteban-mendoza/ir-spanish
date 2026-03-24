@@ -28,12 +28,14 @@ from pyserini.search.lucene import LuceneSearcher
 MODEL_SLUG = "bm25_pyserini"
 NUM_WORKERS = os.cpu_count() or 32
 TOP_K = 100
+MAX_QUERY_WORDS = 64
+MAX_DOC_WORDS = 256
 
 CACHE_DIR = Path.home() / ".cache" / "messirve_embeddings"
 
 # BM25 has no seq length, so path only reflects dataset config
 MODEL_CACHE_BASE = (
-    CACHE_DIR / MODEL_SLUG / f"{data.COUNTRY}_v{data.DATASET_VERSION}_filt{data.MAX_WORD_COUNT}w"
+    CACHE_DIR / MODEL_SLUG / f"{data.COUNTRY}_v{data.DATASET_VERSION}_{cache._filter_suffix(data.MAX_WORD_COUNT)}"
 )
 INDEX_DIR = MODEL_CACHE_BASE / "lucene_index"
 RUN_PATH = cache.run_cache_path(MODEL_CACHE_BASE)
@@ -43,16 +45,27 @@ DATASET_CACHE_DIR = cache.dataset_cache_base(
 
 
 # ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+def truncate_words(text: str, max_words: int) -> str:
+    """Truncate text to at most *max_words* whitespace-separated tokens."""
+    words = text.split()
+    if len(words) <= max_words:
+        return text
+    return " ".join(words[:max_words])
+
+
+# ---------------------------------------------------------------------------
 # Indexing
 # ---------------------------------------------------------------------------
 def build_index(doc_ids: list[str], doc_texts: list[str]) -> None:
-    """Build a Lucene index from the filtered corpus."""
+    """Build a Lucene index from the corpus, truncating documents to MAX_DOC_WORDS."""
     INDEX_DIR.mkdir(parents=True, exist_ok=True)
 
     with Timer(f"Building Lucene index ({len(doc_ids)} docs)"):
         indexer = LuceneIndexer(str(INDEX_DIR), args=["-index", str(INDEX_DIR), "-language", "es"], threads=NUM_WORKERS)
         for doc_id, doc_text in zip(doc_ids, doc_texts):
-            indexer.add_doc_dict({"id": doc_id, "contents": doc_text})
+            indexer.add_doc_dict({"id": doc_id, "contents": truncate_words(doc_text, MAX_DOC_WORDS)})
         indexer.close()
 
     log.info("Lucene index saved to %s", INDEX_DIR)
@@ -66,9 +79,11 @@ def search(query_ids: list[str], query_texts: list[str]) -> dict[str, dict[str, 
     searcher = LuceneSearcher(str(INDEX_DIR))
     searcher.set_language("es")
 
+    truncated_queries = [truncate_words(q, MAX_QUERY_WORDS) for q in query_texts]
+
     with Timer(f"BM25 search ({len(query_ids)} queries x top-{TOP_K})"):
         hits = searcher.batch_search(
-            queries=query_texts,
+            queries=truncated_queries,
             qids=query_ids,
             k=TOP_K,
             threads=NUM_WORKERS,

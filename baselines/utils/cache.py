@@ -37,13 +37,18 @@ def model_slug(model_name: str) -> str:
     return model_name.replace("/", "__")
 
 
-def dataset_cache_base(cache_dir: Path, country: str, version: str, max_words: int) -> Path:
+def _filter_suffix(max_words: int | None) -> str:
+    """Return the cache directory suffix for a word-count filter setting."""
+    return "nofilter" if max_words is None else f"filt{max_words}w"
+
+
+def dataset_cache_base(cache_dir: Path, country: str, version: str, max_words: int | None) -> Path:
     """Return the model-agnostic cache directory for filtered qrels and query maps.
 
     This directory is shared across all models that use the same dataset configuration,
     so the expensive qrels-pruning step only runs once.
     """
-    return cache_dir / "shared_datasets" / f"{country}_v{version}_filt{max_words}w"
+    return cache_dir / "shared_datasets" / f"{country}_v{version}_{_filter_suffix(max_words)}"
 
 
 def cache_base(
@@ -51,18 +56,19 @@ def cache_base(
     model_name: str,
     country: str,
     version: str,
-    max_seq_length: int,
-    max_word_count: int,
+    max_query_length: int,
+    max_doc_length: int,
+    max_word_count: int | None,
 ) -> Path:
     """Return the model-specific cache root directory.
 
-    Each combination of (model, dataset, sequence length, word-count filter) gets
+    Each combination of (model, dataset, sequence lengths, word-count filter) gets
     its own directory so cached embeddings are never silently reused across configs.
     """
     return (
         cache_dir
         / model_slug(model_name)
-        / f"{country}_v{version}_seq{max_seq_length}_filt{max_word_count}w"
+        / f"{country}_v{version}_q{max_query_length}_d{max_doc_length}_{_filter_suffix(max_word_count)}"
     )
 
 

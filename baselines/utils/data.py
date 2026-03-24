@@ -22,7 +22,7 @@ log = logging.getLogger(__name__)
 COUNTRY = "full"
 DATASET_VERSION = "1.2"
 CORPUS_NAME = "spanish-ir/eswiki_20240401_corpus"
-MAX_WORD_COUNT = 400
+MAX_WORD_COUNT = None
 
 
 # ---------------------------------------------------------------------------
@@ -170,10 +170,10 @@ def _batch_format_and_count(batch: dict) -> dict:
 
 
 def load_corpus(num_workers: int):
-    """Load the eswiki corpus, format documents, and filter out overly long ones.
+    """Load the eswiki corpus and format documents.
 
-    Documents with more than MAX_WORD_COUNT words are excluded to avoid tokenizer
-    truncation and out-of-memory errors during GPU encoding.
+    When MAX_WORD_COUNT is set, documents exceeding that word count are excluded.
+    When MAX_WORD_COUNT is None, all documents are kept.
 
     Returns:
         doc_ids:   List of document IDs (strings) for the kept documents.
@@ -200,22 +200,25 @@ def load_corpus(num_workers: int):
             desc="Formatting",
         )
 
-    with Timer(f"Filtering docs <= {MAX_WORD_COUNT} words"):
-        corpus_split = corpus_split.filter(
-            lambda batch: [word_count <= MAX_WORD_COUNT for word_count in batch["word_count"]],
-            batched=True,
-            batch_size=10_000,
-            num_proc=num_workers,
-            desc="Filtering",
-        )
+    if MAX_WORD_COUNT is not None:
+        with Timer(f"Filtering docs <= {MAX_WORD_COUNT} words"):
+            corpus_split = corpus_split.filter(
+                lambda batch: [word_count <= MAX_WORD_COUNT for word_count in batch["word_count"]],
+                batched=True,
+                batch_size=10_000,
+                num_proc=num_workers,
+                desc="Filtering",
+            )
 
-    num_docs_after_filter = len(corpus_split)
-    log.info(
-        "Filtered corpus: %d / %d documents kept (%.1f%%)",
-        num_docs_after_filter,
-        num_docs_before_filter,
-        (num_docs_after_filter / num_docs_before_filter) * 100 if num_docs_before_filter else 0,
-    )
+        num_docs_after_filter = len(corpus_split)
+        log.info(
+            "Filtered corpus: %d / %d documents kept (%.1f%%)",
+            num_docs_after_filter,
+            num_docs_before_filter,
+            (num_docs_after_filter / num_docs_before_filter) * 100 if num_docs_before_filter else 0,
+        )
+    else:
+        log.info("Word-count filter disabled — using all %d documents", num_docs_before_filter)
 
     doc_ids = corpus_split["str_docid"]
     doc_texts = corpus_split["full_text"]

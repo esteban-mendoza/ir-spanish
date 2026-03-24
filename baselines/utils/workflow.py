@@ -23,7 +23,8 @@ class BaseWorkflow:
     def __init__(
         self,
         model_name: str,
-        max_seq_length: int,
+        max_query_length: int,
+        max_doc_length: int,
         cache_dir: Path,
         gpu_devices: list[str],
         seed: int,
@@ -31,7 +32,8 @@ class BaseWorkflow:
         doc_chunk_size: int,
     ):
         self.model_name = model_name
-        self.max_seq_length = max_seq_length
+        self.max_query_length = max_query_length
+        self.max_doc_length = max_doc_length
         self.cache_dir = cache_dir
         self.gpu_devices = gpu_devices
         self.seed = seed
@@ -40,7 +42,8 @@ class BaseWorkflow:
 
         # Pre-compute all cache directory paths so each step can check / write them
         self.model_cache_base = cache.cache_base(
-            cache_dir, model_name, data.COUNTRY, data.DATASET_VERSION, max_seq_length, data.MAX_WORD_COUNT
+            cache_dir, model_name, data.COUNTRY, data.DATASET_VERSION,
+            max_query_length, max_doc_length, data.MAX_WORD_COUNT
         )
         self.doc_embedding_dir = cache.emb_dir(self.model_cache_base, "doc")
         self.query_embedding_dir = cache.emb_dir(self.model_cache_base, "query")

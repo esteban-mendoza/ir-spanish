@@ -30,13 +30,15 @@ class BaseEmbeddingModel:
         devices: list[str],
         doc_batch_size: int,
         query_batch_size: int,
-        max_seq_length: int = 512,
+        max_doc_length: int = 256,
+        max_query_length: int = 64,
     ):
         self.model_name = model_name
         self.devices = devices
         self.doc_batch_size = doc_batch_size
         self.query_batch_size = query_batch_size
-        self.max_seq_length = max_seq_length
+        self.max_doc_length = max_doc_length
+        self.max_query_length = max_query_length
         self.model = None
         self.pool = None
         self.query_prompt = ""
@@ -77,12 +79,26 @@ class BaseEmbeddingModel:
                 model_kwargs=self.get_model_kwargs(),
                 **optional_tokenizer_kwargs,
             )
-            self.model.max_seq_length = self.max_seq_length
+            self.model.max_seq_length = self.max_doc_length
 
         self.setup_prompts()
 
         with Timer(f"Starting pool on {self.devices}"):
             self.pool = self.model.start_multi_process_pool(target_devices=self.devices)
+
+    def _ensure_seq_length(self, length: int):
+        """Restart the multi-GPU pool if the current max_seq_length differs from *length*.
+
+        Pool workers inherit max_seq_length at fork time, so the pool must be
+        recycled whenever the truncation limit changes (e.g. switching from
+        document encoding to query encoding).
+        """
+        if self.model.max_seq_length == length:
+            return
+        log.info("Switching max_seq_length %d → %d — restarting pool", self.model.max_seq_length, length)
+        self.model.stop_multi_process_pool(self.pool)
+        self.model.max_seq_length = length
+        self.pool = self.model.start_multi_process_pool(target_devices=self.devices)
 
     def stop(self):
         """Shut down the GPU pool and free all model memory."""
@@ -105,6 +121,9 @@ class BaseEmbeddingModel:
             batch_size: Number of texts per encoding batch.
             is_query: If True, prepend self.query_prompt to each text before encoding.
         """
+        target_length = self.max_query_length if is_query else self.max_doc_length
+        self._ensure_seq_length(target_length)
+
         query_prefix = self.query_prompt if is_query else ""
         if query_prefix:
             texts = [query_prefix + text for text in texts]
