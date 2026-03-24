@@ -28,17 +28,11 @@ from pyserini.search.lucene import LuceneSearcher
 MODEL_SLUG = "bm25_pyserini"
 NUM_WORKERS = os.cpu_count() or 32
 TOP_K = 100
-USE_TOKENIZER = False
-TOKENIZER_NAME = "intfloat/multilingual-e5-large-instruct"
-MAX_QUERY_TOKENS = 64
-MAX_DOC_TOKENS = 256
 
 CACHE_DIR = Path.home() / ".cache" / "messirve_embeddings"
 
-# BM25 has no seq length, so path only reflects dataset config
-_trunc_suffix = f"_q{MAX_QUERY_TOKENS}d{MAX_DOC_TOKENS}" if USE_TOKENIZER else ""
 MODEL_CACHE_BASE = (
-    CACHE_DIR / MODEL_SLUG / f"{data.COUNTRY}_v{data.DATASET_VERSION}_{cache._filter_suffix(data.MAX_WORD_COUNT)}{_trunc_suffix}"
+    CACHE_DIR / MODEL_SLUG / f"{data.COUNTRY}_v{data.DATASET_VERSION}_{cache._filter_suffix(data.MAX_WORD_COUNT)}"
 )
 INDEX_DIR = MODEL_CACHE_BASE / "lucene_index"
 RUN_PATH = cache.run_cache_path(MODEL_CACHE_BASE)
@@ -48,39 +42,17 @@ DATASET_CACHE_DIR = cache.dataset_cache_base(
 
 
 # ---------------------------------------------------------------------------
-# Tokenizer-based truncation (optional)
-# ---------------------------------------------------------------------------
-if USE_TOKENIZER:
-    from transformers import AutoTokenizer
-    _tokenizer = AutoTokenizer.from_pretrained(TOKENIZER_NAME)
-
-    def batch_truncate(texts: list[str], max_tokens: int, chunk_size: int = 10_000) -> list[str]:
-        """Truncate a list of texts to *max_tokens* subword tokens using batch encoding.
-
-        Processes in chunks of *chunk_size* to avoid OOM on large corpora.
-        The Rust-backed tokenizer parallelizes internally.
-        """
-        truncated: list[str] = []
-        for start in range(0, len(texts), chunk_size):
-            chunk = texts[start : start + chunk_size]
-            encoded = _tokenizer(chunk, truncation=True, max_length=max_tokens, add_special_tokens=False)
-            truncated.extend(_tokenizer.batch_decode(encoded["input_ids"], skip_special_tokens=True))
-        return truncated
-
-
-# ---------------------------------------------------------------------------
 # Indexing
 # ---------------------------------------------------------------------------
 def build_index(doc_ids: list[str], doc_texts: list[str]) -> None:
-    """Build a Lucene index from the corpus, truncating documents to MAX_DOC_TOKENS."""
+    """Build a Lucene index from the corpus."""
     INDEX_DIR.mkdir(parents=True, exist_ok=True)
 
-    if USE_TOKENIZER:
-        with Timer(f"Batch-truncating {len(doc_texts)} docs to {MAX_DOC_TOKENS} tokens"):
-            doc_texts = batch_truncate(doc_texts, MAX_DOC_TOKENS)
-
     with Timer(f"Building Lucene index ({len(doc_ids)} docs)"):
-        indexer = LuceneIndexer(str(INDEX_DIR), args=["-index", str(INDEX_DIR), "-language", "es"], threads=NUM_WORKERS)
+        indexer = LuceneIndexer(str(INDEX_DIR), args=[
+            "-index", str(INDEX_DIR),
+            "-language", "es",
+        ], threads=NUM_WORKERS)
         for doc_id, doc_text in zip(doc_ids, doc_texts):
             indexer.add_doc_dict({"id": doc_id, "contents": doc_text})
         indexer.close()
@@ -96,11 +68,9 @@ def search(query_ids: list[str], query_texts: list[str]) -> dict[str, dict[str, 
     searcher = LuceneSearcher(str(INDEX_DIR))
     searcher.set_language("es")
 
-    truncated_queries = batch_truncate(query_texts, MAX_QUERY_TOKENS) if USE_TOKENIZER else query_texts
-
     with Timer(f"BM25 search ({len(query_ids)} queries x top-{TOP_K})"):
         hits = searcher.batch_search(
-            queries=truncated_queries,
+            queries=query_texts,
             qids=query_ids,
             k=TOP_K,
             threads=NUM_WORKERS,
