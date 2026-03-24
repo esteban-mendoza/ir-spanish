@@ -54,10 +54,18 @@ if USE_TOKENIZER:
     from transformers import AutoTokenizer
     _tokenizer = AutoTokenizer.from_pretrained(TOKENIZER_NAME)
 
-    def truncate_tokens(text: str, max_tokens: int) -> str:
-        """Truncate *text* to at most *max_tokens* subword tokens using the HuggingFace tokenizer."""
-        token_ids = _tokenizer.encode(text, add_special_tokens=False, truncation=True, max_length=max_tokens)
-        return _tokenizer.decode(token_ids, skip_special_tokens=True)
+    def batch_truncate(texts: list[str], max_tokens: int, chunk_size: int = 10_000) -> list[str]:
+        """Truncate a list of texts to *max_tokens* subword tokens using batch encoding.
+
+        Processes in chunks of *chunk_size* to avoid OOM on large corpora.
+        The Rust-backed tokenizer parallelizes internally.
+        """
+        truncated: list[str] = []
+        for start in range(0, len(texts), chunk_size):
+            chunk = texts[start : start + chunk_size]
+            encoded = _tokenizer(chunk, truncation=True, max_length=max_tokens, add_special_tokens=False)
+            truncated.extend(_tokenizer.batch_decode(encoded["input_ids"], skip_special_tokens=True))
+        return truncated
 
 
 # ---------------------------------------------------------------------------
@@ -67,11 +75,14 @@ def build_index(doc_ids: list[str], doc_texts: list[str]) -> None:
     """Build a Lucene index from the corpus, truncating documents to MAX_DOC_TOKENS."""
     INDEX_DIR.mkdir(parents=True, exist_ok=True)
 
+    if USE_TOKENIZER:
+        with Timer(f"Batch-truncating {len(doc_texts)} docs to {MAX_DOC_TOKENS} tokens"):
+            doc_texts = batch_truncate(doc_texts, MAX_DOC_TOKENS)
+
     with Timer(f"Building Lucene index ({len(doc_ids)} docs)"):
         indexer = LuceneIndexer(str(INDEX_DIR), args=["-index", str(INDEX_DIR), "-language", "es"], threads=NUM_WORKERS)
         for doc_id, doc_text in zip(doc_ids, doc_texts):
-            contents = truncate_tokens(doc_text, MAX_DOC_TOKENS) if USE_TOKENIZER else doc_text
-            indexer.add_doc_dict({"id": doc_id, "contents": contents})
+            indexer.add_doc_dict({"id": doc_id, "contents": doc_text})
         indexer.close()
 
     log.info("Lucene index saved to %s", INDEX_DIR)
@@ -85,7 +96,7 @@ def search(query_ids: list[str], query_texts: list[str]) -> dict[str, dict[str, 
     searcher = LuceneSearcher(str(INDEX_DIR))
     searcher.set_language("es")
 
-    truncated_queries = [truncate_tokens(q, MAX_QUERY_TOKENS) for q in query_texts] if USE_TOKENIZER else query_texts
+    truncated_queries = batch_truncate(query_texts, MAX_QUERY_TOKENS) if USE_TOKENIZER else query_texts
 
     with Timer(f"BM25 search ({len(query_ids)} queries x top-{TOP_K})"):
         hits = searcher.batch_search(
