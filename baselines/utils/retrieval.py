@@ -109,7 +109,7 @@ def run_evaluation(
     Returns:
         A dict mapping metric names to their computed float values.
     """
-    results = evaluate(qrels, run, metrics=["ndcg@10", "recall@100"])
+    results: dict[str, float] = evaluate(qrels, run, metrics=["ndcg@10", "recall@100"])
 
     model_short_name = model_name.split("/")[-1]
     log.info("")
