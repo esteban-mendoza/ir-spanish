@@ -25,7 +25,7 @@ from utils.workflow import BaseWorkflow
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
-MODEL_NAME = "Qwen/Qwen3-Embedding-8B"
+MODEL_NAME = "Qwen/Qwen3-Embedding-4B"
 QUERY_BATCH_SIZE = 32
 DOC_BATCH_SIZE = 8
 # 64 effective tokens + ~20 tokens consumed by the instruct prefix
