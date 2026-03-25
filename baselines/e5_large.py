@@ -26,7 +26,8 @@ from utils.workflow import BaseWorkflow
 MODEL_NAME = "intfloat/multilingual-e5-large-instruct"
 QUERY_BATCH_SIZE = 256
 DOC_BATCH_SIZE = 1024
-MAX_QUERY_LENGTH = 64
+# 64 effective tokens + ~20 tokens consumed by the e5-instruct prefix
+MAX_QUERY_LENGTH = 84
 MAX_DOC_LENGTH = 256
 
 GPU_DEVICES = ["cuda:0", "cuda:1"]
@@ -44,9 +45,8 @@ class EmbeddingModel(BaseEmbeddingModel):
         super().__init__(model_name, devices, DOC_BATCH_SIZE, QUERY_BATCH_SIZE, MAX_DOC_LENGTH, MAX_QUERY_LENGTH)
 
     def setup_prompts(self):
-        # Strict e5 instruction requirement
-        task = "Given a web search query, retrieve relevant passages that answer the query"
-        self.query_prompt = f"Instruct: {task}\nQuery: "
+        self.task_description = "Given a web search query, retrieve relevant passages that answer the query"
+        super().setup_prompts()
 
 
 # ---------------------------------------------------------------------------

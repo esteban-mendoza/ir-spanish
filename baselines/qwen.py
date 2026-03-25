@@ -28,7 +28,8 @@ from utils.workflow import BaseWorkflow
 MODEL_NAME = "Qwen/Qwen3-Embedding-8B"
 QUERY_BATCH_SIZE = 32
 DOC_BATCH_SIZE = 8
-MAX_QUERY_LENGTH = 64
+# 64 effective tokens + ~20 tokens consumed by the instruct prefix
+MAX_QUERY_LENGTH = 84
 MAX_DOC_LENGTH = 256
 
 GPU_DEVICES = ["cuda:0", "cuda:1"]
@@ -52,12 +53,12 @@ class EmbeddingModel(BaseEmbeddingModel):
         return {"padding_side": "left"}
 
     def setup_prompts(self):
-        if hasattr(self.model, "prompts") and "query" in self.model.prompts:
-            self.query_prompt = self.model.prompts["query"]
+        prompt = self.model.prompts.get("query", "") if hasattr(self.model, "prompts") else ""
+        if prompt.startswith("Instruct: ") and "\nQuery: " in prompt:
+            self.task_description = prompt.removeprefix("Instruct: ").split("\nQuery: ")[0]
         else:
-            self.query_prompt = (
-                "Instruct: Given a web search query, retrieve relevant passages that answer the query\nQuery: "
-            )
+            self.task_description = "Given a web search query, retrieve relevant passages that answer the query"
+        super().setup_prompts()
 
 
 # ---------------------------------------------------------------------------

@@ -6,7 +6,8 @@ model-specific behaviour:
 
   get_model_kwargs()     — extra kwargs for SentenceTransformer(model_kwargs=...)
   get_tokenizer_kwargs() — kwargs for SentenceTransformer(tokenizer_kwargs=...)
-  setup_prompts()        — called after the model loads; set self.query_prompt here
+  setup_prompts()        — called after the model loads; set self.task_description
+                           and it will be formatted into self.query_prompt automatically
 """
 
 from __future__ import annotations
@@ -41,6 +42,7 @@ class BaseEmbeddingModel:
         self.max_query_length = max_query_length
         self.model = None
         self.pool = None
+        self.task_description = ""
         self.query_prompt = ""
 
     # ------------------------------------------------------------------
@@ -55,13 +57,24 @@ class BaseEmbeddingModel:
         """Return extra kwargs to pass as tokenizer_kwargs= when loading SentenceTransformer."""
         return {}
 
+    def format_query_prompt(self) -> str:
+        """Format task_description into the e5-instruct query prompt template.
+
+        Returns the prompt string ``"Instruct: {task}\\nQuery: "`` if a
+        task_description is set, otherwise returns an empty string.
+        """
+        if not self.task_description:
+            return ""
+        return f"Instruct: {self.task_description}\nQuery: "
+
     def setup_prompts(self):
         """Set self.query_prompt after the model has been loaded.
 
-        Called automatically by start(). Override this in subclasses to configure
-        model-specific query instructions.
+        Called automatically by start(). Override this in subclasses to set
+        self.task_description, then call super().setup_prompts() to have
+        query_prompt formatted automatically.
         """
-        pass
+        self.query_prompt = self.format_query_prompt()
 
     # ------------------------------------------------------------------
     # Lifecycle
