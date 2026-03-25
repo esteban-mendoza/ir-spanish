@@ -53,12 +53,7 @@ class EmbeddingModel(BaseEmbeddingModel):
         return {"padding_side": "left"}
 
     def setup_prompts(self):
-        prompt = self.model.prompts.get("query", "") if hasattr(self.model, "prompts") else ""
-        if prompt.startswith("Instruct: ") and "\nQuery: " in prompt:
-            self.task_description = prompt.removeprefix("Instruct: ").split("\nQuery: ")[0]
-        else:
-            self.task_description = "Given a web search query, retrieve relevant passages that answer the query"
-        super().setup_prompts()
+        self.query_prompt_name = "query"
 
 
 # ---------------------------------------------------------------------------
