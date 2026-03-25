@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Baseline evaluation of Qwen3-Embedding-8B on MessIRve (Spanish IR).
+Baseline evaluation of Qwen3-Embedding-4B on MessIRve (Spanish IR).
 Metrics: nDCG@10, Recall@100 via ranx.
 
 Features:
