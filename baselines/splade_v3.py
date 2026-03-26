@@ -55,6 +55,14 @@ DATASET_CACHE_DIR = cache.dataset_cache_base(
 )
 
 
+def _to_scipy_csr(tensor: torch.Tensor) -> sp.csr_matrix:
+    """Convert a PyTorch sparse COO tensor to scipy CSR."""
+    t = tensor.coalesce()
+    indices = t.indices().numpy()
+    values = t.values().numpy()
+    return sp.csr_matrix((values, (indices[0], indices[1])), shape=t.shape)
+
+
 # ---------------------------------------------------------------------------
 # Sparse cache helpers
 # ---------------------------------------------------------------------------
@@ -125,7 +133,9 @@ def encode_documents_chunked(
         chunk_sparse = model.encode_multi_process(chunk_texts, pool=pool, batch_size=DOC_BATCH_SIZE)
         del chunk_texts
 
-        if not sp.issparse(chunk_sparse):
+        if isinstance(chunk_sparse, torch.Tensor):
+            chunk_sparse = _to_scipy_csr(chunk_sparse) if chunk_sparse.is_sparse else sp.csr_matrix(chunk_sparse.numpy())
+        elif not sp.issparse(chunk_sparse):
             chunk_sparse = sp.csr_matrix(chunk_sparse)
 
         save_sparse_chunk(chunk_sparse, embedding_dir / f"chunk_{ci:04d}.npz")
@@ -152,7 +162,9 @@ def encode_queries(
 
     query_sparse = model.encode_multi_process(query_texts, pool=pool, batch_size=QUERY_BATCH_SIZE)
 
-    if not sp.issparse(query_sparse):
+    if isinstance(query_sparse, torch.Tensor):
+        query_sparse = _to_scipy_csr(query_sparse) if query_sparse.is_sparse else sp.csr_matrix(query_sparse.numpy())
+    elif not sp.issparse(query_sparse):
         query_sparse = sp.csr_matrix(query_sparse)
 
     embedding_dir.mkdir(parents=True, exist_ok=True)
