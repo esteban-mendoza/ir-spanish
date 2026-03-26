@@ -195,59 +195,82 @@ def sparse_retrieve(
     doc_sparse: sp.csr_matrix,
     top_k: int,
 ) -> dict[str, dict[str, float]]:
-    """Retrieve top-k documents per query via sparse matmul on multiple GPUs."""
+    """Retrieve top-k documents per query via sparse matmul sharded across GPUs."""
     devices = GPU_DEVICES
+    n_devices = len(devices)
     n_queries = len(query_ids)
+    n_docs = len(doc_ids)
     doc_ids_array = np.array(doc_ids, dtype=object)
 
-    with Timer(f"Sparse retrieval on {len(devices)} GPUs ({n_queries} queries × top-{top_k})"):
+    with Timer(f"Sparse retrieval on {n_devices} GPUs ({n_queries} queries × top-{top_k})"):
+        # Shard doc matrix (transposed) column-wise across GPUs
         doc_sparse_t_csr = doc_sparse.T.tocsr()
-        doc_ts = {dev: _scipy_csr_to_torch(doc_sparse_t_csr, torch.device(dev)) for dev in devices}
+        shard_size = (n_docs + n_devices - 1) // n_devices
+        shards: list[tuple[str, torch.Tensor, int]] = []  # (device, tensor, col_offset)
+        for i, dev in enumerate(devices):
+            col_start = i * shard_size
+            col_end = min(col_start + shard_size, n_docs)
+            shard_csr = doc_sparse_t_csr[:, col_start:col_end].tocsr()
+            shard_gpu = _scipy_csr_to_torch(shard_csr, torch.device(dev))
+            shards.append((dev, shard_gpu, col_start))
+            log.info("  Shard %d on %s: cols [%d, %d) — %.1f GiB",
+                      i, dev, col_start, col_end,
+                      (shard_csr.data.nbytes + shard_csr.indices.nbytes + shard_csr.indptr.nbytes) / (1024**3))
         del doc_sparse_t_csr
 
-        def _process_batch(batch_start: int, device: str) -> dict[str, dict[str, float]]:
-            batch_end = min(batch_start + QUERY_SEARCH_BATCH, n_queries)
-            batch_csr = query_sparse[batch_start:batch_end]
+        def _search_shard(batch_csr: sp.csr_matrix, device: str,
+                          shard_t: torch.Tensor, col_offset: int,
+                          k: int):
+            """Compute top-k on one shard. Returns (scores, global_indices) on CPU."""
             dev = torch.device(device)
-
             q_gpu = _scipy_csr_to_torch(batch_csr, dev)
-            scores_dense = torch.sparse.mm(q_gpu, doc_ts[device])
-            tk_scores, tk_indices = torch.topk(
-                scores_dense, k=min(top_k, scores_dense.shape[1]), dim=1,
-            )
-
-            tk_scores_cpu = tk_scores.cpu().numpy()
-            tk_indices_cpu = tk_indices.cpu().numpy()
-
-            partial: dict[str, dict[str, float]] = {}
-            for j in range(batch_csr.shape[0]):
-                qid = query_ids[batch_start + j]
-                mask = tk_scores_cpu[j] > 0
-                partial[qid] = {
-                    str(doc_ids_array[idx]): float(score)
-                    for idx, score in zip(tk_indices_cpu[j][mask], tk_scores_cpu[j][mask])
-                }
-
+            scores_dense = torch.sparse.mm(q_gpu, shard_t)
+            actual_k = min(k, scores_dense.shape[1])
+            tk_scores, tk_indices = torch.topk(scores_dense, k=actual_k, dim=1)
+            # Shift local indices to global doc indices
+            tk_indices = tk_indices + col_offset
+            result = (tk_scores.cpu(), tk_indices.cpu())
             del q_gpu, scores_dense, tk_scores, tk_indices
             torch.cuda.empty_cache()
-            return partial
+            return result
 
         retrieval_run: dict[str, dict[str, float]] = {}
-        batches = list(range(0, n_queries, QUERY_SEARCH_BATCH))
 
-        with ThreadPoolExecutor(max_workers=len(devices)) as executor:
-            futures = [
-                executor.submit(_process_batch, bs, devices[i % len(devices)])
-                for i, bs in enumerate(batches)
-            ]
-            for fi, future in enumerate(futures):
-                retrieval_run.update(future.result())
-                done = min(batches[fi] + QUERY_SEARCH_BATCH, n_queries)
-                if done < n_queries:
-                    log.info("  Searched %d / %d queries", done, n_queries)
+        with ThreadPoolExecutor(max_workers=n_devices) as executor:
+            for batch_start in range(0, n_queries, QUERY_SEARCH_BATCH):
+                batch_end = min(batch_start + QUERY_SEARCH_BATCH, n_queries)
+                batch_csr = query_sparse[batch_start:batch_end]
 
-        for doc_t in doc_ts.values():
-            del doc_t
+                # Submit one job per shard — runs on different GPUs in parallel
+                futures = [
+                    executor.submit(_search_shard, batch_csr, dev, shard_t, offset, top_k)
+                    for dev, shard_t, offset in shards
+                ]
+                shard_results = [f.result() for f in futures]
+
+                # Merge: concatenate shard results, take overall top-k on CPU
+                all_scores = torch.cat([s for s, _ in shard_results], dim=1)
+                all_indices = torch.cat([idx for _, idx in shard_results], dim=1)
+                actual_k = min(top_k, all_scores.shape[1])
+                merge_scores, merge_pos = torch.topk(all_scores, k=actual_k, dim=1)
+                merge_indices = torch.gather(all_indices, 1, merge_pos)
+
+                merge_scores_np = merge_scores.numpy()
+                merge_indices_np = merge_indices.numpy()
+
+                for j in range(batch_csr.shape[0]):
+                    qid = query_ids[batch_start + j]
+                    mask = merge_scores_np[j] > 0
+                    retrieval_run[qid] = {
+                        str(doc_ids_array[idx]): float(score)
+                        for idx, score in zip(merge_indices_np[j][mask], merge_scores_np[j][mask])
+                    }
+
+                if batch_end < n_queries:
+                    log.info("  Searched %d / %d queries", batch_end, n_queries)
+
+        for _, shard_t, _ in shards:
+            del shard_t
         torch.cuda.empty_cache()
 
     return retrieval_run
