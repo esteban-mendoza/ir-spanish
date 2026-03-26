@@ -41,6 +41,7 @@ SEED = 42
 NUM_WORKERS = os.cpu_count() or 32
 DOC_CHUNK_SIZE = 50_000
 QUERY_SEARCH_BATCH = 500
+MATMUL_SUB_BATCH = 64
 
 CACHE_DIR = Path.home() / ".cache" / "messirve_embeddings"
 
@@ -203,36 +204,37 @@ def sparse_retrieve(
     doc_ids_array = np.array(doc_ids, dtype=object)
 
     with Timer(f"Sparse retrieval on {n_devices} GPUs ({n_queries} queries × top-{top_k})"):
-        # Shard doc matrix (transposed) column-wise across GPUs
-        doc_sparse_t_csr = doc_sparse.T.tocsr()
+        # Shard doc matrix row-wise across GPUs — each shard is (shard_docs, vocab) CSR
         shard_size = (n_docs + n_devices - 1) // n_devices
-        shards: list[tuple[str, torch.Tensor, int]] = []  # (device, tensor, col_offset)
+        shards: list[tuple[str, torch.Tensor, int]] = []  # (device, tensor, row_offset)
         for i, dev in enumerate(devices):
-            col_start = i * shard_size
-            col_end = min(col_start + shard_size, n_docs)
-            shard_csr = doc_sparse_t_csr[:, col_start:col_end].tocsr()
+            row_start = i * shard_size
+            row_end = min(row_start + shard_size, n_docs)
+            shard_csr = doc_sparse[row_start:row_end]  # (shard_docs, vocab) CSR — row slice is O(1)
             shard_gpu = _scipy_csr_to_torch(shard_csr, torch.device(dev))
-            shards.append((dev, shard_gpu, col_start))
-            log.info("  Shard %d on %s: cols [%d, %d) — %.1f GiB",
-                      i, dev, col_start, col_end,
+            shards.append((dev, shard_gpu, row_start))
+            log.info("  Shard %d on %s: rows [%d, %d) — %.1f GiB",
+                      i, dev, row_start, row_end,
                       (shard_csr.data.nbytes + shard_csr.indices.nbytes + shard_csr.indptr.nbytes) / (1024**3))
-        del doc_sparse_t_csr
 
         def _search_shard(batch_csr: sp.csr_matrix, device: str,
-                          shard_t: torch.Tensor, col_offset: int,
+                          shard: torch.Tensor, row_offset: int,
                           k: int):
-            """Compute top-k on one shard. Returns (scores, global_indices) on CPU."""
+            """Compute top-k on one shard with sub-batching. Returns (scores, global_indices) on CPU."""
             dev = torch.device(device)
-            q_gpu = _scipy_csr_to_torch(batch_csr, dev).to_dense()
-            scores_dense = torch.sparse.mm(shard_t.t(), q_gpu.t()).t()
-            actual_k = min(k, scores_dense.shape[1])
-            tk_scores, tk_indices = torch.topk(scores_dense, k=actual_k, dim=1)
-            # Shift local indices to global doc indices
-            tk_indices = tk_indices + col_offset
-            result = (tk_scores.cpu(), tk_indices.cpu())
-            del q_gpu, scores_dense, tk_scores, tk_indices
+            q_dense = _scipy_csr_to_torch(batch_csr, dev).to_dense()  # (batch, vocab)
+            sub_scores, sub_indices = [], []
+            for i in range(0, q_dense.shape[0], MATMUL_SUB_BATCH):
+                q_sub = q_dense[i:i + MATMUL_SUB_BATCH]
+                scores = torch.sparse.mm(shard, q_sub.t()).t()  # (sub, shard_docs)
+                actual_k = min(k, scores.shape[1])
+                tk_s, tk_i = torch.topk(scores, k=actual_k, dim=1)
+                sub_scores.append(tk_s.cpu())
+                sub_indices.append((tk_i + row_offset).cpu())
+                del scores, tk_s, tk_i
+            del q_dense
             torch.cuda.empty_cache()
-            return result
+            return (torch.cat(sub_scores), torch.cat(sub_indices))
 
         retrieval_run: dict[str, dict[str, float]] = {}
 
@@ -243,8 +245,8 @@ def sparse_retrieve(
 
                 # Submit one job per shard — runs on different GPUs in parallel
                 futures = [
-                    executor.submit(_search_shard, batch_csr, dev, shard_t, offset, top_k)
-                    for dev, shard_t, offset in shards
+                    executor.submit(_search_shard, batch_csr, dev, shard, row_offset, top_k)
+                    for dev, shard, row_offset in shards
                 ]
                 shard_results = [f.result() for f in futures]
 
@@ -269,8 +271,8 @@ def sparse_retrieve(
                 if batch_end < n_queries:
                     log.info("  Searched %d / %d queries", batch_end, n_queries)
 
-        for _, shard_t, _ in shards:
-            del shard_t
+        for _, shard, _ in shards:
+            del shard
         torch.cuda.empty_cache()
 
     return retrieval_run
