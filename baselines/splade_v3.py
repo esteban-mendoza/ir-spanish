@@ -223,8 +223,8 @@ def sparse_retrieve(
                           k: int):
             """Compute top-k on one shard. Returns (scores, global_indices) on CPU."""
             dev = torch.device(device)
-            q_gpu = _scipy_csr_to_torch(batch_csr, dev)
-            scores_dense = torch.sparse.mm(q_gpu, shard_t)
+            q_gpu = _scipy_csr_to_torch(batch_csr, dev).to_dense()
+            scores_dense = torch.sparse.mm(shard_t.t(), q_gpu.t()).t()
             actual_k = min(k, scores_dense.shape[1])
             tk_scores, tk_indices = torch.topk(scores_dense, k=actual_k, dim=1)
             # Shift local indices to global doc indices
