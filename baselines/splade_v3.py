@@ -4,7 +4,7 @@ SPLADE-v3 sparse retrieval baseline for MessIRve (Spanish IR).
 Metrics: nDCG@10, Recall@100 via ranx.
 
 Uses naver/splade-v3 to produce learned sparse term-weight vectors,
-then retrieves via scipy sparse dot product.
+then retrieves via GPU-accelerated sparse matmul (PyTorch CUDA).
 """
 
 from __future__ import annotations
@@ -12,6 +12,7 @@ from __future__ import annotations
 import gc
 import logging
 import os
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import numpy as np
@@ -39,7 +40,7 @@ GPU_DEVICES = ["cuda:0", "cuda:1"]
 SEED = 42
 NUM_WORKERS = os.cpu_count() or 32
 DOC_CHUNK_SIZE = 50_000
-QUERY_SEARCH_BATCH = 5000
+QUERY_SEARCH_BATCH = 500
 
 CACHE_DIR = Path.home() / ".cache" / "messirve_embeddings"
 
@@ -61,6 +62,17 @@ def _to_scipy_csr(tensor: torch.Tensor) -> sp.csr_matrix:
     indices = t.indices().numpy()
     values = t.values().numpy()
     return sp.csr_matrix((values, (indices[0], indices[1])), shape=t.shape)
+
+
+def _scipy_csr_to_torch(m: sp.csr_matrix, device: torch.device) -> torch.Tensor:
+    """Convert a scipy CSR matrix to a PyTorch sparse CSR tensor on the given device."""
+    return torch.sparse_csr_tensor(
+        torch.from_numpy(m.indptr.astype(np.int64)),
+        torch.from_numpy(m.indices.astype(np.int64)),
+        torch.from_numpy(m.data.astype(np.float32)),
+        size=m.shape,
+        device=device,
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -183,42 +195,60 @@ def sparse_retrieve(
     doc_sparse: sp.csr_matrix,
     top_k: int,
 ) -> dict[str, dict[str, float]]:
-    """Retrieve top-k documents per query via sparse dot product."""
+    """Retrieve top-k documents per query via sparse matmul on multiple GPUs."""
+    devices = GPU_DEVICES
     n_queries = len(query_ids)
     doc_ids_array = np.array(doc_ids, dtype=object)
-    doc_sparse_t = doc_sparse.T.tocsc()
 
-    retrieval_run: dict[str, dict[str, float]] = {}
+    with Timer(f"Sparse retrieval on {len(devices)} GPUs ({n_queries} queries × top-{top_k})"):
+        doc_sparse_t_csr = doc_sparse.T.tocsr()
+        doc_ts = {dev: _scipy_csr_to_torch(doc_sparse_t_csr, torch.device(dev)) for dev in devices}
+        del doc_sparse_t_csr
 
-    with Timer(f"Sparse retrieval ({n_queries} queries × top-{top_k})"):
-        for batch_start in range(0, n_queries, QUERY_SEARCH_BATCH):
+        def _process_batch(batch_start: int, device: str) -> dict[str, dict[str, float]]:
             batch_end = min(batch_start + QUERY_SEARCH_BATCH, n_queries)
-            batch_queries = query_sparse[batch_start:batch_end]
+            batch_csr = query_sparse[batch_start:batch_end]
+            dev = torch.device(device)
 
-            scores = batch_queries.dot(doc_sparse_t)  # (batch, n_docs) sparse
+            q_gpu = _scipy_csr_to_torch(batch_csr, dev)
+            scores_dense = torch.sparse.mm(q_gpu, doc_ts[device])
+            tk_scores, tk_indices = torch.topk(
+                scores_dense, k=min(top_k, scores_dense.shape[1]), dim=1,
+            )
 
-            for j in range(batch_queries.shape[0]):
-                row = scores.getrow(j)
-                row_data = row.data
-                row_indices = row.indices
+            tk_scores_cpu = tk_scores.cpu().numpy()
+            tk_indices_cpu = tk_indices.cpu().numpy()
 
-                if len(row_data) == 0:
-                    retrieval_run[query_ids[batch_start + j]] = {}
-                    continue
-
-                if len(row_data) > top_k:
-                    top_k_pos = np.argpartition(row_data, -top_k)[-top_k:]
-                else:
-                    top_k_pos = np.arange(len(row_data))
-
+            partial: dict[str, dict[str, float]] = {}
+            for j in range(batch_csr.shape[0]):
                 qid = query_ids[batch_start + j]
-                retrieval_run[qid] = {
-                    str(doc_ids_array[row_indices[k]]): float(row_data[k])
-                    for k in top_k_pos
+                mask = tk_scores_cpu[j] > 0
+                partial[qid] = {
+                    str(doc_ids_array[idx]): float(score)
+                    for idx, score in zip(tk_indices_cpu[j][mask], tk_scores_cpu[j][mask])
                 }
 
-            if batch_end < n_queries:
-                log.info("  Searched %d / %d queries", batch_end, n_queries)
+            del q_gpu, scores_dense, tk_scores, tk_indices
+            torch.cuda.empty_cache()
+            return partial
+
+        retrieval_run: dict[str, dict[str, float]] = {}
+        batches = list(range(0, n_queries, QUERY_SEARCH_BATCH))
+
+        with ThreadPoolExecutor(max_workers=len(devices)) as executor:
+            futures = [
+                executor.submit(_process_batch, bs, devices[i % len(devices)])
+                for i, bs in enumerate(batches)
+            ]
+            for fi, future in enumerate(futures):
+                retrieval_run.update(future.result())
+                done = min(batches[fi] + QUERY_SEARCH_BATCH, n_queries)
+                if done < n_queries:
+                    log.info("  Searched %d / %d queries", done, n_queries)
+
+        for doc_t in doc_ts.values():
+            del doc_t
+        torch.cuda.empty_cache()
 
     return retrieval_run
 
