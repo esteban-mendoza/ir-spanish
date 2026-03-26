@@ -130,7 +130,7 @@ def encode_documents_chunked(
         log.info("── Chunk %d/%d [%d–%d] ──", ci + 1, total_chunks, start, end - 1)
 
         chunk_texts = list(doc_texts[start:end])
-        chunk_sparse = model.encode_multi_process(chunk_texts, pool=pool, batch_size=DOC_BATCH_SIZE)
+        chunk_sparse = model.encode(chunk_texts, pool=pool, batch_size=DOC_BATCH_SIZE)
         del chunk_texts
 
         if isinstance(chunk_sparse, torch.Tensor):
@@ -160,7 +160,7 @@ def encode_queries(
     query_ids = list(query_id_to_text.keys())
     query_texts = list(query_id_to_text.values())
 
-    query_sparse = model.encode_multi_process(query_texts, pool=pool, batch_size=QUERY_BATCH_SIZE)
+    query_sparse = model.encode(query_texts, pool=pool, batch_size=QUERY_BATCH_SIZE)
 
     if isinstance(query_sparse, torch.Tensor):
         query_sparse = _to_scipy_csr(query_sparse) if query_sparse.is_sparse else sp.csr_matrix(query_sparse.numpy())

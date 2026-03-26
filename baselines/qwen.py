@@ -27,7 +27,7 @@ from utils.workflow import BaseWorkflow
 # ---------------------------------------------------------------------------
 MODEL_NAME = "Qwen/Qwen3-Embedding-4B"
 QUERY_BATCH_SIZE = 32
-DOC_BATCH_SIZE = 8
+DOC_BATCH_SIZE = 128
 # 64 effective tokens + ~20 tokens consumed by the instruct prefix
 MAX_QUERY_LENGTH = 84
 MAX_DOC_LENGTH = 256
