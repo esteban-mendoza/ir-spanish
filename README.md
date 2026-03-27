@@ -32,7 +32,7 @@ We evaluate on [**MessIRve**](https://huggingface.co/datasets/spanish-ir/messirv
 
 | Model | Parameters | Reference |
 |-------|-----------|-----------|
-| [Qwen3-Embedding-8B](https://huggingface.co/Qwen/Qwen3-Embedding-8B) | 8B | Qwen, 2025 |
+| [Qwen3-Embedding-0.6B](https://huggingface.co/Qwen/Qwen3-Embedding-0.6B) | 600M | Qwen, 2025 |
 | [BGE-M3](https://huggingface.co/BAAI/bge-m3) | 568M | BAAI, 2024 |
 | [multilingual-e5-large-instruct](https://huggingface.co/intfloat/multilingual-e5-large-instruct) | 560M | Microsoft, 2024 |
 
