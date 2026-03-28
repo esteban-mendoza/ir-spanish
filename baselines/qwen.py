@@ -28,9 +28,8 @@ from utils.workflow import BaseWorkflow
 MODEL_NAME = "Qwen/Qwen3-Embedding-0.6B"
 QUERY_BATCH_SIZE = 256
 DOC_BATCH_SIZE = 512
-# 64 effective tokens + ~20 tokens consumed by the instruct prefix
-MAX_QUERY_LENGTH = 84
-MAX_DOC_LENGTH = 256
+MAX_QUERY_LENGTH = 512
+MAX_DOC_LENGTH = 512
 
 GPU_DEVICES = ["cuda:0", "cuda:1"]
 SEED = 42

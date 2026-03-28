@@ -26,9 +26,8 @@ from utils.workflow import BaseWorkflow
 MODEL_NAME = "intfloat/multilingual-e5-large-instruct"
 QUERY_BATCH_SIZE = 256
 DOC_BATCH_SIZE = 2048
-# 64 effective tokens + ~20 tokens consumed by the e5-instruct prefix
-MAX_QUERY_LENGTH = 84
-MAX_DOC_LENGTH = 256
+MAX_QUERY_LENGTH = 512
+MAX_DOC_LENGTH = 512
 
 GPU_DEVICES = ["cuda:0", "cuda:1"]
 SEED = 42
