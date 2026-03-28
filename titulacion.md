@@ -75,6 +75,16 @@ _INCLUIR LOS 3 DOCUMENTOS EN UN SOLO PDF._
 | E5-large-ft-messirve     | 0.491   | 0.887      |
 | OpenAI-large             | 0.476   | 0.916      |
 
+## Mis resultados (q512, d512)
+
+| Model                            | nDCG@10 | Recall@100 |
+|----------------------------------|--------:|-----------:|
+| BM25 (no filters)                | 0.1848  | 0.5725     |
+| splade-v3                        | xxxxxx  | xxxxxx     |
+| qwen3-embedding-0.6b             | xxxxxx  | xxxxxx     |
+| multilingual-e5-large-instruct   | xxxxxx  | xxxxxx     |
+| BGE-M3                           | xxxxxx  | xxxxxx     |
+
 ## Mis resultados (q64, d256)
 
 | Model                            | nDCG@10 | Recall@100 |
@@ -176,4 +186,4 @@ tail -f ~/proyecto/logs/splade-v3.log
 ```
 
 ## PIDs
-1284767
+1305943

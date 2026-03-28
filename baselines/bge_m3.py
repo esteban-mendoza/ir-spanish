@@ -25,7 +25,7 @@ from utils.workflow import BaseWorkflow
 # ---------------------------------------------------------------------------
 MODEL_NAME = "BAAI/bge-m3"
 QUERY_BATCH_SIZE = 256
-DOC_BATCH_SIZE = 2048
+DOC_BATCH_SIZE = 1024
 MAX_QUERY_LENGTH = 512
 MAX_DOC_LENGTH = 512
 
