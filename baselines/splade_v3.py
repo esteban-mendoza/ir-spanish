@@ -30,8 +30,8 @@ log = logging.getLogger(__name__)
 # Configuration
 # ---------------------------------------------------------------------------
 MODEL_NAME = "naver/splade-v3"
-DOC_BATCH_SIZE = 256
-QUERY_BATCH_SIZE = 256
+DOC_BATCH_SIZE = 128
+QUERY_BATCH_SIZE = 128
 MAX_QUERY_LENGTH = 512
 MAX_DOC_LENGTH = 512
 TOP_K = 100
