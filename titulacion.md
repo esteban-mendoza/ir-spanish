@@ -81,9 +81,9 @@ _INCLUIR LOS 3 DOCUMENTOS EN UN SOLO PDF._
 |----------------------------------|--------:|-----------:|
 | BM25 (no filters)                | 0.1848  | 0.5725     |
 | splade-v3                        | xxxxxx  | xxxxxx     |
-| qwen3-embedding-0.6b             | xxxxxx  | xxxxxx     |
-| multilingual-e5-large-instruct   | xxxxxx  | xxxxxx     |
-| BGE-M3                           | xxxxxx  | xxxxxx     |
+| qwen3-embedding-0.6b             | 0.4468  | 0.8422     |
+| multilingual-e5-large-instruct   | 0.4675  | 0.8666     |
+| BGE-M3                           | 0.4818  | 0.8741     |
 
 ## Mis resultados (q64, d256)
 
@@ -177,13 +177,13 @@ df -h
 
 du -sh .[^.]* * 2>/dev/null | sort -hr
 
-nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python /home/jmendoza/proyecto/baselines/qwen.py > /home/jmendoza/proyecto/logs/qwen3-embedding-0.6b.log 2>&1 &
+nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python /home/jmendoza/proyecto/baselines/splade_v3.py > /home/jmendoza/proyecto/logs/splade-v3.log 2>&1 &
 ps aux | grep baselines
 kill <PIDs>
 kill -9 <PIDs>
 
-tail -f ~/proyecto/logs/splade-v3.log
+tail -f /home/jmendoza/proyecto/logs/splade-v3.log
 ```
 
 ## PIDs
-1305943
+1385441
