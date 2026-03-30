@@ -76,7 +76,7 @@ _INCLUIR LOS 3 DOCUMENTOS EN UN SOLO PDF._
 | E5-large-ft-messirve     | 0.491   | 0.887      |
 | OpenAI-large             | 0.476   | 0.916      |
 
-## Mis resultados (q512, d512), tasks in English
+## Mis resultados (q512, d512)
 
 | Model                            | nDCG@10 | Recall@100 |
 |----------------------------------|--------:|-----------:|
@@ -85,6 +85,13 @@ _INCLUIR LOS 3 DOCUMENTOS EN UN SOLO PDF._
 | qwen3-embedding-0.6b             | 0.4468  | 0.8422     |
 | multilingual-e5-large-instruct   | 0.4675  | 0.8666     |
 | BGE-M3                           | 0.4818  | 0.8741     |
+
+## Fusiones (q512, d512)
+
+| Model                            | nDCG@10 | Recall@100 |
+|----------------------------------|--------:|-----------:|
+| e5 + bge                         | 0.5128  | 0.8997     |
+
 
 ## Mis resultados (q64, d256)
 
