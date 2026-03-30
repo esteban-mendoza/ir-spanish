@@ -122,9 +122,42 @@ def run_evaluation(
 
     if mode == "short":
         _log_short(results, model_name, strategy, params)
-    else:
+    elif mode == "inline":
+        _log_inline(results, model_name, strategy, params)
+    elif mode == "verbose":
         _log_verbose(results, model_name)
+    # mode="quiet": no logging, just return results
     return results
+
+
+_TABLE_COLUMNS = ["model", "strategy", "params", "ndcg@10", "recall@100"]
+
+
+def md_table(rows: list[list[str]]) -> str:
+    """Build a markdown table with fixed-width padded columns."""
+    widths = [len(c) for c in _TABLE_COLUMNS]
+    for row in rows:
+        for i, cell in enumerate(row):
+            widths[i] = max(widths[i], len(cell))
+
+    def fmt(cells: list[str]) -> str:
+        return "| " + " | ".join(c.ljust(widths[i]) for i, c in enumerate(cells)) + " |"
+
+    header = fmt(_TABLE_COLUMNS)
+    sep = "| " + " | ".join("-" * w for w in widths) + " |"
+    return "\n".join([header, sep] + [fmt(r) for r in rows])
+
+
+def _results_row(
+    model_name: str, strategy: str, params: str, results: dict[str, float],
+) -> list[str]:
+    return [
+        model_name,
+        strategy or " ",
+        params or " ",
+        f"{results['ndcg@10']:.4f}",
+        f"{results['recall@100']:.4f}",
+    ]
 
 
 def _log_verbose(results: dict[str, float], model_name: str) -> None:
@@ -141,7 +174,16 @@ def _log_verbose(results: dict[str, float], model_name: str) -> None:
 def _log_short(
     results: dict[str, float], model_name: str, strategy: str, params: str,
 ) -> None:
-    log.info(
-        "| %s | %s | %s | %.4f | %.4f |",
-        model_name, strategy, params, results["ndcg@10"], results["recall@100"],
-    )
+    row = _results_row(model_name, strategy, params, results)
+    log.info("\n%s", md_table([row]))
+
+
+def _log_inline(
+    results: dict[str, float], model_name: str, strategy: str, params: str,
+) -> None:
+    tag = model_name
+    if strategy:
+        tag += f" ({strategy})" if not params else f" ({strategy}, {params})"
+    ndcg = results["ndcg@10"]
+    recall = results["recall@100"]
+    log.info("  %-60s  ndcg@10=%.4f  recall@100=%.4f", tag, ndcg, recall)

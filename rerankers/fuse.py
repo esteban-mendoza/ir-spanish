@@ -134,9 +134,8 @@ def sweep_combinations(
     all_slugs: list[str],
     strategy: FusionStrategy,
 ) -> str:
-    header = "| model | strategy | params | ndcg@10 | recall@100 |"
-    separator = "|---|---|---|---|---|"
-    rows = [header, separator]
+    data_rows: list[list[str]] = []
+    params_str = _format_params(strategy.params)
 
     for size in range(len(all_runs), 1, -1):
         for indices in itertools.combinations(range(len(all_runs)), size):
@@ -152,19 +151,16 @@ def sweep_combinations(
             fused_run.name = combo_name
 
             results = retrieval.run_evaluation(
-                qrels,
-                fused_run,
-                combo_name,
-                mode="short",
+                qrels, fused_run, combo_name,
+                mode="inline",
                 strategy=strategy.method,
-                params=_format_params(strategy.params),
+                params=params_str,
             )
-            ndcg = results["ndcg@10"]
-            recall = results["recall@100"]
-            row = f"| {combo_name} | {strategy.method} | {_format_params(strategy.params)} | {ndcg:.4f} | {recall:.4f} |"
-            rows.append(row)
+            data_rows.append(retrieval._results_row(
+                combo_name, strategy.method, params_str, results,
+            ))
 
-    table = "\n".join(rows)
+    table = retrieval.md_table(data_rows)
     log.info("Sweep results:\n%s", table)
     return table
 
