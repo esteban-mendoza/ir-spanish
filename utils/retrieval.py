@@ -101,16 +101,33 @@ def run_evaluation(
     qrels: Qrels,
     run: Run,
     model_name: str,
+    *,
+    mode: str = "verbose",
+    strategy: str = "",
+    params: str = "",
 ) -> dict:
     """Evaluate the retrieval run against ground-truth qrels and log the results.
 
     Computes nDCG@10 and Recall@100 using ranx.
+
+    Args:
+        mode: "verbose" for box-drawing output, "short" for a markdown table row.
+        strategy: fusion strategy name (used in short mode).
+        params: fusion params string (used in short mode).
 
     Returns:
         A dict mapping metric names to their computed float values.
     """
     results: dict[str, float] = evaluate(qrels, run, metrics=["ndcg@10", "recall@100"])
 
+    if mode == "short":
+        _log_short(results, model_name, strategy, params)
+    else:
+        _log_verbose(results, model_name)
+    return results
+
+
+def _log_verbose(results: dict[str, float], model_name: str) -> None:
     model_short_name = model_name.split("/")[-1]
     log.info("")
     log.info("╔══════════════════════════════════════════════════╗")
@@ -119,4 +136,12 @@ def run_evaluation(
     for metric_name, metric_value in results.items():
         log.info("║  %-15s  %.4f                         ║", metric_name, metric_value)
     log.info("╚══════════════════════════════════════════════════╝")
-    return results
+
+
+def _log_short(
+    results: dict[str, float], model_name: str, strategy: str, params: str,
+) -> None:
+    log.info(
+        "| %s | %s | %s | %.4f | %.4f |",
+        model_name, strategy, params, results["ndcg@10"], results["recall@100"],
+    )

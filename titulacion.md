@@ -71,13 +71,13 @@ _INCLUIR LOS 3 DOCUMENTOS EN UN SOLO PDF._
 
 ## Resultados previos
 
-| Model                    | nDCG@10 | Recall@100 |
-|--------------------------|--------:|-----------:|
-| BM25                     | 0.179   | 0.558      |
-| MIRACL-mdpr-es           | 0.284   | 0.658      |
-| E5-large                 | 0.463   | 0.865      |
-| E5-large-ft-messirve     | 0.491   | 0.887      |
-| OpenAI-large             | 0.476   | 0.916      |
+| Model                         | nDCG@10 | Recall@100 |
+|-------------------------------|--------:|-----------:|
+| BM25                          | 0.179   | 0.558      |
+| MIRACL-mdpr-es                | 0.284   | 0.658      |
+| E5-large                      | 0.463   | 0.865      |
+| E5-large-ft-messirve          | 0.491   | 0.887      |
+| OpenAI-text-embedding-3-large | 0.476   | 0.916      |
 
 ## Mis resultados (q512, d512)
 

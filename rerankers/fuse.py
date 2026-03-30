@@ -9,8 +9,9 @@ and which fusion method is used.
 
 from __future__ import annotations
 
+import itertools
 import logging
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 
 # utils.__init__ sets up logging and NUMA/threading env-vars
@@ -24,10 +25,24 @@ log = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
+MODEL_ALIASES = {
+    "bm25_pyserini": "bm25",
+    "naver/splade-v3": "splade-v3",
+    "Qwen/Qwen3-Embedding-0.6B": "qwen3-0.6b",
+    "intfloat/multilingual-e5-large-instruct": "e5-large",
+    "BAAI/bge-m3": "bge-m3",
+    "jinaai/jina-embeddings-v5-text-small-retrieval": "jina-v5-small",
+}
+
+
+def short_alias(slug: str) -> str:
+    return MODEL_ALIASES.get(slug, slug.split("/")[-1].lower())
+
+
 @dataclass(frozen=True)
 class FusionStrategy:
     method: str
-    params: dict = field(default_factory=dict)
+    params: dict | None = None
 
 
 STRATEGIES = {
@@ -88,16 +103,70 @@ def load_qrels():
     return qrels
 
 
-def fuse_and_evaluate(qrels, runs: list, strategy: FusionStrategy):
+def fuse_and_evaluate(qrels, runs: list, strategy: FusionStrategy, *, mode="verbose"):
     log.info(
         "Fusing %d runs with strategy '%s' (params: %s)",
         len(runs),
         strategy.method,
         strategy.params,
     )
-    fused_run = fuse(runs=runs, method=strategy.method, params=strategy.params)
+    fused_run = fuse(runs=runs, method=strategy.method, params=strategy.params or {})
     fused_run.name = f"fused_{strategy.method}"
-    retrieval.run_evaluation(qrels, fused_run, f"fused({strategy.method})")
+    return retrieval.run_evaluation(
+        qrels,
+        fused_run,
+        f"fused({strategy.method})",
+        mode=mode,
+        strategy=strategy.method,
+        params=_format_params(strategy.params),
+    )
+
+
+def _format_params(params: dict | None) -> str:
+    if not params:
+        return ""
+    return ",".join(f"{k}={v}" for k, v in params.items())
+
+
+def sweep_combinations(
+    qrels,
+    all_runs: list,
+    all_slugs: list[str],
+    strategy: FusionStrategy,
+) -> str:
+    header = "| model | strategy | params | ndcg@10 | recall@100 |"
+    separator = "|---|---|---|---|---|"
+    rows = [header, separator]
+
+    for size in range(len(all_runs), 1, -1):
+        for indices in itertools.combinations(range(len(all_runs)), size):
+            combo_runs = [all_runs[i] for i in indices]
+            combo_slugs = [all_slugs[i] for i in indices]
+            combo_name = "+".join(short_alias(s) for s in combo_slugs)
+
+            fused_run = fuse(
+                runs=combo_runs,
+                method=strategy.method,
+                params=strategy.params or {},
+            )
+            fused_run.name = combo_name
+
+            results = retrieval.run_evaluation(
+                qrels,
+                fused_run,
+                combo_name,
+                mode="short",
+                strategy=strategy.method,
+                params=_format_params(strategy.params),
+            )
+            ndcg = results["ndcg@10"]
+            recall = results["recall@100"]
+            row = f"| {combo_name} | {strategy.method} | {_format_params(strategy.params)} | {ndcg:.4f} | {recall:.4f} |"
+            rows.append(row)
+
+    table = "\n".join(rows)
+    log.info("Sweep results:\n%s", table)
+    return table
 
 
 # ---------------------------------------------------------------------------
