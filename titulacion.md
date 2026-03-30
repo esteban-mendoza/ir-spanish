@@ -183,14 +183,15 @@ df -h
 
 du -sh .[^.]* * 2>/dev/null | sort -hr
 
-cd /home/jmendoza/proyecto && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python baselines/jina_v5_small.py >
-  logs/jina-embeddings-v5-text-small-retrieval.log 2>&1 &
 ps aux | grep proyecto
 kill <PIDs>
 kill -9 <PIDs>
 
-tail -f /home/jmendoza/proyecto/logs/jina-embeddings-v5-text-small-retrieval.log
+tail -f /home/jmendoza/proyecto/logs/rerankers-fuse.log
 
-cd /home/jmendoza/proyecto && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m rerankers.fuse >
-  logs/jina-embeddings-v5-text-small-retrieval.log 2>&1 &
+cd /home/jmendoza/proyecto && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python baselines/jina_v5_small.py >logs/jina-embeddings-v5-text-small-retrieval.log 2>&1 &
+
+cd /home/jmendoza/proyecto && conda activate proyecto && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m rerankers.fuse > logs/rerankers-fuse.log 2>&1 &
+
+cd /home/jmendoza/proyecto && conda activate proyecto && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m rerankers.bge_reranker_v2_m3 > logs/bge-reranker-v2-m3.log 2>&1 &
 ```
