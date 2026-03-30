@@ -9,16 +9,12 @@ and which fusion method is used.
 
 from __future__ import annotations
 
-import sys
 from pathlib import Path
 
-# Allow imports from the baselines package (sibling directory)
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "baselines"))
+# utils.__init__ sets up logging and NUMA/threading env-vars
+from utils import cache, data, retrieval
 
-# baselines.utils.__init__ sets up logging and NUMA/threading env-vars
-from baselines.utils import cache, data, retrieval  # noqa: E402
-
-from ranx import fuse  # noqa: E402
+from ranx import fuse
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -36,7 +32,7 @@ CACHE_DIR = Path.home() / ".cache" / "messirve_embeddings"
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
-import logging  # noqa: E402
+import logging
 
 log = logging.getLogger(__name__)
 
