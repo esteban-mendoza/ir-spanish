@@ -97,7 +97,7 @@ _INCLUIR LOS 3 DOCUMENTOS EN UN SOLO PDF._
 | e5 + bge                         | rrf (k=60) | 0.5128  | 0.8997     |
 | e5 + bge + jina                  | rrf (k=60) | 0.5450  | 0.9232     |
 | e5 + bge + jina                  | rbc (φ=0.9)| 0.5478  | 0.9194     |
-
+| e5 + bge + jina                  | rbc (φ=0.8)| 0.5434  | 0.9191     |
 
 ## Mis resultados (q64, d256)
 
@@ -191,7 +191,7 @@ tail -f /home/jmendoza/proyecto/logs/rerankers-fuse.log
 
 cd /home/jmendoza/proyecto && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python baselines/jina_v5_small.py >logs/jina-embeddings-v5-text-small-retrieval.log 2>&1 &
 
-cd /home/jmendoza/proyecto && conda activate proyecto && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m rerankers.fuse > logs/rerankers-fuse.log 2>&1 &
+cd /home/jmendoza/proyecto && conda activate proyecto && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m rerankers.fuse > logs/rerankers-fuse-rrf60.log 2>&1 &
 
 cd /home/jmendoza/proyecto && conda activate proyecto && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m rerankers.bge_reranker_v2_m3 > logs/bge-reranker-v2-m3.log 2>&1 &
 ```
