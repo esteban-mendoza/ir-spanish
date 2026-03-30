@@ -10,6 +10,7 @@ Usage:
 from __future__ import annotations
 
 import logging
+import os
 from pathlib import Path
 
 # utils.__init__ sets up logging and NUMA/threading env-vars
@@ -27,6 +28,7 @@ BATCH_SIZE = 256
 MAX_QUERY_LENGTH = 512
 MAX_DOC_LENGTH = 512
 CACHE_DIR = Path.home() / ".cache" / "messirve_embeddings"
+NUM_WORKERS = os.cpu_count() or 32
 
 
 # ---------------------------------------------------------------------------
@@ -135,7 +137,7 @@ def main():
         data.DATASET_VERSION,
         kept_doc_ids=None,
         dataset_cache_dir=dataset_cache_dir,
-        num_workers=1,
+        num_workers=NUM_WORKERS,
     )
 
     # Check cache
@@ -147,7 +149,7 @@ def main():
 
     # Full reranking pipeline
     first_stage_run = load_first_stage_run()
-    doc_lookup = build_doc_lookup(num_workers=4)
+    doc_lookup = build_doc_lookup(num_workers=NUM_WORKERS)
 
     from sentence_transformers import CrossEncoder
     log.info("Loading cross-encoder: %s", RERANKER_MODEL)
