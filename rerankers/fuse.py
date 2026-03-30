@@ -71,11 +71,6 @@ def load_qrels():
     return qrels
 
 
-def evaluate_individual_runs(qrels, model_names: list[str], runs: list):
-    for model_name, run in zip(model_names, runs):
-        retrieval.run_evaluation(qrels, run, model_name)
-
-
 def fuse_and_evaluate(qrels, runs: list, strategy: str):
     log.info("Fusing %d runs with strategy '%s'", len(runs), strategy)
     fused_run = fuse(runs=runs, method=strategy)
@@ -86,7 +81,6 @@ def fuse_and_evaluate(qrels, runs: list, strategy: str):
 def main():
     runs = load_runs(RUNS)
     qrels = load_qrels()
-    evaluate_individual_runs(qrels, RUNS, runs)
     fuse_and_evaluate(qrels, runs, STRATEGY)
 
 
