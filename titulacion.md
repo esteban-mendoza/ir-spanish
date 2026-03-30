@@ -170,14 +170,10 @@ df -h
 
 du -sh .[^.]* * 2>/dev/null | sort -hr
 
-nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python /home/jmendoza/proyecto/baselines/splade_v3.py > /home/jmendoza/proyecto/logs/splade-v3.log 2>&1 &
+nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python /home/jmendoza/proyecto/baselines/jina_v5_small.py > /home/jmendoza/proyecto/logs/jina-embeddings-v5-text-small-retrieval.log 2>&1 &
 ps aux | grep baselines
 kill <PIDs>
 kill -9 <PIDs>
 
-tail -f /home/jmendoza/proyecto/logs/splade-v3.log
+tail -f /home/jmendoza/proyecto/logs/jina-embeddings-v5-text-small-retrieval.log
 ```
-
-## PIDs
-
-1385441
