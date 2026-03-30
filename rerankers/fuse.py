@@ -175,7 +175,7 @@ def sweep_combinations(
 def main():
     runs = load_runs(RUNS)
     qrels = load_qrels()
-    fuse_and_evaluate(qrels, runs, STRATEGIES[STRATEGY])
+    sweep_combinations(qrels, runs, RUNS, STRATEGIES[STRATEGY])
 
 
 if __name__ == "__main__":
