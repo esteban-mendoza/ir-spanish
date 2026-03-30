@@ -3,7 +3,8 @@
 ## Tareas
 
 - Experimentos
-    - Baselines 
+    - Baselines
+    - Baselines con instrucciones en Español
     - Comparar rankings entre sí
     - Comparar con text-embedding-3-large
 
@@ -47,6 +48,7 @@ _INCLUIR LOS 3 DOCUMENTOS EN UN SOLO PDF._
     - multilingual-e5-large-instruct
     - BGE-M3
     - Qwen3-Embedding-8B
+    - jina-embeddings-v5-text-small
 - Dispersos:
     - SPLADE-v3
 - Interacción tardía:
@@ -75,12 +77,12 @@ _INCLUIR LOS 3 DOCUMENTOS EN UN SOLO PDF._
 | E5-large-ft-messirve     | 0.491   | 0.887      |
 | OpenAI-large             | 0.476   | 0.916      |
 
-## Mis resultados (q512, d512)
+## Mis resultados (q512, d512), tasks in English
 
 | Model                            | nDCG@10 | Recall@100 |
 |----------------------------------|--------:|-----------:|
 | BM25 (no filters)                | 0.1848  | 0.5725     |
-| splade-v3                        | xxxxxx  | xxxxxx     |
+| splade-v3                        | 0.1956  | 0.5725     |
 | qwen3-embedding-0.6b             | 0.4468  | 0.8422     |
 | multilingual-e5-large-instruct   | 0.4675  | 0.8666     |
 | BGE-M3                           | 0.4818  | 0.8741     |
@@ -149,14 +151,6 @@ qrel: query relevance judgment
     - Interacción tardía:
         - Modelos como COLBERT generan un embedding por cada token (en vez de un embedding por consulta/documento).
         - Calcula similitud a nivel de token entre consultas y documentos.
-
-| Model Category   | Key Model        | Indexing Cost (A100 GPU Hours) | Vector Storage (RAM/Disk) |
-|------------------|------------------|--------------------------------|---------------------------|
-| Lexical          | BM25             | 4 - 8 (CPU Only)              | ~2 GB                     |
-| Dual-Encoder     | BGE-M3 / E5      | 80 - 120 Hours                | 28 - 56 GB                |
-| Dual-Encoder     | Qwen3-8B         | 1,200 - 1,800 Hours           | 112 - 224 GB              |
-| Sparse           | SPLADE-v3        | 100 - 150 Hours               | 10 - 15 GB                |
-| Late Interaction | Jina-ColBERT-v2  | 150 - 250 Hours               | 140 - 280 GB              |
 
 ## Cmds
 
