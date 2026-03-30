@@ -4,8 +4,8 @@
 
 - Experimentos
   - Baselines
-  - Baselines con instrucciones en Español
   - Comparar rankings entre sí
+    - 
   - Comparar con text-embedding-3-large
 
 - Revisar resultados y métodos:
@@ -59,6 +59,9 @@ _INCLUIR LOS 3 DOCUMENTOS EN UN SOLO PDF._
 
 - Rerankers:
   - RRF
+  - Rank-Biased Centroids (rbc)
+  - BayesFuse (bayesfuse)
+  - MAPFuse (mapfuse)
   - Condorcet-fuse
   - Borda-fuse
 
@@ -78,19 +81,22 @@ _INCLUIR LOS 3 DOCUMENTOS EN UN SOLO PDF._
 
 ## Mis resultados (q512, d512)
 
-| Model                            | nDCG@10 | Recall@100 |
-|----------------------------------|--------:|-----------:|
-| BM25 (no filters)                | 0.1848  | 0.5725     |
-| splade-v3                        | 0.1956  | 0.5725     |
-| qwen3-embedding-0.6b             | 0.4468  | 0.8422     |
-| multilingual-e5-large-instruct   | 0.4675  | 0.8666     |
-| BGE-M3                           | 0.4818  | 0.8741     |
+| Model                                   | nDCG@10 | Recall@100 |
+|-----------------------------------------|--------:|-----------:|
+| BM25 (no filters)                       | 0.1848  | 0.5725     |
+| splade-v3                               | 0.1956  | 0.5725     |
+| qwen3-embedding-0.6b                    | 0.4468  | 0.8422     |
+| multilingual-e5-large-instruct          | 0.4675  | 0.8666     |
+| bge-m3                                  | 0.4818  | 0.8741     |
+| jina-embeddings-v5-text-small-retrieval | 0.5111  | 0.9037     |
 
 ## Fusiones (q512, d512)
 
-| Model                            | nDCG@10 | Recall@100 |
-|----------------------------------|--------:|-----------:|
-| e5 + bge                         | 0.5128  | 0.8997     |
+| Model                            | strategy   | nDCG@10 | Recall@100 |
+|----------------------------------|-----------:|--------:|-----------:|
+| e5 + bge                         | rrf (k=60) | 0.5128  | 0.8997     |
+| e5 + bge + jina                  | rrf (k=60) | 0.5450  | 0.9232     |
+| e5 + bge + jina                  | rbc (φ=0.9)| 0.5478  | 0.9194     |
 
 
 ## Mis resultados (q64, d256)
@@ -179,11 +185,12 @@ du -sh .[^.]* * 2>/dev/null | sort -hr
 
 cd /home/jmendoza/proyecto && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python baselines/jina_v5_small.py >
   logs/jina-embeddings-v5-text-small-retrieval.log 2>&1 &
-ps aux | grep baselines
+ps aux | grep proyecto
 kill <PIDs>
 kill -9 <PIDs>
 
 tail -f /home/jmendoza/proyecto/logs/jina-embeddings-v5-text-small-retrieval.log
 
-cd /home/jmendoza/proyecto && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m rerankers.fuse 
+cd /home/jmendoza/proyecto && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m rerankers.fuse >
+  logs/jina-embeddings-v5-text-small-retrieval.log 2>&1 &
 ```
