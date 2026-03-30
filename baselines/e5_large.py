@@ -4,8 +4,6 @@ Baseline evaluation of multilingual-e5-large-instruct on MessIRve (Spanish IR).
 Metrics: nDCG@10, Recall@100 via ranx.
 
 Features:
-- Filters out documents > 400 words to prevent truncation & OOM.
-- Prunes qrels/queries missing from the filtered corpus to maintain metric validity (Cached).
 - Chunked document encoding with crash-safe resumption.
 - float32 `.npy` caching to avoid Parquet bottleneck.
 - NUMA-aware multi-processing.
