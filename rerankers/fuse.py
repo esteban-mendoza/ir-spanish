@@ -21,6 +21,10 @@ from ranx import fuse
 
 log = logging.getLogger(__name__)
 
+@dataclass(frozen=True)
+class FusionStrategy:
+    method: str
+    params: dict | None = None
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -34,32 +38,23 @@ MODEL_ALIASES = {
     "jinaai/jina-embeddings-v5-text-small-retrieval": "jina-v5-small",
 }
 
-
-def short_alias(slug: str) -> str:
-    return MODEL_ALIASES.get(slug, slug.split("/")[-1].lower())
-
-
-@dataclass(frozen=True)
-class FusionStrategy:
-    method: str
-    params: dict | None = None
-
-
 STRATEGIES = {
     "rrf": FusionStrategy(method="rrf", params={"k": 60}),
-    "rbc": FusionStrategy(method="rbc", params={"phi": 0.9}),
+    "rbc": FusionStrategy(method="rbc", params={"phi": 0.85}),
 }
 
 STRATEGY = "rbc"
 
 RUNS = [
-    "bm25_pyserini",
-    "naver/splade-v3",
-    "Qwen/Qwen3-Embedding-0.6B",
+    # "bm25_pyserini",
+    # "naver/splade-v3",
+    # "Qwen/Qwen3-Embedding-0.6B",
     "intfloat/multilingual-e5-large-instruct",
     "BAAI/bge-m3",
     "jinaai/jina-embeddings-v5-text-small-retrieval",
 ]
+
+SINGLE_FUSION = True
 
 MAX_QUERY_LENGTH = 512
 MAX_DOC_LENGTH = 512
@@ -69,6 +64,10 @@ CACHE_DIR = Path.home() / ".cache" / "messirve_embeddings"
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
+def short_alias(slug: str) -> str:
+    return MODEL_ALIASES.get(slug, slug.split("/")[-1].lower())
+
 def load_runs(model_names: list[str]) -> list:
     runs = []
     for model_name in model_names:
@@ -171,7 +170,10 @@ def sweep_combinations(
 def main():
     runs = load_runs(RUNS)
     qrels = load_qrels()
-    sweep_combinations(qrels, runs, RUNS, STRATEGIES[STRATEGY])
+    if SINGLE_FUSION:
+        fuse_and_evaluate(qrels, runs, STRATEGIES[STRATEGY])
+    else:
+        sweep_combinations(qrels, runs, RUNS, STRATEGIES[STRATEGY])
 
 
 if __name__ == "__main__":
