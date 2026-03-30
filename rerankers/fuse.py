@@ -9,6 +9,8 @@ and which fusion method is used.
 
 from __future__ import annotations
 
+import logging
+from dataclasses import dataclass, field
 from pathlib import Path
 
 # utils.__init__ sets up logging and NUMA/threading env-vars
@@ -16,27 +18,42 @@ from utils import cache, data, retrieval
 
 from ranx import fuse
 
+log = logging.getLogger(__name__)
+
+
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
+@dataclass(frozen=True)
+class FusionStrategy:
+    method: str
+    params: dict = field(default_factory=dict)
+
+
+STRATEGIES = {
+    "rrf": FusionStrategy(method="rrf", params={"k": 60}),
+    "rbc": FusionStrategy(method="rbc", params={"phi": 0.9}),
+}
+
+STRATEGY = "rbc"
+
 RUNS = [
+    "bm25_pyserini",
+    "naver/splade-v3",
+    "Qwen/Qwen3-Embedding-0.6B",
     "intfloat/multilingual-e5-large-instruct",
     "BAAI/bge-m3",
+    "jinaai/jina-embeddings-v5-text-small-retrieval",
 ]
-STRATEGY = "rrf"
+
 MAX_QUERY_LENGTH = 512
 MAX_DOC_LENGTH = 512
 CACHE_DIR = Path.home() / ".cache" / "messirve_embeddings"
 
 
 # ---------------------------------------------------------------------------
-# Main
+# Helpers
 # ---------------------------------------------------------------------------
-import logging
-
-log = logging.getLogger(__name__)
-
-
 def load_runs(model_names: list[str]) -> list:
     runs = []
     for model_name in model_names:
@@ -71,17 +88,25 @@ def load_qrels():
     return qrels
 
 
-def fuse_and_evaluate(qrels, runs: list, strategy: str):
-    log.info("Fusing %d runs with strategy '%s'", len(runs), strategy)
-    fused_run = fuse(runs=runs, method=strategy)
-    fused_run.name = f"fused_{strategy}"
-    retrieval.run_evaluation(qrels, fused_run, f"fused({strategy})")
+def fuse_and_evaluate(qrels, runs: list, strategy: FusionStrategy):
+    log.info(
+        "Fusing %d runs with strategy '%s' (params: %s)",
+        len(runs),
+        strategy.method,
+        strategy.params,
+    )
+    fused_run = fuse(runs=runs, method=strategy.method, params=strategy.params)
+    fused_run.name = f"fused_{strategy.method}"
+    retrieval.run_evaluation(qrels, fused_run, f"fused({strategy.method})")
 
 
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
 def main():
     runs = load_runs(RUNS)
     qrels = load_qrels()
-    fuse_and_evaluate(qrels, runs, STRATEGY)
+    fuse_and_evaluate(qrels, runs, STRATEGIES[STRATEGY])
 
 
 if __name__ == "__main__":
