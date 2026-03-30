@@ -15,8 +15,8 @@ from pathlib import Path
 # Allow imports from the baselines package (sibling directory)
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "baselines"))
 
-# utils.__init__ sets up logging and NUMA/threading env-vars
-from utils import cache, data, retrieval  # noqa: E402
+# baselines.utils.__init__ sets up logging and NUMA/threading env-vars
+from baselines.utils import cache, data, retrieval  # noqa: E402
 
 from ranx import fuse  # noqa: E402
 
