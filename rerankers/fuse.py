@@ -156,7 +156,7 @@ def sweep_combinations(
                 strategy=strategy.method,
                 params=params_str,
             )
-            data_rows.append(retrieval._results_row(
+            data_rows.append(retrieval.results_row(
                 combo_name, strategy.method, params_str, results,
             ))
 

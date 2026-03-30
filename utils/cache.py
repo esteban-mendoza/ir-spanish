@@ -91,9 +91,17 @@ def is_complete(embedding_dir: Path) -> bool:
     return (embedding_dir / "ids.json").exists() and (embedding_dir / "merged.npy").exists()
 
 
+def are_qrels_cached(dataset_cache_dir: Path) -> bool:
+    """Return True if the pruned qrels and query map JSON files both exist."""
+    return (
+        (dataset_cache_dir / "pruned_qrels.json").exists()
+        and (dataset_cache_dir / "pruned_q_map.json").exists()
+    )
+
+
 def log_cache_status(model_cache_base: Path, dataset_cache_dir: Path):
     """Log whether each expected cache artifact (qrels, doc embeddings, query embeddings) exists."""
-    qrels_are_cached = (dataset_cache_dir / "pruned_qrels.json").exists()
+    qrels_are_cached = are_qrels_cached(dataset_cache_dir)
     log.info("  %-6s: %s", "qrels", "✓ cached" if qrels_are_cached else "✗ not cached")
 
     for embedding_type in ("doc", "query"):

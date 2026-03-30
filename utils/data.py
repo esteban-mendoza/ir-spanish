@@ -57,6 +57,50 @@ def load_messirve_qrels(country: str, version: str, num_workers: int):
     return Qrels(qrels_dict), query_id_to_text
 
 
+def _build_pruned_qrels(
+    kept_doc_ids: list[str],
+    country: str,
+    version: str,
+    num_workers: int,
+) -> tuple[dict, dict]:
+    """Load original qrels, prune to only kept doc IDs, and return the pruned dicts.
+
+    Returns:
+        pruned_qrels_dict:  {query_id: {doc_id: relevance}} with only kept docs.
+        pruned_query_map:   {query_id: query_text} for queries that still have judgments.
+    """
+    original_qrels, original_query_map = load_messirve_qrels(country, version, num_workers)
+
+    with Timer("Pruning qrels against filtered corpus"):
+        valid_doc_ids = set(kept_doc_ids)
+        original_qrels_dict = original_qrels.to_dict()
+        pruned_qrels_dict: dict[str, dict[str, int]] = defaultdict(dict)
+
+        for query_id, relevance_judgments in original_qrels_dict.items():
+            for doc_id, relevance_score in relevance_judgments.items():
+                if doc_id in valid_doc_ids:
+                    pruned_qrels_dict[query_id][doc_id] = relevance_score
+
+        # Drop queries whose every relevant document was filtered out
+        pruned_qrels_dict = {
+            query_id: judgments
+            for query_id, judgments in pruned_qrels_dict.items()
+            if judgments
+        }
+        pruned_query_map = {
+            query_id: original_query_map[query_id]
+            for query_id in pruned_qrels_dict.keys()
+        }
+
+        log.info(
+            "Filtered queries: %d / %d kept after pruning",
+            len(pruned_qrels_dict),
+            len(original_qrels_dict),
+        )
+
+    return pruned_qrels_dict, pruned_query_map
+
+
 def get_pruned_qrels_and_queries(
     country: str,
     version: str,
@@ -92,34 +136,9 @@ def get_pruned_qrels_and_queries(
             "Cache miss for pruned qrels, but kept_doc_ids were not provided to build it."
         )
 
-    original_qrels, original_query_map = load_messirve_qrels(country, version, num_workers)
-
-    with Timer("Pruning qrels against filtered corpus"):
-        valid_doc_ids = set(kept_doc_ids)
-        original_qrels_dict = original_qrels.to_dict()
-        pruned_qrels_dict: dict[str, dict[str, int]] = defaultdict(dict)
-
-        for query_id, relevance_judgments in original_qrels_dict.items():
-            for doc_id, relevance_score in relevance_judgments.items():
-                if doc_id in valid_doc_ids:
-                    pruned_qrels_dict[query_id][doc_id] = relevance_score
-
-        # Drop queries whose every relevant document was filtered out
-        pruned_qrels_dict = {
-            query_id: judgments
-            for query_id, judgments in pruned_qrels_dict.items()
-            if judgments
-        }
-        pruned_query_map = {
-            query_id: original_query_map[query_id]
-            for query_id in pruned_qrels_dict.keys()
-        }
-
-        log.info(
-            "Filtered queries: %d / %d kept after pruning",
-            len(pruned_qrels_dict),
-            len(original_qrels_dict),
-        )
+    pruned_qrels_dict, pruned_query_map = _build_pruned_qrels(
+        kept_doc_ids, country, version, num_workers,
+    )
 
     # 3. Save to cache for the next run and other models that share this dataset config
     dataset_cache_dir.mkdir(parents=True, exist_ok=True)

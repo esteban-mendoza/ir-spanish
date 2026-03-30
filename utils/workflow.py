@@ -80,10 +80,7 @@ class BaseWorkflow:
         """
         need_doc_embeddings = not cache.is_complete(self.doc_embedding_dir)
         need_query_embeddings = not cache.is_complete(self.query_embedding_dir)
-        need_pruned_qrels = not (
-            (self.dataset_cache_dir / "pruned_qrels.json").exists()
-            and (self.dataset_cache_dir / "pruned_q_map.json").exists()
-        )
+        need_pruned_qrels = not cache.are_qrels_cached(self.dataset_cache_dir)
         need_retrieval_run = not cache.run_cache_path(self.model_cache_base).exists()
         return need_doc_embeddings, need_query_embeddings, need_pruned_qrels, need_retrieval_run
 

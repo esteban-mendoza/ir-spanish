@@ -120,9 +120,7 @@ def run_evaluation(
     """
     results: dict[str, float] = evaluate(qrels, run, metrics=["ndcg@10", "recall@100"])
 
-    if mode == "short":
-        _log_short(results, model_name, strategy, params)
-    elif mode == "inline":
+    if mode == "inline":
         _log_inline(results, model_name, strategy, params)
     elif mode == "verbose":
         _log_verbose(results, model_name)
@@ -148,7 +146,7 @@ def md_table(rows: list[list[str]]) -> str:
     return "\n".join([header, sep] + [fmt(r) for r in rows])
 
 
-def _results_row(
+def results_row(
     model_name: str, strategy: str, params: str, results: dict[str, float],
 ) -> list[str]:
     return [
@@ -169,13 +167,6 @@ def _log_verbose(results: dict[str, float], model_name: str) -> None:
     for metric_name, metric_value in results.items():
         log.info("║  %-15s  %.4f                         ║", metric_name, metric_value)
     log.info("╚══════════════════════════════════════════════════╝")
-
-
-def _log_short(
-    results: dict[str, float], model_name: str, strategy: str, params: str,
-) -> None:
-    row = _results_row(model_name, strategy, params, results)
-    log.info("\n%s", md_table([row]))
 
 
 def _log_inline(
