@@ -51,6 +51,7 @@ class BaseEmbeddingModel:
         self.pool = None
         self.task_description = ""
         self.query_prompt_name: str | None = None
+        self.doc_prompt_name: str | None = None
 
     # ------------------------------------------------------------------
     # Hooks — override in subclasses
@@ -142,7 +143,7 @@ class BaseEmbeddingModel:
             pool=self.pool,
             batch_size=batch_size,
             normalize_embeddings=True,
-            prompt_name=self.query_prompt_name if is_query else None,
+            prompt_name=self.query_prompt_name if is_query else self.doc_prompt_name,
         )
         return embeddings.astype(np.float32, copy=False)
 
