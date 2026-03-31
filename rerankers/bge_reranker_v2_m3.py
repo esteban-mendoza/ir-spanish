@@ -93,6 +93,48 @@ def build_doc_lookup(num_workers: int) -> dict[str, str]:
     return lookup
 
 
+def _rerank_shard(
+    model,
+    device: str,
+    chunk: list[tuple[str, str, list[str]]],
+    shard_index: int,
+    doc_lookup: dict[str, str],
+    batch_size: int,
+    checkpoint_dir: Path,
+) -> dict[str, dict[str, float]]:
+    shard_result: dict[str, dict[str, float]] = {}
+    shard_pairs = 0
+    t0 = time.perf_counter()
+    cp_file = checkpoint_dir / f"shard_{shard_index:04d}.json"
+    for idx, (query_id, query_text, doc_ids) in enumerate(chunk, 1):
+        pairs = [(query_text, doc_lookup[did]) for did in doc_ids]
+        scores = model.predict(pairs, batch_size=batch_size, show_progress_bar=False)
+        shard_result[query_id] = {
+            doc_id: float(score) for doc_id, score in zip(doc_ids, scores)
+        }
+        shard_pairs += len(pairs)
+        if idx % CHECKPOINT_EVERY == 0:
+            with open(cp_file, "w") as f:
+                json.dump(shard_result, f)
+            elapsed = time.perf_counter() - t0
+            rate = shard_pairs / elapsed if elapsed > 0 else 0
+            log.info(
+                "[%s] %d/%d queries | %d pairs | %.0f pairs/s | %.1fs | checkpoint saved",
+                device, idx, len(chunk), shard_pairs, rate, elapsed,
+            )
+    # Final checkpoint for this shard
+    if shard_result:
+        with open(cp_file, "w") as f:
+            json.dump(shard_result, f)
+    elapsed = time.perf_counter() - t0
+    rate = shard_pairs / elapsed if elapsed > 0 else 0
+    log.info(
+        "[%s] Shard done: %d queries, %d pairs in %.1fs (%.0f pairs/s)",
+        device, len(chunk), shard_pairs, elapsed, rate,
+    )
+    return shard_result
+
+
 def rerank(
     first_stage_run,
     query_map: dict[str, str],
@@ -139,48 +181,15 @@ def rerank(
         n = len(models)
         chunks = [query_items[i::n] for i in range(n)]
 
-        def _rerank_shard(
-            model, device: str, chunk: list[tuple[str, str, list[str]]],
-            shard_index: int,
-        ) -> dict[str, dict[str, float]]:
-            shard_result: dict[str, dict[str, float]] = {}
-            shard_pairs = 0
-            t0 = time.perf_counter()
-            cp_file = checkpoint_dir / f"shard_{shard_index:04d}.json"
-            for idx, (query_id, query_text, doc_ids) in enumerate(chunk, 1):
-                pairs = [(query_text, doc_lookup[did]) for did in doc_ids]
-                scores = model.predict(pairs, batch_size=batch_size, show_progress_bar=False)
-                shard_result[query_id] = {
-                    doc_id: float(score) for doc_id, score in zip(doc_ids, scores)
-                }
-                shard_pairs += len(pairs)
-                if idx % CHECKPOINT_EVERY == 0:
-                    with open(cp_file, "w") as f:
-                        json.dump(shard_result, f)
-                    elapsed = time.perf_counter() - t0
-                    rate = shard_pairs / elapsed if elapsed > 0 else 0
-                    log.info(
-                        "[%s] %d/%d queries | %d pairs | %.0f pairs/s | %.1fs | checkpoint saved",
-                        device, idx, len(chunk), shard_pairs, rate, elapsed,
-                    )
-            # Final checkpoint for this shard
-            if shard_result:
-                with open(cp_file, "w") as f:
-                    json.dump(shard_result, f)
-            elapsed = time.perf_counter() - t0
-            rate = shard_pairs / elapsed if elapsed > 0 else 0
-            log.info(
-                "[%s] Shard done: %d queries, %d pairs in %.1fs (%.0f pairs/s)",
-                device, len(chunk), shard_pairs, elapsed, rate,
-            )
-            return shard_result
-
         # Run shards in parallel
         reranked: dict[str, dict[str, float]] = {}
         reranked.update(done)
         with ThreadPoolExecutor(max_workers=len(models)) as executor:
             futures = [
-                executor.submit(_rerank_shard, model, dev, chunk, shard_idx)
+                executor.submit(
+                    _rerank_shard, model, dev, chunk, shard_idx,
+                    doc_lookup, batch_size, checkpoint_dir,
+                )
                 for shard_idx, ((model, dev), chunk) in enumerate(zip(models, chunks))
             ]
             for f in futures:
