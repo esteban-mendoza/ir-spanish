@@ -40,7 +40,7 @@ MODEL_ALIASES = {
 
 STRATEGIES = {
     "rrf": FusionStrategy(method="rrf", params={"k": 60}),
-    "rbc": FusionStrategy(method="rbc", params={"phi": 0.85}),
+    "rbc": FusionStrategy(method="rbc", params={"phi": 0.95}),
 }
 
 STRATEGY = "rbc"
