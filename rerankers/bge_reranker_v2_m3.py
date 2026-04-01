@@ -31,7 +31,7 @@ log = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 FIRST_STAGE_MODEL = "jinaai/jina-embeddings-v5-text-small-retrieval"
 RERANKER_MODEL = "BAAI/bge-reranker-v2-m3"
-BATCH_SIZE = 512
+BATCH_SIZE = 256
 MAX_QUERY_LENGTH = 512
 MAX_DOC_LENGTH = 512
 GPU_DEVICES = (
