@@ -5,7 +5,6 @@
 - Experimentos
   - Baselines
   - Comparar rankings entre sí
-    - 
   - Comparar con text-embedding-3-large
 
 - Revisar resultados y métodos:
