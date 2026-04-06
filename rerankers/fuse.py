@@ -14,17 +14,19 @@ import logging
 from dataclasses import dataclass
 from pathlib import Path
 
+from ranx import fuse
+
 # utils.__init__ sets up logging and NUMA/threading env-vars
 from utils import cache, data, retrieval
 
-from ranx import fuse
-
 log = logging.getLogger(__name__)
+
 
 @dataclass(frozen=True)
 class FusionStrategy:
     method: str
     params: dict | None = None
+
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -42,9 +44,9 @@ STRATEGIES = {
     "rrf": FusionStrategy(method="rrf", params={"k": 60}),
     "rbc": FusionStrategy(method="rbc", params={"phi": 0.95}),
     "combmnz": FusionStrategy(method="mnz"),
+    "isr": FusionStrategy(method="isr"),
     "bordafuse": FusionStrategy(method="bordafuse"),
     "condorcet": FusionStrategy(method="condorcet"),
-    "isr": FusionStrategy(method="isr"),
 }
 
 STRATEGY = "isr"
@@ -69,8 +71,10 @@ CACHE_DIR = Path.home() / ".cache" / "messirve_embeddings"
 # Helpers
 # ---------------------------------------------------------------------------
 
+
 def short_alias(slug: str) -> str:
     return MODEL_ALIASES.get(slug, slug.split("/")[-1].lower())
+
 
 def load_runs(model_names: list[str]) -> list:
     runs = []
@@ -93,9 +97,7 @@ def load_runs(model_names: list[str]) -> list:
 
 
 def load_qrels():
-    dataset_cache_dir = cache.dataset_cache_base(
-        CACHE_DIR, data.COUNTRY, data.DATASET_VERSION, data.MAX_WORD_COUNT
-    )
+    dataset_cache_dir = cache.dataset_cache_base(CACHE_DIR, data.COUNTRY, data.DATASET_VERSION, data.MAX_WORD_COUNT)
     qrels, _ = data.get_pruned_qrels_and_queries(
         data.COUNTRY,
         data.DATASET_VERSION,
@@ -154,14 +156,21 @@ def sweep_combinations(
             fused_run.name = combo_name
 
             results = retrieval.run_evaluation(
-                qrels, fused_run, combo_name,
+                qrels,
+                fused_run,
+                combo_name,
                 mode="inline",
                 strategy=strategy.method,
                 params=params_str,
             )
-            data_rows.append(retrieval.results_row(
-                combo_name, strategy.method, params_str, results,
-            ))
+            data_rows.append(
+                retrieval.results_row(
+                    combo_name,
+                    strategy.method,
+                    params_str,
+                    results,
+                )
+            )
 
     table = retrieval.md_table(data_rows)
     log.info("Sweep results:\n%s", table)
