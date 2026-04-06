@@ -190,7 +190,7 @@ ps aux | grep proyecto
 kill <PIDs>
 kill -9 <PIDs>
 
-tail -f /home/jmendoza/proyecto/logs/rerankers-fuse.log
+tail -f /home/jmendoza/proyecto/logs/bge-reranker-v2-m3.log
 
 cd /home/jmendoza/proyecto && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python baselines/jina_v5_small.py >logs/jina-embeddings-v5-text-small-retrieval.log 2>&1 &
 
