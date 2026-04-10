@@ -183,13 +183,13 @@ df -h
 
 du -sh .[^.]* * 2>/dev/null | sort -hr
 
-ps aux | grep proyecto
+ps aux | grep baselines
 kill <PIDs>
 kill -9 <PIDs>
 
 tail -f /home/jmendoza/proyecto/logs/bge-reranker-v2-m3.log
 
-cd /home/jmendoza/proyecto && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python baselines/jina_v5_small.py >logs/jina-embeddings-v5-text-small-retrieval.log 2>&1 &
+cd /home/jmendoza/proyecto && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m baselines.harrier >logs/harrier-oss-v1-0.6b.log 2>&1 &
 
 cd /home/jmendoza/proyecto && conda activate proyecto && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m rerankers.fuse > logs/rerankers-fuse-borda.log 2>&1 &
 
