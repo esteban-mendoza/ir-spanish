@@ -24,8 +24,8 @@ from utils.workflow import BaseWorkflow
 # Configuration
 # ---------------------------------------------------------------------------
 MODEL_NAME = "microsoft/harrier-oss-v1-0.6b"
-QUERY_BATCH_SIZE = 256
-DOC_BATCH_SIZE = 256
+QUERY_BATCH_SIZE = 128
+DOC_BATCH_SIZE = 128
 MAX_QUERY_LENGTH = 512
 MAX_DOC_LENGTH = 512
 
