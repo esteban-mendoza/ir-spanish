@@ -108,7 +108,7 @@ def run_evaluation(
 ) -> dict:
     """Evaluate the retrieval run against ground-truth qrels and log the results.
 
-    Computes nDCG@10 and Recall@100 using ranx.
+    Computes nDCG@10, Recall@100, MRR, Bpref, and MAP using ranx.
 
     Args:
         mode: "verbose" for box-drawing output, "short" for a markdown table row.
@@ -118,7 +118,7 @@ def run_evaluation(
     Returns:
         A dict mapping metric names to their computed float values.
     """
-    results: dict[str, float] = evaluate(qrels, run, metrics=["ndcg@10", "recall@100"])
+    results: dict[str, float] = evaluate(qrels, run, metrics=["ndcg@10", "recall@100", "mrr", "bpref", "map"])
 
     if mode == "inline":
         _log_inline(results, model_name, strategy, params)
@@ -128,7 +128,7 @@ def run_evaluation(
     return results
 
 
-_TABLE_COLUMNS = ["model", "strategy", "params", "ndcg@10", "recall@100"]
+_TABLE_COLUMNS = ["model", "strategy", "params", "ndcg@10", "recall@100", "mrr", "bpref", "map"]
 
 
 def md_table(rows: list[list[str]]) -> str:
@@ -155,6 +155,9 @@ def results_row(
         params or " ",
         f"{results['ndcg@10']:.4f}",
         f"{results['recall@100']:.4f}",
+        f"{results['mrr']:.4f}",
+        f"{results['bpref']:.4f}",
+        f"{results['map']:.4f}",
     ]
 
 
@@ -177,4 +180,10 @@ def _log_inline(
         tag += f" ({strategy})" if not params else f" ({strategy}, {params})"
     ndcg = results["ndcg@10"]
     recall = results["recall@100"]
-    log.info("  %-60s  ndcg@10=%.4f  recall@100=%.4f", tag, ndcg, recall)
+    mrr = results["mrr"]
+    bpref = results["bpref"]
+    map_score = results["map"]
+    log.info(
+        "  %-60s  ndcg@10=%.4f  recall@100=%.4f  mrr=%.4f  bpref=%.4f  map=%.4f",
+        tag, ndcg, recall, mrr, bpref, map_score,
+    )
