@@ -80,6 +80,7 @@ _INCLUIR LOS 3 DOCUMENTOS EN UN SOLO PDF._
 | BM25 (no filters)                       |  0.1848 |     0.5725 |
 | splade-v3                               |  0.1956 |     0.5725 |
 | qwen3-embedding-0.6b                    |  0.4468 |     0.8422 |
+| harrier-oss-v1-0.6b                     |  0.4520 |     0.8769 |
 | multilingual-e5-large-instruct          |  0.4675 |     0.8666 |
 | bge-m3                                  |  0.4818 |     0.8741 |
 | jina-embeddings-v5-text-small-retrieval |  0.5111 |     0.9037 |
