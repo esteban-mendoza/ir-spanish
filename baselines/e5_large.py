@@ -23,8 +23,8 @@ from utils.workflow import BaseWorkflow
 # ---------------------------------------------------------------------------
 MODEL_NAME = "intfloat/multilingual-e5-large-instruct"
 MODEL_MAX_LENGTH = 514
-QUERY_BATCH_SIZE = 256
-DOC_BATCH_SIZE = 1024
+QUERY_BATCH_SIZE = 512
+DOC_BATCH_SIZE = 128
 
 GPU_DEVICES = ["cuda:0", "cuda:1"]
 SEED = 42

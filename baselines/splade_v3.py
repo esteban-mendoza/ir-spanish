@@ -31,8 +31,8 @@ log = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 MODEL_NAME = "naver/splade-v3"
 MODEL_MAX_LENGTH = 512
+QUERY_BATCH_SIZE = 256
 DOC_BATCH_SIZE = 128
-QUERY_BATCH_SIZE = 128
 TOP_K = 100
 
 GPU_DEVICES = ["cuda:0", "cuda:1"]

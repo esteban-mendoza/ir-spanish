@@ -24,8 +24,8 @@ from utils.workflow import BaseWorkflow
 # Configuration
 # ---------------------------------------------------------------------------
 MODEL_NAME = "microsoft/harrier-oss-v1-0.6b"
-MODEL_MAX_LENGTH = 8192
-QUERY_BATCH_SIZE = 8
+MODEL_MAX_LENGTH = 32768
+QUERY_BATCH_SIZE = 512
 DOC_BATCH_SIZE = 8
 
 GPU_DEVICES = ["cuda:0", "cuda:1"]
