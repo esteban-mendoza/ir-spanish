@@ -103,13 +103,15 @@ _INCLUIR LOS 3 DOCUMENTOS EN UN SOLO PDF._
 
 ## Mis resultados (q64, d256)
 
-| Model                          | nDCG@10 | Recall@100 |
-| ------------------------------ | ------: | ---------: |
-| BM25 (no filters)              |  0.1848 |     0.5725 |
-| splade-v3                      |  0.1964 |     0.5759 |
-| qwen3-embedding-0.6b           |  0.4463 |     0.8408 |
-| multilingual-e5-large-instruct |  0.4625 |     0.8591 |
-| BGE-M3                         |  0.4816 |     0.8735 |
+| Model                                   | nDCG@10 | Recall@100 |
+| ----------------------------------------| ------: | ---------: |
+| BM25 (no filters)                       |  0.1848 |     0.5725 |
+| splade-v3                               |  0.1964 |     0.5759 |
+| qwen3-embedding-0.6b                    |  0.4463 |     0.8408 |
+| harrier-oss-v1-0.6b                     |  0.xxxx |     0.xxxx |
+| multilingual-e5-large-instruct          |  0.4625 |     0.8591 |
+| bge-m3                                  |  0.4816 |     0.8735 |
+| jina-embeddings-v5-text-small-retrieval |  0.xxxx |     0.xxxx |
 
 ## Fusiones (q512, d512)
 
