@@ -26,7 +26,7 @@ from utils.workflow import BaseWorkflow
 MODEL_NAME = "jinaai/jina-embeddings-v5-text-small-retrieval"
 MODEL_MAX_LENGTH = 32768
 QUERY_BATCH_SIZE = 512
-DOC_BATCH_SIZE = 8
+DOC_BATCH_SIZE = 16
 
 GPU_DEVICES = ["cuda:0", "cuda:1"]
 SEED = 42

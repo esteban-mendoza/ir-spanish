@@ -25,8 +25,8 @@ from utils.workflow import BaseWorkflow
 # ---------------------------------------------------------------------------
 MODEL_NAME = "Qwen/Qwen3-Embedding-0.6B"
 MODEL_MAX_LENGTH = 32768
-QUERY_BATCH_SIZE = 256
-DOC_BATCH_SIZE = 4
+QUERY_BATCH_SIZE = 512
+DOC_BATCH_SIZE = 16
 
 GPU_DEVICES = ["cuda:0", "cuda:1"]
 SEED = 42
