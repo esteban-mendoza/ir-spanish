@@ -89,11 +89,23 @@ _INCLUIR LOS 3 DOCUMENTOS EN UN SOLO PDF._
 | E5-large-ft-messirve          |   0.491 |      0.887 |
 | OpenAI-text-embedding-3-large |   0.476 |      0.916 |
 
+## Mis resultados (max_seq_length)
+
+| Model                                   | length | nDCG@10 | Recall@100 |
+| --------------------------------------- | -----: | ------: | ---------: |
+| BM25                                    |    N/A |  0.1848 |     0.5725 |
+| splade-v3                               |    512 |  0.1964 |     0.5759 |
+| qwen3-embedding-0.6b                    | 32,768 |  0.xxxx |     0.xxxx |
+| harrier-oss-v1-0.6b                     | 32,768 |  0.xxxx |     0.xxxx |
+| multilingual-e5-large-instruct          |    512 |  0.4625 |     0.8591 |
+| bge-m3                                  |  8,192 |  0.xxxx |     0.xxxx |
+| jina-embeddings-v5-text-small-retrieval | 32,768 |  0.xxxx |     0.xxxx |
+
 ## Mis resultados (q512, d512)
 
 | Model                                   | nDCG@10 | Recall@100 |
 | --------------------------------------- | ------: | ---------: |
-| BM25 (no filters)                       |  0.1848 |     0.5725 |
+| BM25                                    |  0.1848 |     0.5725 |
 | splade-v3                               |  0.1956 |     0.5725 |
 | qwen3-embedding-0.6b                    |  0.4468 |     0.8422 |
 | harrier-oss-v1-0.6b                     |  0.4520 |     0.8769 |
@@ -104,8 +116,8 @@ _INCLUIR LOS 3 DOCUMENTOS EN UN SOLO PDF._
 ## Mis resultados (q64, d256)
 
 | Model                                   | nDCG@10 | Recall@100 |
-| ----------------------------------------| ------: | ---------: |
-| BM25 (no filters)                       |  0.1848 |     0.5725 |
+| --------------------------------------- | ------: | ---------: |
+| BM25                                    |  0.1848 |     0.5725 |
 | splade-v3                               |  0.1964 |     0.5759 |
 | qwen3-embedding-0.6b                    |  0.4463 |     0.8408 |
 | harrier-oss-v1-0.6b                     |  0.xxxx |     0.xxxx |
