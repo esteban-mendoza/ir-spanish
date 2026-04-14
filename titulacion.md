@@ -3,12 +3,29 @@
 ## Tareas
 
 - Experimentos
-  - Baselines
+  - Implementar rerankers:
+    - Interacción tardía:
+      - Jina-ColBERT-v2
+    - Cross-encoders:
+      - bge-reranker-v2-m3
+      - jina-reranker-v3
   - Comparar rankings entre sí
   - Comparar con text-embedding-3-large
 
+- Protocolo
+  - Obtener fundamentos teóricos de:
+    - Embeddings
+    - Probabilistic relevance framework
+  - Rerankers:
+    - RRF
+    - Rank-Biased Centroids (rbc)
+    - CombMNZ
+    - Condorcet-fuse
+    - Borda-fuse
+  - Métricas
+    - Justificar métricas de acuerdo con el estado del arte para hacer comparaciones
+
 - Revisar resultados y métodos:
-  - Paper de MessIRve
   - Artículos utilizando MessIRve
   - MTEB y La Leaderboard
   - Comparar los resultados obtenidos con resultados en otras lenguas para todos los modelos involucrados
@@ -54,8 +71,7 @@ _INCLUIR LOS 3 DOCUMENTOS EN UN SOLO PDF._
 - Rerankers:
   - RRF
   - Rank-Biased Centroids (rbc)
-  - BayesFuse (bayesfuse)
-  - MAPFuse (mapfuse)
+  - CombMNZ
   - Condorcet-fuse
   - Borda-fuse
 
@@ -165,14 +181,20 @@ qrel: query relevance judgment
     - Modelos como COLBERT generan un embedding por cada token (en vez de un embedding por consulta/documento).
     - Calcula similitud a nivel de token entre consultas y documentos.
 
-## Cmds
+## TeX
 
 ```bash
+brew install --cask basictex
+
 sudo tlmgr update --self && sudo tlmgr update --all
 tlmgr search --global --file mypackage.sty
 sudo tlmgr install <package1> <package2>
 tlmgr list --only-installed
+```
 
+## Cmds
+
+```bash
 ps -o user PID
 
 cd /media/discoexterno/
