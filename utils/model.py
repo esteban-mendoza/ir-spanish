@@ -93,6 +93,7 @@ class BaseEmbeddingModel:
                 **optional_tokenizer_kwargs,
             )
             self.model.max_seq_length = self.max_doc_length
+            self.model.tokenizer.model_max_length = max(self.max_doc_length, self.max_query_length)
 
         self.setup_prompts()
 

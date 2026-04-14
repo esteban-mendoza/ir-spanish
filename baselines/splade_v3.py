@@ -30,10 +30,9 @@ log = logging.getLogger(__name__)
 # Configuration
 # ---------------------------------------------------------------------------
 MODEL_NAME = "naver/splade-v3"
+MODEL_MAX_LENGTH = 512
 DOC_BATCH_SIZE = 128
 QUERY_BATCH_SIZE = 128
-MAX_QUERY_LENGTH = 512
-MAX_DOC_LENGTH = 512
 TOP_K = 100
 
 GPU_DEVICES = ["cuda:0", "cuda:1"]
@@ -47,7 +46,7 @@ CACHE_DIR = Path.home() / ".cache" / "messirve_embeddings"
 
 MODEL_CACHE_BASE = cache.cache_base(
     CACHE_DIR, MODEL_NAME, data.COUNTRY, data.DATASET_VERSION,
-    MAX_QUERY_LENGTH, MAX_DOC_LENGTH, data.MAX_WORD_COUNT,
+    MODEL_MAX_LENGTH, MODEL_MAX_LENGTH, data.MAX_WORD_COUNT,
 )
 DOC_EMB_DIR = cache.emb_dir(MODEL_CACHE_BASE, "doc")
 QUERY_EMB_DIR = cache.emb_dir(MODEL_CACHE_BASE, "query")
@@ -313,7 +312,8 @@ if __name__ == "__main__":
         if need_doc_emb or need_query_emb:
             with Timer("Loading SparseEncoder"):
                 model = SparseEncoder(MODEL_NAME, device="cpu")
-                model.max_seq_length = MAX_DOC_LENGTH
+                model.max_seq_length = MODEL_MAX_LENGTH
+                model.tokenizer.model_max_length = MODEL_MAX_LENGTH
 
             with Timer(f"Starting pool on {GPU_DEVICES}"):
                 pool = model.start_multi_process_pool(target_devices=GPU_DEVICES)
@@ -326,10 +326,10 @@ if __name__ == "__main__":
                 gc.collect()
 
             if need_query_emb:
-                if model.max_seq_length != MAX_QUERY_LENGTH:
-                    log.info("Switching max_seq_length %d → %d — restarting pool", model.max_seq_length, MAX_QUERY_LENGTH)
+                if model.max_seq_length != MODEL_MAX_LENGTH:
+                    log.info("Switching max_seq_length %d → %d — restarting pool", model.max_seq_length, MODEL_MAX_LENGTH)
                     model.stop_multi_process_pool(pool)
-                    model.max_seq_length = MAX_QUERY_LENGTH
+                    model.max_seq_length = MODEL_MAX_LENGTH
                     pool = model.start_multi_process_pool(target_devices=GPU_DEVICES)
 
                 query_ids, query_sparse = encode_queries(

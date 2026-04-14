@@ -24,10 +24,9 @@ from utils.workflow import BaseWorkflow
 # Configuration
 # ---------------------------------------------------------------------------
 MODEL_NAME = "Qwen/Qwen3-Embedding-0.6B"
-QUERY_BATCH_SIZE = 256
-DOC_BATCH_SIZE = 256
-MAX_QUERY_LENGTH = 512
-MAX_DOC_LENGTH = 512
+MODEL_MAX_LENGTH = 32768
+QUERY_BATCH_SIZE = 4
+DOC_BATCH_SIZE = 4
 
 GPU_DEVICES = ["cuda:0", "cuda:1"]
 SEED = 42
@@ -41,7 +40,7 @@ DOC_CHUNK_SIZE = 50_000
 # ---------------------------------------------------------------------------
 class EmbeddingModel(BaseEmbeddingModel):
     def __init__(self, model_name: str, devices: list[str]):
-        super().__init__(model_name, devices, DOC_BATCH_SIZE, QUERY_BATCH_SIZE, MAX_DOC_LENGTH, MAX_QUERY_LENGTH)
+        super().__init__(model_name, devices, DOC_BATCH_SIZE, QUERY_BATCH_SIZE, MODEL_MAX_LENGTH, MODEL_MAX_LENGTH)
 
     def get_model_kwargs(self) -> dict:
         return {"torch_dtype": torch.float16, "attn_implementation": "sdpa"}
@@ -58,7 +57,7 @@ class EmbeddingModel(BaseEmbeddingModel):
 # ---------------------------------------------------------------------------
 class Workflow(BaseWorkflow):
     def __init__(self):
-        super().__init__(MODEL_NAME, MAX_QUERY_LENGTH, MAX_DOC_LENGTH, CACHE_DIR, GPU_DEVICES, SEED, NUM_WORKERS, DOC_CHUNK_SIZE)
+        super().__init__(MODEL_NAME, MODEL_MAX_LENGTH, MODEL_MAX_LENGTH, CACHE_DIR, GPU_DEVICES, SEED, NUM_WORKERS, DOC_CHUNK_SIZE)
 
     def create_model(self) -> EmbeddingModel:
         return EmbeddingModel(self.model_name, self.gpu_devices)
