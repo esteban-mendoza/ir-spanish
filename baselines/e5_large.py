@@ -22,7 +22,7 @@ from utils.workflow import BaseWorkflow
 # Configuration
 # ---------------------------------------------------------------------------
 MODEL_NAME = "intfloat/multilingual-e5-large-instruct"
-MODEL_MAX_LENGTH = 514
+MODEL_MAX_LENGTH = 512
 QUERY_BATCH_SIZE = 512
 DOC_BATCH_SIZE = 128
 
