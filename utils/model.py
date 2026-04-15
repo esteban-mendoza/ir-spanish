@@ -127,7 +127,8 @@ class BaseEmbeddingModel:
     # Encoding
     # ------------------------------------------------------------------
 
-    def encode(self, texts: list[str], batch_size: int, is_query: bool = False) -> np.ndarray:
+    def encode(self, texts: list[str], batch_size: int, is_query: bool = False,
+               max_seq_length: int | None = None) -> np.ndarray:
         """Encode a list of texts into normalized float32 embeddings.
 
         Args:
@@ -135,9 +136,14 @@ class BaseEmbeddingModel:
             batch_size: Number of texts per encoding batch.
             is_query: If True, use self.query_prompt_name so the model prepends
                       the registered query prompt automatically.
+            max_seq_length: If provided, override the default max_seq_length for
+                            this encode call (used for adaptive per-chunk encoding).
         """
-        target_length = self.max_query_length if is_query else self.max_doc_length
-        self._ensure_seq_length(target_length)
+        if max_seq_length is not None:
+            self._ensure_seq_length(max_seq_length)
+        else:
+            target_length = self.max_query_length if is_query else self.max_doc_length
+            self._ensure_seq_length(target_length)
 
         embeddings = self.model.encode(
             sentences=texts,

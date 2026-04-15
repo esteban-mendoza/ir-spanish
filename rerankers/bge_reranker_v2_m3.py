@@ -87,7 +87,7 @@ def load_first_stage_run():
 
 def build_doc_lookup(num_workers: int) -> dict[str, str]:
     """Load the corpus and return a {doc_id: text} dict."""
-    doc_ids, doc_texts = data.load_corpus(num_workers)
+    doc_ids, doc_texts, _ = data.load_corpus(num_workers)
     lookup = dict(zip(doc_ids, doc_texts))
     log.info("Doc lookup built: %d documents", len(lookup))
     return lookup

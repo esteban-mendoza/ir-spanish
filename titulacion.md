@@ -22,8 +22,6 @@
     - CombMNZ
     - Condorcet-fuse
     - Borda-fuse
-  - Métricas
-    - Justificar métricas de acuerdo con el estado del arte para hacer comparaciones
 
 - Revisar resultados y métodos:
   - Artículos utilizando MessIRve
@@ -224,11 +222,9 @@ ps aux | grep baselines
 kill <PIDs>
 kill -9 <PIDs>
 
-tail -f /home/jmendoza/proyecto/logs/bge-reranker-v2-m3.log
+tail -f /home/jmendoza/ir-spanish/logs/jina-embeddings-v5-text-small-retrieval.log
 
-cd /home/jmendoza/proyecto && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m baselines.jina_v5_small >logs/jina-embeddings-v5-text-small-retrieval.log 2>&1 &
+cd /home/jmendoza/ir-spanish && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m baselines.jina_v5_small > logs/jina-embeddings-v5-text-small-retrieval.log 2>&1 &
 
-cd /home/jmendoza/proyecto && conda activate proyecto && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m rerankers.fuse > logs/rerankers-fuse-borda.log 2>&1 &
-
-cd /home/jmendoza/proyecto && conda activate proyecto && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m rerankers.bge_reranker_v2_m3 > logs/bge-reranker-v2-m3.log 2>&1 &
+cd /home/jmendoza/ir-spanish && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m rerankers.fuse > logs/rerankers-fuse-borda.log 2>&1 &
 ```

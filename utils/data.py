@@ -195,8 +195,9 @@ def load_corpus(num_workers: int):
     When MAX_WORD_COUNT is None, all documents are kept.
 
     Returns:
-        doc_ids:   List of document IDs (strings) for the kept documents.
-        doc_texts: List of formatted full-text strings for the kept documents.
+        doc_ids:     List of document IDs (strings) for the kept documents.
+        doc_texts:   List of formatted full-text strings for the kept documents.
+        word_counts: List of word counts (ints) for each document.
     """
     with Timer("Loading eswiki corpus"):
         corpus_dataset = datasets.load_dataset(CORPUS_NAME, num_proc=num_workers)
@@ -241,6 +242,7 @@ def load_corpus(num_workers: int):
 
     doc_ids = corpus_split["str_docid"]
     doc_texts = corpus_split["full_text"]
+    word_counts = corpus_split["word_count"]
     del corpus_split, corpus_dataset
     gc.collect()
-    return doc_ids, doc_texts
+    return doc_ids, doc_texts, word_counts
