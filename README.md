@@ -25,69 +25,69 @@ We evaluate on [**MessIRve**](https://huggingface.co/datasets/spanish-ir/messirv
 
 ### Lexical
 
-| Model | Type | Reference |
-|-------|------|-----------|
+| Model                                         | Type           | Reference                  |
+| --------------------------------------------- | -------------- | -------------------------- |
 | [BM25](https://github.com/castorini/pyserini) | Sparse lexical | Robertson & Zaragoza, 2009 |
 
 ### Dense (Dual-Encoders)
 
-| Model | Parameters | Reference |
-|-------|-----------|-----------|
-| [multilingual-e5-large-instruct](https://huggingface.co/intfloat/multilingual-e5-large-instruct) | 560M | Microsoft, 2024 |
-| [BGE-M3](https://huggingface.co/BAAI/bge-m3) | 568M | BAAI, 2024 |
-| [Qwen3-Embedding-0.6B](https://huggingface.co/Qwen/Qwen3-Embedding-0.6B) | 600M | Qwen, 2025 |
-| [jina-embeddings-v5-text-small](https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval) | 677M | Jina AI, 2025 |
-| [Harrier-oss-v1-0.6B](https://huggingface.co/microsoft/harrier-oss-v1-0.6b) | 600M | Microsoft, 2025 |
+| Model                                                                                                  | Parameters | Reference       |
+| ------------------------------------------------------------------------------------------------------ | ---------- | --------------- |
+| [multilingual-e5-large-instruct](https://huggingface.co/intfloat/multilingual-e5-large-instruct)       | 560M       | Microsoft, 2024 |
+| [BGE-M3](https://huggingface.co/BAAI/bge-m3)                                                           | 568M       | BAAI, 2024      |
+| [Qwen3-Embedding-0.6B](https://huggingface.co/Qwen/Qwen3-Embedding-0.6B)                               | 600M       | Qwen, 2025      |
+| [jina-embeddings-v5-text-small](https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval) | 677M       | Jina AI, 2025   |
+| [harrier-oss-v1-0.6B](https://huggingface.co/microsoft/harrier-oss-v1-0.6b)                            | 600M       | Microsoft, 2025 |
 
 ### Sparse (Learned Sparse)
 
-| Model | Type | Reference |
-|-------|------|-----------|
+| Model                                               | Type                           | Reference        |
+| --------------------------------------------------- | ------------------------------ | ---------------- |
 | [SPLADE-v3](https://huggingface.co/naver/splade-v3) | Learned sparse representations | Naver Labs, 2024 |
 
 ### Late Interaction
 
-| Model | Type | Reference |
-|-------|------|-----------|
+| Model                                                            | Type                           | Reference     |
+| ---------------------------------------------------------------- | ------------------------------ | ------------- |
 | [Jina-ColBERT-v2](https://huggingface.co/jinaai/jina-colbert-v2) | ColBERT-style late interaction | Jina AI, 2024 |
 
 ### Cross-Encoders (Rerankers)
 
-| Model | Reference |
-|-------|-----------|
-| [bge-reranker-v2-m3](https://huggingface.co/BAAI/bge-reranker-v2-m3) | BAAI, 2024 |
-| [jina-reranker-v3](https://huggingface.co/jinaai/jina-reranker-v3) | Jina AI, 2024 |
+| Model                                                                | Reference     |
+| -------------------------------------------------------------------- | ------------- |
+| [bge-reranker-v2-m3](https://huggingface.co/BAAI/bge-reranker-v2-m3) | BAAI, 2024    |
+| [jina-reranker-v3](https://huggingface.co/jinaai/jina-reranker-v3)   | Jina AI, 2024 |
 
 ## Rank Fusion Algorithms
 
-| Algorithm | Type | Reference |
-|-----------|------|-----------|
-| **CombMNZ** | Score-based (weighted combination) | Fox & Shaw, 1994 |
-| **BordaFuse** | Score-based (positional) | Aslam & Montague, 2001 |
-| **Condorcet** | Graph-based (pairwise majority) | Montague & Aslam, 2002 |
-| **Reciprocal Rank Fusion (RRF)** | Score-based | Cormack et al., 2009 |
-| **ISR** | Score-based (inverse square rank) | Mourão et al., 2014 |
-| **Rank-Biased Centroids (RBC)** | Score-based (rank-biased overlap) | Bailey et al., 2017 |
+| Algorithm                        | Type                               | Reference              |
+| -------------------------------- | ---------------------------------- | ---------------------- |
+| **CombMNZ**                      | Score-based (weighted combination) | Fox & Shaw, 1994       |
+| **BordaFuse**                    | Score-based (positional)           | Aslam & Montague, 2001 |
+| **Condorcet**                    | Graph-based (pairwise majority)    | Montague & Aslam, 2002 |
+| **Reciprocal Rank Fusion (RRF)** | Score-based                        | Cormack et al., 2009   |
+| **ISR**                          | Score-based (inverse square rank)  | Mourão et al., 2014    |
+| **Rank-Biased Centroids (RBC)**  | Score-based (rank-biased overlap)  | Bailey et al., 2017    |
 
 ## Experimental Design
 
-| Experiment | Description |
-|------------|-------------|
-| **Experiment 1** | Fusion vs. individual models — does combining ranked lists improve over the best single model? |
-| **Experiment 2** | Comparison of fusion algorithms — RRF vs. BordaFuse vs. Condorcet vs. CombMNZ vs. RBC vs. ISR |
+| Experiment       | Description                                                                                                                                                                                |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Experiment 1** | Fusion vs. individual models — does combining ranked lists improve over the best single model?                                                                                             |
+| **Experiment 2** | Comparison of fusion algorithms — RRF vs. BordaFuse vs. Condorcet vs. CombMNZ vs. RBC vs. ISR                                                                                              |
 | **Experiment 3** | Fusion vs. late interaction and cross-encoders — how do rank fusion methods compare against Jina-ColBERT-v2 (late interaction), bge-reranker-v2-m3, and jina-reranker-v3 (cross-encoders)? |
-| **Experiment 4** | Open-source hybrid systems vs. proprietary baselines reported on MessIRve |
+| **Experiment 4** | Open-source hybrid systems vs. proprietary baselines reported on MessIRve                                                                                                                  |
 
 ## Metrics
 
-| Metric | Description |
-|--------|-------------|
-| **nDCG@10** | Normalized Discounted Cumulative Gain at rank 10 — measures ranking quality with graded relevance, giving higher weight to top positions |
-| **Recall@100** | Fraction of relevant documents retrieved in the top 100 results |
-| **MRR@10** | Mean Reciprocal Rank at 10 — average of the reciprocal rank of the first relevant result, considering only the top 10 |
-| **MAP** | Mean Average Precision — mean of average precision scores across all queries |
-| **Precision@10** | Fraction of relevant documents in the top 10 results |
-| **Precision@50** | Fraction of relevant documents in the top 50 results |
+| Metric           | Description                                                                                                                              |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| **nDCG@10**      | Normalized Discounted Cumulative Gain at rank 10 — measures ranking quality with graded relevance, giving higher weight to top positions |
+| **Recall@100**   | Fraction of relevant documents retrieved in the top 100 results                                                                          |
+| **MRR@10**       | Mean Reciprocal Rank at 10 — average of the reciprocal rank of the first relevant result, considering only the top 10                    |
+| **MAP**          | Mean Average Precision — mean of average precision scores across all queries                                                             |
+| **Precision@10** | Fraction of relevant documents in the top 10 results                                                                                     |
+| **Precision@50** | Fraction of relevant documents in the top 50 results                                                                                     |
 
 ## Dataset
 
@@ -98,22 +98,22 @@ We evaluate on [**MessIRve**](https://huggingface.co/datasets/spanish-ir/messirv
 
 ## Tech Stack
 
-| Tool | Purpose |
-|------|---------|
-| [`ranx`](https://github.com/AmenRa/ranx) | Rank fusion, evaluation metrics, and statistical significance tests |
-| [`sentence-transformers`](https://www.sbert.net/) | Dense and sparse embedding models |
-| [`pyserini`](https://github.com/castorini/pyserini) | BM25 indexing and retrieval |
-| [`datasets`](https://huggingface.co/docs/datasets) | Loading MessIRve and the Wikipedia corpus from HuggingFace |
-| [`faiss-gpu`](https://github.com/facebookresearch/faiss) | GPU-accelerated exact nearest-neighbour search |
+| Tool                                                     | Purpose                                                             |
+| -------------------------------------------------------- | ------------------------------------------------------------------- |
+| [`ranx`](https://github.com/AmenRa/ranx)                 | Rank fusion, evaluation metrics, and statistical significance tests |
+| [`sentence-transformers`](https://www.sbert.net/)        | Dense and sparse embedding models                                   |
+| [`pyserini`](https://github.com/castorini/pyserini)      | BM25 indexing and retrieval                                         |
+| [`datasets`](https://huggingface.co/docs/datasets)       | Loading MessIRve and the Wikipedia corpus from HuggingFace          |
+| [`faiss-gpu`](https://github.com/facebookresearch/faiss) | GPU-accelerated exact nearest-neighbour search                      |
 
 ## Hardware
 
-| Component | Specification |
-|-----------|--------------|
-| GPU 0 | NVIDIA RTX A5000 (24 GB VRAM) |
-| GPU 1 | NVIDIA RTX A5000 (24 GB VRAM) |
-| CUDA | 12.2 |
-| Driver | 535.154.05 |
+| Component | Specification                 |
+| --------- | ----------------------------- |
+| GPU 0     | NVIDIA RTX A5000 (24 GB VRAM) |
+| GPU 1     | NVIDIA RTX A5000 (24 GB VRAM) |
+| CUDA      | 12.2                          |
+| Driver    | 535.154.05                    |
 
 ## Setup
 
