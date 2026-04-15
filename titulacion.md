@@ -97,7 +97,7 @@ _INCLUIR LOS 3 DOCUMENTOS EN UN SOLO PDF._
 | harrier-oss-v1-0.6b                     | 32,768 |  0.xxxx |     0.xxxx |
 | multilingual-e5-large-instruct          |    512 |  0.4625 |     0.8591 |
 | bge-m3                                  |  8,192 |  0.xxxx |     0.xxxx |
-| jina-embeddings-v5-text-small-retrieval | 32,768 |  0.xxxx |     0.xxxx |
+| jina-embeddings-v5-text-small-retrieval | 32,768 |  0.5115 |     0.9039 |
 
 ## Mis resultados (q512, d512)
 
@@ -121,7 +121,7 @@ _INCLUIR LOS 3 DOCUMENTOS EN UN SOLO PDF._
 | harrier-oss-v1-0.6b                     |  0.xxxx |     0.xxxx |
 | multilingual-e5-large-instruct          |  0.4625 |     0.8591 |
 | bge-m3                                  |  0.4816 |     0.8735 |
-| jina-embeddings-v5-text-small-retrieval |  0.5115 |     0.9039 |
+| jina-embeddings-v5-text-small-retrieval |  0.xxxx |     0.xxxx |
 
 ## Fusiones (q512, d512)
 
