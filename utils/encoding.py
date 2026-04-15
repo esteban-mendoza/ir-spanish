@@ -102,7 +102,7 @@ def encode_documents_chunked(
     embedding_dir.mkdir(parents=True, exist_ok=True)
 
     # Clean up stale temp files from previous crashes
-    for tmp in embedding_dir.glob("*.npy.tmp"):
+    for tmp in embedding_dir.glob("*_tmp.npy"):
         log.warning("Removing stale temp file: %s", tmp.name)
         tmp.unlink()
 

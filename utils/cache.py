@@ -156,7 +156,7 @@ def save_chunk(embeddings: np.ndarray, path: Path):
     This prevents corrupt .npy files if the process is killed mid-write.
     """
     path.parent.mkdir(parents=True, exist_ok=True)
-    tmp = path.with_suffix(".npy.tmp")
+    tmp = path.with_name(path.stem + "_tmp.npy")
     try:
         np.save(tmp, embeddings)
         os.replace(tmp, path)
