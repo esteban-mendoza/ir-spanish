@@ -175,14 +175,41 @@ def save_chunk(embeddings: np.ndarray, path: Path):
 def merge_chunks(embedding_dir: Path) -> np.ndarray:
     """Concatenate all chunk_*.npy files in a directory into a single merged.npy array.
 
+    Uses a pre-allocated array to avoid holding all chunks in memory simultaneously,
+    which would require ~2x the final array size and can OOM-kill the process on
+    large corpora.
+
     The individual chunk files are deleted after a successful merge to free disk space.
     """
     chunk_paths = sorted(embedding_dir.glob("chunk_*.npy"))
     if not chunk_paths:
         raise FileNotFoundError(f"No chunk files found in {embedding_dir}")
 
-    log.info("Merging %d chunks …", len(chunk_paths))
-    merged_embeddings = np.concatenate([np.load(chunk_path) for chunk_path in chunk_paths], axis=0)
+    # Peek at first chunk to get embedding dimension and dtype
+    first_chunk = np.load(chunk_paths[0])
+    embedding_dim = first_chunk.shape[1]
+    dtype = first_chunk.dtype
+
+    # Compute total rows without loading all chunks
+    total_rows = 0
+    chunk_sizes = []
+    for cp in chunk_paths:
+        # Read only the header to get the shape (avoids loading data)
+        arr = np.load(cp, mmap_mode="r")
+        chunk_sizes.append(arr.shape[0])
+        total_rows += arr.shape[0]
+        del arr
+
+    log.info("Merging %d chunks (%d rows, %d dims) …", len(chunk_paths), total_rows, embedding_dim)
+
+    # Pre-allocate and fill one chunk at a time
+    merged_embeddings = np.empty((total_rows, embedding_dim), dtype=dtype)
+    offset = 0
+    for cp, size in zip(chunk_paths, chunk_sizes):
+        chunk = np.load(cp)
+        merged_embeddings[offset : offset + size] = chunk
+        offset += size
+        del chunk
 
     merged_output_path = embedding_dir / "merged.npy"
     np.save(merged_output_path, merged_embeddings)

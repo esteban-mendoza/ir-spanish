@@ -192,19 +192,27 @@ def encode_documents_chunked(
         gc.collect()
 
     # ------------------------------------------------------------------
-    # Merge chunks and restore original document order
+    # Merge chunks and save IDs in the same order as embeddings
     # ------------------------------------------------------------------
-    save_ids(doc_ids, embedding_dir / "ids.json")
+    # When sorted, save IDs in sorted order so they align with the sorted
+    # embeddings.  This avoids an expensive un-sort of the full embedding
+    # matrix (which would require 2x the array size in RAM).
+    # Downstream code only needs ids[i] <-> embeddings[i] alignment;
+    # the actual ordering is irrelevant for retrieval.
+    if sort_order is not None:
+        doc_ids_list = list(doc_ids) if not isinstance(doc_ids, list) else doc_ids
+        sorted_ids = [doc_ids_list[i] for i in sort_order]
+        save_ids(sorted_ids, embedding_dir / "ids.json")
+    else:
+        sorted_ids = None
+        save_ids(doc_ids, embedding_dir / "ids.json")
+
     merged = merge_chunks(embedding_dir)
 
-    if sort_order is not None:
-        inverse = np.argsort(sort_order)
-        merged = merged[inverse]
-        np.save(embedding_dir / "merged.npy", merged)
-        if sort_order_path.exists():
-            sort_order_path.unlink()
+    if sort_order_path.exists():
+        sort_order_path.unlink()
 
-    return doc_ids, merged
+    return (sorted_ids if sorted_ids is not None else doc_ids), merged
 
 
 def encode_queries(query_id_to_text: dict[str, str], embedding_dir: Path, model):
