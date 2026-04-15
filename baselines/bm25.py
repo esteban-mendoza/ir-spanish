@@ -95,7 +95,7 @@ if __name__ == "__main__":
 
         if need_index:
             # Must load corpus to build index; also needed for qrels if not cached
-            doc_ids, doc_texts = data.load_corpus(NUM_WORKERS)
+            doc_ids, doc_texts, _ = data.load_corpus(NUM_WORKERS)
             qrels, query_id_to_text = data.get_pruned_qrels_and_queries(
                 data.COUNTRY, data.DATASET_VERSION,
                 kept_doc_ids=None if qrels_cached else doc_ids,

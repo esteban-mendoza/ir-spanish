@@ -294,7 +294,7 @@ if __name__ == "__main__":
     if need_retrieval_run:
         # --- Load data ---
         if need_doc_emb:
-            doc_ids, doc_texts = data.load_corpus(NUM_WORKERS)
+            doc_ids, doc_texts, _ = data.load_corpus(NUM_WORKERS)
         else:
             doc_ids = cache.load_ids(DOC_EMB_DIR / "ids.json")
             doc_texts = None

@@ -91,13 +91,14 @@ class BaseWorkflow:
         to qrels pruning), so we skip the expensive full corpus load.
 
         Returns:
-            doc_ids:   List of document ID strings.
-            doc_texts: List of formatted document strings, or None if loaded from cache.
+            doc_ids:     List of document ID strings.
+            doc_texts:   List of formatted document strings, or None if loaded from cache.
+            word_counts: List of word counts per document, or None if loaded from cache.
         """
         if need_doc_embeddings:
             return data.load_corpus(self.num_workers)
         # Embeddings exist — we only need the IDs for potential qrels pruning
-        return cache.load_ids(self.doc_embedding_dir / "ids.json"), None
+        return cache.load_ids(self.doc_embedding_dir / "ids.json"), None, None
 
     def load_qrels(self, doc_ids: list[str] | None, need_pruned_qrels: bool):
         """Load pruned qrels and the query-id-to-text map, building the cache if required.
@@ -121,6 +122,7 @@ class BaseWorkflow:
         need_query_embeddings: bool,
         doc_ids,
         doc_texts,
+        word_counts,
         query_id_to_text,
     ):
         """Encode documents and queries, loading each from cache when already available.
@@ -139,9 +141,11 @@ class BaseWorkflow:
             with self.create_model() as model:
                 if need_doc_embeddings:
                     doc_ids, doc_embeddings = encoding.encode_documents_chunked(
-                        doc_ids, doc_texts, self.doc_embedding_dir, model, self.doc_chunk_size
+                        doc_ids, doc_texts, word_counts,
+                        self.doc_embedding_dir, model, self.doc_chunk_size,
+                        self.max_doc_length,
                     )
-                    del doc_texts
+                    del doc_texts, word_counts
                     gc.collect()
 
                 if need_query_embeddings:
@@ -181,10 +185,11 @@ class BaseWorkflow:
         run_path = cache.run_cache_path(self.model_cache_base)
 
         if need_retrieval_run:
-            doc_ids, doc_texts = self.load_corpus(need_doc_embeddings, need_pruned_qrels)
+            doc_ids, doc_texts, word_counts = self.load_corpus(need_doc_embeddings, need_pruned_qrels)
             qrels, query_id_to_text = self.load_qrels(doc_ids, need_pruned_qrels)
             doc_ids, doc_embeddings, query_ids, query_embeddings = self.encode(
-                need_doc_embeddings, need_query_embeddings, doc_ids, doc_texts, query_id_to_text
+                need_doc_embeddings, need_query_embeddings,
+                doc_ids, doc_texts, word_counts, query_id_to_text
             )
             retrieval_run = self.retrieve(query_ids, query_embeddings, doc_ids, doc_embeddings)
             run_path.parent.mkdir(parents=True, exist_ok=True)

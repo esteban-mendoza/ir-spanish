@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 from pathlib import Path
 
 import numpy as np
@@ -149,11 +150,22 @@ def load_ids(path: Path) -> list[str]:
 
 
 def save_chunk(embeddings: np.ndarray, path: Path):
-    """Save a single embedding chunk to disk and log its shape and file size."""
+    """Save a single embedding chunk to disk atomically.
+
+    Writes to a temporary file first, then atomically renames to the final path.
+    This prevents corrupt .npy files if the process is killed mid-write.
+    """
     path.parent.mkdir(parents=True, exist_ok=True)
-    np.save(path, embeddings)
+    tmp = path.with_suffix(".npy.tmp")
+    try:
+        np.save(tmp, embeddings)
+        os.replace(tmp, path)
+    except BaseException:
+        if tmp.exists():
+            tmp.unlink()
+        raise
     log.info(
-        "  Saved %s (%d×%d, %.1f MB)",
+        "  Saved %s (%d\u00d7%d, %.1f MB)",
         path.name,
         *embeddings.shape,
         path.stat().st_size / (1024**2),
