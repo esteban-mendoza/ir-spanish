@@ -12,7 +12,7 @@ This project investigates whether combining the ranked results of multiple open-
 
 We evaluate on [**MessIRve**](https://huggingface.co/datasets/spanish-ir/messirve) — a large-scale Spanish IR dataset with ~700,000 queries derived from real search intents via Google's autocomplete API, paired with relevant passages from Spanish Wikipedia.
 
-**Metrics:** nDCG@10 and Recall@100.
+**Metrics:** nDCG@10, Recall@100, MRR@10, MAP, Precision@10, and Precision@50.
 
 ## Research Questions
 
@@ -35,6 +35,8 @@ We evaluate on [**MessIRve**](https://huggingface.co/datasets/spanish-ir/messirv
 | [Qwen3-Embedding-0.6B](https://huggingface.co/Qwen/Qwen3-Embedding-0.6B) | 600M | Qwen, 2025 |
 | [BGE-M3](https://huggingface.co/BAAI/bge-m3) | 568M | BAAI, 2024 |
 | [multilingual-e5-large-instruct](https://huggingface.co/intfloat/multilingual-e5-large-instruct) | 560M | Microsoft, 2024 |
+| [jina-embeddings-v5-text-small](https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval) | 677M | Jina AI, 2025 |
+| [Harrier-oss-v1-0.6B](https://huggingface.co/microsoft/harrier-oss-v1-0.6b) | 600M | Microsoft, 2025 |
 
 ### Sparse (Learned Sparse)
 
@@ -69,7 +71,19 @@ We evaluate on [**MessIRve**](https://huggingface.co/datasets/spanish-ir/messirv
 |------------|-------------|
 | **Experiment 1** | Fusion vs. individual models — does combining ranked lists improve over the best single model? |
 | **Experiment 2** | Comparison of fusion algorithms — RRF vs. Borda vs. Condorcet |
-| **Experiment 3** | Open-source hybrid systems vs. proprietary baselines reported on MessIRve |
+| **Experiment 3** | Fusion vs. late interaction and cross-encoders — how do rank fusion methods compare against Jina-ColBERT-v2 (late interaction), bge-reranker-v2-m3, and jina-reranker-v3 (cross-encoders)? |
+| **Experiment 4** | Open-source hybrid systems vs. proprietary baselines reported on MessIRve |
+
+## Metrics
+
+| Metric | Description |
+|--------|-------------|
+| **nDCG@10** | Normalized Discounted Cumulative Gain at rank 10 — measures ranking quality with graded relevance, giving higher weight to top positions |
+| **Recall@100** | Fraction of relevant documents retrieved in the top 100 results |
+| **MRR@10** | Mean Reciprocal Rank at 10 — average of the reciprocal rank of the first relevant result, considering only the top 10 |
+| **MAP** | Mean Average Precision — mean of average precision scores across all queries |
+| **Precision@10** | Fraction of relevant documents in the top 10 results |
+| **Precision@50** | Fraction of relevant documents in the top 50 results |
 
 ## Dataset
 

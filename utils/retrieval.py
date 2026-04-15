@@ -108,7 +108,7 @@ def run_evaluation(
 ) -> dict:
     """Evaluate the retrieval run against ground-truth qrels and log the results.
 
-    Computes nDCG@10, Recall@100, MRR, Bpref, and MAP using ranx.
+    Computes nDCG@10, Recall@100, MRR@10, MAP, Precision@10, and Precision@50 using ranx.
 
     Args:
         mode: "verbose" for box-drawing output, "short" for a markdown table row.
@@ -118,7 +118,7 @@ def run_evaluation(
     Returns:
         A dict mapping metric names to their computed float values.
     """
-    results: dict[str, float] = evaluate(qrels, run, metrics=["ndcg@10", "recall@100", "mrr", "bpref", "map"])
+    results: dict[str, float] = evaluate(qrels, run, metrics=["ndcg@10", "recall@100", "mrr@10", "map", "precision@10", "precision@50"])
 
     if mode == "inline":
         _log_inline(results, model_name, strategy, params)
@@ -128,7 +128,7 @@ def run_evaluation(
     return results
 
 
-_TABLE_COLUMNS = ["model", "strategy", "params", "ndcg@10", "recall@100", "mrr", "bpref", "map"]
+_TABLE_COLUMNS = ["model", "strategy", "params", "ndcg@10", "recall@100", "mrr@10", "map", "precision@10", "precision@50"]
 
 
 def md_table(rows: list[list[str]]) -> str:
@@ -155,9 +155,10 @@ def results_row(
         params or " ",
         f"{results['ndcg@10']:.4f}",
         f"{results['recall@100']:.4f}",
-        f"{results['mrr']:.4f}",
-        f"{results['bpref']:.4f}",
+        f"{results['mrr@10']:.4f}",
         f"{results['map']:.4f}",
+        f"{results['precision@10']:.4f}",
+        f"{results['precision@50']:.4f}",
     ]
 
 
@@ -180,10 +181,11 @@ def _log_inline(
         tag += f" ({strategy})" if not params else f" ({strategy}, {params})"
     ndcg = results["ndcg@10"]
     recall = results["recall@100"]
-    mrr = results["mrr"]
-    bpref = results["bpref"]
+    mrr = results["mrr@10"]
     map_score = results["map"]
+    p10 = results["precision@10"]
+    p50 = results["precision@50"]
     log.info(
-        "  %-60s  ndcg@10=%.4f  recall@100=%.4f  mrr=%.4f  bpref=%.4f  map=%.4f",
-        tag, ndcg, recall, mrr, bpref, map_score,
+        "  %-60s  ndcg@10=%.4f  recall@100=%.4f  mrr@10=%.4f  map=%.4f  p@10=%.4f  p@50=%.4f",
+        tag, ndcg, recall, mrr, map_score, p10, p50,
     )

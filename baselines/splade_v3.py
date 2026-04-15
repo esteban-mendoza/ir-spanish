@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 SPLADE-v3 sparse retrieval baseline for MessIRve (Spanish IR).
-Metrics: nDCG@10, Recall@100 via ranx.
+Metrics: nDCG@10, Recall@100, MRR@10, MAP, P@10, P@50 via ranx.
 
 Uses naver/splade-v3 to produce learned sparse term-weight vectors,
 then retrieves via GPU-accelerated sparse matmul (PyTorch CUDA).

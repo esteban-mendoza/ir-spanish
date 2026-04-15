@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Baseline evaluation of multilingual-e5-large-instruct on MessIRve (Spanish IR).
-Metrics: nDCG@10, Recall@100 via ranx.
+Metrics: nDCG@10, Recall@100, MRR@10, MAP, P@10, P@50 via ranx.
 
 Features:
 - Chunked document encoding with crash-safe resumption.

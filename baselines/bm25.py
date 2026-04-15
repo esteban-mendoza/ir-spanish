@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 BM25 baseline for MessIRve (Spanish IR) using Pyserini.
-Metrics: nDCG@10, Recall@100, MRR, Bpref, MAP via ranx.
+Metrics: nDCG@10, Recall@100, MRR@10, MAP, P@10, P@50 via ranx.
 
 Uses Lucene's BM25 with Spanish language analysis (stemming + stopwords).
 No neural model or GPU required.
