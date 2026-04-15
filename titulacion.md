@@ -224,7 +224,7 @@ ps aux | grep baselines
 kill <PIDs>
 kill -9 <PIDs>
 
-tail -f /home/jmendoza/ir-spanish/logs/jina-embeddings-v5-text-small-retrieval.log
+tail -f /home/jmendoza/ir-spanish/logs/bge-m3.log
 
 cd /home/jmendoza/ir-spanish && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m baselines.bge_m3 > logs/bge-m3.log 2>&1 &
 
