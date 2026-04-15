@@ -17,8 +17,9 @@ We evaluate on [**MessIRve**](https://huggingface.co/datasets/spanish-ir/messirv
 ## Research Questions
 
 1. Does rank fusion of lexical and semantic retrieval models improve relevance over individual models for Spanish IR?
-2. How do the Borda and Condorcet fusion methods compare against the standard Reciprocal Rank Fusion (RRF)?
-3. Can open-source hybrid systems match or surpass proprietary baselines (e.g., OpenAI's `text-embedding-3-large`) on MessIRve?
+2. How do the BordaFuse, Condorcet, CombMNZ, RBC, and ISR fusion methods compare against the standard Reciprocal Rank Fusion (RRF)?
+3. How does rank fusion compare against late interaction (Jina-ColBERT-v2) and cross-encoder reranking (bge-reranker-v2-m3, jina-reranker-v3)?
+4. Can open-source hybrid systems match or surpass proprietary baselines (e.g., OpenAI's `text-embedding-3-large`) on MessIRve?
 
 ## Retrieval Models
 
@@ -32,9 +33,9 @@ We evaluate on [**MessIRve**](https://huggingface.co/datasets/spanish-ir/messirv
 
 | Model | Parameters | Reference |
 |-------|-----------|-----------|
-| [Qwen3-Embedding-0.6B](https://huggingface.co/Qwen/Qwen3-Embedding-0.6B) | 600M | Qwen, 2025 |
-| [BGE-M3](https://huggingface.co/BAAI/bge-m3) | 568M | BAAI, 2024 |
 | [multilingual-e5-large-instruct](https://huggingface.co/intfloat/multilingual-e5-large-instruct) | 560M | Microsoft, 2024 |
+| [BGE-M3](https://huggingface.co/BAAI/bge-m3) | 568M | BAAI, 2024 |
+| [Qwen3-Embedding-0.6B](https://huggingface.co/Qwen/Qwen3-Embedding-0.6B) | 600M | Qwen, 2025 |
 | [jina-embeddings-v5-text-small](https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval) | 677M | Jina AI, 2025 |
 | [Harrier-oss-v1-0.6B](https://huggingface.co/microsoft/harrier-oss-v1-0.6b) | 600M | Microsoft, 2025 |
 
@@ -61,16 +62,19 @@ We evaluate on [**MessIRve**](https://huggingface.co/datasets/spanish-ir/messirv
 
 | Algorithm | Type | Reference |
 |-----------|------|-----------|
+| **CombMNZ** | Score-based (weighted combination) | Fox & Shaw, 1994 |
+| **BordaFuse** | Score-based (positional) | Aslam & Montague, 2001 |
+| **Condorcet** | Graph-based (pairwise majority) | Montague & Aslam, 2002 |
 | **Reciprocal Rank Fusion (RRF)** | Score-based | Cormack et al., 2009 |
-| **Borda-fuse** | Score-based (positional) | Aslam & Montague, 2001 |
-| **Condorcet-fuse** | Graph-based (pairwise majority) | Montague & Aslam, 2002 |
+| **ISR** | Score-based (inverse square rank) | Mourão et al., 2014 |
+| **Rank-Biased Centroids (RBC)** | Score-based (rank-biased overlap) | Bailey et al., 2017 |
 
 ## Experimental Design
 
 | Experiment | Description |
 |------------|-------------|
 | **Experiment 1** | Fusion vs. individual models — does combining ranked lists improve over the best single model? |
-| **Experiment 2** | Comparison of fusion algorithms — RRF vs. Borda vs. Condorcet |
+| **Experiment 2** | Comparison of fusion algorithms — RRF vs. BordaFuse vs. Condorcet vs. CombMNZ vs. RBC vs. ISR |
 | **Experiment 3** | Fusion vs. late interaction and cross-encoders — how do rank fusion methods compare against Jina-ColBERT-v2 (late interaction), bge-reranker-v2-m3, and jina-reranker-v3 (cross-encoders)? |
 | **Experiment 4** | Open-source hybrid systems vs. proprietary baselines reported on MessIRve |
 
