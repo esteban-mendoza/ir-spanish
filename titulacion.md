@@ -23,10 +23,12 @@
     - Condorcet-fuse
     - Borda-fuse
 
-- Revisar resultados y métodos:
-  - Artículos utilizando MessIRve
-  - MTEB y La Leaderboard
-  - Comparar los resultados obtenidos con resultados en otras lenguas para todos los modelos involucrados
+- Tesis
+  - Estudiar distribución del número de documentos relevantes por query para explicar métricas
+  - Revisar resultados y métodos:
+    - Artículos utilizando MessIRve
+    - MTEB y La Leaderboard
+    - Comparar los resultados obtenidos con resultados en otras lenguas para todos los modelos involucrados
 
 ## Registro
 
@@ -89,15 +91,15 @@ _INCLUIR LOS 3 DOCUMENTOS EN UN SOLO PDF._
 
 ## Mis resultados (max_seq_length)
 
-| Model                                   | length | nDCG@10 | Recall@100 |
-| --------------------------------------- | -----: | ------: | ---------: |
-| BM25                                    |    N/A |  0.1848 |     0.5725 |
-| splade-v3                               |    512 |  0.1964 |     0.5759 |
-| qwen3-embedding-0.6b                    | 32,768 |  0.xxxx |     0.xxxx |
-| harrier-oss-v1-0.6b                     | 32,768 |  0.xxxx |     0.xxxx |
-| multilingual-e5-large-instruct          |    512 |  0.4625 |     0.8591 |
-| bge-m3                                  |  8,192 |  0.xxxx |     0.xxxx |
-| jina-embeddings-v5-text-small-retrieval | 32,768 |  0.5115 |     0.9039 |
+| Model                                   | length | nDCG@10 | Recall@100 | MRR@10 |    MAP |   P@10 |   P@50 |
+| --------------------------------------- | -----: | ------: | ---------: | -----: | -----: | -----: | -----: |
+| BM25                                    |    N/A |  0.1848 |     0.5725 | 0.xxxx | 0.xxxx | 0.xxxx | 0.xxxx |
+| splade-v3                               |    512 |  0.1964 |     0.5759 | 0.xxxx | 0.xxxx | 0.xxxx | 0.xxxx |
+| qwen3-embedding-0.6b                    | 32,768 |  0.xxxx |     0.xxxx | 0.xxxx | 0.xxxx | 0.xxxx | 0.xxxx |
+| harrier-oss-v1-0.6b                     | 32,768 |  0.xxxx |     0.xxxx | 0.xxxx | 0.xxxx | 0.xxxx | 0.xxxx |
+| multilingual-e5-large-instruct          |    512 |  0.4625 |     0.8591 | 0.xxxx | 0.xxxx | 0.xxxx | 0.xxxx |
+| bge-m3                                  |  8,192 |  0.xxxx |     0.xxxx | 0.xxxx | 0.xxxx | 0.xxxx | 0.xxxx |
+| jina-embeddings-v5-text-small-retrieval | 32,768 |  0.5115 |     0.9039 | 0.4481 | 0.4538 | 0.0733 | 0.0178 |
 
 ## Mis resultados (q512, d512)
 
@@ -224,7 +226,7 @@ kill -9 <PIDs>
 
 tail -f /home/jmendoza/ir-spanish/logs/jina-embeddings-v5-text-small-retrieval.log
 
-cd /home/jmendoza/ir-spanish && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m baselines.jina_v5_small > logs/jina-embeddings-v5-text-small-retrieval.log 2>&1 &
+cd /home/jmendoza/ir-spanish && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m baselines.bge_m3 > logs/bge-m3.log 2>&1 &
 
 cd /home/jmendoza/ir-spanish && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m rerankers.fuse > logs/rerankers-fuse-borda.log 2>&1 &
 ```
