@@ -96,7 +96,7 @@ _INCLUIR LOS 3 DOCUMENTOS EN UN SOLO PDF._
 | BM25                                    |    N/A |  0.1848 |     0.5725 | 0.xxxx | 0.xxxx | 0.xxxx | 0.xxxx |
 | splade-v3                               |    512 |  0.1964 |     0.5759 | 0.xxxx | 0.xxxx | 0.xxxx | 0.xxxx |
 | qwen3-embedding-0.6b                    | 32,768 |  0.xxxx |     0.xxxx | 0.xxxx | 0.xxxx | 0.xxxx | 0.xxxx |
-| harrier-oss-v1-0.6b                     | 32,768 |  0.xxxx |     0.xxxx | 0.xxxx | 0.xxxx | 0.xxxx | 0.xxxx |
+| harrier-oss-v1-0.6b                     | 32,768 |  0.4519 |     0.8768 | 0.3902 | 0.3972 | 0.0668 | 0.0170 |
 | multilingual-e5-large-instruct          |    512 |  0.4675 |     0.8666 | 0.4079 | 0.4140 | 0.0676 | 0.0168 |
 | bge-m3                                  |  8,192 |  0.4818 |     0.8741 | 0.4206 | 0.4264 | 0.0696 | 0.0171 |
 | jina-embeddings-v5-text-small-retrieval | 32,768 |  0.5115 |     0.9039 | 0.4481 | 0.4538 | 0.0733 | 0.0178 |
