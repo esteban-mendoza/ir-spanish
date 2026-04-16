@@ -108,6 +108,14 @@ def _rerank_shard(
     t0 = time.perf_counter()
     cp_file = checkpoint_dir / f"shard_{shard_index:04d}.json"
 
+    # Sort queries by max candidate doc word count (ascending) so that
+    # short-document queries are processed first and CUDA memory stays
+    # predictable for the heavier queries at the end.
+    chunk = sorted(
+        chunk,
+        key=lambda item: max(len(doc_lookup[did].split()) for did in item[2]),
+    )
+
     with torch.no_grad():
         for idx, (query_id, query_text, doc_ids) in enumerate(chunk, 1):
             doc_texts = [doc_lookup[did] for did in doc_ids]

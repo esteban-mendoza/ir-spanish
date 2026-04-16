@@ -17,6 +17,9 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
+# Reduce CUDA memory fragmentation over long-running inference
+os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
+
 import torch
 
 # utils.__init__ sets up logging and NUMA/threading env-vars
@@ -106,22 +109,46 @@ def _rerank_shard(
     shard_pairs = 0
     t0 = time.perf_counter()
     cp_file = checkpoint_dir / f"shard_{shard_index:04d}.json"
-    for idx, (query_id, query_text, doc_ids) in enumerate(chunk, 1):
-        pairs = [(query_text, doc_lookup[did]) for did in doc_ids]
-        scores = model.predict(pairs, batch_size=batch_size, show_progress_bar=False)
-        shard_result[query_id] = {
-            doc_id: float(score) for doc_id, score in zip(doc_ids, scores)
-        }
-        shard_pairs += len(pairs)
-        if idx % CHECKPOINT_EVERY == 0:
-            with open(cp_file, "w") as f:
-                json.dump(shard_result, f)
-            elapsed = time.perf_counter() - t0
-            rate = shard_pairs / elapsed if elapsed > 0 else 0
-            log.info(
-                "[%s] %d/%d queries | %d pairs | %.0f pairs/s | %.1fs | checkpoint saved",
-                device, idx, len(chunk), shard_pairs, rate, elapsed,
-            )
+
+    # Sort queries by max candidate doc word count (ascending) so that each
+    # flush sends similar-length pairs to the GPU, minimising padding waste.
+    chunk = sorted(
+        chunk,
+        key=lambda item: max(len(doc_lookup[did].split()) for did in item[2]),
+    )
+
+    buffer_pairs: list[tuple[str, str]] = []
+    buffer_meta: list[tuple[str, str]] = []  # (query_id, doc_id)
+
+    with torch.no_grad():
+        for idx, (query_id, query_text, doc_ids) in enumerate(chunk, 1):
+            for did in doc_ids:
+                buffer_pairs.append((query_text, doc_lookup[did]))
+                buffer_meta.append((query_id, did))
+
+            # Flush at query boundary when the buffer is full enough
+            if len(buffer_pairs) >= batch_size or idx == len(chunk):
+                scores = model.predict(
+                    buffer_pairs, batch_size=batch_size, show_progress_bar=False,
+                )
+                for (qid, did), score in zip(buffer_meta, scores):
+                    shard_result.setdefault(qid, {})[did] = float(score)
+                shard_pairs += len(buffer_pairs)
+                buffer_pairs.clear()
+                buffer_meta.clear()
+
+            if idx % CHECKPOINT_EVERY == 0:
+                # Release fragmented CUDA memory to prevent OOM over long runs
+                torch.cuda.empty_cache()
+
+                with open(cp_file, "w") as f:
+                    json.dump(shard_result, f)
+                elapsed = time.perf_counter() - t0
+                rate = shard_pairs / elapsed if elapsed > 0 else 0
+                log.info(
+                    "[%s] %d/%d queries | %d pairs | %.0f pairs/s | %.1fs | checkpoint saved",
+                    device, idx, len(chunk), shard_pairs, rate, elapsed,
+                )
     # Final checkpoint for this shard
     if shard_result:
         with open(cp_file, "w") as f:
