@@ -93,8 +93,8 @@ _INCLUIR LOS 3 DOCUMENTOS EN UN SOLO PDF._
 
 | Model                                   | length | nDCG@10 | Recall@100 | MRR@10 |    MAP |   P@10 |   P@50 |
 | --------------------------------------- | -----: | ------: | ---------: | -----: | -----: | -----: | -----: |
-| BM25                                    |    N/A |  0.1848 |     0.5725 | 0.xxxx | 0.xxxx | 0.xxxx | 0.xxxx |
-| splade-v3                               |    512 |  0.1964 |     0.5759 | 0.xxxx | 0.xxxx | 0.xxxx | 0.xxxx |
+| BM25                                    |    N/A |  0.1848 |     0.5725 | 0.1483 | 0.1575 | 0.0311 | 0.0102 |
+| splade-v3                               |    512 |  0.1956 |     0.5725 | 0.1580 | 0.1666 | 0.0326 | 0.0103 |
 | qwen3-embedding-0.6b                    | 32,768 |  0.4468 |     0.8423 | 0.3886 | 0.3947 | 0.0651 | 0.0163 |
 | harrier-oss-v1-0.6b                     | 32,768 |  0.4519 |     0.8768 | 0.3902 | 0.3972 | 0.0668 | 0.0170 |
 | multilingual-e5-large-instruct          |    512 |  0.4675 |     0.8666 | 0.4079 | 0.4140 | 0.0676 | 0.0168 |
@@ -106,7 +106,7 @@ _INCLUIR LOS 3 DOCUMENTOS EN UN SOLO PDF._
 | Model                                   | nDCG@10 | Recall@100 |
 | --------------------------------------- | ------: | ---------: |
 | BM25                                    |  0.1848 |     0.5725 |
-| splade-v3                               |  0.1956 |     0.5725 |
+| splade-v3                               |  0.1956 |     0.5759 |
 | qwen3-embedding-0.6b                    |  0.4468 |     0.8422 |
 | harrier-oss-v1-0.6b                     |  0.4520 |     0.8769 |
 | multilingual-e5-large-instruct          |  0.4675 |     0.8666 |
@@ -224,9 +224,9 @@ ps aux | grep baselines
 kill <PIDs>
 kill -9 <PIDs>
 
-tail -f /home/jmendoza/ir-spanish/logs/qwen3-embedding-0.6b
+tail -f /home/jmendoza/ir-spanish/logs/bm25.log
 
-cd /home/jmendoza/ir-spanish && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m baselines.qwen > logs/qwen3-embedding-0.6b 2>&1 &
+cd /home/jmendoza/ir-spanish && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m baselines.bm25 > logs/bm25.log 2>&1 &
 
 cd /home/jmendoza/ir-spanish && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m rerankers.fuse > logs/rerankers-fuse-borda.log 2>&1 &
 ```
