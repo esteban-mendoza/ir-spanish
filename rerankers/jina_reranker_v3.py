@@ -34,8 +34,11 @@ log = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 FIRST_STAGE_MODEL = "jinaai/jina-embeddings-v5-text-small-retrieval"
 RERANKER_MODEL = "jinaai/jina-reranker-v3"
-MAX_QUERY_LENGTH = 512
-MAX_DOC_LENGTH = 512
+FIRST_STAGE_QUERY_LENGTH = 512  # query length used by the first-stage embedder
+FIRST_STAGE_DOC_LENGTH = 512    # doc length used by the first-stage embedder
+MAX_QUERY_LENGTH = 512          # reranker query truncation (model default)
+MAX_DOC_LENGTH = 8192           # reranker doc truncation — model's effective sequence length (paper Table 5)
+MAX_DOCS_PER_RERANK = 25        # cap docs per rerank() call to limit internal block size
 GPU_DEVICES = (
     [f"cuda:{i}" for i in range(torch.cuda.device_count())]
     if torch.cuda.is_available()
@@ -78,8 +81,8 @@ def load_first_stage_run():
         FIRST_STAGE_MODEL,
         data.COUNTRY,
         data.DATASET_VERSION,
-        MAX_QUERY_LENGTH,
-        MAX_DOC_LENGTH,
+        FIRST_STAGE_QUERY_LENGTH,
+        FIRST_STAGE_DOC_LENGTH,
         data.MAX_WORD_COUNT,
     )
     run_path = cache.run_cache_path(base)
@@ -118,14 +121,22 @@ def _rerank_shard(
 
     with torch.no_grad():
         for idx, (query_id, query_text, doc_ids) in enumerate(chunk, 1):
-            doc_texts = [doc_lookup[did] for did in doc_ids]
+            query_scores: dict[str, float] = {}
 
-            results = model.rerank(query_text, doc_texts)
+            for batch_start in range(0, len(doc_ids), MAX_DOCS_PER_RERANK):
+                batch_doc_ids = doc_ids[batch_start : batch_start + MAX_DOCS_PER_RERANK]
+                batch_doc_texts = [doc_lookup[did] for did in batch_doc_ids]
 
-            shard_result[query_id] = {
-                doc_ids[r["index"]]: float(r["relevance_score"])
-                for r in results
-            }
+                results = model.rerank(
+                    query_text,
+                    batch_doc_texts,
+                    max_query_length=MAX_QUERY_LENGTH,
+                    max_doc_length=MAX_DOC_LENGTH,
+                )
+                for r in results:
+                    query_scores[batch_doc_ids[r["index"]]] = float(r["relevance_score"])
+
+            shard_result[query_id] = query_scores
             shard_docs += len(doc_ids)
 
             if idx % CHECKPOINT_EVERY == 0:
