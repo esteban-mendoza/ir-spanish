@@ -224,7 +224,7 @@ ps aux | grep baselines
 kill <PIDs>
 kill -9 <PIDs>
 
-tail -f /home/jmendoza/ir-spanish/logs/bm25.log
+tail -f /home/jmendoza/ir-spanish/logs/jina-reranker-v3.log
 
 cd /home/jmendoza/ir-spanish && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m baselines.bm25 > logs/bm25.log 2>&1 &
 
