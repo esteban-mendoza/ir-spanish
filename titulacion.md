@@ -228,5 +228,5 @@ tail -f /home/jmendoza/ir-spanish/logs/jina-reranker-v3.log
 
 cd /home/jmendoza/ir-spanish && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m baselines.bm25 > logs/bm25.log 2>&1 &
 
-cd /home/jmendoza/ir-spanish && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m rerankers.fuse > logs/rerankers-fuse-borda.log 2>&1 &
+cd /home/jmendoza/ir-spanish && nohup /home/jmendoza/miniconda3/envs/proyecto/bin/python -m rerankers.jina_reranker_v3 > logs/jina-reranker-v3.log 2>&1 &
 ```
