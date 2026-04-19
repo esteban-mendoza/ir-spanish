@@ -14,7 +14,6 @@ import logging
 import os
 import shutil
 import time
-from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 # Reduce CUDA memory fragmentation over long-running inference
@@ -210,19 +209,16 @@ def rerank(
         n = len(models)
         chunks = [query_items[i::n] for i in range(n)]
 
-        # Run shards in parallel
+        # Run shards sequentially — Jina's custom modeling.py is not thread-safe
+        # (mutates model state in forward()), causing cudaErrorIllegalAddress
+        # under ThreadPoolExecutor.
         reranked: dict[str, dict[str, float]] = {}
         reranked.update(done)
-        with ThreadPoolExecutor(max_workers=len(models)) as executor:
-            futures = [
-                executor.submit(
-                    _rerank_shard, model, dev, chunk, shard_idx,
-                    doc_lookup, checkpoint_dir,
-                )
-                for shard_idx, ((model, dev), chunk) in enumerate(zip(models, chunks))
-            ]
-            for f in futures:
-                reranked.update(f.result())
+        for shard_idx, ((model, dev), chunk) in enumerate(zip(models, chunks)):
+            shard_result = _rerank_shard(
+                model, dev, chunk, shard_idx, doc_lookup, checkpoint_dir,
+            )
+            reranked.update(shard_result)
 
         log.info("Reranking complete: %d queries, %d total docs scored", len(reranked), total_docs)
         log_gpu_memory()
