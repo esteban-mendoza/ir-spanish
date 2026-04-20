@@ -56,7 +56,7 @@ We evaluate on [**MessIRve**](https://huggingface.co/datasets/spanish-ir/messirv
 | Model                                                                | Reference     |
 | -------------------------------------------------------------------- | ------------- |
 | [bge-reranker-v2-m3](https://huggingface.co/BAAI/bge-reranker-v2-m3) | BAAI, 2024    |
-| [jina-reranker-v3](https://huggingface.co/jinaai/jina-reranker-v3)   | Jina AI, 2024 |
+| [jina-reranker-v3](https://huggingface.co/jinaai/jina-reranker-v3)   | Jina AI, 2025 |
 
 ## Rank Fusion Algorithms
 
