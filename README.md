@@ -36,8 +36,8 @@ We evaluate on [**MessIRve**](https://huggingface.co/datasets/spanish-ir/messirv
 | [multilingual-e5-large-instruct](https://huggingface.co/intfloat/multilingual-e5-large-instruct)       | 560M       | Microsoft, 2024 |
 | [BGE-M3](https://huggingface.co/BAAI/bge-m3)                                                           | 568M       | BAAI, 2024      |
 | [Qwen3-Embedding-0.6B](https://huggingface.co/Qwen/Qwen3-Embedding-0.6B)                               | 600M       | Qwen, 2025      |
-| [jina-embeddings-v5-text-small](https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval) | 677M       | Jina AI, 2025   |
-| [harrier-oss-v1-0.6B](https://huggingface.co/microsoft/harrier-oss-v1-0.6b)                            | 600M       | Microsoft, 2025 |
+| [jina-embeddings-v5-text-small](https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval) | 677M       | Jina AI, 2026   |
+| [harrier-oss-v1-0.6B](https://huggingface.co/microsoft/harrier-oss-v1-0.6b)                            | 600M       | Microsoft, 2026 |
 
 ### Sparse (Learned Sparse)
 
