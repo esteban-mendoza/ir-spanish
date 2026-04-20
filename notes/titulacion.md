@@ -84,7 +84,18 @@ Protocolo: <https://www.overleaf.com/project/69af3f611c674ab6c9bfd1f3>
 
 ## Notas
 
-qrel: query relevance judgment
+- RanX:
+  - Qrel: query relevance judgment
+    - query_id → document_id → relevance_score
+  - Run: output of a retrieval system
+    - query_id → document_id → score
+  - Both have the following structure:
+    ```python
+    {
+        "q_1": {"doc_a": 2, "doc_b": 1, "doc_c": 0},
+        "q_2": {"doc_x": 1, "doc_y": 0},
+    }
+    ```
 
 - Arquitecturas
   - Dual-encoders:
