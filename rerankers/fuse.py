@@ -51,13 +51,13 @@ class FusionStrategy:
 # Configuration
 # ---------------------------------------------------------------------------
 MODELS = [
-    ModelConfig("bm25_pyserini", "bm25", 512, 512),
-    ModelConfig("naver/splade-v3", "splade-v3", 512, 512),
+    # ModelConfig("bm25_pyserini", "bm25", 512, 512),
+    # ModelConfig("naver/splade-v3", "splade-v3", 512, 512),
     ModelConfig("intfloat/multilingual-e5-large-instruct", "e5-large", 512, 512),
     ModelConfig("BAAI/bge-m3", "bge-m3", 8192, 8192),
+    # ModelConfig("Qwen/Qwen3-Embedding-0.6B", "qwen3-0.6b", 32768, 32768),
     ModelConfig("jinaai/jina-embeddings-v5-text-small-retrieval", "jina-v5-small", 32768, 32768),
-    ModelConfig("Qwen/Qwen3-Embedding-0.6B", "qwen3-0.6b", 32768, 32768),
-    ModelConfig("microsoft/harrier-oss-v1-0.6b", "harrier", 32768, 32768),
+    # ModelConfig("microsoft/harrier-oss-v1-0.6b", "harrier", 32768, 32768),
 ]
 
 STRATEGIES = {
@@ -69,10 +69,10 @@ STRATEGIES = {
     "condorcet": FusionStrategy(method="condorcet"),
 }
 
-STRATEGY = "isr"
+STRATEGY = "combmnz"
 
-MIN_COMBO_SIZE = 3  # minimum number of models in a fusion combination
-MAX_COMBO_SIZE = 4  # maximum number of models in a fusion combination
+MIN_COMBO_SIZE = 2  # minimum number of models in a fusion combination
+MAX_COMBO_SIZE = 3  # maximum number of models in a fusion combination
 
 CACHE_DIR = Path.home() / ".cache" / "messirve_embeddings"
 
