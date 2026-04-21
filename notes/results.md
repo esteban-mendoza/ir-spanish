@@ -28,6 +28,15 @@
 | ---------------- | --------------------------------------: | ------: | ---------: | -----: | -----: | -----: | -----: |
 | jina-reranker-v3 | jina-embeddings-v5-text-small-retrieval |  0.5792 |     0.9039 | 0.5167 | 0.5201 | 0.0798 | 0.0182 |
 
+## Fusiones (max_seq_length)
+
+| model                         | strategy | params   | ndcg@10 | recall@100 | mrr@10 | map    | precision@10 | precision@50 |
+| ----------------------------- | -------- | -------- | ------- | ---------- | ------ | ------ | ------------ | ------------ |
+| e5-large+bge-m3+jina-v5-small | mnz      |          | 0.5517  | 0.9231     | 0.4878 | 0.4929 | 0.0775       | 0.0183       |
+| e5-large+bge-m3+jina-v5-small | rbc      | phi=0.95 | 0.5485  | 0.9206     | 0.4835 | 0.4884 | 0.0775       | 0.0182       |
+| e5-large+bge-m3+jina-v5-small | rrf      | k=60     | 0.5450  | 0.9234     | 0.4806 | 0.4859 | 0.0770       | 0.0183       |
+| e5-large+bge-m3+jina-v5-small | isr      |          | 0.5382  | 0.9230     | 0.4743 | 0.4798 | 0.0763       | 0.0183       |
+
 ## Fusiones (q512, d512)
 
 | Model           |     strategy | nDCG@10 | Recall@100 |
