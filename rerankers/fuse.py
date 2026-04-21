@@ -11,7 +11,7 @@ from __future__ import annotations
 import itertools
 import logging
 import os
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -161,7 +161,7 @@ def fuse_and_evaluate_all(
     else:
         # Multiple combinations — parallelize across CPUs
         log.info("Evaluating %d combinations across %d workers ...", len(work_items), NUM_WORKERS)
-        with ProcessPoolExecutor(max_workers=NUM_WORKERS) as executor:
+        with ThreadPoolExecutor(max_workers=NUM_WORKERS) as executor:
             data_rows = list(executor.map(_fuse_one, work_items))
 
     table = retrieval.md_table(data_rows)
