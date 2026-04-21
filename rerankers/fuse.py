@@ -8,16 +8,17 @@ below to configure which models are fused and how.
 
 from __future__ import annotations
 
+import os
+
+# Must be set before ANY import that touches Numba (ranx, faiss, etc.).
+# The default workqueue layer crashes under concurrent Python threads.
+os.environ["NUMBA_THREADING_LAYER"] = "omp"
+
 import itertools
 import logging
-import os
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
-
-# Numba's default workqueue threading layer is not thread-safe when called
-# from multiple Python threads. Switch to OpenMP which supports concurrent access.
-os.environ.setdefault("NUMBA_THREADING_LAYER", "omp")
 
 from ranx import fuse
 
