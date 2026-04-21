@@ -12,7 +12,7 @@ import os
 
 # Must be set before ANY import that touches Numba (ranx, faiss, etc.).
 # The default workqueue layer crashes under concurrent Python threads.
-os.environ["NUMBA_THREADING_LAYER"] = "omp"
+os.environ["NUMBA_THREADING_LAYER"] = "tbb"
 
 import itertools
 import logging
