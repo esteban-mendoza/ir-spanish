@@ -15,6 +15,10 @@ from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 
+# Numba's default workqueue threading layer is not thread-safe when called
+# from multiple Python threads. Switch to OpenMP which supports concurrent access.
+os.environ.setdefault("NUMBA_THREADING_LAYER", "omp")
+
 from ranx import fuse
 
 # utils.__init__ sets up logging and NUMA/threading env-vars
