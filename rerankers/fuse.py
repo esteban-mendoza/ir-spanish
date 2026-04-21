@@ -8,15 +8,9 @@ below to configure which models are fused and how.
 
 from __future__ import annotations
 
-import os
-
-# Must be set before ANY import that touches Numba (ranx, faiss, etc.).
-# The default workqueue layer crashes under concurrent Python threads.
-os.environ["NUMBA_THREADING_LAYER"] = "tbb"
-
 import itertools
 import logging
-from concurrent.futures import ThreadPoolExecutor
+import os
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -118,18 +112,6 @@ def _format_params(params: dict | None) -> str:
     return ",".join(f"{k}={v}" for k, v in params.items())
 
 
-def _fuse_one(args: tuple) -> list[str]:
-    """Fuse and evaluate a single combination. Top-level function for pickling."""
-    combo_runs, combo_name, qrels, method, params, params_str = args
-    fused_run = fuse(runs=combo_runs, method=method, params=params)
-    fused_run.name = combo_name
-    results = retrieval.run_evaluation(
-        qrels, fused_run, combo_name,
-        mode="quiet", strategy=method, params=params_str,
-    )
-    return retrieval.results_row(combo_name, method, params_str, results)
-
-
 def fuse_and_evaluate_all(
     qrels,
     all_runs: list,
@@ -138,36 +120,36 @@ def fuse_and_evaluate_all(
 ) -> str:
     """Fuse all combinations of models from MAX_COMBO_SIZE down to
     MIN_COMBO_SIZE and evaluate each. Returns a markdown table of results."""
+    data_rows: list[list[str]] = []
     params_str = _format_params(strategy.params)
 
-    # Build all work items: (combo_runs, combo_name, ...)
-    work_items: list[tuple] = []
     for size in range(MAX_COMBO_SIZE, MIN_COMBO_SIZE - 1, -1):
-        for indices in itertools.combinations(range(len(all_runs)), size):
+        combos = list(itertools.combinations(range(len(all_runs)), size))
+        single_combo = len(combos) == 1 and MIN_COMBO_SIZE == MAX_COMBO_SIZE
+
+        for idx, indices in enumerate(combos, 1):
             combo_runs = [all_runs[i] for i in indices]
             combo_name = "+".join(models[i].alias for i in indices)
-            work_items.append((
-                combo_runs, combo_name, qrels,
-                strategy.method, strategy.params or {}, params_str,
-            ))
 
-    single_combo = len(work_items) == 1
+            fused_run = fuse(
+                runs=combo_runs,
+                method=strategy.method,
+                params=strategy.params or {},
+            )
+            fused_run.name = combo_name
 
-    if single_combo:
-        # One combination — run inline with verbose output
-        combo_runs, combo_name, _, _, _, _ = work_items[0]
-        fused_run = fuse(runs=combo_runs, method=strategy.method, params=strategy.params or {})
-        fused_run.name = combo_name
-        results = retrieval.run_evaluation(
-            qrels, fused_run, combo_name,
-            mode="verbose", strategy=strategy.method, params=params_str,
-        )
-        data_rows = [retrieval.results_row(combo_name, strategy.method, params_str, results)]
-    else:
-        # Multiple combinations — parallelize across CPUs
-        log.info("Evaluating %d combinations across %d workers ...", len(work_items), NUM_WORKERS)
-        with ThreadPoolExecutor(max_workers=NUM_WORKERS) as executor:
-            data_rows = list(executor.map(_fuse_one, work_items))
+            results = retrieval.run_evaluation(
+                qrels,
+                fused_run,
+                combo_name,
+                mode="verbose" if single_combo else "inline",
+                strategy=strategy.method,
+                params=params_str,
+            )
+            data_rows.append(retrieval.results_row(combo_name, strategy.method, params_str, results))
+
+            if not single_combo and idx % 10 == 0:
+                log.info("Progress: %d/%d combinations (size=%d)", idx, len(combos), size)
 
     table = retrieval.md_table(data_rows)
     log.info("Results:\n%s", table)
