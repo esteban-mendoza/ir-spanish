@@ -63,9 +63,9 @@ STRATEGIES = {
     "condorcet": FusionStrategy(method="condorcet"),
 }
 
-STRATEGY = "combmnz"
+ACTIVE_STRATEGIES = ["combmnz", "rbc", "rrf", "isr"]  # which strategies to run (keys from STRATEGIES)
 
-MIN_COMBO_SIZE = 2  # minimum number of models in a fusion combination
+MIN_COMBO_SIZE = 3  # minimum number of models in a fusion combination
 MAX_COMBO_SIZE = 3  # maximum number of models in a fusion combination
 
 CACHE_DIR = Path.home() / ".cache" / "messirve_embeddings"
@@ -116,40 +116,42 @@ def fuse_and_evaluate_all(
     qrels,
     all_runs: list,
     models: list[ModelConfig],
-    strategy: FusionStrategy,
+    strategies: list[FusionStrategy],
 ) -> str:
     """Fuse all combinations of models from MAX_COMBO_SIZE down to
-    MIN_COMBO_SIZE and evaluate each. Returns a markdown table of results."""
+    MIN_COMBO_SIZE for each strategy and evaluate. Returns a markdown table."""
     data_rows: list[list[str]] = []
-    params_str = _format_params(strategy.params)
 
-    for size in range(MAX_COMBO_SIZE, MIN_COMBO_SIZE - 1, -1):
-        combos = list(itertools.combinations(range(len(all_runs)), size))
-        single_combo = len(combos) == 1 and MIN_COMBO_SIZE == MAX_COMBO_SIZE
+    for strategy in strategies:
+        params_str = _format_params(strategy.params)
 
-        for idx, indices in enumerate(combos, 1):
-            combo_runs = [all_runs[i] for i in indices]
-            combo_name = "+".join(models[i].alias for i in indices)
+        for size in range(MAX_COMBO_SIZE, MIN_COMBO_SIZE - 1, -1):
+            combos = list(itertools.combinations(range(len(all_runs)), size))
+            single_combo = len(combos) == 1 and MIN_COMBO_SIZE == MAX_COMBO_SIZE and len(strategies) == 1
 
-            fused_run = fuse(
-                runs=combo_runs,
-                method=strategy.method,
-                params=strategy.params or {},
-            )
-            fused_run.name = combo_name
+            for idx, indices in enumerate(combos, 1):
+                combo_runs = [all_runs[i] for i in indices]
+                combo_name = "+".join(models[i].alias for i in indices)
 
-            results = retrieval.run_evaluation(
-                qrels,
-                fused_run,
-                combo_name,
-                mode="verbose" if single_combo else "inline",
-                strategy=strategy.method,
-                params=params_str,
-            )
-            data_rows.append(retrieval.results_row(combo_name, strategy.method, params_str, results))
+                fused_run = fuse(
+                    runs=combo_runs,
+                    method=strategy.method,
+                    params=strategy.params or {},
+                )
+                fused_run.name = combo_name
 
-            if not single_combo and idx % 10 == 0:
-                log.info("Progress: %d/%d combinations (size=%d)", idx, len(combos), size)
+                results = retrieval.run_evaluation(
+                    qrels,
+                    fused_run,
+                    combo_name,
+                    mode="verbose" if single_combo else "inline",
+                    strategy=strategy.method,
+                    params=params_str,
+                )
+                data_rows.append(retrieval.results_row(combo_name, strategy.method, params_str, results))
+
+                if not single_combo and idx % 10 == 0:
+                    log.info("Progress: %d/%d combinations (strategy=%s, size=%d)", idx, len(combos), strategy.method, size)
 
     table = retrieval.md_table(data_rows)
     log.info("Results:\n%s", table)
@@ -162,7 +164,7 @@ def fuse_and_evaluate_all(
 def main():
     runs = load_runs(MODELS)
     qrels = load_qrels()
-    fuse_and_evaluate_all(qrels, runs, MODELS, STRATEGIES[STRATEGY])
+    fuse_and_evaluate_all(qrels, runs, MODELS, [STRATEGIES[s] for s in ACTIVE_STRATEGIES])
 
 
 if __name__ == "__main__":
