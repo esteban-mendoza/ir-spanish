@@ -17,6 +17,9 @@ conda install -n "${ENV_NAME}" \
     -c pytorch -c nvidia -c conda-forge \
     faiss-gpu="${FAISS_VERSION}" -y
 
+echo "Installing CUDA toolkit (provides nvcc for building GPU extensions)..."
+conda install -n "${ENV_NAME}" -c nvidia cuda-toolkit -y
+
 echo "Installing remaining dependencies via pip..."
 conda run -n "${ENV_NAME}" pip install -r requirements.txt
 

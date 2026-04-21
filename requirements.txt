@@ -3,3 +3,5 @@ ranx>=0.3.21
 sentence-transformers>=5.3.0
 fastparquet<2026
 accelerate>=1.13.0
+pylate>=1.4.0
+einops>=0.8.0
