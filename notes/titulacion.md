@@ -11,44 +11,12 @@
   - Comparar rankings entre sí
   - Comparar con text-embedding-3-large
 
-- Protocolo
-  - Obtener fundamentos teóricos de:
-    - Embeddings
-    - Probabilistic relevance framework
-  - Rerankers:
-    - RRF
-    - Rank-Biased Centroids (rbc)
-    - CombMNZ
-    - Condorcet-fuse
-    - Borda-fuse
-
 - Tesis
   - Estudiar distribución del número de documentos relevantes por query para explicar métricas
   - Revisar resultados y métodos:
     - Artículos utilizando MessIRve
     - MTEB y La Leaderboard
     - Comparar los resultados obtenidos con resultados en otras lenguas para todos los modelos involucrados
-
-## Registro
-
-1. Formato de registro firmado por estudiante y asesor(a).
-2. Historial académico SIAE (por lo menos con el 75% de los créditos)
-3. Constancia de conclusión de servicio social
-4. Propuesta de tema de Tesis
-    - Título tentativo
-    - Justificación
-    - Objetivos
-    - Índice tentativo
-    - Bibliografía básica en orden alfabético.
-    - Firmada de forma autógrafa por el estudiante y por el tutor.
-
-_INCLUIR LOS 4 DOCUMENTOS EN UN SOLO PDF._
-
-1. CV resumido y firmado.
-2. Copia de su último grado obtenido (título, anverso y reverso, no cédula).
-3. Copia de CURP.
-
-_INCLUIR LOS 3 DOCUMENTOS EN UN SOLO PDF._
 
 ## Experimentos
 
