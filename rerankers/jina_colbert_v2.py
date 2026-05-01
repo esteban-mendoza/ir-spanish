@@ -169,6 +169,28 @@ def _worker(
         corpus_workers:  Number of parallel workers for corpus loading.
     """
     from pylate import models
+    from pylate.models.Dense import Dense
+
+    # pylate does a hard key lookup on config["activation_function"] inside
+    # Dense.from_sentence_transformers, but jina-colbert-v2 omits that key.
+    _orig_from_st = Dense.from_sentence_transformers.__func__
+
+    @classmethod  # type: ignore[misc]
+    def _patched_from_st(cls, dense):
+        try:
+            return _orig_from_st(cls, dense)
+        except KeyError as e:
+            if "activation_function" not in str(e):
+                raise
+            config_path = os.path.join(dense.get_config_path(), "config.json")
+            with open(config_path) as f:
+                cfg = json.load(f)
+            cfg["activation_function"] = "torch.nn.modules.linear.Identity"
+            with open(config_path, "w") as f:
+                json.dump(cfg, f, indent=2)
+            return _orig_from_st(cls, dense)
+
+    Dense.from_sentence_transformers = _patched_from_st
 
     # Each worker builds its own doc lookup from the HF-cached corpus.
     log.info("[%s] Building doc lookup ...", device)
