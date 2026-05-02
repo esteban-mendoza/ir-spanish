@@ -27,7 +27,7 @@ from pathlib import Path
 
 # Reduce CUDA memory fragmentation over long-running inference.
 # Must be set before any CUDA initialization.
-os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
+os.environ.setdefault("PYTORCH_ALLOC_CONF", "expandable_segments:True")
 
 import torch
 import torch.multiprocessing as mp
@@ -168,7 +168,54 @@ def _worker(
         checkpoint_path: Path for this worker's checkpoint JSON file.
         corpus_workers:  Number of parallel workers for corpus loading.
     """
+    import warnings
+    warnings.filterwarnings("ignore", message=".*tokenizer_kwargs.*deprecated")
+    warnings.filterwarnings("ignore", message=".*get_word_embedding_dimension.*")
+    warnings.filterwarnings("ignore", message=".*tokenize.*deprecated.*preprocess")
+    warnings.filterwarnings("ignore", message=".*flash_attn is not installed.*")
+
     from pylate import models
+    from pylate.models.Dense import Dense as _PylateDense
+    from pylate.scores import colbert_scores_pairwise
+    from sentence_transformers.models import Dense as _STDense
+    from sentence_transformers.util import import_from_string
+
+    # jina-colbert-v2 has no modules.json, so SentenceTransformer creates
+    # [Transformer, Pooling].  pylate expects [Transformer, Dense] and tries
+    # to convert module 1 via Dense.from_sentence_transformers — but it is a
+    # Pooling module, not Dense.  When we detect a non-Dense module, we load
+    # the projection weights directly from the checkpoint instead.
+    _dense_keys = {"in_features", "out_features", "bias", "activation_function",
+                    "init_weight", "init_bias", "use_residual"}
+
+    @staticmethod
+    def _fixed_from_st(dense):
+        if not isinstance(dense, _STDense):
+            from safetensors import safe_open
+            from transformers.utils import cached_file
+
+            path = cached_file(RERANKER_MODEL, "model.safetensors")
+            with safe_open(path, framework="pt", device="cpu") as f:
+                weight = f.get_tensor("linear.weight")
+
+            model = _PylateDense(
+                in_features=weight.shape[1],
+                out_features=weight.shape[0],
+                bias=False,
+            )
+            model.load_state_dict({"linear.weight": weight})
+            return model
+
+        config = dense.get_config_dict()
+        config["activation_function"] = import_from_string(
+            config.get("activation_function", "torch.nn.modules.linear.Identity")
+        )()
+        filtered = {k: v for k, v in config.items() if k in _dense_keys}
+        model = _PylateDense(**filtered)
+        model.load_state_dict(dense.state_dict())
+        return model
+
+    _PylateDense.from_sentence_transformers = _fixed_from_st
 
     # Each worker builds its own doc lookup from the HF-cached corpus.
     log.info("[%s] Building doc lookup ...", device)
@@ -182,7 +229,10 @@ def _worker(
         attend_to_expansion_tokens=True,
         trust_remote_code=True,
         device=device,
+        query_length=MAX_QUERY_LENGTH,
+        document_length=MAX_DOC_LENGTH,
     )
+    model._text_length = model._input_length
     log.info("[%s] Model loaded.", device)
 
     # Resume from checkpoint
@@ -212,18 +262,20 @@ def _worker(
                 [query_text],
                 is_query=True,
                 batch_size=1,
-                max_length=MAX_QUERY_LENGTH,
+                show_progress_bar=False,
             )
             doc_embs = model.encode(
                 doc_texts,
                 is_query=False,
                 batch_size=DOC_BATCH_SIZE,
-                max_length=MAX_DOC_LENGTH,
+                show_progress_bar=False,
             )
 
             # Compute MaxSim scores: S(Q,D) = Σ_i max_j cos(Q_i, D_j)
-            # model.score returns a list of lists; [0] is scores for the single query
-            scores = model.score(query_emb, doc_embs)[0]
+            scores = colbert_scores_pairwise(
+                [query_emb[0]] * len(doc_embs),
+                doc_embs,
+            )
 
             results[query_id] = {
                 did: float(score) for did, score in zip(doc_ids, scores)
