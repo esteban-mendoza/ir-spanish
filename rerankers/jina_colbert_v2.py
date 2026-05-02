@@ -174,13 +174,17 @@ def _worker(
 
     # pylate does a hard key lookup on config["activation_function"] inside
     # Dense.from_sentence_transformers, but jina-colbert-v2 omits that key.
+    _dense_keys = {"in_features", "out_features", "bias", "activation_function",
+                    "init_weight", "init_bias", "use_residual"}
+
     @staticmethod
     def _fixed_from_st(dense):
         config = dense.get_config_dict()
         config["activation_function"] = import_from_string(
             config.get("activation_function", "torch.nn.modules.linear.Identity")
         )()
-        model = _PylateDense(**config)
+        filtered = {k: v for k, v in config.items() if k in _dense_keys}
+        model = _PylateDense(**filtered)
         model.load_state_dict(dense.state_dict())
         return model
 
