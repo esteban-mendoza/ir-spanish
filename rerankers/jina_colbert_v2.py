@@ -170,7 +170,7 @@ def _worker(
     """
     from pylate import models
     from pylate.models.Dense import Dense as _PylateDense
-    from pylate.scores import colbert_scores
+    from pylate.scores import colbert_scores_pairwise
     from sentence_transformers.models import Dense as _STDense
     from sentence_transformers.util import import_from_string
 
@@ -256,17 +256,18 @@ def _worker(
                 [query_text],
                 is_query=True,
                 batch_size=1,
-                padding=True,
             )
             doc_embs = model.encode(
                 doc_texts,
                 is_query=False,
                 batch_size=DOC_BATCH_SIZE,
-                padding=True,
             )
 
             # Compute MaxSim scores: S(Q,D) = Σ_i max_j cos(Q_i, D_j)
-            scores = colbert_scores(query_emb, doc_embs)[0]
+            scores = colbert_scores_pairwise(
+                [query_emb[0]] * len(doc_embs),
+                doc_embs,
+            )
 
             results[query_id] = {
                 did: float(score) for did, score in zip(doc_ids, scores)
