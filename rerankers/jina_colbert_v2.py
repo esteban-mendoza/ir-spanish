@@ -222,6 +222,8 @@ def _worker(
         attend_to_expansion_tokens=True,
         trust_remote_code=True,
         device=device,
+        query_length=MAX_QUERY_LENGTH,
+        document_length=MAX_DOC_LENGTH,
     )
     log.info("[%s] Model loaded.", device)
 
@@ -252,13 +254,11 @@ def _worker(
                 [query_text],
                 is_query=True,
                 batch_size=1,
-                max_length=MAX_QUERY_LENGTH,
             )
             doc_embs = model.encode(
                 doc_texts,
                 is_query=False,
                 batch_size=DOC_BATCH_SIZE,
-                max_length=MAX_DOC_LENGTH,
             )
 
             # Compute MaxSim scores: S(Q,D) = Σ_i max_j cos(Q_i, D_j)
