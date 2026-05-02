@@ -168,6 +168,12 @@ def _worker(
         checkpoint_path: Path for this worker's checkpoint JSON file.
         corpus_workers:  Number of parallel workers for corpus loading.
     """
+    import warnings
+    warnings.filterwarnings("ignore", message=".*tokenizer_kwargs.*deprecated")
+    warnings.filterwarnings("ignore", message=".*get_word_embedding_dimension.*")
+    warnings.filterwarnings("ignore", message=".*tokenize.*deprecated.*preprocess")
+    warnings.filterwarnings("ignore", message=".*flash_attn is not installed.*")
+
     from pylate import models
     from pylate.models.Dense import Dense as _PylateDense
     from pylate.scores import colbert_scores_pairwise
@@ -256,11 +262,13 @@ def _worker(
                 [query_text],
                 is_query=True,
                 batch_size=1,
+                show_progress_bar=False,
             )
             doc_embs = model.encode(
                 doc_texts,
                 is_query=False,
                 batch_size=DOC_BATCH_SIZE,
+                show_progress_bar=False,
             )
 
             # Compute MaxSim scores: S(Q,D) = Σ_i max_j cos(Q_i, D_j)
