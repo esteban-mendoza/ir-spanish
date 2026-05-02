@@ -256,15 +256,16 @@ def _worker(
                 [query_text],
                 is_query=True,
                 batch_size=1,
+                padding=True,
             )
             doc_embs = model.encode(
                 doc_texts,
                 is_query=False,
                 batch_size=DOC_BATCH_SIZE,
+                padding=True,
             )
 
             # Compute MaxSim scores: S(Q,D) = Σ_i max_j cos(Q_i, D_j)
-            # model.score returns a list of lists; [0] is scores for the single query
             scores = colbert_scores(query_emb, doc_embs)[0]
 
             results[query_id] = {
