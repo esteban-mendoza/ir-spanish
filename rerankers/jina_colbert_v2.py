@@ -225,6 +225,7 @@ def _worker(
         query_length=MAX_QUERY_LENGTH,
         document_length=MAX_DOC_LENGTH,
     )
+    model._text_length = model._input_length
     log.info("[%s] Model loaded.", device)
 
     # Resume from checkpoint
