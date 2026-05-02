@@ -27,7 +27,7 @@ from pathlib import Path
 
 # Reduce CUDA memory fragmentation over long-running inference.
 # Must be set before any CUDA initialization.
-os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
+os.environ.setdefault("PYTORCH_ALLOC_CONF", "expandable_segments:True")
 
 import torch
 import torch.multiprocessing as mp
@@ -170,15 +170,35 @@ def _worker(
     """
     from pylate import models
     from pylate.models.Dense import Dense as _PylateDense
+    from sentence_transformers.models import Dense as _STDense
     from sentence_transformers.util import import_from_string
 
-    # pylate does a hard key lookup on config["activation_function"] inside
-    # Dense.from_sentence_transformers, but jina-colbert-v2 omits that key.
+    # jina-colbert-v2 has no modules.json, so SentenceTransformer creates
+    # [Transformer, Pooling].  pylate expects [Transformer, Dense] and tries
+    # to convert module 1 via Dense.from_sentence_transformers — but it is a
+    # Pooling module, not Dense.  When we detect a non-Dense module, we load
+    # the projection weights directly from the checkpoint instead.
     _dense_keys = {"in_features", "out_features", "bias", "activation_function",
                     "init_weight", "init_bias", "use_residual"}
 
     @staticmethod
     def _fixed_from_st(dense):
+        if not isinstance(dense, _STDense):
+            from safetensors import safe_open
+            from transformers.utils import cached_file
+
+            path = cached_file(RERANKER_MODEL, "model.safetensors")
+            with safe_open(path, framework="pt", device="cpu") as f:
+                weight = f.get_tensor("linear.weight")
+
+            model = _PylateDense(
+                in_features=weight.shape[1],
+                out_features=weight.shape[0],
+                bias=False,
+            )
+            model.load_state_dict({"linear.weight": weight})
+            return model
+
         config = dense.get_config_dict()
         config["activation_function"] = import_from_string(
             config.get("activation_function", "torch.nn.modules.linear.Identity")
