@@ -30,9 +30,9 @@
 - Dispersos:
   - SPLADE-v3 ✅
 - Interacción tardía:
-  - Jina-ColBERT-v2
+  - Jina-ColBERT-v2 ✅
 - Cross-encoders:
-  - bge-reranker-v2-m3
+  - bge-reranker-v2-m3 ✅
   - jina-reranker-v3 ✅
 
 - Rerankers:
