@@ -19,9 +19,12 @@ Usage:
 from __future__ import annotations
 
 import gc
+import json
 import logging
 import os
+import shutil
 import time
+from dataclasses import dataclass
 from pathlib import Path
 
 os.environ.setdefault("PYTORCH_ALLOC_CONF", "expandable_segments:True")
@@ -30,15 +33,8 @@ import torch
 import torch.multiprocessing as mp
 from ranx import fuse
 
-from rerankers.fuse import ModelConfig, load_runs
-from rerankers.jina_reranker_v3 import (
-    build_doc_lookup,
-    _cleanup_checkpoints,
-    _load_checkpoint,
-    _save_checkpoint,
-)
 from utils import cache, data, retrieval
-from utils.observability import Timer
+from utils.observability import Timer, log_gpu_memory, log_ram_usage
 
 log = logging.getLogger(__name__)
 
@@ -46,6 +42,14 @@ log = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 # Configuration — first-stage models to fuse
 # ---------------------------------------------------------------------------
+@dataclass(frozen=True)
+class ModelConfig:
+    name: str
+    alias: str
+    max_q_len: int
+    max_d_len: int
+
+
 FIRST_STAGE_MODELS = [
     ModelConfig("intfloat/multilingual-e5-large-instruct", "e5large", 512, 512),
     ModelConfig("BAAI/bge-m3", "bgem3", 8192, 8192),
@@ -110,6 +114,27 @@ def hybrid_cache_base() -> Path:
 # ---------------------------------------------------------------------------
 # Fusion
 # ---------------------------------------------------------------------------
+def load_first_stage_runs() -> list:
+    """Load cached retrieval runs for all first-stage models."""
+    runs = []
+    for m in FIRST_STAGE_MODELS:
+        base = cache.cache_base(
+            CACHE_DIR,
+            m.name,
+            data.COUNTRY,
+            data.DATASET_VERSION,
+            m.max_q_len,
+            m.max_d_len,
+            data.MAX_WORD_COUNT,
+        )
+        run_path = cache.run_cache_path(base)
+        log.info("Loading run for %s from %s", m.alias, run_path)
+        run = retrieval.load_run(run_path)
+        run.name = m.alias
+        runs.append(run)
+    return runs
+
+
 def fuse_runs(runs: list):
     """Fuse multiple retrieval runs using the configured strategy."""
     with Timer(f"Fusing {len(runs)} runs with {FUSION_LABEL}"):
@@ -126,6 +151,47 @@ def fuse_runs(runs: list):
 
 
 # ---------------------------------------------------------------------------
+# Doc lookup
+# ---------------------------------------------------------------------------
+def build_doc_lookup(num_workers: int) -> dict[str, str]:
+    """Load the corpus and return a {doc_id: text} dict."""
+    doc_ids, doc_texts, _ = data.load_corpus(num_workers)
+    lookup = dict(zip(doc_ids, doc_texts))
+    del doc_ids, doc_texts
+    gc.collect()
+    log.info("Doc lookup built: %d documents", len(lookup))
+    return lookup
+
+
+# ---------------------------------------------------------------------------
+# Checkpointing
+# ---------------------------------------------------------------------------
+def _save_checkpoint(path: Path, results: dict[str, dict[str, float]]) -> None:
+    """Atomically save a checkpoint to disk."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_suffix(".tmp")
+    with open(tmp, "w") as f:
+        json.dump(results, f)
+    os.replace(tmp, path)
+
+
+def _load_checkpoint(path: Path) -> dict[str, dict[str, float]]:
+    """Load a checkpoint from disk, returning an empty dict if it doesn't exist."""
+    if not path.exists():
+        return {}
+    with open(path) as f:
+        return json.load(f)
+
+
+def _cleanup_checkpoints(reranker_base: Path) -> None:
+    """Remove the checkpoint directory after a successful run."""
+    checkpoint_dir = reranker_base / "checkpoints"
+    if checkpoint_dir.exists():
+        shutil.rmtree(checkpoint_dir)
+        log.info("Cleaned up checkpoint directory")
+
+
+# ---------------------------------------------------------------------------
 # Worker — runs in a child process, one per GPU
 # ---------------------------------------------------------------------------
 def _worker(
@@ -134,7 +200,12 @@ def _worker(
     checkpoint_path: Path,
     corpus_workers: int,
 ) -> None:
-    """Rerank a shard of queries on one GPU."""
+    """Rerank a shard of queries on one GPU.
+
+    Each worker loads its own copy of the corpus and model. This avoids
+    pickling the multi-GB doc_lookup through mp.Process args (required
+    because 'spawn' start method does not share parent memory).
+    """
     from transformers import AutoModel
 
     log.info("[%s] Building doc lookup ...", device)
@@ -286,15 +357,18 @@ def main():
         retrieval.run_evaluation(qrels, reranked_run, RERANKER_MODEL)
         return
 
+    # Step 1: Load and fuse first-stage runs
     runs = load_first_stage_runs()
     fused_run = fuse_runs(runs)
     del runs
     gc.collect()
 
+    # Step 2: Rerank fused result
     reranked_dict = rerank(fused_run, query_map, base)
     del fused_run
     gc.collect()
 
+    # Step 3: Save and evaluate
     base.mkdir(parents=True, exist_ok=True)
     reranked_run = retrieval.save_run(reranked_dict, RERANKER_MODEL, run_path)
     log.info("Saved hybrid reranked run to %s", run_path)
@@ -302,11 +376,6 @@ def main():
     _cleanup_checkpoints(base)
 
     retrieval.run_evaluation(qrels, reranked_run, RERANKER_MODEL)
-
-
-def load_first_stage_runs() -> list:
-    """Load cached retrieval runs for all first-stage models."""
-    return load_runs(FIRST_STAGE_MODELS)
 
 
 if __name__ == "__main__":
