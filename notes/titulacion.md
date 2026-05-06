@@ -11,13 +11,6 @@
   - Comparar rankings entre sí
   - Comparar con text-embedding-3-large
 
-- Tesis
-  - Estudiar distribución del número de documentos relevantes por query para explicar métricas
-  - Revisar resultados y métodos:
-    - Artículos utilizando MessIRve
-    - MTEB y La Leaderboard
-    - Comparar los resultados obtenidos con resultados en otras lenguas para todos los modelos involucrados
-
 ## Experimentos
 
 - Léxicos
@@ -58,6 +51,7 @@ Protocolo: <https://www.overleaf.com/project/69af3f611c674ab6c9bfd1f3>
   - Run: output of a retrieval system
     - query_id → document_id → score
   - Both have the following structure:
+
     ```python
     {
         "q_1": {"doc_a": 2, "doc_b": 1, "doc_c": 0},
@@ -97,4 +91,3 @@ Protocolo: <https://www.overleaf.com/project/69af3f611c674ab6c9bfd1f3>
   - Attention in the encoder is bidirectional; the decoder is causal but also cross-attends to the encoder's output.
   - There's a clear separation between input and output.
   - Used for translation, summarization, abstractive QA (generate an answer), sequence-to-sequence tasks.
-
