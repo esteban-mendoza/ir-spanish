@@ -30,6 +30,18 @@
 | bge-reranker-v3-m3 | jina-embeddings-v5-text-small-retrieval |  0.5770 |     0.9039 | 0.5124 | 0.5159 | 0.0802 | 0.0183 |
 | jina-colbert-v2    | jina-embeddings-v5-text-small-retrieval |  0.5019 |     0.9039 | 0.4358 | 0.4423 | 0.0731 | 0.0180 |
 
+## Hybrid
+╔══════════════════════════════════════════════════╗
+║  RESULTS — jina-reranker-v3                      ║
+╠══════════════════════════════════════════════════╣
+║  ndcg@10          0.5185                         ║
+║  recall@100       0.9275                         ║
+║  mrr@10           0.4532                         ║
+║  map              0.4595                         ║
+║  precision@10     0.0747                         ║
+║  precision@50     0.0183                         ║
+╚══════════════════════════════════════════════════╝
+
 ## Fusiones (max_seq_length)
 
 | model                         | strategy | params   | ndcg@10 | recall@100 | mrr@10 | map    | precision@10 | precision@50 |
