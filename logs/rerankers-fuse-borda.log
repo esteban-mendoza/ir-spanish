@@ -1,0 +1,18 @@
+nohup: no se tendrá en cuenta la entrada
+17:15:13 | INFO | Loading faiss with AVX512 support.
+17:15:13 | INFO | Successfully loaded faiss with AVX512 support.
+17:15:13 | INFO | Loading run for intfloat/multilingual-e5-large-instruct from /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+17:15:39 | INFO | Loading run for BAAI/bge-m3 from /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-m3/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+17:16:04 | INFO | Loading run for jinaai/jina-embeddings-v5-text-small-retrieval from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+17:16:54 | INFO | ⏱  START: Loading cached pruned qrels
+17:16:55 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.7s)
+17:17:08 | INFO | Fusing 3 runs with strategy 'bordafuse' (params: None)
+/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/ranx/fusion/bordafuse.py:56: NumbaTypeSafetyWarning: unsafe cast from uint64 to int64. Precision may be lost.
+  combined_results[i] = _borda_score(run[q_ids[i]], candidates[i])
+17:36:43 | INFO | 
+17:36:43 | INFO | ╔══════════════════════════════════════════════════╗
+17:36:43 | INFO | ║  RESULTS — fused(bordafuse)                      ║
+17:36:43 | INFO | ╠══════════════════════════════════════════════════╣
+17:36:43 | INFO | ║  ndcg@10          0.5413                         ║
+17:36:43 | INFO | ║  recall@100       0.9233                         ║
+17:36:43 | INFO | ╚══════════════════════════════════════════════════╝

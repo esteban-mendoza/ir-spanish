@@ -1,0 +1,16 @@
+nohup: no se tendrá en cuenta la entrada
+17:16:13 | INFO | Loading faiss with AVX512 support.
+17:16:13 | INFO | Successfully loaded faiss with AVX512 support.
+17:16:13 | INFO | Loading run for intfloat/multilingual-e5-large-instruct from /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+17:18:04 | INFO | Loading run for BAAI/bge-m3 from /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-m3/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+17:19:18 | INFO | Loading run for jinaai/jina-embeddings-v5-text-small-retrieval from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+17:20:27 | INFO | ⏱  START: Loading cached pruned qrels
+17:20:28 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.7s)
+17:20:41 | INFO | Fusing 3 runs with strategy 'condorcet' (params: None)
+18:47:39 | INFO | 
+18:47:39 | INFO | ╔══════════════════════════════════════════════════╗
+18:47:39 | INFO | ║  RESULTS — fused(condorcet)                      ║
+18:47:39 | INFO | ╠══════════════════════════════════════════════════╣
+18:47:39 | INFO | ║  ndcg@10          0.5418                         ║
+18:47:39 | INFO | ║  recall@100       0.8905                         ║
+18:47:39 | INFO | ╚══════════════════════════════════════════════════╝

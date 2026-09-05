@@ -1,0 +1,17 @@
+nohup: no se tendrá en cuenta la entrada
+15:49:52 | INFO | Loading faiss with AVX512 support.
+15:49:52 | INFO | Successfully loaded faiss with AVX512 support.
+15:49:52 | INFO | Loading cached retrieval run from /home/jmendoza/.cache/messirve_embeddings/naver__splade-v3/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+15:50:19 | INFO | ⏱  START: Loading cached pruned qrels
+15:50:20 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.3s)
+15:50:33 | INFO | 
+15:50:33 | INFO | ╔══════════════════════════════════════════════════╗
+15:50:33 | INFO | ║  RESULTS — splade-v3                             ║
+15:50:33 | INFO | ╠══════════════════════════════════════════════════╣
+15:50:33 | INFO | ║  ndcg@10          0.1956                         ║
+15:50:33 | INFO | ║  recall@100       0.5725                         ║
+15:50:33 | INFO | ║  mrr@10           0.1580                         ║
+15:50:33 | INFO | ║  map              0.1666                         ║
+15:50:33 | INFO | ║  precision@10     0.0326                         ║
+15:50:33 | INFO | ║  precision@50     0.0103                         ║
+15:50:33 | INFO | ╚══════════════════════════════════════════════════╝

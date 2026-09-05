@@ -1,0 +1,34 @@
+nohup: no se tendrá en cuenta la entrada
+16:50:52 | INFO | Loading faiss with AVX512 support.
+16:50:52 | INFO | Successfully loaded faiss with AVX512 support.
+16:50:52 | INFO | Loading run for Qwen/Qwen3-Embedding-0.6B from /home/jmendoza/.cache/messirve_embeddings/Qwen__Qwen3-Embedding-0.6B/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+16:51:46 | INFO | Loading run for intfloat/multilingual-e5-large-instruct from /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+16:52:36 | INFO | Loading run for BAAI/bge-m3 from /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-m3/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+16:53:22 | INFO | Loading run for jinaai/jina-embeddings-v5-text-small-retrieval from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+16:54:08 | INFO | ⏱  START: Loading cached pruned qrels
+16:54:08 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.5s)
+16:57:55 | INFO |   qwen3-0.6b+e5-large+bge-m3+jina-v5-small (rrf, k=60)          ndcg@10=0.5410  recall@100=0.9228
+17:01:06 | INFO |   qwen3-0.6b+e5-large+bge-m3 (rrf, k=60)                        ndcg@10=0.5253  recall@100=0.9078
+17:04:06 | INFO |   qwen3-0.6b+e5-large+jina-v5-small (rrf, k=60)                 ndcg@10=0.5261  recall@100=0.9154
+17:07:09 | INFO |   qwen3-0.6b+bge-m3+jina-v5-small (rrf, k=60)                   ndcg@10=0.5303  recall@100=0.9165
+17:10:07 | INFO |   e5-large+bge-m3+jina-v5-small (rrf, k=60)                     ndcg@10=0.5450  recall@100=0.9232
+17:12:42 | INFO |   qwen3-0.6b+e5-large (rrf, k=60)                               ndcg@10=0.4968  recall@100=0.8910
+17:15:21 | INFO |   qwen3-0.6b+bge-m3 (rrf, k=60)                                 ndcg@10=0.5057  recall@100=0.8913
+17:17:57 | INFO |   qwen3-0.6b+jina-v5-small (rrf, k=60)                          ndcg@10=0.4985  recall@100=0.9024
+17:22:16 | INFO |   e5-large+bge-m3 (rrf, k=60)                                   ndcg@10=0.5128  recall@100=0.8997
+17:24:39 | INFO |   e5-large+jina-v5-small (rrf, k=60)                            ndcg@10=0.5283  recall@100=0.9152
+17:26:41 | INFO |   bge-m3+jina-v5-small (rrf, k=60)                              ndcg@10=0.5370  recall@100=0.9182
+17:26:41 | INFO | Sweep results:
+| model                                    | strategy | params | ndcg@10 | recall@100 |
+| ---------------------------------------- | -------- | ------ | ------- | ---------- |
+| qwen3-0.6b+e5-large+bge-m3+jina-v5-small | rrf      | k=60   | 0.5410  | 0.9228     |
+| qwen3-0.6b+e5-large+bge-m3               | rrf      | k=60   | 0.5253  | 0.9078     |
+| qwen3-0.6b+e5-large+jina-v5-small        | rrf      | k=60   | 0.5261  | 0.9154     |
+| qwen3-0.6b+bge-m3+jina-v5-small          | rrf      | k=60   | 0.5303  | 0.9165     |
+| e5-large+bge-m3+jina-v5-small            | rrf      | k=60   | 0.5450  | 0.9232     |
+| qwen3-0.6b+e5-large                      | rrf      | k=60   | 0.4968  | 0.8910     |
+| qwen3-0.6b+bge-m3                        | rrf      | k=60   | 0.5057  | 0.8913     |
+| qwen3-0.6b+jina-v5-small                 | rrf      | k=60   | 0.4985  | 0.9024     |
+| e5-large+bge-m3                          | rrf      | k=60   | 0.5128  | 0.8997     |
+| e5-large+jina-v5-small                   | rrf      | k=60   | 0.5283  | 0.9152     |
+| bge-m3+jina-v5-small                     | rrf      | k=60   | 0.5370  | 0.9182     |

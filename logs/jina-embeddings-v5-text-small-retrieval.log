@@ -1,0 +1,22 @@
+nohup: no se tendrá en cuenta la entrada
+10:30:19 | INFO | Loading faiss with AVX512 support.
+10:30:19 | INFO | Successfully loaded faiss with AVX512 support.
+10:30:19 | INFO |   qrels : ✓ cached
+10:30:19 | INFO |   doc   : ✓ complete (54874.1 MB)  [0 chunks on disk]
+10:30:19 | INFO |   query : ✓ complete (664.3 MB)  [0 chunks on disk]
+10:30:19 | INFO | Loading cached retrieval run from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+10:30:47 | INFO | ⏱  START: Loading cached pruned qrels
+10:30:47 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/ranx/metrics/precision.py:24: NumbaTypeSafetyWarning: unsafe cast from uint64 to int64. Precision may be lost.
+  scores[i] = _precision(qrels[i], run[i], k, rel_lvl)
+10:31:04 | INFO | 
+10:31:04 | INFO | ╔══════════════════════════════════════════════════╗
+10:31:04 | INFO | ║  RESULTS — jina-embeddings-v5-text-small-retrieval ║
+10:31:04 | INFO | ╠══════════════════════════════════════════════════╣
+10:31:04 | INFO | ║  ndcg@10          0.5115                         ║
+10:31:04 | INFO | ║  recall@100       0.9039                         ║
+10:31:04 | INFO | ║  mrr@10           0.4481                         ║
+10:31:04 | INFO | ║  map              0.4538                         ║
+10:31:04 | INFO | ║  precision@10     0.0733                         ║
+10:31:04 | INFO | ║  precision@50     0.0178                         ║
+10:31:04 | INFO | ╚══════════════════════════════════════════════════╝

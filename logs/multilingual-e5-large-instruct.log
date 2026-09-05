@@ -1,0 +1,20 @@
+nohup: no se tendrá en cuenta la entrada
+15:40:14 | INFO | Loading faiss with AVX512 support.
+15:40:14 | INFO | Successfully loaded faiss with AVX512 support.
+15:40:14 | INFO |   qrels : ✓ cached
+15:40:14 | INFO |   doc   : ✗ incomplete  [0 chunks on disk]
+15:40:14 | INFO |   query : ✗ incomplete  [0 chunks on disk]
+15:40:14 | INFO | Loading cached retrieval run from /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+15:40:41 | INFO | ⏱  START: Loading cached pruned qrels
+15:40:41 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+15:40:55 | INFO | 
+15:40:55 | INFO | ╔══════════════════════════════════════════════════╗
+15:40:55 | INFO | ║  RESULTS — multilingual-e5-large-instruct        ║
+15:40:55 | INFO | ╠══════════════════════════════════════════════════╣
+15:40:55 | INFO | ║  ndcg@10          0.4675                         ║
+15:40:55 | INFO | ║  recall@100       0.8666                         ║
+15:40:55 | INFO | ║  mrr@10           0.4079                         ║
+15:40:55 | INFO | ║  map              0.4140                         ║
+15:40:55 | INFO | ║  precision@10     0.0676                         ║
+15:40:55 | INFO | ║  precision@50     0.0168                         ║
+15:40:55 | INFO | ╚══════════════════════════════════════════════════╝

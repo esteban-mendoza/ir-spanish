@@ -9,8 +9,5 @@ wheels/
 # Virtual environments
 .venv
 
-# Logs
-logs
-
 # Visual Studio Code
 .vscode

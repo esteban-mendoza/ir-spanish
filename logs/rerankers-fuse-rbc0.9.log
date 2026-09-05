@@ -1,0 +1,128 @@
+nohup: no se tendrá en cuenta la entrada
+14:01:15 | INFO | Loading faiss with AVX512 support.
+14:01:15 | INFO | Successfully loaded faiss with AVX512 support.
+14:01:15 | INFO | Loading run for bm25_pyserini from /home/jmendoza/.cache/messirve_embeddings/bm25_pyserini/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+14:01:42 | INFO | Loading run for naver/splade-v3 from /home/jmendoza/.cache/messirve_embeddings/naver__splade-v3/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+14:02:06 | INFO | Loading run for Qwen/Qwen3-Embedding-0.6B from /home/jmendoza/.cache/messirve_embeddings/Qwen__Qwen3-Embedding-0.6B/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+14:02:30 | INFO | Loading run for intfloat/multilingual-e5-large-instruct from /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+14:02:53 | INFO | Loading run for BAAI/bge-m3 from /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-m3/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+14:03:16 | INFO | Loading run for jinaai/jina-embeddings-v5-text-small-retrieval from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+14:03:40 | INFO | ⏱  START: Loading cached pruned qrels
+14:03:40 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+14:08:33 | INFO |   bm25+splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (rbc, phi=0.9)  ndcg@10=0.5393  recall@100=0.9125
+14:12:44 | INFO |   bm25+splade-v3+qwen3-0.6b+e5-large+bge-m3 (rbc, phi=0.9)      ndcg@10=0.5171  recall@100=0.8970
+14:16:58 | INFO |   bm25+splade-v3+qwen3-0.6b+e5-large+jina-v5-small (rbc, phi=0.9)  ndcg@10=0.5193  recall@100=0.9054
+14:21:06 | INFO |   bm25+splade-v3+qwen3-0.6b+bge-m3+jina-v5-small (rbc, phi=0.9)  ndcg@10=0.5211  recall@100=0.9062
+14:25:13 | INFO |   bm25+splade-v3+e5-large+bge-m3+jina-v5-small (rbc, phi=0.9)   ndcg@10=0.5336  recall@100=0.9120
+14:29:14 | INFO |   bm25+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (rbc, phi=0.9)  ndcg@10=0.5432  recall@100=0.9177
+14:33:18 | INFO |   splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (rbc, phi=0.9)  ndcg@10=0.5441  recall@100=0.9131
+14:36:44 | INFO |   bm25+splade-v3+qwen3-0.6b+e5-large (rbc, phi=0.9)             ndcg@10=0.4769  recall@100=0.8816
+14:40:05 | INFO |   bm25+splade-v3+qwen3-0.6b+bge-m3 (rbc, phi=0.9)               ndcg@10=0.4805  recall@100=0.8814
+14:43:19 | INFO |   bm25+splade-v3+qwen3-0.6b+jina-v5-small (rbc, phi=0.9)        ndcg@10=0.4813  recall@100=0.8919
+14:46:39 | INFO |   bm25+splade-v3+e5-large+bge-m3 (rbc, phi=0.9)                 ndcg@10=0.4915  recall@100=0.8890
+14:49:55 | INFO |   bm25+splade-v3+e5-large+jina-v5-small (rbc, phi=0.9)          ndcg@10=0.5009  recall@100=0.9037
+14:53:13 | INFO |   bm25+splade-v3+bge-m3+jina-v5-small (rbc, phi=0.9)            ndcg@10=0.5038  recall@100=0.9051
+14:56:24 | INFO |   bm25+qwen3-0.6b+e5-large+bge-m3 (rbc, phi=0.9)                ndcg@10=0.5224  recall@100=0.9029
+14:59:37 | INFO |   bm25+qwen3-0.6b+e5-large+jina-v5-small (rbc, phi=0.9)         ndcg@10=0.5247  recall@100=0.9115
+15:02:47 | INFO |   bm25+qwen3-0.6b+bge-m3+jina-v5-small (rbc, phi=0.9)           ndcg@10=0.5284  recall@100=0.9124
+15:07:08 | INFO |   bm25+e5-large+bge-m3+jina-v5-small (rbc, phi=0.9)             ndcg@10=0.5403  recall@100=0.9181
+15:10:16 | INFO |   splade-v3+qwen3-0.6b+e5-large+bge-m3 (rbc, phi=0.9)           ndcg@10=0.5245  recall@100=0.8974
+15:13:20 | INFO |   splade-v3+qwen3-0.6b+e5-large+jina-v5-small (rbc, phi=0.9)    ndcg@10=0.5269  recall@100=0.9062
+15:16:28 | INFO |   splade-v3+qwen3-0.6b+bge-m3+jina-v5-small (rbc, phi=0.9)      ndcg@10=0.5285  recall@100=0.9069
+15:19:34 | INFO |   splade-v3+e5-large+bge-m3+jina-v5-small (rbc, phi=0.9)        ndcg@10=0.5417  recall@100=0.9134
+15:22:30 | INFO |   qwen3-0.6b+e5-large+bge-m3+jina-v5-small (rbc, phi=0.9)       ndcg@10=0.5465  recall@100=0.9177
+15:24:56 | INFO |   bm25+splade-v3+qwen3-0.6b (rbc, phi=0.9)                      ndcg@10=0.3823  recall@100=0.8372
+15:27:25 | INFO |   bm25+splade-v3+e5-large (rbc, phi=0.9)                        ndcg@10=0.3968  recall@100=0.8588
+15:30:08 | INFO |   bm25+splade-v3+bge-m3 (rbc, phi=0.9)                          ndcg@10=0.4020  recall@100=0.8612
+15:32:31 | INFO |   bm25+splade-v3+jina-v5-small (rbc, phi=0.9)                   ndcg@10=0.4113  recall@100=0.8850
+15:35:30 | INFO |   bm25+qwen3-0.6b+e5-large (rbc, phi=0.9)                       ndcg@10=0.4842  recall@100=0.8890
+15:37:50 | INFO |   bm25+qwen3-0.6b+bge-m3 (rbc, phi=0.9)                         ndcg@10=0.4915  recall@100=0.8893
+15:40:09 | INFO |   bm25+qwen3-0.6b+jina-v5-small (rbc, phi=0.9)                  ndcg@10=0.4900  recall@100=0.8993
+15:42:30 | INFO |   bm25+e5-large+bge-m3 (rbc, phi=0.9)                           ndcg@10=0.4992  recall@100=0.8964
+15:44:50 | INFO |   bm25+e5-large+jina-v5-small (rbc, phi=0.9)                    ndcg@10=0.5125  recall@100=0.9109
+15:47:10 | INFO |   bm25+bge-m3+jina-v5-small (rbc, phi=0.9)                      ndcg@10=0.5184  recall@100=0.9130
+15:49:31 | INFO |   splade-v3+qwen3-0.6b+e5-large (rbc, phi=0.9)                  ndcg@10=0.4907  recall@100=0.8826
+15:51:52 | INFO |   splade-v3+qwen3-0.6b+bge-m3 (rbc, phi=0.9)                    ndcg@10=0.4939  recall@100=0.8817
+15:54:10 | INFO |   splade-v3+qwen3-0.6b+jina-v5-small (rbc, phi=0.9)             ndcg@10=0.4928  recall@100=0.8931
+15:56:32 | INFO |   splade-v3+e5-large+bge-m3 (rbc, phi=0.9)                      ndcg@10=0.5042  recall@100=0.8904
+15:58:51 | INFO |   splade-v3+e5-large+jina-v5-small (rbc, phi=0.9)               ndcg@10=0.5164  recall@100=0.9060
+16:01:11 | INFO |   splade-v3+bge-m3+jina-v5-small (rbc, phi=0.9)                 ndcg@10=0.5188  recall@100=0.9075
+16:03:31 | INFO |   qwen3-0.6b+e5-large+bge-m3 (rbc, phi=0.9)                     ndcg@10=0.5290  recall@100=0.9033
+16:06:29 | INFO |   qwen3-0.6b+e5-large+jina-v5-small (rbc, phi=0.9)              ndcg@10=0.5317  recall@100=0.9124
+16:09:27 | INFO |   qwen3-0.6b+bge-m3+jina-v5-small (rbc, phi=0.9)                ndcg@10=0.5354  recall@100=0.9134
+16:12:29 | INFO |   e5-large+bge-m3+jina-v5-small (rbc, phi=0.9)                  ndcg@10=0.5478  recall@100=0.9194
+16:14:30 | INFO |   bm25+splade-v3 (rbc, phi=0.9)                                 ndcg@10=0.2340  recall@100=0.6373
+16:16:20 | INFO |   bm25+qwen3-0.6b (rbc, phi=0.9)                                ndcg@10=0.3897  recall@100=0.8469
+16:18:08 | INFO |   bm25+e5-large (rbc, phi=0.9)                                  ndcg@10=0.4066  recall@100=0.8660
+16:19:58 | INFO |   bm25+bge-m3 (rbc, phi=0.9)                                    ndcg@10=0.4175  recall@100=0.8716
+16:21:50 | INFO |   bm25+jina-v5-small (rbc, phi=0.9)                             ndcg@10=0.4319  recall@100=0.8965
+16:23:45 | INFO |   splade-v3+qwen3-0.6b (rbc, phi=0.9)                           ndcg@10=0.4007  recall@100=0.8348
+16:25:43 | INFO |   splade-v3+e5-large (rbc, phi=0.9)                             ndcg@10=0.4227  recall@100=0.8599
+16:27:40 | INFO |   splade-v3+bge-m3 (rbc, phi=0.9)                               ndcg@10=0.4241  recall@100=0.8623
+16:29:49 | INFO |   splade-v3+jina-v5-small (rbc, phi=0.9)                        ndcg@10=0.4380  recall@100=0.8893
+16:31:25 | INFO |   qwen3-0.6b+e5-large (rbc, phi=0.9)                            ndcg@10=0.4987  recall@100=0.8894
+16:33:31 | INFO |   qwen3-0.6b+bge-m3 (rbc, phi=0.9)                              ndcg@10=0.5062  recall@100=0.8897
+16:35:26 | INFO |   qwen3-0.6b+jina-v5-small (rbc, phi=0.9)                       ndcg@10=0.5036  recall@100=0.9016
+16:37:31 | INFO |   e5-large+bge-m3 (rbc, phi=0.9)                                ndcg@10=0.5127  recall@100=0.8981
+16:39:33 | INFO |   e5-large+jina-v5-small (rbc, phi=0.9)                         ndcg@10=0.5297  recall@100=0.9141
+16:41:36 | INFO |   bge-m3+jina-v5-small (rbc, phi=0.9)                           ndcg@10=0.5371  recall@100=0.9173
+16:41:36 | INFO | Sweep results:
+| model                                                   | strategy | params  | ndcg@10 | recall@100 |
+| ------------------------------------------------------- | -------- | ------- | ------- | ---------- |
+| bm25+splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small | rbc      | phi=0.9 | 0.5393  | 0.9125     |
+| bm25+splade-v3+qwen3-0.6b+e5-large+bge-m3               | rbc      | phi=0.9 | 0.5171  | 0.8970     |
+| bm25+splade-v3+qwen3-0.6b+e5-large+jina-v5-small        | rbc      | phi=0.9 | 0.5193  | 0.9054     |
+| bm25+splade-v3+qwen3-0.6b+bge-m3+jina-v5-small          | rbc      | phi=0.9 | 0.5211  | 0.9062     |
+| bm25+splade-v3+e5-large+bge-m3+jina-v5-small            | rbc      | phi=0.9 | 0.5336  | 0.9120     |
+| bm25+qwen3-0.6b+e5-large+bge-m3+jina-v5-small           | rbc      | phi=0.9 | 0.5432  | 0.9177     |
+| splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small      | rbc      | phi=0.9 | 0.5441  | 0.9131     |
+| bm25+splade-v3+qwen3-0.6b+e5-large                      | rbc      | phi=0.9 | 0.4769  | 0.8816     |
+| bm25+splade-v3+qwen3-0.6b+bge-m3                        | rbc      | phi=0.9 | 0.4805  | 0.8814     |
+| bm25+splade-v3+qwen3-0.6b+jina-v5-small                 | rbc      | phi=0.9 | 0.4813  | 0.8919     |
+| bm25+splade-v3+e5-large+bge-m3                          | rbc      | phi=0.9 | 0.4915  | 0.8890     |
+| bm25+splade-v3+e5-large+jina-v5-small                   | rbc      | phi=0.9 | 0.5009  | 0.9037     |
+| bm25+splade-v3+bge-m3+jina-v5-small                     | rbc      | phi=0.9 | 0.5038  | 0.9051     |
+| bm25+qwen3-0.6b+e5-large+bge-m3                         | rbc      | phi=0.9 | 0.5224  | 0.9029     |
+| bm25+qwen3-0.6b+e5-large+jina-v5-small                  | rbc      | phi=0.9 | 0.5247  | 0.9115     |
+| bm25+qwen3-0.6b+bge-m3+jina-v5-small                    | rbc      | phi=0.9 | 0.5284  | 0.9124     |
+| bm25+e5-large+bge-m3+jina-v5-small                      | rbc      | phi=0.9 | 0.5403  | 0.9181     |
+| splade-v3+qwen3-0.6b+e5-large+bge-m3                    | rbc      | phi=0.9 | 0.5245  | 0.8974     |
+| splade-v3+qwen3-0.6b+e5-large+jina-v5-small             | rbc      | phi=0.9 | 0.5269  | 0.9062     |
+| splade-v3+qwen3-0.6b+bge-m3+jina-v5-small               | rbc      | phi=0.9 | 0.5285  | 0.9069     |
+| splade-v3+e5-large+bge-m3+jina-v5-small                 | rbc      | phi=0.9 | 0.5417  | 0.9134     |
+| qwen3-0.6b+e5-large+bge-m3+jina-v5-small                | rbc      | phi=0.9 | 0.5465  | 0.9177     |
+| bm25+splade-v3+qwen3-0.6b                               | rbc      | phi=0.9 | 0.3823  | 0.8372     |
+| bm25+splade-v3+e5-large                                 | rbc      | phi=0.9 | 0.3968  | 0.8588     |
+| bm25+splade-v3+bge-m3                                   | rbc      | phi=0.9 | 0.4020  | 0.8612     |
+| bm25+splade-v3+jina-v5-small                            | rbc      | phi=0.9 | 0.4113  | 0.8850     |
+| bm25+qwen3-0.6b+e5-large                                | rbc      | phi=0.9 | 0.4842  | 0.8890     |
+| bm25+qwen3-0.6b+bge-m3                                  | rbc      | phi=0.9 | 0.4915  | 0.8893     |
+| bm25+qwen3-0.6b+jina-v5-small                           | rbc      | phi=0.9 | 0.4900  | 0.8993     |
+| bm25+e5-large+bge-m3                                    | rbc      | phi=0.9 | 0.4992  | 0.8964     |
+| bm25+e5-large+jina-v5-small                             | rbc      | phi=0.9 | 0.5125  | 0.9109     |
+| bm25+bge-m3+jina-v5-small                               | rbc      | phi=0.9 | 0.5184  | 0.9130     |
+| splade-v3+qwen3-0.6b+e5-large                           | rbc      | phi=0.9 | 0.4907  | 0.8826     |
+| splade-v3+qwen3-0.6b+bge-m3                             | rbc      | phi=0.9 | 0.4939  | 0.8817     |
+| splade-v3+qwen3-0.6b+jina-v5-small                      | rbc      | phi=0.9 | 0.4928  | 0.8931     |
+| splade-v3+e5-large+bge-m3                               | rbc      | phi=0.9 | 0.5042  | 0.8904     |
+| splade-v3+e5-large+jina-v5-small                        | rbc      | phi=0.9 | 0.5164  | 0.9060     |
+| splade-v3+bge-m3+jina-v5-small                          | rbc      | phi=0.9 | 0.5188  | 0.9075     |
+| qwen3-0.6b+e5-large+bge-m3                              | rbc      | phi=0.9 | 0.5290  | 0.9033     |
+| qwen3-0.6b+e5-large+jina-v5-small                       | rbc      | phi=0.9 | 0.5317  | 0.9124     |
+| qwen3-0.6b+bge-m3+jina-v5-small                         | rbc      | phi=0.9 | 0.5354  | 0.9134     |
+| e5-large+bge-m3+jina-v5-small                           | rbc      | phi=0.9 | 0.5478  | 0.9194     |
+| bm25+splade-v3                                          | rbc      | phi=0.9 | 0.2340  | 0.6373     |
+| bm25+qwen3-0.6b                                         | rbc      | phi=0.9 | 0.3897  | 0.8469     |
+| bm25+e5-large                                           | rbc      | phi=0.9 | 0.4066  | 0.8660     |
+| bm25+bge-m3                                             | rbc      | phi=0.9 | 0.4175  | 0.8716     |
+| bm25+jina-v5-small                                      | rbc      | phi=0.9 | 0.4319  | 0.8965     |
+| splade-v3+qwen3-0.6b                                    | rbc      | phi=0.9 | 0.4007  | 0.8348     |
+| splade-v3+e5-large                                      | rbc      | phi=0.9 | 0.4227  | 0.8599     |
+| splade-v3+bge-m3                                        | rbc      | phi=0.9 | 0.4241  | 0.8623     |
+| splade-v3+jina-v5-small                                 | rbc      | phi=0.9 | 0.4380  | 0.8893     |
+| qwen3-0.6b+e5-large                                     | rbc      | phi=0.9 | 0.4987  | 0.8894     |
+| qwen3-0.6b+bge-m3                                       | rbc      | phi=0.9 | 0.5062  | 0.8897     |
+| qwen3-0.6b+jina-v5-small                                | rbc      | phi=0.9 | 0.5036  | 0.9016     |
+| e5-large+bge-m3                                         | rbc      | phi=0.9 | 0.5127  | 0.8981     |
+| e5-large+jina-v5-small                                  | rbc      | phi=0.9 | 0.5297  | 0.9141     |
+| bge-m3+jina-v5-small                                    | rbc      | phi=0.9 | 0.5371  | 0.9173     |

@@ -1,0 +1,19 @@
+nohup: no se tendrá en cuenta la entrada
+15:51:46 | INFO | Loading faiss with AVX512 support.
+15:51:46 | INFO | Successfully loaded faiss with AVX512 support.
+WARNING: Using incubator modules: jdk.incubator.vector
+[0;93m2026-04-17 15:51:51.483511243 [W:onnxruntime:Default, device_discovery.cc:325 DiscoverDevicesForPlatform] GPU device discovery failed: device_discovery.cc:92 ReadFileContents Failed to open file: "/sys/class/drm/card0/device/vendor"[m
+15:51:51 | INFO | Loading cached retrieval run from /home/jmendoza/.cache/messirve_embeddings/bm25_pyserini/full_v1.2_nofilter/retrieval_run.lz4
+15:52:18 | INFO | ⏱  START: Loading cached pruned qrels
+15:52:18 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+15:52:32 | INFO | 
+15:52:32 | INFO | ╔══════════════════════════════════════════════════╗
+15:52:32 | INFO | ║  RESULTS — bm25_pyserini                         ║
+15:52:32 | INFO | ╠══════════════════════════════════════════════════╣
+15:52:32 | INFO | ║  ndcg@10          0.1848                         ║
+15:52:32 | INFO | ║  recall@100       0.5725                         ║
+15:52:32 | INFO | ║  mrr@10           0.1483                         ║
+15:52:32 | INFO | ║  map              0.1575                         ║
+15:52:32 | INFO | ║  precision@10     0.0311                         ║
+15:52:32 | INFO | ║  precision@50     0.0102                         ║
+15:52:32 | INFO | ╚══════════════════════════════════════════════════╝

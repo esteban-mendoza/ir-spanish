@@ -1,0 +1,18 @@
+nohup: no se tendrá en cuenta la entrada
+17:16:30 | INFO | Loading faiss with AVX512 support.
+17:16:30 | INFO | Successfully loaded faiss with AVX512 support.
+17:16:30 | INFO | Loading run for intfloat/multilingual-e5-large-instruct from /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+17:18:28 | INFO | Loading run for BAAI/bge-m3 from /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-m3/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+17:19:41 | INFO | Loading run for jinaai/jina-embeddings-v5-text-small-retrieval from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+17:20:51 | INFO | ⏱  START: Loading cached pruned qrels
+17:20:52 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.7s)
+17:21:40 | INFO | Fusing 3 runs with strategy 'isr' (params: None)
+/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/ranx/fusion/isr.py:33: NumbaTypeSafetyWarning: unsafe cast from uint64 to int64. Precision may be lost.
+  combined_results[i] = _isr_score(run[q_ids[i]])
+17:25:34 | INFO | 
+17:25:34 | INFO | ╔══════════════════════════════════════════════════╗
+17:25:34 | INFO | ║  RESULTS — fused(isr)                            ║
+17:25:34 | INFO | ╠══════════════════════════════════════════════════╣
+17:25:34 | INFO | ║  ndcg@10          0.5382                         ║
+17:25:34 | INFO | ║  recall@100       0.9228                         ║
+17:25:34 | INFO | ╚══════════════════════════════════════════════════╝

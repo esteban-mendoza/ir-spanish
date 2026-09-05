@@ -1,0 +1,18 @@
+nohup: no se tendrá en cuenta la entrada
+16:59:29 | INFO | Loading faiss with AVX512 support.
+16:59:29 | INFO | Successfully loaded faiss with AVX512 support.
+16:59:29 | INFO | Loading run for intfloat/multilingual-e5-large-instruct from /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+16:59:56 | INFO | Loading run for BAAI/bge-m3 from /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-m3/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+17:00:20 | INFO | Loading run for jinaai/jina-embeddings-v5-text-small-retrieval from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+17:00:42 | INFO | ⏱  START: Loading cached pruned qrels
+17:00:43 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+17:00:47 | INFO | Fusing 3 runs with strategy 'mnz' (params: None)
+/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/ranx/fusion/comb_mnz.py:37: NumbaTypeSafetyWarning: unsafe cast from uint64 to int64. Precision may be lost.
+  q_id = q_ids[i]
+17:02:46 | INFO | 
+17:02:46 | INFO | ╔══════════════════════════════════════════════════╗
+17:02:46 | INFO | ║  RESULTS — fused(mnz)                            ║
+17:02:46 | INFO | ╠══════════════════════════════════════════════════╣
+17:02:46 | INFO | ║  ndcg@10          0.5518                         ║
+17:02:46 | INFO | ║  recall@100       0.9230                         ║
+17:02:46 | INFO | ╚══════════════════════════════════════════════════╝

@@ -1,0 +1,22 @@
+nohup: no se tendrá en cuenta la entrada
+23:25:48 | INFO | Loading faiss with AVX512 support.
+23:25:48 | INFO | Successfully loaded faiss with AVX512 support.
+23:25:48 | INFO | Loading run for e5-large from /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+23:27:22 | INFO | Loading run for bge-m3 from /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-m3/full_v1.2_q8192_d8192_nofilter/retrieval_run.lz4
+23:28:34 | INFO | Loading run for jina-v5-small from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+23:29:45 | INFO | Loading run for harrier from /home/jmendoza/.cache/messirve_embeddings/microsoft__harrier-oss-v1-0.6b/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+23:30:57 | INFO | ⏱  START: Loading cached pruned qrels
+23:30:58 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.7s)
+23:35:28 | INFO |   e5-large+bge-m3+jina-v5-small+harrier (mnz)                   ndcg@10=0.5513  recall@100=0.9269  mrr@10=0.4871  map=0.4923  p@10=0.0776  p@50=0.0184
+23:39:13 | INFO |   e5-large+bge-m3+jina-v5-small (mnz)                           ndcg@10=0.5517  recall@100=0.9231  mrr@10=0.4878  map=0.4929  p@10=0.0775  p@50=0.0183
+23:42:43 | INFO |   e5-large+bge-m3+harrier (mnz)                                 ndcg@10=0.5317  recall@100=0.9127  mrr@10=0.4680  map=0.4734  p@10=0.0754  p@50=0.0180
+23:46:19 | INFO |   e5-large+jina-v5-small+harrier (mnz)                          ndcg@10=0.5374  recall@100=0.9204  mrr@10=0.4737  map=0.4791  p@10=0.0760  p@50=0.0182
+23:49:53 | INFO |   bge-m3+jina-v5-small+harrier (mnz)                            ndcg@10=0.5487  recall@100=0.9233  mrr@10=0.4843  map=0.4896  p@10=0.0773  p@50=0.0183
+23:49:53 | INFO | Results:
+| model                                 | strategy | params | ndcg@10 | recall@100 | mrr@10 | map    | precision@10 | precision@50 |
+| ------------------------------------- | -------- | ------ | ------- | ---------- | ------ | ------ | ------------ | ------------ |
+| e5-large+bge-m3+jina-v5-small+harrier | mnz      |        | 0.5513  | 0.9269     | 0.4871 | 0.4923 | 0.0776       | 0.0184       |
+| e5-large+bge-m3+jina-v5-small         | mnz      |        | 0.5517  | 0.9231     | 0.4878 | 0.4929 | 0.0775       | 0.0183       |
+| e5-large+bge-m3+harrier               | mnz      |        | 0.5317  | 0.9127     | 0.4680 | 0.4734 | 0.0754       | 0.0180       |
+| e5-large+jina-v5-small+harrier        | mnz      |        | 0.5374  | 0.9204     | 0.4737 | 0.4791 | 0.0760       | 0.0182       |
+| bge-m3+jina-v5-small+harrier          | mnz      |        | 0.5487  | 0.9233     | 0.4843 | 0.4896 | 0.0773       | 0.0183       |
