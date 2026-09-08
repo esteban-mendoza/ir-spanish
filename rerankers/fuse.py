@@ -61,9 +61,12 @@ STRATEGIES = {
     "isr": FusionStrategy(method="isr"),
     "bordafuse": FusionStrategy(method="bordafuse"),
     "condorcet": FusionStrategy(method="condorcet"),
+    "w_bordafuse": FusionStrategy(method="w_bordafuse", params={"step": 0.1})
 }
 
-ACTIVE_STRATEGIES = ["combmnz", "rbc", "rrf", "isr"]  # which strategies to run (keys from STRATEGIES)
+ACTIVE_STRATEGIES = [
+    "w_bordafuse"
+]  # which strategies to run (keys from STRATEGIES)
 
 MIN_COMBO_SIZE = 3  # minimum number of models in a fusion combination
 MAX_COMBO_SIZE = 3  # maximum number of models in a fusion combination

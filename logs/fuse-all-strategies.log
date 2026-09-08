@@ -1,0 +1,23 @@
+nohup: no se tendrá en cuenta la entrada
+18:43:17 | INFO | Loading faiss with AVX512 support.
+18:43:17 | INFO | Successfully loaded faiss with AVX512 support.
+18:43:17 | INFO | Loading run for e5-large from /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+18:43:45 | INFO | Loading run for bge-m3 from /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-m3/full_v1.2_q8192_d8192_nofilter/retrieval_run.lz4
+18:44:09 | INFO | Loading run for jina-v5-small from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+18:44:32 | INFO | ⏱  START: Loading cached pruned qrels
+18:44:33 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+18:46:34 | INFO |   e5-large+bge-m3+jina-v5-small (mnz)                           ndcg@10=0.5517  recall@100=0.9231  mrr@10=0.4878  map=0.4929  p@10=0.0775  p@50=0.0183
+18:48:56 | INFO |   e5-large+bge-m3+jina-v5-small (rbc, phi=0.95)                 ndcg@10=0.5485  recall@100=0.9206  mrr@10=0.4835  map=0.4884  p@10=0.0775  p@50=0.0182
+18:51:04 | INFO |   e5-large+bge-m3+jina-v5-small (rrf, k=60)                     ndcg@10=0.5450  recall@100=0.9234  mrr@10=0.4806  map=0.4859  p@10=0.0770  p@50=0.0183
+18:53:17 | INFO |   e5-large+bge-m3+jina-v5-small (isr)                           ndcg@10=0.5382  recall@100=0.9230  mrr@10=0.4743  map=0.4798  p@10=0.0763  p@50=0.0183
+19:03:27 | INFO |   e5-large+bge-m3+jina-v5-small (bordafuse)                     ndcg@10=0.5414  recall@100=0.9234  mrr@10=0.4776  map=0.4831  p@10=0.0764  p@50=0.0183
+20:23:54 | INFO |   e5-large+bge-m3+jina-v5-small (condorcet)                     ndcg@10=0.5415  recall@100=0.8913  mrr@10=0.4785  map=0.4831  p@10=0.0762  p@50=0.0177
+20:23:54 | INFO | Results:
+| model                         | strategy  | params   | ndcg@10 | recall@100 | mrr@10 | map    | precision@10 | precision@50 |
+| ----------------------------- | --------- | -------- | ------- | ---------- | ------ | ------ | ------------ | ------------ |
+| e5-large+bge-m3+jina-v5-small | mnz       |          | 0.5517  | 0.9231     | 0.4878 | 0.4929 | 0.0775       | 0.0183       |
+| e5-large+bge-m3+jina-v5-small | rbc       | phi=0.95 | 0.5485  | 0.9206     | 0.4835 | 0.4884 | 0.0775       | 0.0182       |
+| e5-large+bge-m3+jina-v5-small | rrf       | k=60     | 0.5450  | 0.9234     | 0.4806 | 0.4859 | 0.0770       | 0.0183       |
+| e5-large+bge-m3+jina-v5-small | isr       |          | 0.5382  | 0.9230     | 0.4743 | 0.4798 | 0.0763       | 0.0183       |
+| e5-large+bge-m3+jina-v5-small | bordafuse |          | 0.5414  | 0.9234     | 0.4776 | 0.4831 | 0.0764       | 0.0183       |
+| e5-large+bge-m3+jina-v5-small | condorcet |          | 0.5415  | 0.8913     | 0.4785 | 0.4831 | 0.0762       | 0.0177       |
