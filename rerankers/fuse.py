@@ -65,7 +65,12 @@ STRATEGIES = {
 }
 
 ACTIVE_STRATEGIES = [
-    "w_bordafuse"
+    "combmnz", 
+    "rbc", 
+    "rrf", 
+    "isr", 
+    "bordafuse", 
+    "condorcet"
 ]  # which strategies to run (keys from STRATEGIES)
 
 MIN_COMBO_SIZE = 3  # minimum number of models in a fusion combination
