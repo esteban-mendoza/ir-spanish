@@ -17,19 +17,21 @@ We evaluate on [**MessIRve**](https://huggingface.co/datasets/spanish-ir/messirv
 ## Research Questions
 
 1. Does rank fusion of lexical and semantic retrieval models improve relevance over individual models for Spanish IR?
-2. How do the BordaFuse, Condorcet, CombMNZ, RBC, and ISR fusion methods compare against the standard Reciprocal Rank Fusion (RRF)?
-3. How does rank fusion compare against late interaction (Jina-ColBERT-v2) and cross-encoder reranking (bge-reranker-v2-m3, jina-reranker-v3)?
+2. How do BordaFuse, Condorcet, CombMNZ, RBC, ISR, and RRF compare against themselves?
+3. How does rank fusion alghorithms compare against reranker models?
 4. Can open-source hybrid systems match or surpass proprietary baselines (e.g., OpenAI's `text-embedding-3-large`) on MessIRve?
 
 ## Retrieval Models
 
-### Lexical
+### Models for initial retrieval
+
+#### Lexical
 
 | Model                                         | Type           | Reference                  |
 | --------------------------------------------- | -------------- | -------------------------- |
 | [BM25](https://github.com/castorini/pyserini) | Sparse lexical | Robertson & Zaragoza, 2009 |
 
-### Dense (Dual-Encoders)
+#### Dense (Dual-Encoders)
 
 | Model                                                                                                  | Parameters | Reference       |
 | ------------------------------------------------------------------------------------------------------ | ---------- | --------------- |
@@ -38,19 +40,21 @@ We evaluate on [**MessIRve**](https://huggingface.co/datasets/spanish-ir/messirv
 | [Qwen3-Embedding-0.6B](https://huggingface.co/Qwen/Qwen3-Embedding-0.6B)                               | 600M       | Qwen, 2025      |
 | [jina-embeddings-v5-text-small](https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval) | 677M       | Jina AI, 2026   |
 
-### Sparse (Learned Sparse)
+#### Sparse (Learned Sparse)
 
 | Model                                               | Type                           | Reference        |
 | --------------------------------------------------- | ------------------------------ | ---------------- |
 | [SPLADE-v3](https://huggingface.co/naver/splade-v3) | Learned sparse representations | Naver Labs, 2024 |
 
-### Late Interaction
+### Neural rerankers
+
+#### Late Interaction
 
 | Model                                                            | Type                           | Reference     |
 | ---------------------------------------------------------------- | ------------------------------ | ------------- |
 | [Jina-ColBERT-v2](https://huggingface.co/jinaai/jina-colbert-v2) | ColBERT-style late interaction | Jina AI, 2024 |
 
-### Cross-Encoders (Rerankers)
+#### Cross-Encoders (Rerankers)
 
 | Model                                                                | Reference     |
 | -------------------------------------------------------------------- | ------------- |
@@ -70,12 +74,12 @@ We evaluate on [**MessIRve**](https://huggingface.co/datasets/spanish-ir/messirv
 
 ## Experimental Design
 
-| Experiment       | Description                                                                                                                                                                                |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Experiment 1** | Fusion vs. individual models — does combining ranked lists improve over the best single model?                                                                                             |
-| **Experiment 2** | Comparison of fusion algorithms — RRF vs. BordaFuse vs. Condorcet vs. CombMNZ vs. RBC vs. ISR                                                                                              |
-| **Experiment 3** | Fusion vs. late interaction and cross-encoders — how do rank fusion methods compare against Jina-ColBERT-v2 (late interaction), bge-reranker-v2-m3, and jina-reranker-v3 (cross-encoders)? |
-| **Experiment 4** | Open-source hybrid systems vs. proprietary baselines reported on MessIRve                                                                                                                  |
+| Experiment       | Description                                                                                                                                                      |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Experiment 1** | Fusion vs. individual models — does combining ranked lists improve over the best single model?                                                                   |
+| **Experiment 2** | Comparison of fusion algorithms — RRF vs. BordaFuse vs. Condorcet vs. CombMNZ vs. RBC vs. ISR                                                                    |
+| **Experiment 3** | Fusion vs. rerankers — how do rank fusion methods compare against Jina-ColBERT-v2 (late interaction), bge-reranker-v2-m3, and jina-reranker-v3 (cross-encoders)? |
+| **Experiment 4** | Open-source hybrid systems vs. proprietary baselines reported on MessIRve                                                                                        |
 
 ## Metrics
 
