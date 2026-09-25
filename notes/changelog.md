@@ -23,6 +23,13 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-09-25 — Corregido el estado global del cuaderno top-n (la versión interactiva mostraba la consulta vieja)
+- **Cambios:** `analysis/top_n_per_query.ipynb` — las funciones de visualización dejan de leer la consulta y los textos del espacio global: ahora son `cargar_textos(resultados, numero)`, `mostrar_resultados(resultados, numero, textos)`, `mostrar_relevantes(numero, textos)` y `resumen_relevantes(resultados, numero)`. La sección «Versión interactiva» (celdas del usuario) queda con un único punto de entrada, `analizar_consulta(numero, n)`, que hace el recorrido completo; la celda del ejemplo (§4) usa `CONSULTA` para colgar de la misma resolución que la §3. Cuaderno re-ejecutado en el servidor (0 errores).
+- **Decisiones:** el cuaderno se escribió para una consulta fija (§1), de modo que `CONSULTA` (resuelta en la §3) y `textos` (cargados en la §5) eran globales. Al cambiar `NUMERO_CONSULTA` en la versión interactiva, `top_n_por_modelo` devolvía los documentos de la consulta nueva, pero `mostrar_relevantes()` imprimía los relevantes de la vieja, `resumen_relevantes(resultados)` comparaba contra el `docid` viejo («—» en los seis modelos, `modelos = 0`) y las columnas `titulo`/`extracto` salían vacías, porque los textos se habían cargado solo para los `docid` de la consulta anterior. Se arregla pasando la consulta **explícitamente** (no leyendo variables globales) y con un solo punto de entrada interactivo, que evita olvidar un paso. Se conserva el límite de 330 caracteres de `_extracto` que había puesto el usuario.
+- **Estado / pendientes:** verificado con la consulta interactiva del usuario, 7521003 («cual fue el ultimo presidente de la urss»): su relevante (`303630#0`, «Presidente de la Unión Soviética») sale 1.º en qwen3-0.6b y jina-v5-small, 9.º en bge-m3 y no aparece en los otros tres (`modelos = 3`), y las tablas salen con título y extracto; el ejemplo de la §6 sigue con 8101866. **Regla del cuaderno:** toda función que dependa de la consulta la recibe como argumento (`numero`); no leer `CONSULTA` ni `textos` del espacio global.
+
+---
+
 ## 2026-09-25 — Cuaderno nuevo: top n de documentos por modelo para una consulta de prueba
 - **Cambios:** `analysis/top_n_per_query.ipynb` — cuaderno nuevo (17 celdas) que, dado un número de consulta del split de prueba, devuelve el top n (10 por omisión) de documentos de cada modelo de recuperación inicial, leído de los runs cacheados. Ejecutado de extremo a extremo en el servidor con el kernel `proyecto` (0 errores) sobre la consulta de ejemplo 8101866 («que moneda circula en aruba»).
 - **Decisiones:**
