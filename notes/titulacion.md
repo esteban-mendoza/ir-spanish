@@ -14,19 +14,20 @@
 ## Experimentos
 
 - Léxicos
-  - BM25 ✅
-- Dual-encoders:
-  - multilingual-e5-large-instruct ✅
-  - BGE-M3 ✅
-  - Qwen3-Embedding-8B ✅
-  - jina-embeddings-v5-text-small ✅
+  - BM25
 - Dispersos:
-  - SPLADE-v3 ✅
+  - SPLADE-v3
+- Dual-encoders:
+  - multilingual-e5-large-instruct
+  - BGE-M3
+  - Qwen3-Embedding-8B
+  - jina-embeddings-v5-text-small
+
 - Interacción tardía:
-  - Jina-ColBERT-v2 ✅
+  - Jina-ColBERT-v2
 - Cross-encoders:
-  - bge-reranker-v2-m3 ✅
-  - jina-reranker-v3 ✅
+  - bge-reranker-v2-m3
+  - jina-reranker-v3
 
 - Rerankers:
   - Rank-Biased Centroids (rbc)
