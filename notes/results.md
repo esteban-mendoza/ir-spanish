@@ -27,7 +27,7 @@
 | Model              |                                    from | nDCG@10 | Recall@100 | MRR@10 |    MAP |   P@10 |   P@50 |
 | ------------------ | --------------------------------------: | ------: | ---------: | -----: | -----: | -----: | -----: |
 | jina-reranker-v3   | jina-embeddings-v5-text-small-retrieval |  0.5792 |     0.9039 | 0.5167 | 0.5201 | 0.0798 | 0.0182 |
-| bge-reranker-v3-m3 | jina-embeddings-v5-text-small-retrieval |  0.5770 |     0.9039 | 0.5124 | 0.5159 | 0.0802 | 0.0183 |
+| bge-reranker-v2-m3 | jina-embeddings-v5-text-small-retrieval |  0.5770 |     0.9039 | 0.5124 | 0.5159 | 0.0802 | 0.0183 |
 | jina-colbert-v2    | jina-embeddings-v5-text-small-retrieval |  0.5019 |     0.9039 | 0.4358 | 0.4423 | 0.0731 | 0.0180 |
 
 ## Hybrid
