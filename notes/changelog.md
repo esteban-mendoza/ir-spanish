@@ -23,6 +23,11 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-10-19 — Módulo `evaluation`: t pareada, permutación, Holm y BH
+- **Cambios:** `evaluation/` nuevo (`significance.py`, `compare.py`); prueba de humo con jina-v5 vs bge-m3 en 20 000 consultas; corrección del bug de `ranx.evaluate` con una métrica parametrizada y de la importación perezosa del CLI.
+- **Decisiones:** E1/E3 usan t pareada + permutación; E2 usa Holm-Bonferroni principal y Benjamini-Hochberg como sensibilidad; no Tukey. La implementación es independiente de `ranx.compare` para controlar las correcciones.
+- **Estado / pendientes:** probado; falta aplicarlo a los runs definitivos y añadir el análisis de eficiencia.
+
 ## 2026-10-19 — Barrido exhaustivo de fusiones y normalización explícita
 - **Cambios:** `rerankers/fuse_sweep.py` nuevo (todas las combinaciones de 2 a 6 modelos, CSV/Markdown y runs fusionados); `rerankers/fuse.py` pasa `norm="min-max"` explícito. Corrida lanzada en el servidor con CombMNZ y RBC 0.95 sobre las longitudes nativas.
 - **Decisiones:** la corrida usa dos estrategias (CombMNZ y RBC) para no multiplicar por seis el costo; los runs fusionados quedan en `~/.cache/messirve_embeddings/fusions` para las pruebas pareadas. La normalización de CombMNZ es la min-max por consulta de `ranx`, verificada en su código.
