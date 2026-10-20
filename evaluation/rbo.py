@@ -5,11 +5,10 @@ depth.  It is a descriptive complementarity measure, not a significance test.
 The persistence parameter ``p`` is the probability of continuing to the next
 rank; the expected evaluation depth is ``1 / (1 - p)``.
 
-The calculation uses ``pyterrier_alpha.rbo``, the RBO measure of the official
-PyTerrier Alpha extension.  PyTerrier 1.1.2 does not include RBO in its core;
-the extension is the PyTerrier implementation of the measure.  It follows the
-definition of Webber, Moffat and Zobel (2010), which is the citation required
-by the PyTerrier documentation.
+The calculation is delegated to the open-source ``ranked-overlap`` package
+(MIT), which implements the extrapolated finite-list equation of Webber,
+Moffat and Zobel (2010).  The thesis cites the original RBO paper; the package
+is only the implementation used by the repository.
 """
 
 from __future__ import annotations
@@ -19,8 +18,7 @@ import csv
 import logging
 from pathlib import Path
 
-import pandas as pd
-from pyterrier_alpha import rbo as _rbo
+from ranked_overlap import rbo as _rbo
 
 from utils import retrieval
 
@@ -28,38 +26,11 @@ log = logging.getLogger(__name__)
 
 DEFAULT_P = 0.95
 DEFAULT_DEPTH = 100
-DEFAULT_BATCH_SIZE = 5000
-
-
-def _frame(run, query_ids: list, depth: int) -> pd.DataFrame:
-    """Build the ranking frame expected by ``pyterrier_alpha.rbo``."""
-    rows = []
-    for query_id in query_ids:
-        ranking = run.run[query_id] if query_id in run.run else {}
-        for rank, docno in enumerate(list(ranking)[:depth]):
-            # The measure sorts by score; -rank preserves the run order even
-            # when the original scores contain ties.
-            rows.append((query_id, docno, -float(rank)))
-    return pd.DataFrame(rows, columns=["qid", "docno", "score"])
 
 
 def rbo(a: list[str], b: list[str], p: float = DEFAULT_P, depth: int = DEFAULT_DEPTH) -> float:
-    """Return the RBO of two ranked lists, truncated to ``depth``."""
-    if not a or not b:
-        return 0.0
-    left = _frame_from_list(a[:depth])
-    right = _frame_from_list(b[:depth])
-    return float(next(iter(_rbo(left, right, p=p)))[1])
-
-
-def _frame_from_list(ranking: list[str]) -> pd.DataFrame:
-    return pd.DataFrame(
-        {
-            "qid": [0] * len(ranking),
-            "docno": ranking,
-            "score": [-float(rank) for rank in range(len(ranking))],
-        }
-    )
+    """Return the extrapolated RBO of two ranked lists, truncated to ``depth``."""
+    return float(_rbo(a[:depth], b[:depth], p=p))
 
 
 def rbo_between_runs(
@@ -68,32 +39,25 @@ def rbo_between_runs(
     p: float = DEFAULT_P,
     depth: int = DEFAULT_DEPTH,
     limit: int | None = None,
-    batch_size: int = DEFAULT_BATCH_SIZE,
 ) -> tuple[float, int]:
     """Average RBO over the queries present in both runs."""
-    query_ids = [
-        qid
-        for qid in run_a.get_query_ids()
-        if qid in run_b.run and len(run_a.run[qid]) > 0 and len(run_b.run[qid]) > 0
-    ]
+    query_ids = list(run_a.get_query_ids())
     if limit is not None:
         query_ids = query_ids[:limit]
 
-    total = 0.0
-    count = 0
-    for start in range(0, len(query_ids), batch_size):
-        batch = query_ids[start : start + batch_size]
-        left = _frame(run_a, batch, depth)
-        right = _frame(run_b, batch, depth)
-        if left.empty or right.empty:
+    values = []
+    for query_id in query_ids:
+        if query_id not in run_b.run:
             continue
-        values = list(_rbo(left, right, p=p))
-        total += sum(value for _, value in values)
-        count += len(values)
+        list_a = list(run_a.run[query_id].keys())[:depth]
+        list_b = list(run_b.run[query_id].keys())[:depth]
+        if not list_a or not list_b:
+            continue
+        values.append(rbo(list_a, list_b, p=p, depth=depth))
 
-    if count == 0:
+    if not values:
         return 0.0, 0
-    return total / count, count
+    return sum(values) / len(values), len(values)
 
 
 def compare_all_pairs(
@@ -102,7 +66,6 @@ def compare_all_pairs(
     p: float = DEFAULT_P,
     depth: int = DEFAULT_DEPTH,
     limit: int | None = None,
-    batch_size: int = DEFAULT_BATCH_SIZE,
 ) -> list[dict]:
     rows = []
     for i in range(len(runs)):
@@ -114,7 +77,6 @@ def compare_all_pairs(
                 p=p,
                 depth=depth,
                 limit=limit,
-                batch_size=batch_size,
             )
             rows.append(
                 {
@@ -151,12 +113,6 @@ def parse_args() -> argparse.Namespace:
         help="Use only the first N queries (smoke tests; not for final results).",
     )
     parser.add_argument(
-        "--batch-size",
-        type=int,
-        default=DEFAULT_BATCH_SIZE,
-        help="Queries per PyTerrier call (default: 5000).",
-    )
-    parser.add_argument(
         "--output",
         type=Path,
         default=Path(__file__).resolve().parents[1] / "results" / "rbo" / "rbo_pairs.csv",
@@ -185,7 +141,6 @@ def main() -> None:
         p=args.p,
         depth=args.depth,
         limit=args.limit,
-        batch_size=args.batch_size,
     )
     write_csv(rows, args.output)
     log.info("CSV: %s", args.output)

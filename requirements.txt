@@ -5,5 +5,4 @@ fastparquet<2026
 accelerate>=1.13.0
 pylate>=1.4.0
 einops>=0.8.0
-pyterrier>=1.1.2
-pyterrier-alpha>=0.16.5
+ranked-overlap>=0.1.0

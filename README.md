@@ -101,7 +101,7 @@ We evaluate on [**MessIRve**](https://huggingface.co/datasets/spanish-ir/messirv
 
 ## Complementarity
 
-RBO is implemented in `evaluation/rbo.py` using PyTerrier Alpha's `pyterrier-alpha`.
+RBO is implemented in `evaluation/rbo.py` using the MIT-licensed `ranked-overlap` package.
 
 ## Dataset
 

@@ -28,6 +28,11 @@ Protocolo obligatorio para todo agente:
 - **Decisión:** los logs y resultados de cada corrida se agregan al repositorio; se pueden limpiar después si crecen.
 - **Pendientes:** etapa B, comparaciones de significancia y análisis RBO–ganancia.
 
+## 2026-10-20 — RBO vuelve a ranked-overlap
+- **Cambios:** `evaluation/rbo.py` y `requirements.txt` vuelven a `ranked-overlap`; `README.md` y `notes/results.md` lo reflejan.
+- **Decisión:** se descarta PyTerrier para RBO por su costo (1000 profundidades y DataFrames, ~30 veces más lento); `ranked-overlap` es MIT, sin dependencias y produce la corrida rápida ya validada.
+- **Estado / pendientes:** los 15 pares de `results/rbo/rbo_pairs.csv` y `logs/rbo_ranked_overlap.log` siguen siendo válidos; no hay que recalcular.
+
 ## 2026-10-20 — README y terminología de pruebas
 - **Cambios:** `README.md` reduce «Statistical Comparison» a la lista de pruebas y separa RBO en «Complementarity»; `evaluation/__init__.py` y `evaluation/significance.py` hablan de «paired permutation test».
 - **Decisión:** no se mencionan pruebas de signos; la confirmación es una permutación pareada.
