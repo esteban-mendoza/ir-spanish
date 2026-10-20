@@ -3,7 +3,7 @@
 Pairwise tests and multiple-comparison corrections used in the thesis:
 
 - paired two-sided Student t-test for mean effectiveness;
-- sign-flip permutation test as a robust confirmation;
+- paired permutation test as a robust confirmation;
 - Holm-Bonferroni (FWER) and Benjamini-Hochberg (FDR) corrections.
 
 The module is intentionally independent of ``ranx.compare`` so that the
@@ -33,11 +33,11 @@ def permutation_test(
     seed: int = 42,
     chunk_size: int = 1_000,
 ) -> float:
-    """Two-sided sign-flip permutation test for the difference of means.
+    """Two-sided paired permutation test for the difference of means.
 
     Under the null hypothesis the two systems are exchangeable, so the sign of
     each per-query difference is equally likely.  The p-value is the fraction
-    of sign-flipped replicates whose absolute mean difference is at least the
+    of paired replicates whose absolute mean difference is at least the
     observed one.  Replicates are generated in chunks to bound memory use.
     """
     differences = np.asarray(a, dtype=np.float32) - np.asarray(b, dtype=np.float32)

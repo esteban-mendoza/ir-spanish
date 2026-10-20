@@ -94,25 +94,14 @@ We evaluate on [**MessIRve**](https://huggingface.co/datasets/spanish-ir/messirv
 
 ## Statistical Comparison
 
-The `evaluation` package implements the protocol used in the thesis:
+- Paired two-sided Student's t-test.
+- Paired permutation test.
+- Holm--Bonferroni correction (FWER).
+- Benjamini--Hochberg correction (FDR), as a sensitivity analysis.
 
-- paired two-sided Student t-test on per-query scores;
-- sign-flip permutation test as confirmation;
-- Holm-Bonferroni (FWER) and Benjamini-Hochberg (FDR) corrections.
+## Complementarity
 
-From the repository root:
-
-```bash
-python -m evaluation.compare --runs run_a.lz4 run_b.lz4 --names a b --test both --correction none
-```
-
-For Experiment 2 (six algorithms, 15 pairs), run once with `--correction holm` (primary) and once with `--correction bh` (sensitivity). The rationale is in `tesis/knowledge/urbano-et-al-2019-pruebas-estadisticas.md`.
-
-The complementarity measure of Experiment 5 is implemented in `evaluation/rbo.py` using the RBO measure of PyTerrier Alpha (`pyterrier-alpha`):
-
-```bash
-python -m evaluation.rbo --runs run_a.lz4 run_b.lz4 --names a b --p 0.95
-```
+RBO is implemented in `evaluation/rbo.py` using PyTerrier Alpha's `pyterrier-alpha`.
 
 ## Dataset
 

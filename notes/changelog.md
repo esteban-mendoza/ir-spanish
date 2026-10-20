@@ -28,6 +28,11 @@ Protocolo obligatorio para todo agente:
 - **Decisión:** los logs y resultados de cada corrida se agregan al repositorio; se pueden limpiar después si crecen.
 - **Pendientes:** etapa B, comparaciones de significancia y análisis RBO–ganancia.
 
+## 2026-10-20 — README y terminología de pruebas
+- **Cambios:** `README.md` reduce «Statistical Comparison» a la lista de pruebas y separa RBO en «Complementarity»; `evaluation/__init__.py` y `evaluation/significance.py` hablan de «paired permutation test».
+- **Decisión:** no se mencionan pruebas de signos; la confirmación es una permutación pareada.
+- **Pendientes:** corrida de RBO con PyTerrier y etapa B.
+
 ## 2026-10-20 — RBO con PyTerrier
 - **Cambios:** `evaluation/rbo.py` usa `pyterrier_alpha.rbo`; `requirements.txt`; `README.md`; corrida completa en curso.
 - **Decisión:** se usa PyTerrier, la implementación reconocida. RBO no está en el núcleo de PyTerrier 1.1.2, sino en su extensión oficial `pyterrier-alpha`; `ranked-overlap` se retira.

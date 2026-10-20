@@ -3,7 +3,7 @@
 This package implements the statistical protocol decided for Experiments 1–3:
 
 - paired two-sided Student t-test for mean effectiveness;
-- sign-flip permutation test as confirmation;
+- paired permutation test as confirmation;
 - Holm-Bonferroni (FWER) and Benjamini-Hochberg (FDR) corrections for the
   six-algorithm comparison of Experiment 2.
 
