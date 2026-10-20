@@ -124,7 +124,7 @@ Barrido completo con CombMNZ y RBC $\varphi = 0.95$. El CSV completo está en `r
 
 ## RBO entre modelos de primera etapa (p = 0.95, top-100)
 
-Promedio sobre las consultas de prueba. Los pares con BM25 usan 169 963 consultas (BM25 no recupera 92). Calculado con `ranked-overlap` 0.1.0 (MIT), que implementa la ecuación de Webber et al. (2010).
+Promedio sobre las consultas de prueba. Los pares con BM25 usan 169 963 consultas (BM25 no recupera 92). La tabla siguiente es de la corrida anterior con `ranked-overlap` 0.1.0; la corrida con PyTerrier (`pyterrier-alpha`) está en curso y estos valores se actualizarán al terminar.
 
 | Modelo A | Modelo B | RBO |
 | --- | --- | ---: |
