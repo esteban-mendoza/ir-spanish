@@ -45,51 +45,6 @@
 | e5-large+bge-m3+jina-v5-small | bordafuse |          | 0.5414  | 0.9234     | 0.4776 | 0.4831 | 0.0764       | 0.0183       |
 | e5-large+bge-m3+jina-v5-small | condorcet |          | 0.5415  | 0.8913     | 0.4785 | 0.4831 | 0.0762       | 0.0177       |
 
-## Fusiones (q512, d512)
-
-| Model           |     strategy | nDCG@10 | Recall@100 |
-| --------------- | -----------: | ------: | ---------: |
-| e5 + bge        |   rrf (k=60) |  0.5128 |     0.8997 |
-| e5 + bge + jina |   rrf (k=60) |  0.5450 |     0.9232 |
-| e5 + bge + jina |  rbc (φ=0.8) |  0.5434 |     0.9191 |
-| e5 + bge + jina |  rbc (φ=0.9) |  0.5478 |     0.9194 |
-| e5 + bge + jina | rbc (φ=0.95) |  0.5485 |     0.9204 |
-| e5 + bge + jina | rbc (φ=0.98) |  0.5460 |     0.9225 |
-| e5 + bge + jina |      CombMNZ |  0.5518 |     0.9230 |
-| e5 + bge + jina |          ISR |  0.5382 |     0.9228 |
-| e5 + bge + jina |    BordaFuse |  0.5413 |     0.9233 |
-| e5 + bge + jina |    Condorcet |  0.5418 |     0.8905 |
-
-## Mis resultados (q512, d512)
-
-| Model                                   | nDCG@10 | Recall@100 |
-| --------------------------------------- | ------: | ---------: |
-| BM25                                    |  0.1848 |     0.5725 |
-| splade-v3                               |  0.1956 |     0.5759 |
-| qwen3-embedding-0.6b                    |  0.4468 |     0.8422 |
-| multilingual-e5-large-instruct          |  0.4675 |     0.8666 |
-| bge-m3                                  |  0.4818 |     0.8741 |
-| jina-embeddings-v5-text-small-retrieval |  0.5111 |     0.9037 |
-
-## Mis resultados (q64, d256)
-
-| Model                                   | nDCG@10 | Recall@100 |
-| --------------------------------------- | ------: | ---------: |
-| BM25                                    |  0.1848 |     0.5725 |
-| splade-v3                               |  0.1964 |     0.5759 |
-| qwen3-embedding-0.6b                    |  0.4463 |     0.8408 |
-| multilingual-e5-large-instruct          |  0.4625 |     0.8591 |
-| bge-m3                                  |  0.4816 |     0.8735 |
-| jina-embeddings-v5-text-small-retrieval |  0.xxxx |     0.xxxx |
-
-## Mis resultados (400 words)
-
-| Model                          | nDCG@10 | Recall@100 |
-| ------------------------------ | ------: | ---------: |
-| BM25                           |  0.1848 |     0.5726 |
-| multilingual-e5-large-instruct |  0.4679 |     0.8669 |
-| BGE-M3                         |  0.4821 |     0.8743 |
-
 ## Fusiones exhaustivas (57 subconjuntos, longitudes nativas)
 
 Barrido completo con CombMNZ y RBC $\varphi = 0.95$. El CSV completo está en `results/fuse_sweep/results.csv`.

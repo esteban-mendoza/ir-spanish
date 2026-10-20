@@ -23,6 +23,10 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-10-20 — Sin ablación de longitudes fijas
+- **Cambios:** `notes/results.md` pierde las tablas de q512/d512, q64/d256 y 400 palabras; se eliminan los seis `logs/rerankers-fuse-*.log` de la corrida q512; `rerankers/fuse_sweep.py` deja de citar esa corrida; `rerankers/fuse.py` y `analysis/top_n_per_query.ipynb` ya no mencionan al modelo descartado.
+- **Decisión:** se reporta solo la configuración de longitudes máximas nativas; la ablación de longitudes fijas no se conserva.
+
 ## 2026-10-20 — Limpieza de logs y harrier fuera del estudio
 - **Cambios:** se eliminan `logs/rbo_full_handrolled.log`, `logs/harrier-oss-v1-0.6b.log` y `logs/fuse-reranker-combnz-3-4.log`; `logs/qwen3-embedding-0.6b` pasa a `.log`; `notes/results.md` deja de reportar harrier.
 - **Decisiones:** harrier no se considera en el estudio; el RBO reportado es el de `ranked-overlap`, no el artesanal.

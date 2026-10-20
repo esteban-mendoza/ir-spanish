@@ -51,7 +51,6 @@ MODELS = [
     ModelConfig("BAAI/bge-m3", "bge-m3", 8192, 8192),
     # ModelConfig("Qwen/Qwen3-Embedding-0.6B", "qwen3-0.6b", 32768, 32768),
     ModelConfig("jinaai/jina-embeddings-v5-text-small-retrieval", "jina-v5-small", 32768, 32768),
-    # ModelConfig("microsoft/harrier-oss-v1-0.6b", "harrier", 32768, 32768),
 ]
 
 STRATEGIES = {

@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Exhaustive rank-fusion sweep over every non-trivial subset of the base models.
 
-The reference run is ``logs/rerankers-fuse-rbc0.9.log``: all combinations of
-sizes 6 down to 2 for one strategy.  This script generalises it to several
+The sweep covers all combinations of sizes 6 down to 2 for several
 strategies, writes one CSV row per (combination, strategy), and optionally
 saves the fused runs so that paired significance tests can be computed later
 without fusing again.
