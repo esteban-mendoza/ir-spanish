@@ -23,6 +23,11 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-10-19 — RBO para el E5
+- **Cambios:** `evaluation/rbo.py` (RBO extrapolado, pares de runs, CLI y CSV); README con el uso.
+- **Decisiones:** p = 0.95, profundidad 100 y promedio por consulta; la corrida completa de los 15 pares queda encolada tras el barrido de fusiones.
+- **Estado / pendientes:** prueba de humo jina-v5 vs. bge-m3 con 1 000 consultas (RBO = 0.4075); falta la corrida completa y el análisis contra la ganancia.
+
 ## 2026-10-19 — Módulo `evaluation`: t pareada, permutación, Holm y BH
 - **Cambios:** `evaluation/` nuevo (`significance.py`, `compare.py`); prueba de humo con jina-v5 vs bge-m3 en 20 000 consultas; corrección del bug de `ranx.evaluate` con una métrica parametrizada y de la importación perezosa del CLI.
 - **Decisiones:** E1/E3 usan t pareada + permutación; E2 usa Holm-Bonferroni principal y Benjamini-Hochberg como sensibilidad; no Tukey. La implementación es independiente de `ranx.compare` para controlar las correcciones.
