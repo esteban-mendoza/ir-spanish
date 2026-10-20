@@ -24,7 +24,7 @@ Protocolo obligatorio para todo agente:
 ---
 
 ## 2026-10-20 — Resultados del barrido y de RBO
-- **Cambios:** `results/fuse_sweep/results.csv`/`.md` (114 pares) y `results/rbo/rbo_pairs.csv` (15 pares) versionados.
+- **Cambios:** `results/fuse_sweep/results.csv`/`.md` (114 pares) y `results/rbo/rbo_pairs.csv` (15 pares) versionados; `notes/results.md` con las mejores fusiones y la matriz de RBO.
 - **Decisiones:** la mejor fusión en nDCG@10 es CombMNZ sobre el trío denso (0.5517); los pares léxico–denso tienen RBO bajo (~0.15–0.18) frente a los densos (~0.38–0.48), lo que respalda la hipótesis de complementariedad del E5.
 - **Estado / pendientes:** etapa B de fusión, comparaciones de significancia y análisis RBO–ganancia.
 

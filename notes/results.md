@@ -92,3 +92,54 @@
 | BM25                           |  0.1848 |     0.5726 |
 | multilingual-e5-large-instruct |  0.4679 |     0.8669 |
 | BGE-M3                         |  0.4821 |     0.8743 |
+
+## Fusiones exhaustivas (57 subconjuntos, longitudes nativas)
+
+Barrido completo con CombMNZ y RBC $\varphi = 0.95$. El CSV completo está en `results/fuse_sweep/results.csv`.
+
+### Mejores por nDCG@10
+
+| Combinación | Estrategia | nDCG@10 | Recall@100 |
+| --- | --- | ---: | ---: |
+| e5-large+bge-m3+jina-v5-small | combmnz | 0.5517 | 0.9231 |
+| e5-large+bge-m3+jina-v5-small | rbc | 0.5485 | 0.9206 |
+| qwen3-0.6b+e5-large+bge-m3+jina-v5-small | combmnz | 0.5482 | 0.9228 |
+| qwen3-0.6b+e5-large+bge-m3+jina-v5-small | rbc | 0.5462 | 0.9193 |
+| bge-m3+jina-v5-small | combmnz | 0.5445 | 0.9184 |
+| splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small | combmnz | 0.5400 | 0.9225 |
+| splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small | rbc | 0.5396 | 0.9157 |
+| bge-m3+jina-v5-small | rbc | 0.5388 | 0.9177 |
+| splade-v3+e5-large+bge-m3+jina-v5-small | combmnz | 0.5382 | 0.9217 |
+| qwen3-0.6b+bge-m3+jina-v5-small | combmnz | 0.5379 | 0.9164 |
+
+### Mejores por Recall@100
+
+| Combinación | Estrategia | nDCG@10 | Recall@100 |
+| --- | --- | ---: | ---: |
+| bm25+qwen3-0.6b+e5-large+bge-m3+jina-v5-small | combmnz | 0.5372 | 0.9269 |
+| bm25+e5-large+bge-m3+jina-v5-small | combmnz | 0.5339 | 0.9259 |
+| bm25+splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small | combmnz | 0.5277 | 0.9256 |
+| bm25+splade-v3+e5-large+bge-m3+jina-v5-small | combmnz | 0.5208 | 0.9241 |
+| e5-large+bge-m3+jina-v5-small | combmnz | 0.5517 | 0.9231 |
+
+## RBO entre modelos de primera etapa (p = 0.95, top-100)
+
+Promedio sobre las consultas de prueba. Los pares con BM25 usan 169 963 consultas (BM25 no recupera 92).
+
+| Modelo A | Modelo B | RBO |
+| --- | --- | ---: |
+| bm25 | splade-v3 | 0.1707 |
+| bm25 | qwen3-0.6b | 0.1742 |
+| bm25 | e5-large | 0.1620 |
+| bm25 | bge-m3 | 0.1601 |
+| bm25 | jina-v5-small | 0.1724 |
+| splade-v3 | qwen3-0.6b | 0.1718 |
+| splade-v3 | e5-large | 0.1515 |
+| splade-v3 | bge-m3 | 0.1668 |
+| splade-v3 | jina-v5-small | 0.1777 |
+| qwen3-0.6b | e5-large | 0.3804 |
+| qwen3-0.6b | bge-m3 | 0.3905 |
+| qwen3-0.6b | jina-v5-small | 0.4849 |
+| e5-large | bge-m3 | 0.4118 |
+| e5-large | jina-v5-small | 0.4081 |
+| bge-m3 | jina-v5-small | 0.4176 |
