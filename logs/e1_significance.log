@@ -1,0 +1,10 @@
+13:11:22 | INFO | Loading faiss with AVX512 support.
+13:11:22 | INFO | Successfully loaded faiss with AVX512 support.
+13:11:22 | INFO | Loading qrels
+13:11:22 | INFO | ⏱  START: Loading cached pruned qrels
+13:11:23 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.8s)
+13:11:39 | INFO | Loading B1-CombMNZ from /home/jmendoza/.cache/messirve_embeddings/fusions_stage_b/combmnz__e5-large+bge-m3+jina-v5-small.lz4
+13:14:11 | INFO | Loading jina-v5-small from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+13:17:59 | INFO | B1-CombMNZ vs jina-v5-small: Δ=+0.0402 p=0 p_adj=0 significant
+13:17:59 | INFO | CSV: results/evaluation/e1.csv
+13:17:59 | INFO | Markdown: results/evaluation/e1.md

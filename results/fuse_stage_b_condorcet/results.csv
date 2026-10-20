@@ -1,0 +1,2 @@
+combo,strategy,params,ndcg@10,recall@100,mrr@10,map,precision@10,precision@50,elapsed_s,run_path
+e5-large+bge-m3+jina-v5-small,condorcet,,0.542174,0.891838,0.479110,0.483675,0.076267,0.017725,6567.0,/home/jmendoza/.cache/messirve_embeddings/fusions_stage_b_condorcet/condorcet__e5-large+bge-m3+jina-v5-small.lz4

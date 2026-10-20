@@ -1,0 +1,2 @@
+run_a,run_b,metric,n_queries,mean_a,mean_b,diff,t_stat,p_student,p_permutation,p_value,p_adjusted,significant,test,correction
+B1-CombMNZ,jina-v5-small,ndcg@10,170055,0.5516951436280854,0.511468081503312,0.04022706212477334,70.75463573953135,0.0,9.999000099990002e-05,0.0,0.0,True,both,none
