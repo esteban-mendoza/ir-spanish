@@ -71,7 +71,11 @@ def rbo_between_runs(
     batch_size: int = DEFAULT_BATCH_SIZE,
 ) -> tuple[float, int]:
     """Average RBO over the queries present in both runs."""
-    query_ids = [qid for qid in run_a.get_query_ids() if qid in run_b.run]
+    query_ids = [
+        qid
+        for qid in run_a.get_query_ids()
+        if qid in run_b.run and len(run_a.run[qid]) > 0 and len(run_b.run[qid]) > 0
+    ]
     if limit is not None:
         query_ids = query_ids[:limit]
 
