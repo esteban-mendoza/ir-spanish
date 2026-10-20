@@ -171,6 +171,11 @@ def parse_args() -> argparse.Namespace:
         default="",
         help="Comma-separated combination names to run (default: all).",
     )
+    parser.add_argument(
+        "--save-combos",
+        default="",
+        help="Comma-separated combinations whose fused runs are saved (default: all).",
+    )
     parser.add_argument("--min-size", type=int, default=2, help="Minimum number of fused runs.")
     parser.add_argument("--max-size", type=int, default=6, help="Maximum number of fused runs.")
     parser.add_argument(
@@ -231,6 +236,18 @@ def main() -> None:
                 raise SystemExit(f"Combination {raw!r} is outside the size range")
             selected.add("+".join(MODELS[i].alias for i in indices))
 
+    save_selected = set()
+    if args.save_combos.strip():
+        for raw in args.save_combos.split(","):
+            parts = [part.strip() for part in raw.split("+") if part.strip()]
+            if len(parts) < 2:
+                raise SystemExit(f"Invalid save combination: {raw!r}")
+            unknown_models = [part for part in parts if part not in alias_to_index]
+            if unknown_models:
+                raise SystemExit(f"Unknown models in {raw!r}: {unknown_models}")
+            indices = tuple(sorted(alias_to_index[part] for part in parts))
+            save_selected.add("+".join(MODELS[i].alias for i in indices))
+
     norm = None if args.norm.lower() == "none" else args.norm
     args.out_dir.mkdir(parents=True, exist_ok=True)
     if not args.no_save_runs:
@@ -279,8 +296,9 @@ def main() -> None:
                     index += 1
                     key = run_key(strategy_key, combo)
 
-                    run_path = args.runs_dir / f"{strategy_key}__{combo}.lz4"
-                    if key in done and (args.no_save_runs or run_path.exists()):
+                    save_run = not args.no_save_runs and (not save_selected or combo in save_selected)
+                    run_path = args.runs_dir / f"{strategy_key}__{combo}.lz4" if save_run else None
+                    if key in done and (not save_run or run_path.exists()):
                         log.info("[%d/%d] skip %s (%s)", index, total, combo, strategy_key)
                         continue
 
@@ -305,7 +323,7 @@ def main() -> None:
                     elapsed = time.perf_counter() - started
 
                     written_path = ""
-                    if not args.no_save_runs:
+                    if save_run:
                         fused_run.save(str(run_path))
                         written_path = str(run_path)
 
