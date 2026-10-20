@@ -5,14 +5,10 @@ depth.  It is a descriptive complementarity measure, not a significance test.
 The persistence parameter ``p`` is the probability of continuing to the next
 rank; the expected evaluation depth is ``1 / (1 - p)``.
 
-For finite lists the extrapolated form is used:
-
-    RBO = (1 - p) * sum_{d=1}^{D} p^(d-1) * A_d + p^D * A_D
-
-where ``A_d`` is the fraction of common documents in the top-``d`` prefixes and
-``D`` is the common depth (the minimum of the two list lengths and ``depth``).
-This is the standard finite-list extrapolation; see Webber, Moffat and Zobel
-(2010).
+The calculation is delegated to the open-source ``ranked-overlap`` package
+(MIT), which implements the extrapolated finite-list equation of Webber,
+Moffat and Zobel (2010).  The thesis cites the original RBO paper; the package
+is only the implementation used by the repository.
 """
 
 from __future__ import annotations
@@ -21,6 +17,8 @@ import argparse
 import csv
 import logging
 from pathlib import Path
+
+from ranked_overlap import rbo as _rbo
 
 from utils import retrieval
 
@@ -31,33 +29,8 @@ DEFAULT_DEPTH = 100
 
 
 def rbo(a: list[str], b: list[str], p: float = DEFAULT_P, depth: int = DEFAULT_DEPTH) -> float:
-    """Return the extrapolated RBO of two ranked lists."""
-    d_max = min(len(a), len(b), depth)
-    if d_max == 0:
-        return 0.0
-
-    seen_a: set[str] = set()
-    seen_b: set[str] = set()
-    common = 0
-    total = 0.0
-    agreement = 0.0
-
-    for d in range(1, d_max + 1):
-        item_a = a[d - 1]
-        if item_a in seen_b:
-            common += 1
-        seen_a.add(item_a)
-
-        item_b = b[d - 1]
-        if item_b in seen_a:
-            common += 1
-        seen_b.add(item_b)
-
-        agreement = common / d
-        total += (1.0 - p) * (p ** (d - 1)) * agreement
-
-    total += (p ** d_max) * agreement
-    return total
+    """Return the extrapolated RBO of two ranked lists, truncated to ``depth``."""
+    return float(_rbo(a[:depth], b[:depth], p=p))
 
 
 def rbo_between_runs(
