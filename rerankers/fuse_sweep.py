@@ -166,6 +166,11 @@ def parse_args() -> argparse.Namespace:
         default="combmnz,rbc",
         help="Comma-separated strategy keys (default: combmnz,rbc).",
     )
+    parser.add_argument(
+        "--combos",
+        default="",
+        help="Comma-separated combination names to run (default: all).",
+    )
     parser.add_argument("--min-size", type=int, default=2, help="Minimum number of fused runs.")
     parser.add_argument("--max-size", type=int, default=6, help="Maximum number of fused runs.")
     parser.add_argument(
@@ -211,6 +216,21 @@ def main() -> None:
     if not (2 <= args.min_size <= args.max_size <= len(MODELS)):
         raise SystemExit("Need 2 <= min-size <= max-size <= number of models")
 
+    alias_to_index = {m.alias: i for i, m in enumerate(MODELS)}
+    selected = set()
+    if args.combos.strip():
+        for raw in args.combos.split(","):
+            parts = [part.strip() for part in raw.split("+") if part.strip()]
+            if len(parts) < 2:
+                raise SystemExit(f"Invalid combination: {raw!r}")
+            unknown_models = [part for part in parts if part not in alias_to_index]
+            if unknown_models:
+                raise SystemExit(f"Unknown models in {raw!r}: {unknown_models}")
+            indices = tuple(sorted(alias_to_index[part] for part in parts))
+            if not (args.min_size <= len(indices) <= args.max_size):
+                raise SystemExit(f"Combination {raw!r} is outside the size range")
+            selected.add("+".join(MODELS[i].alias for i in indices))
+
     norm = None if args.norm.lower() == "none" else args.norm
     args.out_dir.mkdir(parents=True, exist_ok=True)
     if not args.no_save_runs:
@@ -228,10 +248,13 @@ def main() -> None:
     runs = load_runs(MODELS)
     qrels = load_qrels()
 
-    total = sum(
-        len(list(itertools.combinations(range(len(MODELS)), size)))
-        for size in range(args.max_size, args.min_size - 1, -1)
-    ) * len(strategy_keys)
+    if selected:
+        total = len(selected) * len(strategy_keys)
+    else:
+        total = sum(
+            len(list(itertools.combinations(range(len(MODELS)), size)))
+            for size in range(args.max_size, args.min_size - 1, -1)
+        ) * len(strategy_keys)
     log.info("Total (combination, strategy) pairs: %d", total)
 
     new_csv = not csv_path.exists()
@@ -250,8 +273,10 @@ def main() -> None:
             for size in range(args.max_size, args.min_size - 1, -1):
                 combos = list(itertools.combinations(range(len(MODELS)), size))
                 for indices in combos:
-                    index += 1
                     combo = "+".join(MODELS[i].alias for i in indices)
+                    if selected and combo not in selected:
+                        continue
+                    index += 1
                     key = run_key(strategy_key, combo)
 
                     run_path = args.runs_dir / f"{strategy_key}__{combo}.lz4"
