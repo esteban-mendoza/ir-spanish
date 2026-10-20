@@ -165,6 +165,13 @@ def write_csv(rows: list[dict], path: Path) -> None:
             writer.writerow({key: ("" if row[key] is None else row[key]) for key in FIELDS})
 
 
+def format_p(value: float) -> str:
+    """Format a p-value with the thesis convention for the resolution floor."""
+    if value < 1e-4:
+        return "< 0.0001"
+    return f"{value:.4g}"
+
+
 def write_markdown(rows: list[dict], path: Path) -> None:
     header = (
         "| sistema A | sistema B | media A | media B | Δ | p | p ajustada | significativa |\n"
@@ -173,14 +180,14 @@ def write_markdown(rows: list[dict], path: Path) -> None:
     lines = []
     for row in rows:
         lines.append(
-            "| {a} | {b} | {ma:.4f} | {mb:.4f} | {d:+.4f} | {p:.4g} | {pa:.4g} | {sig} |".format(
+            "| {a} | {b} | {ma:.4f} | {mb:.4f} | {d:+.4f} | {p} | {pa} | {sig} |".format(
                 a=row["run_a"],
                 b=row["run_b"],
                 ma=row["mean_a"],
                 mb=row["mean_b"],
                 d=row["diff"],
-                p=row["p_value"],
-                pa=row["p_adjusted"],
+                p=format_p(row["p_value"]),
+                pa=format_p(row["p_adjusted"]),
                 sig="sí" if row["significant"] else "no",
             )
         )
