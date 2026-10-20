@@ -108,7 +108,7 @@ python -m evaluation.compare --runs run_a.lz4 run_b.lz4 --names a b --test both 
 
 For Experiment 2 (six algorithms, 15 pairs), run once with `--correction holm` (primary) and once with `--correction bh` (sensitivity). The rationale is in `tesis/knowledge/urbano-et-al-2019-pruebas-estadisticas.md`.
 
-The complementarity measure of Experiment 5 is implemented in `evaluation/rbo.py` using the MIT-licensed `ranked-overlap` package:
+The complementarity measure of Experiment 5 is implemented in `evaluation/rbo.py` using the RBO measure of PyTerrier Alpha (`pyterrier-alpha`):
 
 ```bash
 python -m evaluation.rbo --runs run_a.lz4 run_b.lz4 --names a b --p 0.95

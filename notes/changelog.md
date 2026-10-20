@@ -28,6 +28,11 @@ Protocolo obligatorio para todo agente:
 - **Decisión:** los logs y resultados de cada corrida se agregan al repositorio; se pueden limpiar después si crecen.
 - **Pendientes:** etapa B, comparaciones de significancia y análisis RBO–ganancia.
 
+## 2026-10-20 — RBO con PyTerrier
+- **Cambios:** `evaluation/rbo.py` usa `pyterrier_alpha.rbo`; `requirements.txt`; `README.md`; corrida completa en curso.
+- **Decisión:** se usa PyTerrier, la implementación reconocida. RBO no está en el núcleo de PyTerrier 1.1.2, sino en su extensión oficial `pyterrier-alpha`; `ranked-overlap` se retira.
+- **Estado / pendientes:** la corrida de 15 pares con PyTerrier está en curso; al terminar se actualizan `results/rbo/` y `notes/results.md`.
+
 ## 2026-10-20 — RBO con ranked-overlap
 - **Cambios:** `evaluation/rbo.py` delega el cálculo a `ranked-overlap`; `requirements.txt`; `results/rbo/rbo_pairs.csv` recomputado; `notes/results.md` y `README.md` actualizados.
 - **Decisiones:** se descarta PyTerrier para RBO porque su implementación trabaja sobre DataFrames y recorre 1000 profundidades por consulta; `ranked-overlap` es MIT, sin dependencias, e implementa la ecuación de Webber et al. (2010).
