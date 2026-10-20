@@ -23,6 +23,11 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-10-20 — Logs y resultados en control de versiones
+- **Cambios:** `logs/fuse_sweep_nosave.log`, `logs/rbo_full_handrolled.log` y `logs/rbo_ranked_overlap.log` se versionan; `README.md` documenta la convención.
+- **Decisión:** los logs y resultados de cada corrida se agregan al repositorio; se pueden limpiar después si crecen.
+- **Pendientes:** etapa B, comparaciones de significancia y análisis RBO–ganancia.
+
 ## 2026-10-20 — RBO con ranked-overlap
 - **Cambios:** `evaluation/rbo.py` delega el cálculo a `ranked-overlap`; `requirements.txt`; `results/rbo/rbo_pairs.csv` recomputado; `notes/results.md` y `README.md` actualizados.
 - **Decisiones:** se descarta PyTerrier para RBO porque su implementación trabaja sobre DataFrames y recorre 1000 profundidades por consulta; `ranked-overlap` es MIT, sin dependencias, e implementa la ecuación de Webber et al. (2010).

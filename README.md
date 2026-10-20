@@ -140,6 +140,10 @@ python -m evaluation.rbo --runs run_a.lz4 run_b.lz4 --names a b --p 0.95
 | CUDA      | 12.2                          |
 | Driver    | 535.154.05                    |
 
+## Logs and results
+
+Each run writes its log to `logs/` and its outputs to `results/`. Both directories are versioned: commit them with the code that produced them so the run can be audited. If they grow too large, prune them in a separate commit; don't leave them out of git from the start.
+
 ## Setup
 
 Requires [Miniconda](https://docs.anaconda.com/miniconda/) (or any conda distribution).
