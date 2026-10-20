@@ -124,15 +124,15 @@ Barrido completo con CombMNZ y RBC $\varphi = 0.95$. El CSV completo está en `r
 
 ## RBO entre modelos de primera etapa (p = 0.95, top-100)
 
-Promedio sobre las consultas de prueba. Los pares con BM25 usan 169 963 consultas (BM25 no recupera 92).
+Promedio sobre las consultas de prueba. Los pares con BM25 usan 169 963 consultas (BM25 no recupera 92). Calculado con `ranked-overlap` 0.1.0 (MIT), que implementa la ecuación de Webber et al. (2010).
 
 | Modelo A | Modelo B | RBO |
 | --- | --- | ---: |
-| bm25 | splade-v3 | 0.1707 |
-| bm25 | qwen3-0.6b | 0.1742 |
-| bm25 | e5-large | 0.1620 |
-| bm25 | bge-m3 | 0.1601 |
-| bm25 | jina-v5-small | 0.1724 |
+| bm25 | splade-v3 | 0.1704 |
+| bm25 | qwen3-0.6b | 0.1740 |
+| bm25 | e5-large | 0.1617 |
+| bm25 | bge-m3 | 0.1598 |
+| bm25 | jina-v5-small | 0.1721 |
 | splade-v3 | qwen3-0.6b | 0.1718 |
 | splade-v3 | e5-large | 0.1515 |
 | splade-v3 | bge-m3 | 0.1668 |

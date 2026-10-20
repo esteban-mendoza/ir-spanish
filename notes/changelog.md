@@ -23,6 +23,11 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-10-20 — RBO con ranked-overlap
+- **Cambios:** `evaluation/rbo.py` delega el cálculo a `ranked-overlap`; `requirements.txt`; `results/rbo/rbo_pairs.csv` recomputado; `notes/results.md` y `README.md` actualizados.
+- **Decisiones:** se descarta PyTerrier para RBO porque su implementación trabaja sobre DataFrames y recorre 1000 profundidades por consulta; `ranked-overlap` es MIT, sin dependencias, e implementa la ecuación de Webber et al. (2010).
+- **Estado / pendientes:** los 15 pares están recomputados; los pares densos coinciden y los de BM25 cambian en la cuarta decimal.
+
 ## 2026-10-20 — Resultados del barrido y de RBO
 - **Cambios:** `results/fuse_sweep/results.csv`/`.md` (114 pares) y `results/rbo/rbo_pairs.csv` (15 pares) versionados; `notes/results.md` con las mejores fusiones y la matriz de RBO.
 - **Decisiones:** la mejor fusión en nDCG@10 es CombMNZ sobre el trío denso (0.5517); los pares léxico–denso tienen RBO bajo (~0.15–0.18) frente a los densos (~0.38–0.48), lo que respalda la hipótesis de complementariedad del E5.
