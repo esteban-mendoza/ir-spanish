@@ -17,7 +17,6 @@
 | BM25                                    |    N/A |  0.1848 |     0.5725 | 0.1483 | 0.1575 | 0.0311 | 0.0102 |
 | splade-v3                               |    512 |  0.1956 |     0.5725 | 0.1580 | 0.1666 | 0.0326 | 0.0103 |
 | qwen3-embedding-0.6b                    | 32,768 |  0.4468 |     0.8423 | 0.3886 | 0.3947 | 0.0651 | 0.0163 |
-| harrier-oss-v1-0.6b                     | 32,768 |  0.4519 |     0.8768 | 0.3902 | 0.3972 | 0.0668 | 0.0170 |
 | multilingual-e5-large-instruct          |    512 |  0.4675 |     0.8666 | 0.4079 | 0.4140 | 0.0676 | 0.0168 |
 | bge-m3                                  |  8,192 |  0.4818 |     0.8741 | 0.4206 | 0.4264 | 0.0696 | 0.0171 |
 | jina-embeddings-v5-text-small-retrieval | 32,768 |  0.5115 |     0.9039 | 0.4481 | 0.4538 | 0.0733 | 0.0178 |
@@ -68,7 +67,6 @@
 | BM25                                    |  0.1848 |     0.5725 |
 | splade-v3                               |  0.1956 |     0.5759 |
 | qwen3-embedding-0.6b                    |  0.4468 |     0.8422 |
-| harrier-oss-v1-0.6b                     |  0.4520 |     0.8769 |
 | multilingual-e5-large-instruct          |  0.4675 |     0.8666 |
 | bge-m3                                  |  0.4818 |     0.8741 |
 | jina-embeddings-v5-text-small-retrieval |  0.5111 |     0.9037 |
@@ -80,7 +78,6 @@
 | BM25                                    |  0.1848 |     0.5725 |
 | splade-v3                               |  0.1964 |     0.5759 |
 | qwen3-embedding-0.6b                    |  0.4463 |     0.8408 |
-| harrier-oss-v1-0.6b                     |  0.xxxx |     0.xxxx |
 | multilingual-e5-large-instruct          |  0.4625 |     0.8591 |
 | bge-m3                                  |  0.4816 |     0.8735 |
 | jina-embeddings-v5-text-small-retrieval |  0.xxxx |     0.xxxx |

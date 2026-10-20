@@ -23,6 +23,11 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-10-20 — Limpieza de logs y harrier fuera del estudio
+- **Cambios:** se eliminan `logs/rbo_full_handrolled.log`, `logs/harrier-oss-v1-0.6b.log` y `logs/fuse-reranker-combnz-3-4.log`; `logs/qwen3-embedding-0.6b` pasa a `.log`; `notes/results.md` deja de reportar harrier.
+- **Decisiones:** harrier no se considera en el estudio; el RBO reportado es el de `ranked-overlap`, no el artesanal.
+- **Estado / pendientes:** `baselines/harrier.py` y la línea comentada de `rerankers/fuse.py` siguen ahí; sin resolver la diferencia de Condorcet (0.5415 en `fuse-all-strategies.log` frente a 0.5422 en `fuse_stage_b_condorcet.log`).
+
 ## 2026-10-20 — Logs y resultados en control de versiones
 - **Cambios:** `logs/fuse_sweep_nosave.log`, `logs/rbo_full_handrolled.log` y `logs/rbo_ranked_overlap.log` se versionan; `README.md` documenta la convención.
 - **Decisión:** los logs y resultados de cada corrida se agregan al repositorio; se pueden limpiar después si crecen.
