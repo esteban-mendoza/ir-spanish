@@ -35,7 +35,7 @@ def _frame(run, query_ids: list, depth: int) -> pd.DataFrame:
     """Build the ranking frame expected by ``pyterrier_alpha.rbo``."""
     rows = []
     for query_id in query_ids:
-        ranking = run.run.get(query_id, {})
+        ranking = run.run[query_id] if query_id in run.run else {}
         for rank, docno in enumerate(list(ranking)[:depth]):
             # The measure sorts by score; -rank preserves the run order even
             # when the original scores contain ties.
