@@ -96,8 +96,8 @@ We evaluate on [**MessIRve**](https://huggingface.co/datasets/spanish-ir/messirv
 
 - Paired two-sided Student's t-test.
 - Paired permutation test.
-- Holm--Bonferroni correction (FWER).
-- Benjamini--Hochberg correction (FDR), as a sensitivity analysis.
+- Holm–Bonferroni correction (FWER).
+- Benjamini–Hochberg correction (FDR), as a sensitivity analysis.
 
 ## Complementarity
 
