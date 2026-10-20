@@ -68,15 +68,24 @@ def load_qrels():
 
 
 def per_query_scores(qrels, run, metric: str) -> np.ndarray:
-    """Return one score per query, aligned with the qrels query order."""
+    """Return one score per query, aligned with the qrels query order.
+
+    ``ranx.evaluate`` 0.3.21 has a bug when a single parametrized metric
+    (e.g. ``ndcg@10``) is requested with ``return_mean=False``: it looks up
+    the base metric name instead of the full key.  Passing a second metric
+    forces the dict branch and avoids the bug.
+    """
+    metrics = [metric] if metric == "map" else [metric, "map"]
     scores = evaluate(
         qrels=qrels,
         run=run,
-        metrics=[metric],
+        metrics=metrics,
         return_mean=False,
         make_comparable=True,
         save_results_in_run=False,
     )
+    if isinstance(scores, dict):
+        scores = scores[metric]
     return np.asarray(scores, dtype=np.float64)
 
 

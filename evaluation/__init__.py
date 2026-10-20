@@ -10,7 +10,6 @@ This package implements the statistical protocol decided for Experiments 1–3:
 See ``tesis/knowledge/urbano-et-al-2019-pruebas-estadisticas.md``.
 """
 
-from .compare import compare_runs, load_qrels, per_query_scores
 from .significance import (
     benjamini_hochberg,
     holm_bonferroni,
@@ -27,3 +26,16 @@ __all__ = [
     "per_query_scores",
     "permutation_test",
 ]
+
+
+def __getattr__(name: str):
+    """Import the run-level helpers lazily.
+
+    Eagerly importing ``compare`` from this module triggers a runpy warning
+    when the CLI is executed with ``python -m evaluation.compare``.
+    """
+    if name in {"compare_runs", "load_qrels", "per_query_scores"}:
+        from . import compare
+
+        return getattr(compare, name)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
