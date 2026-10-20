@@ -143,6 +143,9 @@ def fuse_and_evaluate_all(
 
                 fused_run = fuse(
                     runs=combo_runs,
+                    # Explicit: ranx normalizes min-max per query by default, and
+                    # CombMNZ depends on it. See tesis/knowledge/comb-mnz-normalizacion.md.
+                    norm="min-max",
                     method=strategy.method,
                     params=strategy.params or {},
                 )

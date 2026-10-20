@@ -23,6 +23,11 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-10-19 — Barrido exhaustivo de fusiones y normalización explícita
+- **Cambios:** `rerankers/fuse_sweep.py` nuevo (todas las combinaciones de 2 a 6 modelos, CSV/Markdown y runs fusionados); `rerankers/fuse.py` pasa `norm="min-max"` explícito. Corrida lanzada en el servidor con CombMNZ y RBC 0.95 sobre las longitudes nativas.
+- **Decisiones:** la corrida usa dos estrategias (CombMNZ y RBC) para no multiplicar por seis el costo; los runs fusionados quedan en `~/.cache/messirve_embeddings/fusions` para las pruebas pareadas. La normalización de CombMNZ es la min-max por consulta de `ranx`, verificada en su código.
+- **Estado / pendientes:** el barrido está en curso (114 pares); al terminar, versionar `results/fuse_sweep/results.csv` y `.md` e implementar `ranx.compare`.
+
 ## 2026-09-25 — Extractos largos y sin recorte en las tablas del cuaderno top-n
 - **Cambios:** `analysis/top_n_per_query.ipynb` — parámetro nuevo `EXTRACTO_CARACTERES` en la §1 (2000 por omisión; `None` = párrafo completo), que alimenta a `_extracto`, y `pd.set_option("display.max_colwidth", None)` en la celda de configuración. Cuaderno re-ejecutado en el servidor (0 errores).
 - **Decisiones:** el límite de `_extracto` no era el único recorte: **pandas recorta las celdas a 50 caracteres en el `display`** (en el HTML y en el texto), así que subir el límite no bastaba. Medido sobre los párrafos que la recuperación devuelve para la consulta del usuario (7494312, 32 párrafos distintos): mediana 487 caracteres, P90 916, máx 1597; con el límite de 330 solo se leían completos 11 de 32. Con 2000 se leen completos todos y el tope queda como red de seguridad para párrafos anómalos (`None` lo quita). Verificado: 121 extractos en las tablas de la §6 y de la «Versión interactiva», **0 recortados** por pandas y 0 por el tope.
