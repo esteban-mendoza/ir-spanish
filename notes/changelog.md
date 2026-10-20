@@ -33,6 +33,11 @@ Protocolo obligatorio para todo agente:
 - **Decisión:** se descarta PyTerrier para RBO por su costo (1000 profundidades y DataFrames, ~30 veces más lento); `ranked-overlap` es MIT, sin dependencias y produce la corrida rápida ya validada.
 - **Estado / pendientes:** los 15 pares de `results/rbo/rbo_pairs.csv` y `logs/rbo_ranked_overlap.log` siguen siendo válidos; no hay que recalcular.
 
+## 2026-10-20 — E1 y E3: significancia
+- **Cambios:** `results/evaluation/e1.*` y `e3.*`; `logs/e1_significance.log`, `logs/e3_significance.log`; corrida de Condorcet B1 con run guardado.
+- **Resultados:** E1, fusión 0.5517 frente a jina 0.5115 (Δ = +0.0402, p < 0.0001); E3, la fusión pierde con bge-reranker y jina-reranker y gana a jina-colbert.
+- **Pendientes:** etapa B, E2, E4 descriptivo y análisis RBO–ganancia del E5.
+
 ## 2026-10-20 — README y terminología de pruebas
 - **Cambios:** `README.md` reduce «Statistical Comparison» a la lista de pruebas y separa RBO en «Complementarity»; `evaluation/__init__.py` y `evaluation/significance.py` hablan de «paired permutation test».
 - **Decisión:** no se mencionan pruebas de signos; la confirmación es una permutación pareada.
