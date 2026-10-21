@@ -1,0 +1,43 @@
+{
+  "n_docs": 2000000,
+  "n_queries": 100,
+  "n_reps": 3,
+  "build_seconds": 118.10430855304003,
+  "rss_mib": 10560.6328125,
+  "gpu_delta_mib": [
+    10719,
+    10719
+  ],
+  "search_fusion_reps": [
+    {
+      "search_median_ms": 18.752906,
+      "search_p95_ms": 19.346981,
+      "search_qps": 49.409387114548664,
+      "fusion_median_ms": 8.482339,
+      "fusion_p95_ms": 8.873189,
+      "fusion_qps": 18.27753527458755,
+      "total_median_ms": 27.333658,
+      "total_p95_ms": 27.684407999999998
+    },
+    {
+      "search_median_ms": 18.760101499999998,
+      "search_p95_ms": 18.835449,
+      "search_qps": 53.31964204361652,
+      "fusion_median_ms": 8.639691500000001,
+      "fusion_p95_ms": 8.840878,
+      "fusion_qps": 115.8037810219381,
+      "total_median_ms": 27.4060895,
+      "total_p95_ms": 27.658435
+    },
+    {
+      "search_median_ms": 18.619279,
+      "search_p95_ms": 18.701875,
+      "search_qps": 53.782923116887595,
+      "fusion_median_ms": 8.619582000000001,
+      "fusion_p95_ms": 8.815979,
+      "fusion_qps": 127.01848052333932,
+      "total_median_ms": 27.2475245,
+      "total_p95_ms": 27.469262
+    }
+  ]
+}

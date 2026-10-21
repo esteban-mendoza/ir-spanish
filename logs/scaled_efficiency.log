@@ -1,0 +1,33 @@
+=== scaled 2M 2026-10-21T13:07:30-06:00 ===
+13:07:35 | INFO | Loading faiss with AVX512 support.
+13:07:35 | INFO | Successfully loaded faiss with AVX512 support.
+13:07:35 | INFO | ⏱  START: Loading eswiki corpus
+13:07:36 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+13:07:36 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+13:07:36 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+13:07:36 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+13:07:36 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+13:07:36 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+13:07:37 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+13:07:37 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+13:07:37 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+13:07:37 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+13:07:39 | INFO | ⏱  DONE:  Loading eswiki corpus (3.6s)
+13:07:39 | INFO | Original corpus: 14047759 documents
+13:07:39 | INFO | ⏱  START: Formatting and counting words (1 workers)
+Setting TOKENIZERS_PARALLELISM=false for forked processes.
+13:07:39 | WARNING | Setting TOKENIZERS_PARALLELISM=false for forked processes.
+13:07:44 | INFO | ⏱  DONE:  Formatting and counting words (1 workers) (4.8s)
+13:07:44 | INFO | Word-count filter disabled — using all 14047759 documents
+13:12:37 | INFO | Loaded 2000000 document ids
+13:12:37 | INFO | Building e5 proxy with 2000000 docs ...
+13:13:17 | INFO |   e5 on GPU; RSS 9.3 GiB
+13:13:17 | INFO | Building bge proxy with 2000000 docs ...
+13:13:56 | INFO |   bge on GPU; RSS 9.8 GiB
+13:13:56 | INFO | Building jina proxy with 2000000 docs ...
+13:14:35 | INFO |   jina on GPU; RSS 10.3 GiB
+13:14:44 | INFO | N=2000000 rep 1 search+fusion 27.33 ms
+13:14:47 | INFO | N=2000000 rep 2 search+fusion 27.41 ms
+13:14:50 | INFO | N=2000000 rep 3 search+fusion 27.25 ms
+13:14:50 | INFO | Wrote /home/jmendoza/ir-spanish/results/scaled_efficiency/scale_2000000.json
+EXIT=0
