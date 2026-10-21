@@ -1,0 +1,16 @@
+{
+  "model": "jina",
+  "name": "jinaai/jina-embeddings-v5-text-small-retrieval",
+  "max_length": 32768,
+  "n": 500,
+  "load_seconds": 4.365890488028526,
+  "median_ms": 29.573850999999998,
+  "p95_ms": 31.7744,
+  "batch_qps": {
+    "1": 33.4043007212226,
+    "32": 890.697717814226
+  },
+  "peak_rss_mib": 2209.125,
+  "peak_vram_allocated_mib": 1275.072265625,
+  "peak_vram_reserved_mib": 1362.0
+}

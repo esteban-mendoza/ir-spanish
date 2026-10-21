@@ -91,3 +91,50 @@
 10:53:48 | INFO | RAM (peak RSS): 4.0 GB
 10:53:52 | INFO | Wrote first-stage summary (/home/jmendoza/ir-spanish/results/first_stage)
 10:54:44 | INFO | Wrote first-stage summary (/home/jmendoza/ir-spanish/results/first_stage)
+=== jina first-stage 2026-10-21T11:07:43-06:00 ===
+11:07:48 | INFO | Loading jinaai/jina-embeddings-v5-text-small-retrieval ...
+11:07:48 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+11:07:48 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/modules.json "HTTP/1.1 200 OK"
+11:07:48 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+11:07:48 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/config_sentence_transformers.json "HTTP/1.1 200 OK"
+11:07:48 | INFO | Loading SentenceTransformer model from jinaai/jina-embeddings-v5-text-small-retrieval.
+11:07:48 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+11:07:48 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/config_sentence_transformers.json "HTTP/1.1 200 OK"
+11:07:49 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+11:07:49 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/README.md "HTTP/1.1 200 OK"
+11:07:49 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+11:07:49 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/modules.json "HTTP/1.1 200 OK"
+11:07:49 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_bert_config.json "HTTP/1.1 404 Not Found"
+11:07:49 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_roberta_config.json "HTTP/1.1 404 Not Found"
+11:07:49 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_distilbert_config.json "HTTP/1.1 404 Not Found"
+11:07:49 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_camembert_config.json "HTTP/1.1 404 Not Found"
+11:07:49 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_albert_config.json "HTTP/1.1 404 Not Found"
+11:07:49 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_xlm-roberta_config.json "HTTP/1.1 404 Not Found"
+11:07:49 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_xlnet_config.json "HTTP/1.1 404 Not Found"
+11:07:49 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+11:07:50 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+11:07:50 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/config.json "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 39044.90it/s]
+11:07:50 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+11:07:50 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+11:07:50 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+11:07:50 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+11:07:50 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+11:07:50 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/tokenizer_config.json "HTTP/1.1 200 OK"
+11:07:50 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+11:07:50 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/config.json "HTTP/1.1 200 OK"
+11:07:50 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+11:07:50 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/config.json "HTTP/1.1 200 OK"
+11:07:50 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+11:07:50 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/tokenizer_config.json "HTTP/1.1 200 OK"
+11:07:50 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-embeddings-v5-text-small-retrieval/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+11:07:51 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-embeddings-v5-text-small-retrieval/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+11:07:52 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-embeddings-v5-text-small-retrieval "HTTP/1.1 200 OK"
+11:07:52 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+11:07:52 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+11:07:52 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-embeddings-v5-text-small-retrieval "HTTP/1.1 200 OK"
+11:07:52 | INFO | Loaded 2 prompts with these keys: ['query', 'document']
+11:07:52 | INFO | Loaded jinaai/jina-embeddings-v5-text-small-retrieval in 4.4s
+11:08:09 | INFO | Wrote /home/jmendoza/ir-spanish/results/first_stage/jina_batch1.csv and /home/jmendoza/ir-spanish/results/first_stage/jina.json
+11:08:09 | INFO | RAM (peak RSS): 2.2 GB
+11:08:12 | INFO | Wrote first-stage summary (/home/jmendoza/ir-spanish/results/first_stage)

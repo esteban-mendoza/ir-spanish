@@ -17,8 +17,19 @@
       "batch_32_qps": 1700.6653768253561,
       "peak_rss_mib": 4076.671875,
       "peak_vram_allocated_mib": 1111.185546875
+    },
+    {
+      "model": "jina",
+      "median_ms": 29.573850999999998,
+      "p95_ms": 31.7744,
+      "batch_1_qps": 33.4043007212226,
+      "batch_32_qps": 890.697717814226,
+      "peak_rss_mib": 2209.125,
+      "peak_vram_allocated_mib": 1275.072265625
     }
   ],
   "extra_encoding_ms_per_query_batch32": 1.284046088,
-  "note": "Cota inferior del costo adicional de la primera etapa de la fusión: codificación de e5-large y bge-m3. No incluye la búsqueda en los índices ni el costo de mantener tres índices; jina-v5 es común a ambas rutas y se cancela."
+  "jina_encoding_ms_per_query_batch32": 1.12271535,
+  "total_encoding_ms_per_query_batch32": 2.406761438,
+  "note": "Codificación de consultas de e5-large, bge-m3 y jina-v5. La diferencia entre rutas es e5 + bge; jina es común y se cancela. No incluye la búsqueda en los índices ni el costo de mantener tres índices."
 }
