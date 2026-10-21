@@ -23,6 +23,11 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-10-21 — Banco de eficiencia ejecutado
+- **Cambios:** `evaluation/efficiency.py` y `results/efficiency/` con 500 consultas, tres repeticiones, lote 1/32, crudos, metadatos y resumen; logs en `logs/efficiency_run.log` y `logs/efficiency_pilot.log`.
+- **Resultados:** fusión 1.90 ms de mediana; `bge-reranker-v2-m3` 2 247.75 ms (1 182×), `jina-reranker-v3` 793.45 ms (417×) y `jina-colbert-v2` 410.76 ms (216×). VRAM pico: 4 401, 3 153 y 1 385 MiB.
+- **Decisión:** la comparación principal es mediana/p95 y razones; el throughput del lote 1 se reporta como complemento porque la media de la fusión tiene valores atípicos.
+
 ## 2026-10-20 — Scripts durables en `scripts/`
 - **Cambios:** `setup_env.sh` y `notes/cmds.sh` se mueven a `scripts/`; se elimina del control de versiones `run_b2_b3_after_b6.sh`; README y `scripts/README.md` documentan la regla.
 - **Decisión:** solo se versionan scripts reproducibles; los lanzadores de una sola corrida son temporales y no se commitean.

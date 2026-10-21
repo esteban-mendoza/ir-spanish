@@ -123,6 +123,23 @@ La relación es **positiva**: las combinaciones con RBO alto —los tríos y cua
 
 La tabla descriptiva está en `results/e4/baselines.md`: la mejor fusión (0.5517 / 0.9231) supera a `text-embedding-3-large` (0.476 / 0.916); el mejor reranker (0.5792 / 0.9039) la supera en nDCG@10 pero no en Recall@100.
 
+## E3: eficiencia de la segunda etapa
+
+Banco controlado de 500 consultas de prueba, tres repeticiones y orden intercalado. La latencia se midió con lote 1 en una sola GPU y el throughput con lote 1 y 32. La fusión corre en CPU con un hilo; los rerankers, en `cuda:0`. Los tiempos excluyen la carga de modelos, la carga del corpus y la primera etapa; la evaluación de métricas queda fuera del cronómetro. Los valores son la mediana de las tres repeticiones; los intervalos son un *bootstrap* de 10 000 remuestras sobre las consultas.
+
+| Sistema | Mediana (ms) | P95 (ms) | Razón mediana | IC 95 % | Razón P95 | Throughput b1 rel. | Throughput b32 rel. | VRAM pico (MiB) | RSS pico (MiB) |
+| --- | ---: | ---: | ---: | --- | ---: | ---: | ---: | ---: | ---: |
+| Fusión B1 (CombMNZ) | 1.903 | 2.348 | 1.000 | [1.000, 1.000] | 1.000 | 1.000 | 1.000 | — | 8 351 |
+| `bge-reranker-v2-m3` | 2 247.752 | 2 938.009 | 1 182.020 | [1 145.317, 1 205.856] | 1 251.526 | 0.0013 | 0.0219 | 4 401 | 9 432 |
+| `jina-reranker-v3` | 793.453 | 1 329.855 | 416.966 | [401.792, 428.151] | 565.580 | 0.0035 | 0.0256 | 3 153 | 8 403 |
+| `jina-colbert-v2` | 410.756 | 477.672 | 215.855 | [213.504, 218.308] | 203.477 | 0.0072 | 0.0524 | 1 385 | 8 343 |
+
+La fusión es **dos o tres órdenes de magnitud más barata** que los rerankers. La mediana de latencia pasa de 1.9 ms a 0.41–2.25 s; los cross-encoders son 1 182 y 417 veces más lentos, y el más barato de los tres, `jina-colbert-v2`, 216 veces. Con lote 32 la brecha se reduce a 19–46 veces, pero no desaparece. La ganancia de nDCG@10 de los cross-encoders (+0.025 a +0.028) se paga con ese costo; `jina-colbert-v2` es más barato pero también menos efectivo (0.5019, por debajo de la fusión).
+
+La razón de throughput del lote 1 no coincide exactamente con la inversa de la razón de latencia mediana porque el throughput usa la media de las latencias y la fusión tiene valores atípicos (una consulta de 4.9 s en la primera repetición; mediana 1.9 ms, p95 2.5 ms). Por eso la comparación principal es la mediana y el p95; el throughput se reporta como complemento. La memoria también importa: `bge-reranker-v2-m3` reserva 5 832 MiB de VRAM y la fusión de seis listas con BordaFuse no cabe en 125 GiB (B2), mientras que B3, con cinco, queda al límite.
+
+Archivos: `results/efficiency/summary.csv`, `summary.json`, `summary.md`, `raw/` y `metadata/`; log en `logs/efficiency_run.log`.
+
 ## Límites de recursos de la etapa B
 
 La etapa B se ejecutó en el servidor del IIMAS (125 GiB de RAM, sin swap). B2 —BordaFuse sobre los seis modelos— no terminó: el RSS muestreado llegó a 123 196 256 kB (117.5 GiB) y el 2026-10-20, a las 21:54:29, el cgroup de la sesión registró `oom_kill=1`. El proceso desapareció a las 21:59:40 con código de salida 137 y sin traza de Python. La memoria disponible llegó a 0 kB y el servidor dejó de responder por varios minutos. El pico es una cota inferior: el muestreo era cada 15 s.
