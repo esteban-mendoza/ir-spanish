@@ -43,7 +43,20 @@
 | e5-large+bge-m3+jina-v5-small | rrf       | k=60     | 0.5450  | 0.9234     | 0.4806 | 0.4859 | 0.0770       | 0.0183       |
 | e5-large+bge-m3+jina-v5-small | isr       |          | 0.5382  | 0.9230     | 0.4743 | 0.4798 | 0.0763       | 0.0183       |
 | e5-large+bge-m3+jina-v5-small | bordafuse |          | 0.5414  | 0.9234     | 0.4776 | 0.4831 | 0.0764       | 0.0183       |
-| e5-large+bge-m3+jina-v5-small | condorcet |          | 0.5415  | 0.8913     | 0.4785 | 0.4831 | 0.0762       | 0.0177       |
+| e5-large+bge-m3+jina-v5-small | condorcet |          | 0.5422  | 0.8918     | 0.4791 | 0.4837 | 0.0763       | 0.0177       |
+
+## Etapa B: BordaFuse por combinación
+
+| # | Combinación | Modelos | Tiempo (s) | nDCG@10 | Recall@100 | Estado |
+| --- | --- | ---: | ---: | ---: | ---: | --- |
+| B1 | e5-large+bge-m3+jina-v5-small | 3 | 595.0 | 0.5414 | 0.9234 | completa |
+| B2 | bm25+splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small | 6 | 1 519 (hasta el OOM) | — | — | OOM, sin resultado |
+| B3 | splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small | 5 | 1 259.8 | 0.4962 | 0.9237 | completa |
+| B4 | splade-v3+e5-large+jina-v5-small | 3 | 651.2 | 0.4658 | 0.9119 | completa |
+| B5 | splade-v3+jina-v5-small | 2 | 394.1 | 0.3858 | 0.8904 | completa |
+| B6 | qwen3-0.6b+e5-large+bge-m3+jina-v5-small | 4 | 846.5 | 0.5363 | 0.9228 | completa |
+
+B2 con los cuatro algoritmos rápidos sí terminó (CombMNZ 0.5277, RBC 0.5309, ISR 0.5234 y RRF 0.4985 de nDCG@10), así que la inviabilidad es específica de BordaFuse con seis listas, no de la combinación de seis modelos. La combinación completa tampoco mejora el nDCG@10 de B1 con esos algoritmos.
 
 ## Fusiones exhaustivas (57 subconjuntos, longitudes nativas)
 
@@ -110,3 +123,12 @@ La relación es **positiva**: las combinaciones con RBO alto —los tríos y cua
 
 La tabla descriptiva está en `results/e4/baselines.md`: la mejor fusión (0.5517 / 0.9231) supera a `text-embedding-3-large` (0.476 / 0.916); el mejor reranker (0.5792 / 0.9039) la supera en nDCG@10 pero no en Recall@100.
 
+## Límites de recursos de la etapa B
+
+La etapa B se ejecutó en el servidor del IIMAS (125 GiB de RAM, sin swap). B2 —BordaFuse sobre los seis modelos— no terminó: el RSS muestreado llegó a 123 196 256 kB (117.5 GiB) y el 2026-10-20, a las 21:54:29, el cgroup de la sesión registró `oom_kill=1`. El proceso desapareció a las 21:59:40 con código de salida 137 y sin traza de Python. La memoria disponible llegó a 0 kB y el servidor dejó de responder por varios minutos. El pico es una cota inferior: el muestreo era cada 15 s.
+
+Las configuraciones que sí terminaron fueron B1, B3, B4, B5 y B6. B6 (cuatro modelos) tardó 846.5 s; B3 (cinco modelos) tardó 1 259.8 s y alcanzó un RSS de 105 018 624 kB (100.2 GiB), con 19.4 GB de memoria disponible en el pico; B1, B4 y B5 (tres, tres y dos modelos) tardaron 595.0 s, 651.2 s y 394.1 s. El contraste es nítido: con BordaFuse, cinco modelos caben con poco margen y seis no caben. El costo de BordaFuse no es lineal con el número de listas y la combinación completa no es viable en este servidor; no se imputa el resultado de B2.
+
+Condorcet B1 (tres modelos) terminó en 6 567 s (1.82 h) con 0.5422 de nDCG@10 y 0.8918 de Recall@100. No se ejecutó en combinaciones mayores. No hay una medición de OOM para Condorcet: se descarta como alternativa práctica por el tiempo observado y por su menor recall, no por una falla de memoria comprobada.
+
+Evidencia: `logs/fuse_stage_b_b2_oom_watch.log`, `logs/fuse_stage_b_b2_rss.log`, `logs/fuse_stage_b_b2_memory.log`, `logs/fuse_stage_b_b3_oom_watch.log`, `logs/fuse_stage_b_b3_rss.log`, `logs/fuse_stage_b_b3_memory.log` y `logs/run_b2_b3.log`. En el monitor de B3, `oom_kill=1` es el contador heredado de B2 y no aumentó durante B3.

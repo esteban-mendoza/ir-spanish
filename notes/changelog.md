@@ -23,6 +23,11 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-10-20 — Etapa B: B2 muere por OOM, B3 queda al límite
+- **Cambios:** `notes/results.md` añade la tabla de BordaFuse por combinación y la sección de límites de recursos; se incorporan a git los logs de B2/B3, el muestreo de RSS y `results/fuse_stage_b/`.
+- **Resultados:** B6 846.5 s (0.5363/0.9228); B3 1 259.8 s (0.4962/0.9237) con un pico de 100.2 GiB y 19.4 GB disponibles; B2 con BordaFuse murió por OOM a los 1 519 s (RSS 117.5 GiB, `oom_kill=1`, salida 137). Condorcet B1: 6 567 s y 0.8918 de Recall@100.
+- **Decisiones:** B2-BordaFuse no es viable en 125 GiB y no se imputa; los cuatro algoritmos rápidos sobre B2 sí terminaron. Condorcet no se corre en combinaciones mayores: se descarta por tiempo y recall, sin afirmar un OOM que no se midió.
+
 ## 2026-10-20 — E4 y E5: líneas base y RBO–ganancia
 - **Cambios:** `results/e4/baselines.md`; `analysis/rbo_gain.py`, `results/e5/rbo_gain.csv`, `results/e5/summary.json` y logs.
 - **Resultados:** la mejor fusión supera a la línea base propietaria en nDCG@10 y Recall@100; el mejor reranker la supera en nDCG@10, no en recall. En E5, RBO correlaciona positivamente con la ganancia en nDCG@10 (Pearson 0.678, IC 95 % 0.521–0.808); con Recall@100 la correlación es débil (0.253, IC −0.025–0.553).
