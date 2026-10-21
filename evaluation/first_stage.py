@@ -2,12 +2,10 @@
 """Measure the query-encoding cost of the extra first-stage retrievers.
 
 The fusion pipeline uses three first-stage retrievers (e5-large, bge-m3 and
-jina-v5-small); the rerankers use only jina-v5-small.  The jina-v5 query encoder
-is common and cancels in the difference, so the extra first-stage cost of the
-fusion is the query encoding of e5-large plus bge-m3, plus their index searches.
-
-This script measures the query-encoding part on the same 500-query sample used
-by the efficiency benchmark.  It does not rebuild the 14M-document indexes: the
+jina-v5-small); the rerankers use only jina-v5-small.  The query encoding of the
+three models is measured on the same 500-query sample used by the efficiency
+benchmark; the difference between routes is e5-large + bge-m3, while jina-v5 is
+common and cancels in the comparison.  It does not rebuild the 14M-document indexes: the
 document embeddings were not retained in the cache, only the final runs.  The
 result is therefore a lower bound on the extra first-stage cost, not a full
 end-to-end measurement.
@@ -53,6 +51,14 @@ MODELS = {
         "max_length": 8192,
         "prefix": "",
     },
+    "jina": {
+        "name": "jinaai/jina-embeddings-v5-text-small-retrieval",
+        "max_length": 32768,
+        "prefix": "",
+        "prompt_name": "query",
+        "torch_dtype": "bfloat16",
+        "model_kwargs": {"attn_implementation": "sdpa"},
+    },
 }
 
 
@@ -92,10 +98,13 @@ def measure(model_key: str, batch_sizes: list[int], limit: int, warmup: int) -> 
 
     log.info("Loading %s ...", spec["name"])
     started = time.perf_counter()
+    dtype = torch.bfloat16 if spec.get("torch_dtype") == "bfloat16" else torch.float16
+    model_kwargs = {"torch_dtype": dtype}
+    model_kwargs.update(spec.get("model_kwargs", {}))
     model = SentenceTransformer(
         spec["name"],
         device="cuda:0",
-        model_kwargs={"torch_dtype": torch.float16},
+        model_kwargs=model_kwargs,
     )
     model.max_seq_length = spec["max_length"]
     load_seconds = time.perf_counter() - started
@@ -103,11 +112,15 @@ def measure(model_key: str, batch_sizes: list[int], limit: int, warmup: int) -> 
 
     def encode(texts: list[str], batch_size: int):
         prefixed = [spec["prefix"] + text for text in texts]
+        kwargs = {}
+        if spec.get("prompt_name"):
+            kwargs["prompt_name"] = spec["prompt_name"]
         return model.encode(
             prefixed,
             batch_size=batch_size,
             normalize_embeddings=True,
             show_progress_bar=False,
+            **kwargs,
         )
 
     # Warmup outside the timed region.
@@ -198,19 +211,29 @@ def aggregate() -> None:
         )
 
     extra_ms = None
+    jina_ms = None
+    total_ms = None
     if "e5" in metas and "bge" in metas:
         e5_qps = metas["e5"]["batch_qps"].get("32")
         bge_qps = metas["bge"]["batch_qps"].get("32")
         if e5_qps and bge_qps:
             extra_ms = 1000.0 / e5_qps + 1000.0 / bge_qps
+    if "jina" in metas:
+        jina_qps = metas["jina"]["batch_qps"].get("32")
+        if jina_qps:
+            jina_ms = 1000.0 / jina_qps
+    if extra_ms is not None and jina_ms is not None:
+        total_ms = extra_ms + jina_ms
 
     summary = {
         "models": rows,
         "extra_encoding_ms_per_query_batch32": extra_ms,
+        "jina_encoding_ms_per_query_batch32": jina_ms,
+        "total_encoding_ms_per_query_batch32": total_ms,
         "note": (
-            "Cota inferior del costo adicional de la primera etapa de la fusión: "
-            "codificación de e5-large y bge-m3. No incluye la búsqueda en los índices "
-            "ni el costo de mantener tres índices; jina-v5 es común a ambas rutas y se cancela."
+            "Codificación de consultas de e5-large, bge-m3 y jina-v5. La diferencia "
+            "entre rutas es e5 + bge; jina es común y se cancela. No incluye la búsqueda "
+            "en los índices ni el costo de mantener tres índices."
         ),
     }
     (OUT_DIR / "summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -242,6 +265,10 @@ def aggregate() -> None:
     if extra_ms is not None:
         lines.append("")
         lines.append(f"Costo adicional de codificación (e5 + bge, lote 32): **{extra_ms:.2f} ms/consulta**.")
+    if jina_ms is not None:
+        lines.append(f"Codificación de jina-v5 (lote 32): **{jina_ms:.2f} ms/consulta**.")
+    if total_ms is not None:
+        lines.append(f"Codificación total de la primera etapa (e5 + bge + jina, lote 32): **{total_ms:.2f} ms/consulta**.")
     (OUT_DIR / "summary.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     log.info("Wrote first-stage summary (%s)", OUT_DIR)
 
