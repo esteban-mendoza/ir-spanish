@@ -27,6 +27,10 @@ Protocolo obligatorio para todo agente:
 - **Cambios:** `notes/results.md` añade el cálculo de los tres índices planos y su viabilidad; el análisis completo está en `tesis/knowledge/indices-almacenamiento-fusion.md`.
 - **Resultado:** 160.8 GiB en RAM o 80.4 GiB en GPU para tres índices; no caben en el servidor. Un índice del reranker sí (53.6/26.8 GiB).
 
+## 2026-10-21 — Limpieza de artefactos y Condorcet definitivo
+- **Cambios:** se eliminan `logs/e5_rbo_gain.log`, `logs/fuse-reranker-combnz-2-3.log`, `logs/fuse-reranker-combmnz-rbc-rrf-isr.log` y `logs/fuse-all-strategies.log`; también los crudos del piloto de eficiencia salvo `pilot/metadata/bge_rep0.json`, y `results/scaled_efficiency/candidates_*.json`.
+- **Decisión:** el registro de Condorcet es el de la etapa B (0.5422/0.8918); se descarta el 0.5415/0.8913 del barrido antiguo, que queda en el historial de git. `logs/hybrid.log` se conserva, pero la variante no se reporta.
+
 ## 2026-10-21 — Jina completa la primera etapa
 - **Cambios:** `evaluation/first_stage.py` mide también `jina-v5-small`; `results/first_stage/` incluye `jina.json`, `jina_batch1.csv`, el resumen y el log.
 - **Resultados:** jina 29.57 ms de mediana en lote 1 y 1.12 ms en lote 32. La codificación total de la primera etapa es 57.53 ms en lote 1 y 2.41 ms en lote 32; los dos recuperadores extra son 27.96/1.28 ms.
@@ -67,7 +71,7 @@ Protocolo obligatorio para todo agente:
 ## 2026-10-20 — Limpieza de logs y harrier fuera del estudio
 - **Cambios:** se eliminan `logs/rbo_full_handrolled.log`, `logs/harrier-oss-v1-0.6b.log` y `logs/fuse-reranker-combnz-3-4.log`; `logs/qwen3-embedding-0.6b` pasa a `.log`; `notes/results.md` deja de reportar harrier.
 - **Decisiones:** harrier no se considera en el estudio; el RBO reportado es el de `ranked-overlap`, no el artesanal.
-- **Estado / pendientes:** `baselines/harrier.py` y la línea comentada de `rerankers/fuse.py` siguen ahí; sin resolver la diferencia de Condorcet (0.5415 en `fuse-all-strategies.log` frente a 0.5422 en `fuse_stage_b_condorcet.log`).
+- **Estado / pendientes:** `baselines/harrier.py` y la línea comentada de `rerankers/fuse.py` siguen ahí. La diferencia de Condorcet (0.5415 frente a 0.5422) se resolvió el 2026-10-21: se conserva 0.5422 de la corrida de etapa B.
 
 ## 2026-10-20 — Logs y resultados en control de versiones
 - **Cambios:** `logs/fuse_sweep_nosave.log`, `logs/rbo_full_handrolled.log` y `logs/rbo_ranked_overlap.log` se versionan; `README.md` documenta la convención.

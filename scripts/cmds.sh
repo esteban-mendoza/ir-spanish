@@ -24,7 +24,7 @@ cd /home/jmendoza/ir-spanish && nohup /home/jmendoza/miniconda3/envs/proyecto/bi
 
 # Check logs in real-time
 tail -f /home/jmendoza/ir-spanish/logs/fuse-reranker-combnz-2-3.log
-tail -f /home/jmendoza/ir-spanish/logs/fuse-all-strategies.log
+tail -f /home/jmendoza/ir-spanish/logs/efficiency_run.log
 
 # TeX-related commands
 brew install --cask basictex
