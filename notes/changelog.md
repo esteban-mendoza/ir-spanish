@@ -23,6 +23,11 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-10-21 — Jina completa la primera etapa
+- **Cambios:** `evaluation/first_stage.py` mide también `jina-v5-small`; `results/first_stage/` incluye `jina.json`, `jina_batch1.csv`, el resumen y el log.
+- **Resultados:** jina 29.57 ms de mediana en lote 1 y 1.12 ms en lote 32. La codificación total de la primera etapa es 57.53 ms en lote 1 y 2.41 ms en lote 32; los dos recuperadores extra son 27.96/1.28 ms.
+- **Decisión:** con jina incluida, la ventaja total de la fusión baja a ~38×/~14×/~7× (lote 1) y ~41×/~35×/~17× (lote 32); sigue sin incluir búsqueda ni índices.
+
 ## 2026-10-21 — Codificación de la primera etapa
 - **Cambios:** `evaluation/first_stage.py`, `results/first_stage/` y `logs/first_stage.log`; 500 consultas, e5-large y bge-m3, lote 1/32.
 - **Resultados:** 14.65 y 13.31 ms de mediana en lote 1; 1.28 ms/consulta en lote 32 para los dos recuperadores extra. La ventaja de la fusión baja de 1 182× a ~75× en lote 1, pero sigue siendo de decenas de veces.
