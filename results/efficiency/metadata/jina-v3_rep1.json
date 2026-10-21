@@ -1,0 +1,20 @@
+{
+  "system": "jina-v3",
+  "label": "jina-reranker-v3",
+  "rep": 1,
+  "n": 500,
+  "device": "cuda:0",
+  "load_seconds": 1.566438041627407,
+  "median_ms": 792.258572,
+  "p95_ms": 1332.863695,
+  "peak_rss_mib": 8363.59375,
+  "peak_vram_allocated_mib": 3153.0029296875,
+  "peak_vram_reserved_mib": 4320.0,
+  "batch_qps": 1.1915415746389675,
+  "batch_docs_per_s": 119.15415746389675,
+  "batch_size": 32,
+  "batch_1_qps": 1.1945903949914496,
+  "batch_1_docs_per_s": 119.45903949914496,
+  "batch_32_qps": 1.1915415746389675,
+  "batch_32_docs_per_s": 119.15415746389675
+}

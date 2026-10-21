@@ -1,0 +1,20 @@
+{
+  "system": "fusion",
+  "label": "Fusion B1 (CombMNZ)",
+  "rep": 1,
+  "n": 500,
+  "device": "cpu",
+  "load_seconds": null,
+  "median_ms": 1.9481769999999998,
+  "p95_ms": 2.517572,
+  "peak_rss_mib": 8350.99609375,
+  "peak_vram_allocated_mib": 0.0,
+  "peak_vram_reserved_mib": 0.0,
+  "batch_qps": 45.85570089742916,
+  "batch_docs_per_s": null,
+  "batch_size": 32,
+  "batch_1_qps": 81.2833465914952,
+  "batch_1_docs_per_s": null,
+  "batch_32_qps": 45.85570089742916,
+  "batch_32_docs_per_s": null
+}

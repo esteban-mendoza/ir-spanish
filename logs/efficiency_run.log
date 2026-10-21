@@ -1,0 +1,541 @@
+=== 2026-10-21T00:18:23-06:00 full run ===
+00:18:26 | INFO | Loading faiss with AVX512 support.
+00:18:26 | INFO | Successfully loaded faiss with AVX512 support.
+00:18:26 | INFO | Reusing /home/jmendoza/ir-spanish/results/efficiency/queries.csv (500 measure, 50 warmup)
+00:20:00 | INFO | Loaded retrieval_run.lz4 (550/550 queries)
+00:20:00 | INFO | Document cache already covers 53493 candidates
+00:20:00 | INFO | Run rep=1: /home/jmendoza/miniconda3/envs/proyecto/bin/python -m evaluation.efficiency --mode worker --system jina-v3 --rep 1 --n 500 --warmup 50 --batch 1,32 --device cuda:0
+00:20:03 | INFO | Loading faiss with AVX512 support.
+00:20:03 | INFO | Successfully loaded faiss with AVX512 support.
+00:20:03 | INFO | ⏱  START: Loading cached pruned qrels
+00:20:04 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+00:21:37 | INFO | Loaded retrieval_run.lz4 (550/550 queries)
+00:21:38 | INFO | Document lookup: 53493 candidates from cache
+00:21:40 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-reranker-v3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:21:40 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-reranker-v3/d7d7e73b6ea138ced340b83865931b5dfb6c97aa/config.json "HTTP/1.1 200 OK"
+00:21:40 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-reranker-v3/resolve/main/modeling.py "HTTP/1.1 307 Temporary Redirect"
+00:21:40 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-reranker-v3/d7d7e73b6ea138ced340b83865931b5dfb6c97aa/modeling.py "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/312 [00:00<?, ?it/s]Loading weights: 100%|██████████| 312/312 [00:00<00:00, 46664.87it/s]
+00:21:40 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-reranker-v3/resolve/main/generation_config.json "HTTP/1.1 307 Temporary Redirect"
+00:21:40 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-reranker-v3/d7d7e73b6ea138ced340b83865931b5dfb6c97aa/generation_config.json "HTTP/1.1 200 OK"
+00:21:40 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-reranker-v3/resolve/main/custom_generate/generate.py "HTTP/1.1 404 Not Found"
+00:21:41 | INFO | Loaded jinaai/jina-reranker-v3 in 1.6s
+00:21:41 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-reranker-v3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:21:41 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-reranker-v3/d7d7e73b6ea138ced340b83865931b5dfb6c97aa/config.json "HTTP/1.1 200 OK"
+00:21:41 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-reranker-v3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+00:21:41 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-reranker-v3/d7d7e73b6ea138ced340b83865931b5dfb6c97aa/tokenizer_config.json "HTTP/1.1 200 OK"
+00:21:41 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-reranker-v3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+00:21:41 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-reranker-v3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+00:21:42 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-reranker-v3 "HTTP/1.1 200 OK"
+00:29:20 | INFO | jina-v3 rep=1 batch=1 qps=1.195
+00:36:20 | INFO | jina-v3 rep=1 batch=32 qps=1.192
+00:36:20 | INFO | Wrote /home/jmendoza/ir-spanish/results/efficiency/raw/jina-v3_rep1.csv and /home/jmendoza/ir-spanish/results/efficiency/metadata/jina-v3_rep1.json
+00:36:22 | INFO | Run rep=1: /home/jmendoza/miniconda3/envs/proyecto/bin/python -m evaluation.efficiency --mode worker --system colbert --rep 1 --n 500 --warmup 50 --batch 1,32 --device cuda:0
+00:36:25 | INFO | Loading faiss with AVX512 support.
+00:36:25 | INFO | Successfully loaded faiss with AVX512 support.
+00:36:25 | INFO | ⏱  START: Loading cached pruned qrels
+00:36:25 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+00:38:00 | INFO | Loaded retrieval_run.lz4 (550/550 queries)
+00:38:00 | INFO | Document lookup: 53493 candidates from cache
+00:38:03 | WARNING | The `tokenizer_kwargs` argument was renamed and is now deprecated. Please use `processor_kwargs` instead.
+00:38:03 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+00:38:03 | INFO | No modules.json found for jinaai/jina-colbert-v2, initializing a new ColBERT model.
+00:38:03 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+00:38:03 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:38:03 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+00:38:03 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+00:38:03 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+00:38:03 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:38:03 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+`torch_dtype` is deprecated! Use `dtype` instead!
+00:38:03 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/modeling_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+00:38:03 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/modeling_xlm_roberta.py "HTTP/1.1 200 OK"
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:38:04 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:38:04 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+00:38:04 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+00:38:04 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+00:38:04 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:38:04 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+00:38:04 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+00:38:04 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/tokenizer_config.json "HTTP/1.1 200 OK"
+00:38:04 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+00:38:04 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+00:38:06 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/294 [00:00<?, ?it/s]Loading weights: 100%|██████████| 294/294 [00:00<00:00, 48753.62it/s]
+[1mXLMRobertaModel LOAD REPORT[0m from: jinaai/jina-colbert-v2
+Key           | Status     |  | 
+--------------+------------+--+-
+linear.weight | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+00:38:06 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+00:38:06 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+00:38:06 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+00:38:06 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+00:38:06 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+00:38:06 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/tokenizer_config.json "HTTP/1.1 200 OK"
+00:38:07 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:38:07 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+00:38:07 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+00:38:07 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+00:38:07 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:38:07 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+00:38:07 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:38:07 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+00:38:07 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+00:38:07 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+00:38:07 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:38:07 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+00:38:07 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+00:38:07 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/tokenizer_config.json "HTTP/1.1 200 OK"
+00:38:07 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+00:38:07 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+00:38:09 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+00:38:09 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/pylate/models/colbert.py:253: FutureWarning: The `get_word_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  hidden_size = self[0].get_word_embedding_dimension()
+00:38:10 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/model.safetensors "HTTP/1.1 302 Found"
+00:38:10 | WARNING | The tokenizer does not support resizing the token embeddings, the prefixes token have not been added to vocabulary.
+00:38:10 | INFO | Loaded jinaai/jina-colbert-v2 in 7.4s
+00:38:10 | WARNING | The `tokenize` method is deprecated, please use `preprocess` instead.
+00:41:55 | INFO | colbert rep=1 batch=1 qps=2.449
+00:45:19 | INFO | colbert rep=1 batch=32 qps=2.445
+00:45:19 | INFO | Wrote /home/jmendoza/ir-spanish/results/efficiency/raw/colbert_rep1.csv and /home/jmendoza/ir-spanish/results/efficiency/metadata/colbert_rep1.json
+00:45:21 | INFO | Run rep=1: /home/jmendoza/miniconda3/envs/proyecto/bin/python -m evaluation.efficiency --mode worker --system bge --rep 1 --n 500 --warmup 50 --batch 1,32 --device cuda:0
+00:45:25 | INFO | Loading faiss with AVX512 support.
+00:45:25 | INFO | Successfully loaded faiss with AVX512 support.
+00:45:25 | INFO | ⏱  START: Loading cached pruned qrels
+00:45:25 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+00:47:02 | INFO | Loaded retrieval_run.lz4 (550/550 queries)
+00:47:02 | INFO | Document lookup: 53493 candidates from cache
+00:47:04 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+00:47:04 | INFO | No modules.json found for BAAI/bge-reranker-v2-m3, initializing a new CrossEncoder model.
+00:47:05 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+00:47:05 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:47:05 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+00:47:05 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+00:47:05 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:47:05 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/393 [00:00<?, ?it/s]Loading weights: 100%|██████████| 393/393 [00:00<00:00, 36640.03it/s]
+00:47:05 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+00:47:05 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+00:47:05 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+00:47:05 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+00:47:05 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+00:47:05 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+00:47:06 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:47:06 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+00:47:06 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:47:06 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+00:47:06 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+00:47:06 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+00:47:06 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+00:47:06 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+00:47:08 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+00:47:09 | INFO | Loaded BAAI/bge-reranker-v2-m3 in 4.4s
+01:07:35 | INFO | bge rep=1 batch=1 qps=0.447
+01:15:44 | INFO | bge rep=1 batch=32 qps=1.023
+01:15:44 | INFO | Wrote /home/jmendoza/ir-spanish/results/efficiency/raw/bge_rep1.csv and /home/jmendoza/ir-spanish/results/efficiency/metadata/bge_rep1.json
+01:15:46 | INFO | Run rep=1: /home/jmendoza/miniconda3/envs/proyecto/bin/python -m evaluation.efficiency --mode worker --system fusion --rep 1 --n 500 --warmup 50 --batch 1,32 --device cuda:0
+01:15:49 | INFO | Loading faiss with AVX512 support.
+01:15:50 | INFO | Successfully loaded faiss with AVX512 support.
+01:15:50 | INFO | ⏱  START: Loading cached pruned qrels
+01:15:50 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+01:17:29 | INFO | Loaded retrieval_run.lz4 (550/550 queries)
+01:18:58 | INFO | Loaded retrieval_run.lz4 (550/550 queries)
+01:20:26 | INFO | Loaded retrieval_run.lz4 (550/550 queries)
+01:20:37 | INFO | Fusion prepared for 550 queries
+/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/ranx/normalization/min_max_norm.py:44: NumbaTypeSafetyWarning: unsafe cast from uint64 to int64. Precision may be lost.
+  normalized_run[i] = _min_max_norm(run[q_ids[i]], invert)
+01:20:45 | INFO | fusion rep=1 batch=1 qps=81.283
+01:20:56 | INFO | fusion rep=1 batch=32 qps=45.856
+01:20:56 | INFO | Wrote /home/jmendoza/ir-spanish/results/efficiency/raw/fusion_rep1.csv and /home/jmendoza/ir-spanish/results/efficiency/metadata/fusion_rep1.json
+01:20:57 | INFO | Run rep=2: /home/jmendoza/miniconda3/envs/proyecto/bin/python -m evaluation.efficiency --mode worker --system bge --rep 2 --n 500 --warmup 50 --batch 1,32 --device cuda:0
+01:21:01 | INFO | Loading faiss with AVX512 support.
+01:21:01 | INFO | Successfully loaded faiss with AVX512 support.
+01:21:01 | INFO | ⏱  START: Loading cached pruned qrels
+01:21:01 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+01:22:37 | INFO | Loaded retrieval_run.lz4 (550/550 queries)
+01:22:37 | INFO | Document lookup: 53493 candidates from cache
+01:22:40 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+01:22:40 | INFO | No modules.json found for BAAI/bge-reranker-v2-m3, initializing a new CrossEncoder model.
+01:22:40 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+01:22:40 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+01:22:40 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+01:22:40 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+01:22:40 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+01:22:40 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/393 [00:00<?, ?it/s]Loading weights: 100%|██████████| 393/393 [00:00<00:00, 37635.54it/s]
+01:22:40 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+01:22:40 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+01:22:41 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+01:22:41 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+01:22:41 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+01:22:41 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+01:22:41 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+01:22:41 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+01:22:41 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+01:22:41 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+01:22:41 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+01:22:41 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+01:22:41 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+01:22:41 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+01:22:43 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+01:22:44 | INFO | Loaded BAAI/bge-reranker-v2-m3 in 4.4s
+01:43:09 | INFO | bge rep=2 batch=1 qps=0.447
+01:51:18 | INFO | bge rep=2 batch=32 qps=1.022
+01:51:18 | INFO | Wrote /home/jmendoza/ir-spanish/results/efficiency/raw/bge_rep2.csv and /home/jmendoza/ir-spanish/results/efficiency/metadata/bge_rep2.json
+01:51:20 | INFO | Run rep=2: /home/jmendoza/miniconda3/envs/proyecto/bin/python -m evaluation.efficiency --mode worker --system fusion --rep 2 --n 500 --warmup 50 --batch 1,32 --device cuda:0
+01:51:23 | INFO | Loading faiss with AVX512 support.
+01:51:23 | INFO | Successfully loaded faiss with AVX512 support.
+01:51:23 | INFO | ⏱  START: Loading cached pruned qrels
+01:51:24 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+01:52:58 | INFO | Loaded retrieval_run.lz4 (550/550 queries)
+01:54:23 | INFO | Loaded retrieval_run.lz4 (550/550 queries)
+01:55:47 | INFO | Loaded retrieval_run.lz4 (550/550 queries)
+01:55:48 | INFO | Fusion prepared for 550 queries
+01:55:52 | INFO | fusion rep=2 batch=1 qps=340.033
+01:56:03 | INFO | fusion rep=2 batch=32 qps=46.668
+01:56:03 | INFO | Wrote /home/jmendoza/ir-spanish/results/efficiency/raw/fusion_rep2.csv and /home/jmendoza/ir-spanish/results/efficiency/metadata/fusion_rep2.json
+01:56:04 | INFO | Run rep=2: /home/jmendoza/miniconda3/envs/proyecto/bin/python -m evaluation.efficiency --mode worker --system jina-v3 --rep 2 --n 500 --warmup 50 --batch 1,32 --device cuda:0
+01:56:07 | INFO | Loading faiss with AVX512 support.
+01:56:07 | INFO | Successfully loaded faiss with AVX512 support.
+01:56:07 | INFO | ⏱  START: Loading cached pruned qrels
+01:56:08 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+01:57:42 | INFO | Loaded retrieval_run.lz4 (550/550 queries)
+01:57:43 | INFO | Document lookup: 53493 candidates from cache
+01:57:45 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-reranker-v3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+01:57:45 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-reranker-v3/d7d7e73b6ea138ced340b83865931b5dfb6c97aa/config.json "HTTP/1.1 200 OK"
+01:57:45 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-reranker-v3/resolve/main/modeling.py "HTTP/1.1 307 Temporary Redirect"
+01:57:45 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-reranker-v3/d7d7e73b6ea138ced340b83865931b5dfb6c97aa/modeling.py "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/312 [00:00<?, ?it/s]Loading weights: 100%|██████████| 312/312 [00:00<00:00, 49387.59it/s]
+01:57:45 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-reranker-v3/resolve/main/generation_config.json "HTTP/1.1 307 Temporary Redirect"
+01:57:45 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-reranker-v3/d7d7e73b6ea138ced340b83865931b5dfb6c97aa/generation_config.json "HTTP/1.1 200 OK"
+01:57:46 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-reranker-v3/resolve/main/custom_generate/generate.py "HTTP/1.1 404 Not Found"
+01:57:46 | INFO | Loaded jinaai/jina-reranker-v3 in 1.5s
+01:57:46 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-reranker-v3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+01:57:46 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-reranker-v3/d7d7e73b6ea138ced340b83865931b5dfb6c97aa/config.json "HTTP/1.1 200 OK"
+01:57:46 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-reranker-v3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+01:57:46 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-reranker-v3/d7d7e73b6ea138ced340b83865931b5dfb6c97aa/tokenizer_config.json "HTTP/1.1 200 OK"
+01:57:46 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-reranker-v3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+01:57:47 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-reranker-v3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+01:57:47 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-reranker-v3 "HTTP/1.1 200 OK"
+02:05:25 | INFO | jina-v3 rep=2 batch=1 qps=1.196
+02:12:24 | INFO | jina-v3 rep=2 batch=32 qps=1.193
+02:12:24 | INFO | Wrote /home/jmendoza/ir-spanish/results/efficiency/raw/jina-v3_rep2.csv and /home/jmendoza/ir-spanish/results/efficiency/metadata/jina-v3_rep2.json
+02:12:26 | INFO | Run rep=2: /home/jmendoza/miniconda3/envs/proyecto/bin/python -m evaluation.efficiency --mode worker --system colbert --rep 2 --n 500 --warmup 50 --batch 1,32 --device cuda:0
+02:12:29 | INFO | Loading faiss with AVX512 support.
+02:12:29 | INFO | Successfully loaded faiss with AVX512 support.
+02:12:29 | INFO | ⏱  START: Loading cached pruned qrels
+02:12:30 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+02:14:06 | INFO | Loaded retrieval_run.lz4 (550/550 queries)
+02:14:06 | INFO | Document lookup: 53493 candidates from cache
+02:14:08 | WARNING | The `tokenizer_kwargs` argument was renamed and is now deprecated. Please use `processor_kwargs` instead.
+02:14:08 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+02:14:08 | INFO | No modules.json found for jinaai/jina-colbert-v2, initializing a new ColBERT model.
+02:14:08 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+02:14:09 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:14:09 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+02:14:09 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+02:14:09 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+02:14:09 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:14:09 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+`torch_dtype` is deprecated! Use `dtype` instead!
+02:14:09 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/modeling_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+02:14:09 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/modeling_xlm_roberta.py "HTTP/1.1 200 OK"
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:14:09 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:14:09 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+02:14:09 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+02:14:09 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+02:14:09 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:14:09 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+02:14:09 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+02:14:09 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/tokenizer_config.json "HTTP/1.1 200 OK"
+02:14:10 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+02:14:10 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+02:14:11 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/294 [00:00<?, ?it/s]Loading weights: 100%|██████████| 294/294 [00:00<00:00, 48403.41it/s]
+[1mXLMRobertaModel LOAD REPORT[0m from: jinaai/jina-colbert-v2
+Key           | Status     |  | 
+--------------+------------+--+-
+linear.weight | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+02:14:12 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+02:14:12 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+02:14:12 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+02:14:12 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+02:14:12 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+02:14:12 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/tokenizer_config.json "HTTP/1.1 200 OK"
+02:14:12 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:14:12 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+02:14:12 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+02:14:12 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+02:14:12 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:14:12 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+02:14:12 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:14:12 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+02:14:12 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+02:14:12 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+02:14:12 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:14:12 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+02:14:13 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+02:14:13 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/tokenizer_config.json "HTTP/1.1 200 OK"
+02:14:13 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+02:14:13 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+02:14:15 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+02:14:15 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/pylate/models/colbert.py:253: FutureWarning: The `get_word_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  hidden_size = self[0].get_word_embedding_dimension()
+02:14:15 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/model.safetensors "HTTP/1.1 302 Found"
+02:14:15 | WARNING | The tokenizer does not support resizing the token embeddings, the prefixes token have not been added to vocabulary.
+02:14:15 | INFO | Loaded jinaai/jina-colbert-v2 in 7.2s
+02:14:15 | WARNING | The `tokenize` method is deprecated, please use `preprocess` instead.
+02:18:00 | INFO | colbert rep=2 batch=1 qps=2.450
+02:21:24 | INFO | colbert rep=2 batch=32 qps=2.448
+02:21:24 | INFO | Wrote /home/jmendoza/ir-spanish/results/efficiency/raw/colbert_rep2.csv and /home/jmendoza/ir-spanish/results/efficiency/metadata/colbert_rep2.json
+02:21:26 | INFO | Run rep=3: /home/jmendoza/miniconda3/envs/proyecto/bin/python -m evaluation.efficiency --mode worker --system fusion --rep 3 --n 500 --warmup 50 --batch 1,32 --device cuda:0
+02:21:30 | INFO | Loading faiss with AVX512 support.
+02:21:30 | INFO | Successfully loaded faiss with AVX512 support.
+02:21:30 | INFO | ⏱  START: Loading cached pruned qrels
+02:21:30 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+02:23:06 | INFO | Loaded retrieval_run.lz4 (550/550 queries)
+02:24:33 | INFO | Loaded retrieval_run.lz4 (550/550 queries)
+02:25:59 | INFO | Loaded retrieval_run.lz4 (550/550 queries)
+02:26:00 | INFO | Fusion prepared for 550 queries
+02:26:03 | INFO | fusion rep=3 batch=1 qps=349.969
+02:26:14 | INFO | fusion rep=3 batch=32 qps=46.729
+02:26:14 | INFO | Wrote /home/jmendoza/ir-spanish/results/efficiency/raw/fusion_rep3.csv and /home/jmendoza/ir-spanish/results/efficiency/metadata/fusion_rep3.json
+02:26:16 | INFO | Run rep=3: /home/jmendoza/miniconda3/envs/proyecto/bin/python -m evaluation.efficiency --mode worker --system colbert --rep 3 --n 500 --warmup 50 --batch 1,32 --device cuda:0
+02:26:19 | INFO | Loading faiss with AVX512 support.
+02:26:19 | INFO | Successfully loaded faiss with AVX512 support.
+02:26:19 | INFO | ⏱  START: Loading cached pruned qrels
+02:26:19 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+02:27:55 | INFO | Loaded retrieval_run.lz4 (550/550 queries)
+02:27:56 | INFO | Document lookup: 53493 candidates from cache
+02:27:58 | WARNING | The `tokenizer_kwargs` argument was renamed and is now deprecated. Please use `processor_kwargs` instead.
+02:27:58 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+02:27:58 | INFO | No modules.json found for jinaai/jina-colbert-v2, initializing a new ColBERT model.
+02:27:58 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+02:27:58 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:27:58 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+02:27:58 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+02:27:58 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+02:27:58 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:27:58 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+`torch_dtype` is deprecated! Use `dtype` instead!
+02:27:58 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/modeling_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+02:27:58 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/modeling_xlm_roberta.py "HTTP/1.1 200 OK"
+02:27:58 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:58 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:58 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:58 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:58 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:58 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:58 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:58 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:58 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:58 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:58 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:58 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:58 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:58 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:58 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:58 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:59 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:59 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:59 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:59 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:59 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:59 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:59 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:59 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:59 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+02:27:59 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:27:59 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+02:27:59 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+02:27:59 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+02:27:59 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:27:59 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+02:27:59 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+02:27:59 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/tokenizer_config.json "HTTP/1.1 200 OK"
+02:27:59 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+02:27:59 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+02:28:01 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/294 [00:00<?, ?it/s]Loading weights: 100%|██████████| 294/294 [00:00<00:00, 47751.14it/s]
+[1mXLMRobertaModel LOAD REPORT[0m from: jinaai/jina-colbert-v2
+Key           | Status     |  | 
+--------------+------------+--+-
+linear.weight | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+02:28:01 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+02:28:01 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+02:28:01 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+02:28:01 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+02:28:01 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+02:28:01 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/tokenizer_config.json "HTTP/1.1 200 OK"
+02:28:01 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:28:02 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+02:28:02 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+02:28:02 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+02:28:02 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:28:02 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+02:28:02 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:28:02 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+02:28:02 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+02:28:02 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+02:28:02 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:28:02 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+02:28:02 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+02:28:02 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/tokenizer_config.json "HTTP/1.1 200 OK"
+02:28:02 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+02:28:02 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+02:28:04 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+02:28:04 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/pylate/models/colbert.py:253: FutureWarning: The `get_word_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  hidden_size = self[0].get_word_embedding_dimension()
+02:28:05 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/model.safetensors "HTTP/1.1 302 Found"
+02:28:05 | WARNING | The tokenizer does not support resizing the token embeddings, the prefixes token have not been added to vocabulary.
+02:28:05 | INFO | Loaded jinaai/jina-colbert-v2 in 7.3s
+02:28:05 | WARNING | The `tokenize` method is deprecated, please use `preprocess` instead.
+02:31:48 | INFO | colbert rep=3 batch=1 qps=2.460
+02:35:13 | INFO | colbert rep=3 batch=32 qps=2.444
+02:35:13 | INFO | Wrote /home/jmendoza/ir-spanish/results/efficiency/raw/colbert_rep3.csv and /home/jmendoza/ir-spanish/results/efficiency/metadata/colbert_rep3.json
+02:35:15 | INFO | Run rep=3: /home/jmendoza/miniconda3/envs/proyecto/bin/python -m evaluation.efficiency --mode worker --system bge --rep 3 --n 500 --warmup 50 --batch 1,32 --device cuda:0
+02:35:19 | INFO | Loading faiss with AVX512 support.
+02:35:19 | INFO | Successfully loaded faiss with AVX512 support.
+02:35:19 | INFO | ⏱  START: Loading cached pruned qrels
+02:35:19 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+02:36:55 | INFO | Loaded retrieval_run.lz4 (550/550 queries)
+02:36:56 | INFO | Document lookup: 53493 candidates from cache
+02:36:58 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+02:36:58 | INFO | No modules.json found for BAAI/bge-reranker-v2-m3, initializing a new CrossEncoder model.
+02:36:58 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+02:36:58 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:36:58 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+02:36:58 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+02:36:58 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:36:58 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/393 [00:00<?, ?it/s]Loading weights: 100%|██████████| 393/393 [00:00<00:00, 43474.03it/s]
+02:36:59 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+02:36:59 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+02:36:59 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+02:36:59 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+02:36:59 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+02:36:59 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+02:36:59 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:36:59 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+02:36:59 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:36:59 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+02:36:59 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+02:36:59 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+02:36:59 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+02:36:59 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+02:37:01 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+02:37:02 | INFO | Loaded BAAI/bge-reranker-v2-m3 in 4.4s
+02:57:29 | INFO | bge rep=3 batch=1 qps=0.447
+03:05:38 | INFO | bge rep=3 batch=32 qps=1.022
+03:05:38 | INFO | Wrote /home/jmendoza/ir-spanish/results/efficiency/raw/bge_rep3.csv and /home/jmendoza/ir-spanish/results/efficiency/metadata/bge_rep3.json
+03:05:40 | INFO | Run rep=3: /home/jmendoza/miniconda3/envs/proyecto/bin/python -m evaluation.efficiency --mode worker --system jina-v3 --rep 3 --n 500 --warmup 50 --batch 1,32 --device cuda:0
+03:05:43 | INFO | Loading faiss with AVX512 support.
+03:05:43 | INFO | Successfully loaded faiss with AVX512 support.
+03:05:43 | INFO | ⏱  START: Loading cached pruned qrels
+03:05:44 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+03:07:18 | INFO | Loaded retrieval_run.lz4 (550/550 queries)
+03:07:18 | INFO | Document lookup: 53493 candidates from cache
+03:07:20 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-reranker-v3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+03:07:20 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-reranker-v3/d7d7e73b6ea138ced340b83865931b5dfb6c97aa/config.json "HTTP/1.1 200 OK"
+03:07:20 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-reranker-v3/resolve/main/modeling.py "HTTP/1.1 307 Temporary Redirect"
+03:07:20 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-reranker-v3/d7d7e73b6ea138ced340b83865931b5dfb6c97aa/modeling.py "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/312 [00:00<?, ?it/s]Loading weights: 100%|██████████| 312/312 [00:00<00:00, 48692.94it/s]
+03:07:21 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-reranker-v3/resolve/main/generation_config.json "HTTP/1.1 307 Temporary Redirect"
+03:07:21 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-reranker-v3/d7d7e73b6ea138ced340b83865931b5dfb6c97aa/generation_config.json "HTTP/1.1 200 OK"
+03:07:21 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-reranker-v3/resolve/main/custom_generate/generate.py "HTTP/1.1 404 Not Found"
+03:07:21 | INFO | Loaded jinaai/jina-reranker-v3 in 1.4s
+03:07:21 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-reranker-v3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+03:07:21 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-reranker-v3/d7d7e73b6ea138ced340b83865931b5dfb6c97aa/config.json "HTTP/1.1 200 OK"
+03:07:21 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-reranker-v3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+03:07:21 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-reranker-v3/d7d7e73b6ea138ced340b83865931b5dfb6c97aa/tokenizer_config.json "HTTP/1.1 200 OK"
+03:07:22 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-reranker-v3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+03:07:22 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-reranker-v3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+03:07:22 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-reranker-v3 "HTTP/1.1 200 OK"
+03:15:02 | INFO | jina-v3 rep=3 batch=1 qps=1.194
+03:22:01 | INFO | jina-v3 rep=3 batch=32 qps=1.193
+03:22:01 | INFO | Wrote /home/jmendoza/ir-spanish/results/efficiency/raw/jina-v3_rep3.csv and /home/jmendoza/ir-spanish/results/efficiency/metadata/jina-v3_rep3.json
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/jmendoza/ir-spanish/evaluation/efficiency.py", line 951, in <module>
+    [a / b for a, b in zip(qps_b32, fusion_qps_b32)]
+^^
+  File "/home/jmendoza/ir-spanish/evaluation/efficiency.py", line 941, in main
+    fusion_meta = [metas[("fusion", rep)] for rep in used_reps]
+    ^^^^^^^^^
+  File "/home/jmendoza/ir-spanish/evaluation/efficiency.py", line 818, in run
+    aggregate(args)
+  File "/home/jmendoza/ir-spanish/evaluation/efficiency.py", line 905, in aggregate
+    
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/csv.py", line 167, in writerows
+    return self.writer.writerows(map(self._dict_to_list, rowdicts))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/csv.py", line 159, in _dict_to_list
+    raise ValueError("dict contains fields not in fieldnames: "
+ValueError: dict contains fields not in fieldnames: 'latency_ratio', 'latency_ratio_ci_high', 'latency_ratio_ci_low'
+03:22:15 | INFO | Loading faiss with AVX512 support.
+03:22:15 | INFO | Successfully loaded faiss with AVX512 support.
+03:22:36 | INFO | Wrote /home/jmendoza/ir-spanish/results/efficiency/summary.csv, summary.json and summary.md
+AGGREGATE_EXIT=0

@@ -1,0 +1,41 @@
+=== 2026-10-20T23:41:05-06:00 fusion pilot ===
+23:41:09 | INFO | Loading faiss with AVX512 support.
+23:41:09 | INFO | Successfully loaded faiss with AVX512 support.
+23:41:09 | INFO | Reusing /home/jmendoza/ir-spanish/results/efficiency/queries.csv (500 measure, 50 warmup)
+23:41:09 | INFO | Pilot: /home/jmendoza/miniconda3/envs/proyecto/bin/python -m evaluation.efficiency --mode worker --system fusion --rep 0 --n 5 --warmup 1 --batch 1 --device cuda:0
+23:41:12 | INFO | Loading faiss with AVX512 support.
+23:41:12 | INFO | Successfully loaded faiss with AVX512 support.
+23:41:12 | INFO | ⏱  START: Loading cached pruned qrels
+23:41:12 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+23:42:48 | INFO | Loaded retrieval_run.lz4 (6/6 queries)
+23:44:13 | INFO | Loaded retrieval_run.lz4 (6/6 queries)
+23:45:36 | INFO | Loaded retrieval_run.lz4 (6/6 queries)
+23:45:36 | INFO | Fusion prepared for 6 queries
+23:45:38 | INFO | fusion rep=0 batch=1 qps=516.187
+23:45:38 | INFO | Wrote /home/jmendoza/ir-spanish/results/efficiency/raw/fusion_rep0.csv and /home/jmendoza/ir-spanish/results/efficiency/metadata/fusion_rep0.json
+=== 2026-10-20T23:45:47-06:00 bge pilot ===
+23:45:51 | INFO | Loading faiss with AVX512 support.
+23:45:51 | INFO | Successfully loaded faiss with AVX512 support.
+23:45:51 | INFO | Reusing /home/jmendoza/ir-spanish/results/efficiency/queries.csv (500 measure, 50 warmup)
+23:45:51 | INFO | Pilot: /home/jmendoza/miniconda3/envs/proyecto/bin/python -m evaluation.efficiency --mode worker --system bge --rep 0 --n 3 --warmup 1 --batch 1 --device cuda:0
+23:45:54 | INFO | Loading faiss with AVX512 support.
+23:45:54 | INFO | Successfully loaded faiss with AVX512 support.
+23:45:54 | INFO | ⏱  START: Loading cached pruned qrels
+23:45:54 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+23:47:30 | INFO | Loaded retrieval_run.lz4 (4/4 queries)
+23:47:31 | INFO | ⏱  START: Loading eswiki corpus
+23:47:31 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+23:47:31 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+23:47:31 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+23:47:31 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+23:47:31 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+23:47:31 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+23:47:32 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+23:47:32 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+23:47:32 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+23:47:32 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+23:47:34 | INFO | ⏱  DONE:  Loading eswiki corpus (3.6s)
+23:47:34 | INFO | Original corpus: 14047759 documents
+23:47:34 | INFO | ⏱  START: Formatting and counting words (1 workers)
+23:47:51 | INFO | ⏱  DONE:  Formatting and counting words (1 workers) (16.9s)
+23:47:51 | INFO | Word-count filter disabled — using all 14047759 documents

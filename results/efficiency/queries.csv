@@ -1,0 +1,551 @@
+query_id,split,query,n_chars
+8262052,warmup,qué son semillas de chía,24
+7547524,warmup,cuando hablan diferentes idiomas,32
+7429552,warmup,a qué llamamos síndrome,23
+7780212,warmup,donde murio el cabo,19
+7747182,warmup,de que se murio spinetta,24
+7721911,warmup,de donde sale el bistec,23
+7589818,warmup,cuantas regiones hay en alemania,32
+7533817,warmup,cuales son neuronas bipolares,29
+8160515,warmup,quien compuso o sole mio,24
+7514738,warmup,cual es la inyeccion mas fuerte para el dolor,45
+8202947,warmup,quién era cipriano de valera,28
+8008218,warmup,porque se negrea una cadena de plata,36
+7437790,warmup,como afecta la ropa al medio ambiente,37
+7434965,warmup,cabeza de familia que significa,31
+7522354,warmup,cual marca de guitarra es la mejor,34
+7716550,warmup,de donde es aguilas doradas,27
+7733252,warmup,de que carne es la birria original,34
+8115828,warmup,que presidente vendio parte de guatemala a mexico,49
+8212543,warmup,quién pintó mujeres en la ventana,33
+7431381,warmup,a qué se refiere la impostación,31
+8173810,warmup,quien fue el segundo presidente de estados unidos,49
+7684106,warmup,cuántos habitantes tiene bélgica,32
+8160332,warmup,quien compuso el himno de españa,32
+8004065,warmup,porque salen escaras,20
+7717856,warmup,de donde es topo gigio,22
+8054066,warmup,que es cuadro de instrumentos,29
+8201431,warmup,quién compuso el arte de la fuga,32
+7783610,warmup,donde puede trabajar un cajero bancario,39
+7406165,warmup,a que animales hibernan,23
+7622005,warmup,cuantos escalones son para subir al tepozteco,45
+8009659,warmup,porque se va la luz en venezuela,32
+7860035,warmup,en qué consistió el hacha de piedra,35
+7783181,warmup,donde podemos encontrar pinturas rupestres,42
+7615909,warmup,cuantos bolos de bowling hay,28
+7712117,warmup,cómo va la liga holandesa,25
+7855824,warmup,en que zona esta villa nueva,28
+7533546,warmup,cuales son los valores universales y su significado,51
+7521032,warmup,cual fue el ultimo windows 7 que salio,38
+7917040,warmup,para qué sirve un misil balístico,33
+7527338,warmup,cuales son conectivos,21
+7889684,warmup,para que eran las chinampas,27
+7866977,warmup,en qué provincia de argentina se encuentran las termas de río hondo,67
+8214664,warmup,quiénes eran los montubios,26
+7770296,warmup,donde es el noreste,19
+7457149,warmup,como hallar el determinante de una matriz,41
+8062926,warmup,que es periodo entreguerras,27
+8151532,warmup,que un paso a nivel,19
+7567114,warmup,cuando una mujer pierde la virginidad se nota fisicamente,57
+7915445,warmup,para qué sirve el ram,21
+7506915,warmup,cual es el agua inyectable,26
+8167304,measure,quien era asaf en la biblia,27
+7798745,measure,dónde está la universidad de oxford,35
+8250609,measure,qué propuso proudhon,20
+8235512,measure,qué fue el manifiesto de cartagena,34
+7893101,measure,para que es tenoxicam,21
+8188949,measure,quien trajo el evangelio a colombia,35
+7672140,measure,cuántas maravillas naturales tiene venezuela,44
+7495780,measure,con que respiran los tiburones,30
+7460954,measure,como llegar al salto angel,26
+7727416,measure,de donde vienen los kiwis zespri,32
+7794548,measure,donde vende comida,18
+7507657,measure,cual es el canal azteca uno,27
+7733351,measure,de que ciudad es la fiorentina,30
+7532052,measure,cuales son los medios digitales,31
+7917291,measure,para qué sirven las feromonas,29
+7783327,measure,donde poner aceite de motor,27
+8057671,measure,que es grupo terra,18
+8258575,measure,qué significa plural,20
+7897470,measure,para que se creo geogebra,25
+7626881,measure,cuantos inmigrantes hay en alemania,35
+7904379,measure,para que sirve la ecografia cromosomica,39
+7884055,measure,motivos de hemorragia cerebral,30
+7703534,measure,cómo murió kurt cobain,22
+7772252,measure,donde esta ubicada la sierra maestra,36
+8275530,measure,x donde pasa la ruta 163,24
+7497741,measure,con que se puede pintar la goma eva,35
+8222236,measure,qué causa la sinestesia,23
+8258057,measure,qué significa la química orgánica,33
+7639081,measure,cuantos quintales hay en una arroba,35
+8147196,measure,que territorio de america conforman la cuenca del caribe,56
+7747126,measure,de que se lamenta el hombre,27
+7627692,measure,cuantos jugadores de lol hay en el mundo,40
+8065028,measure,que es transformacion economica wikipedia,41
+7916487,measure,para qué sirve la raíz de maguey,32
+7774910,measure,donde fueron abandonados romulo y remo,38
+8262894,measure,qué sustancias forman la savia elaborada,40
+8170725,measure,quien es otty patiño,20
+7717257,measure,de donde es la champeta,23
+7837425,measure,en que epoca se manifiesta el criollismo,40
+7476535,measure,como se llaman muñecos cabezones,32
+7728546,measure,de dónde es la danza de la pluma,32
+7438289,measure,como alimentar un perro que no quiere comer,43
+7828309,measure,en que canal dan casados con hijos,34
+7959883,measure,por qué murió san valentín,26
+7772782,measure,donde estaba valyria,20
+7491462,measure,con que jabon se puede bañar un perro,37
+7706015,measure,cómo quedó dallas cowboys,25
+8178540,measure,quien hizo el himno de puerto rico,34
+7827357,measure,en que año termino el conflicto armado interno en guatemala,59
+7708035,measure,cómo se escribe look,20
+8105319,measure,que obligaciones tiene un padrino de bautizo,44
+7945762,measure,por que tenemos odio,20
+8267988,measure,razones para cuidar a los animales,34
+8062400,measure,que es negocio innovacion,25
+7594332,measure,cuantas y cuales son las bellas artes,37
+7770591,measure,donde es parana,15
+7589972,measure,cuantas regiones tiene sudafrica,32
+7749170,measure,de que trabaja maria de la isla de las tentaciones,50
+8173928,measure,quien fue fares y zara en la biblia,35
+8155069,measure,que ver en turrialba,20
+7768093,measure,donde desemboca el rio ñuble,28
+8197329,measure,quienes pueden competir en los juegos paralímpicos,50
+8023688,measure,pueden presentarse como moleculas diatomicas,44
+8195767,measure,quienes iniciaron la didactica,30
+7955653,measure,por qué hacían sacrificios los mayas,36
+7893476,measure,para que es valpakine 500 mg,28
+7717089,measure,de donde es grido,17
+7587831,measure,cuantas personas le caben al pepsi center,41
+8122643,measure,que quiere decir smile en español,33
+8098023,measure,que materiales hay en la luna,29
+7518780,measure,cual es rio mas grande de venezuela,35
+7462940,measure,como muere la señorita krabappel,32
+7545674,measure,cuando fue el mundial de sudafrica,34
+7612477,measure,cuanto vale sacar el pasaporte en venezuela,43
+8248430,measure,qué pasó el primero de enero de 1958,36
+7622489,measure,cuantos estados tiene alemania,30
+8008802,measure,porque se produce la hidrocefalia,33
+8207511,measure,quién fue dolores ibárruri,26
+7487699,measure,con que carne se hace la tartara,32
+7922974,measure,por donde va la ciatica,23
+7918810,measure,pisa tower donde esta,21
+8207169,measure,quién fue aidé santa maría,26
+8069365,measure,que es unidades zip,19
+8141684,measure,que son los movimientos y transformaciones sociales,51
+7753345,measure,de quien descienden los iranies,31
+8168209,measure,quien era romualdito,20
+7412964,measure,a que lado va el piercing de la nariz en las mujeres,52
+7552743,measure,cuando muere ricardo i,22
+8152379,measure,que usaban de mascarillas en el antiguo egipto,46
+7772096,measure,donde esta rio piedras,22
+8264436,measure,qué tipo de noticias trata los deportes,39
+7859972,measure,en qué consistió el absolutismo político,40
+7547834,measure,cuando hacer endodoncia,23
+7798996,measure,dónde está situada la ciudad de constantinopla,46
+8033303,measure,que caracteristicas referentes al calor tiene el cobre,54
+7620143,measure,cuantos diputados federales hay en baja california,50
+8057896,measure,que es hipotesis de negocio en marcha,37
+7402349,measure,a donde pertenece belgica,25
+7769183,measure,donde empieza la feria de san telmo,35
+8108372,measure,que otra enfermedad se confunde con parkinson,45
+7649939,measure,cuál es la relación de la filosofía y la psicología,51
+8120720,measure,que pueden hacer los gorilas,28
+7540159,measure,cuando debutó kep1er,20
+8244854,measure,qué no me pierda,16
+7803830,measure,dónde queda la delegación venustiano carranza,45
+8261589,measure,qué son los xennials,20
+8120663,measure,que pueden comer los periquitos verdes,38
+8221838,measure,qué causa artritis,18
+7684217,measure,cuántos habitantes tiene valencia capital,41
+7612474,measure,cuanto vale renovar pasaporte venezolano,40
+7908474,measure,para que son las inyecciones ampigrin,37
+7625152,measure,cuantos habitantes tiene oviedo 2022,36
+8155499,measure,que viene despues de wandavision,32
+8142808,measure,que son medios comunitarios,27
+7398624,measure,a cuantas millas de la costa son aguas internacionales,54
+8209561,measure,quién fue uziel,15
+7837216,measure,en que episodio gon se transforma,33
+8092892,measure,que juegos jugar en casino online,33
+7422497,measure,a quien buscan en ahsoka,24
+7548503,measure,cuando hay que llevar chaleco reflectante,41
+7894772,measure,para que hace bien la pera,26
+7817473,measure,en donde hay dragones de komodo,31
+7741120,measure,de que murio el jugador feher,29
+7479688,measure,como termino el cisma de occidente,34
+7741991,measure,de que nombre viene william,27
+8178689,measure,quien hizo el tren urbano en puerto rico,40
+7506883,measure,cual es el aditivo,18
+7513383,measure,cual es la capital de españa,28
+8089584,measure,que impuestos no se pagan en tierra del fuego,45
+7495539,measure,con que refresco se toma el bacardí añejo,41
+8144646,measure,que sucede al final de ña catita,32
+7568633,measure,cuando vence windows 8.1,24
+7573861,measure,cuantas asistencias tiene stockton,34
+8077340,measure,que ganas de no verte nunca mas valeria lynch,45
+8164949,measure,quien descubrio virus del mosaico del tabaco,44
+7630056,measure,cuantos libros de trono de cristal hay,38
+7770714,measure,donde es tepecoyo,17
+8140502,measure,que son los clubes,18
+8218273,measure,qué alimentos tienen arginina,29
+8011096,measure,porque son importantes y necesarios los jueces de paz en la comunidad,69
+7707048,measure,cómo saber el tamaño en píxeles de una imagen,45
+8155386,measure,que ves el cielo,16
+7688077,measure,cuántos oscars tiene jack nicholson,35
+7823171,measure,en la division internacional del trabajo,40
+7954883,measure,por qué existe la letra h,25
+7907949,measure,para que sirven los conectores gramaticales,43
+8038780,measure,que combustible usan los helicópteros,37
+8132105,measure,que significa corazon blanco,28
+8056120,measure,que es el ursodiol y para que sirve,35
+7561286,measure,cuando se lesiono militao,25
+7750206,measure,de que trata frozen,19
+7724184,measure,de donde son banda machos,25
+7488679,measure,con que comer lentejas,22
+7857796,measure,en qué consiste el agua fósil dónde se encuentra y qué edad tiene,65
+7424100,measure,a quien representa el cabo en la vida real,42
+8201009,measure,quién canta a puro dolor,24
+8168735,measure,quien es chuck norris,21
+7730271,measure,de dónde sale el líquido amniótico,34
+8201061,measure,quién canta despacito,21
+7717712,measure,de donde es pastor lopez,24
+7407255,measure,a que compañia pertenece ip,27
+7497346,measure,con que se preparan los nachos,30
+8253543,measure,qué relación abierta,20
+7481313,measure,como tratar la urticaria por calor,34
+7728477,measure,de dónde es huguito flores,26
+7493340,measure,con que otras disciplinas se relaciona la fisica,48
+7436985,measure,como actua salbutamol,21
+7847249,measure,en que paises puede ver star plus,33
+7497149,measure,con que se mezcla el brugal,27
+8128156,measure,que santos se celebran hoy 1 de enero,37
+7739373,measure,de que lado del cuerpo esta la vena orta,40
+7783922,measure,donde puedo hacer diagramas de flujo,36
+8088809,measure,que implica habitos,19
+7710346,measure,cómo son los tigrillos,22
+8155252,measure,que verduras llevan sorbitol,28
+7579569,measure,cuantas estaciones tiene la linea 2 del metro,45
+8182649,measure,quien mide el rating en colombia,32
+8187835,measure,quien se fue de cnco,20
+8074399,measure,que fue ezequiel zamora,23
+7744514,measure,de que proviene la hidrocefalia,31
+8074689,measure,que fue la junta provisional gubernativa,40
+7975240,measure,porque da escarlatina,21
+7668478,measure,cuántas canciones ha hecho aitana,33
+7523309,measure,cual seria mi amor platónico,28
+7527577,measure,cuales son enfermedades metabolicas,35
+8027573,measure,que aparatos necesitas para hacer un equipo de sonido,53
+7882689,measure,manteca de karite que es,24
+8012017,measure,porque sucede la reaccion de la lampara de lava,47
+7984393,measure,porque existe la uf,19
+8068620,measure,que es una persona toxica,25
+7474717,measure,como se dicen los ordinales,27
+8273308,measure,springfield usa donde queda,27
+7529197,measure,cuales son las kpis,19
+7483873,measure,componentes que quiere decir,28
+7963877,measure,por qué se llama nanomedicina,29
+7859088,measure,en qué consiste la jornada nocturna,35
+7545326,measure,cuando fue el abrazo de acatempan,33
+7750810,measure,de que trata la literatura renacentista,39
+7670919,measure,cuántas franquicias tiene grido,31
+7668125,measure,cuántas bacterias tiene la boca,31
+8151606,measure,que una actitud hostil,22
+8053641,measure,que es ciencias naturales para niños,36
+7591119,measure,cuantas series mundiales tiene boston,37
+8007963,measure,porque se me frena el coche en marcha,37
+7656926,measure,cuáles son los beneficios de la chía,36
+7783967,measure,donde puedo jugar project playtime,34
+8065315,measure,que es un bien giffen,21
+7751629,measure,de que trata teoria endosimbiotica,34
+7502557,measure,con qué herramientas de realiza el cizallado manual,51
+8047269,measure,que diferencia hay entre gasolina roja y verde,46
+8165609,measure,quien determina el valor de una casa,36
+7528635,measure,cuales son las estrategias a nivel corporativo,46
+7467493,measure,como operan el tabique desviado,31
+8157286,measure,que zona es guadarrama,22
+7416659,measure,a que ramal se le dio el nombre de ferrocarril de los altos,59
+7521646,measure,cual fue la ultima victoria de fernando alonso,46
+7737866,measure,de que fue acusado el gobierno de juan bosch,44
+7631802,measure,cuantos metros cuadrados se necesitan para construir una casa,61
+7973711,measure,porque colocar fluor na agua,28
+8089050,measure,que implica o denota duda,25
+8085208,measure,que hierba llevan los esquites,30
+7709695,measure,cómo se saluda en inglés,24
+7959814,measure,por qué murió jenni rivera,26
+7480705,measure,como trabajan los mineros,25
+7629350,measure,cuantos km son de veracruz a tierra blanca,42
+7915981,measure,para qué sirve la betametasona 0.1,34
+7400945,measure,a cuál batalla asistió el presidente mora,41
+7933977,measure,por que los caballos llevan herraduras,38
+7770787,measure,donde es zapopan,16
+8058989,measure,que es la carne kobe de japon,29
+7789275,measure,donde se habla raramuri,23
+8010870,measure,porque son importantes figuras geometricas,42
+8169998,measure,quien es kelpie,15
+8090284,measure,que indica el lexema,20
+7615142,measure,cuantos años vive la medusa,27
+7667096,measure,cuándo y en qué banco fue transformado el banco nacional de fomento,67
+7802811,measure,dónde puedo ver shogun,22
+7715797,measure,de donde debe provenir los ingresos del estado,46
+7480582,measure,como trabajan juntos el sistema nervioso y el sistema endocrino,63
+8191132,measure,quienes conforman el codex alimentarius,39
+8159019,measure,quien bombardeo a siria en 2015,31
+7484344,measure,con cuantas faltas sale un jugador de baloncesto,48
+7825841,measure,en que año inicio trueque,25
+7478609,measure,como surge la generacion del 98,31
+7466586,measure,como obtiene sus poderes kraven,31
+8196789,measure,quienes no recuerdan el pasado están condenados a repetirlo,59
+8079539,measure,que grande felino no puede rugir,32
+8112325,measure,que paso con isaias tejeda,26
+8143489,measure,que son procesos bpo,20
+7618050,measure,cuantos condados tiene new york,31
+7478249,measure,como sucedió la formación de los estados nacionales,51
+8120946,measure,que puedes usar si no tengo crema para afeitar,46
+7507949,measure,cual es el concierto mas grande de mexico,41
+7661163,measure,cuándo es el festival de dichato,32
+7494592,measure,con que puedo acompañar los frijoles,36
+8206509,measure,quién es valeria ripoll,23
+7494077,measure,con que pintaban en el neolitico,32
+7736554,measure,de que esta hecho brandy,24
+7967751,measure,por qué una persona grita mucho,31
+7559562,measure,cuando se celebra maria reina de la paz,39
+8181316,measure,quien libero los esclavos en cuba,33
+7748619,measure,de que son hechas las arepas,28
+8190814,measure,quienes colonizaron el sur,26
+8206103,measure,quién es pepe grillo,20
+7452991,measure,como fue asesinado chris kyle,29
+8236969,measure,qué grupo bryndis,17
+7509714,measure,cual es el navegador google chrome,34
+8003039,measure,porque renuncio neville chamberlain,35
+8195974,measure,quienes integraron el siglo de oro,34
+8176722,measure,quien gano eurovision 2021,26
+8136693,measure,que sistemas operativos existen en el mercado,45
+7829423,measure,en que ciudad transcurre entrevias,34
+7765960,measure,donde botar artefactos electricos,33
+7695263,measure,cómo duele el páncreas,22
+7826592,measure,en que año se abolio la esclavitud en colombia,46
+7740441,measure,de que material es la gabardina,31
+7771051,measure,donde esta el arbol de la vida,30
+7946695,measure,por que tienes celos,20
+7577397,measure,cuantas copias vendio we are the world,38
+8272536,measure,sobre héroes y tumbas de que se trata,37
+7804825,measure,dónde queda verde malaquita,27
+8061029,measure,que es lesion autoinfligida,27
+7829189,measure,en que casos se usa la inmunoterapia,36
+7499297,measure,con que vino se puede acompañar los chiles en nogada,52
+7410337,measure,a que es el grooming,20
+8061988,measure,que es mezcla y master,22
+8239393,measure,qué hizo zaqueo,15
+8174942,measure,quien fue ricardo iii,21
+7530888,measure,cuales son los datos roaming,28
+7499916,measure,con quien ha trabajado arca,27
+8153367,measure,que utilidad cumple el bus,26
+7708753,measure,cómo se juega el poto sucio,27
+8117010,measure,que produce la ladilla,22
+7770786,measure,donde es zambia,15
+7579778,measure,cuantas estrellas tiene marruecos,33
+7875396,measure,hasta donde llega el turnpike,29
+7494922,measure,con que puedo pegar plastico,28
+7746472,measure,de que se encarga el wernicke,29
+7903554,measure,para que sirve hidrocortisona 1 crema,37
+7789078,measure,donde se grabo rambo 1,22
+7618648,measure,cuantos decibeles produce voz humana,36
+8038885,measure,que come la cobra,17
+8159441,measure,quien canta la cancion we are the world,39
+7807977,measure,dónde vive la ballena gris,26
+8226939,measure,qué día dan la pasión de cristo en costa rica,45
+8141543,measure,que son los mensajes mms en iphone,34
+7407980,measure,a que denominamos fenomenos,27
+8169245,measure,quien es el mejor boxeador del mundo,36
+7804415,measure,dónde queda reino animal,24
+7535491,measure,cuando acabo la dictadura de portugal,37
+7582968,measure,cuantas juntas parroquiales hay en ecuador,42
+7770227,measure,donde es el comic con,21
+7553458,measure,cuando nace el ocio,19
+7541182,measure,cuando dia del orgullo gay,26
+7615870,measure,cuantos bits x86,16
+7777197,measure,donde hay bosques en argentina,30
+7785965,measure,donde queda quivican,20
+8216169,measure,quiénes realizan la actividad de la agricultura,47
+7705334,measure,cómo preparar pescado seco,26
+7864745,measure,en qué lugares y tiempo podría suceder una novela de ciencia ficción,68
+7693634,measure,cómo compartir internet en un android,37
+8257398,measure,qué significa gastronomía,25
+7769889,measure,donde encuentro polifenoles,27
+8115953,measure,que principios rigen a la integridad academica,46
+8092832,measure,que juega perico,16
+7753084,measure,de que viven los awa,20
+7467766,measure,como pagar tarjeta de credito,29
+7520553,measure,cual fue el objetivo de la carta de jamaica,43
+8257429,measure,qué significa go,16
+8012006,measure,porque sucede la placenta previa,32
+7781743,measure,donde nacio winston churchill,29
+7458545,measure,como iniciaron los tigres del norte,35
+7402571,measure,a donde pertenece providence,28
+7850877,measure,en que se basa gambito de dama,30
+7577368,measure,cuantas copias vendio batman arkham knight,42
+8259731,measure,qué son ciencias naturales,26
+7767134,measure,donde crecen las flores de cerezo,33
+7625182,measure,cuantos habitantes tiene san jose uruguay,41
+8044931,measure,que devient franck riester,26
+8166906,measure,quien elige el nombre del bebe,30
+8022250,measure,puede ser grave la sinusitis,28
+8173476,measure,quien fue el creador de los números enteros,43
+7410855,measure,a que esta ligado el calendario chino,37
+7548507,measure,cuando hay que matricular un remolque,37
+7502390,measure,con qué finalidad se establecen las garantías constitucionales,62
+7605617,measure,cuanto ml es una onza,21
+8160595,measure,quien compuso y sin embargo te quiero,37
+7446606,measure,como destapar la uretra de un hombre,36
+7903363,measure,para que sirve ginkgo,21
+8194617,measure,quienes fueron los gracos,25
+8167646,measure,quien era ezequiel zamora,25
+7604166,measure,cuanto liquido hay en el espacio pleural,40
+8026077,measure,que alivia el ketoconazol,25
+7572252,measure,cuanta plata es beca junaeb,27
+7455321,measure,como funciona propulsión nuclear,32
+7818523,measure,en donde queda chiquimula,25
+7897263,measure,para que se administra homatropina,34
+7453339,measure,como fue el traslado de abu simbel,34
+7887864,measure,para donde va el aire caliente,30
+7704095,measure,cómo no te voy a querer,23
+7751457,measure,de que trata pedro paramo,25
+7534179,measure,cuales son productos mas importantes que se cultivan en mexico,62
+7881975,measure,los amigos con derecho que hacen,32
+8172746,measure,quien fallecio de la jaula de la moda,37
+7973677,measure,porque ciertos atomos tienden a formar redes cristalinas ionicas,64
+8238870,measure,qué hizo hernán siles zuazo durante su presidencia,50
+7614777,measure,cuantos años son bodas de cristal,33
+7738210,measure,de que habla el libro de zacarias en la biblia,46
+7626717,measure,cuantos idiomas indigenas hay en venezuela,42
+7647858,measure,cuál es el órgano reproductor masculino de la flor,50
+7986390,measure,porque hacer networking,23
+7429275,measure,a qué llamamos juego limpio,27
+7650884,measure,cuál es un conjunto de libros,29
+7849298,measure,en que provincia se encuentra avila,35
+7985352,measure,porque fue la guerra de la independencia,40
+7750390,measure,de que trata kinky boots,24
+7772089,measure,donde esta riaño leon,21
+7621297,measure,cuantos empleados hay en telam,30
+7543402,measure,cuando es el concierto de neutro en caracas,43
+7920511,measure,por donde cruzar a argentina,28
+7451238,measure,como esta dividida la prehistoria universal,43
+8072047,measure,que factores explican el estancamiento demografico del siglo xvii,65
+7720843,measure,de donde proviene waleska,25
+7685463,measure,cuántos kilos tiene una arroba,30
+8063604,measure,que es radiopaco,16
+7876194,measure,hasta que año salio la xt 660r,30
+7813338,measure,en cuantos dispositivos se puede ver el futbol orange,53
+7727067,measure,de donde viene primark,22
+7721510,measure,de donde sacan el uranio,24
+7427364,measure,a qué cultura precolombina peruana pertenece la escultura pétrea conocida como el obelisco tello,96
+7673488,measure,cuántas plantas nucleares hay en japón,38
+7953486,measure,por qué es importante mantener el software de base actualizado,62
+7842835,measure,en que longitud se encuentra brasil,35
+7784035,measure,donde puedo revelar fotografias,31
+7495649,measure,con que rellenar pan bao,24
+7784395,measure,donde queda caibarien en cuba,29
+7879556,measure,huesos que forman el techo de la boca,37
+8265436,measure,qué uso le damos los tableros de osb,36
+8122560,measure,que quiere decir provocaron,27
+7956539,measure,por qué la ciudadanía realiza manifestaciones,45
+8151521,measure,que un objetivo,15
+7848287,measure,en que pelicula sale creep,26
+7432768,measure,alisado cual es su función,26
+7553340,measure,cuando nace cervantes,21
+7766279,measure,donde colocar los zapatos en el dormitorio,42
+7649821,measure,cuál es la provincia número 3 de costa rica,43
+8192897,measure,quienes eran los hermanos ameijeiras,36
+7770933,measure,donde esta bustillo,19
+7450493,measure,como es que la anguila electrica produce electricidad,53
+7543867,measure,cuando es la final del desafio,30
+8207664,measure,quién fue el fundador de la geografía científica,48
+8032931,measure,que canales se pueden ver en roku,33
+7869489,measure,en tu experiencia en qué actividades utilizaste y utilizarías el dibujo técnico,79
+7825977,measure,en que año llego el ferrocarril a bolivia,41
+8036073,measure,que causas ve el juzgado de policia local,41
+8217661,measure,qué actividades desempeñan las mujeres,38
+8124917,measure,que relacion existe entre la belleza y el arte,46
+7553772,measure,cuando nace queen,17
+7923478,measure,por dónde queda alemania,24
+8188167,measure,quien sera kang el conquistador,31
+7667915,measure,cuánta superficie tiene beni,28
+7757018,measure,de qué forma ayuda la economía en los mercados de las sociedades,64
+7459001,measure,como inscribirse en bibliometro,31
+8035168,measure,que causa la hepatomegalia,26
+7400561,measure,a cuantos metros equivale un gigametro,38
+8134033,measure,que significa medios de apremio,31
+8154559,measure,que venden las ferreterias,26
+7680679,measure,cuántos brazos tiene la vía láctea,34
+7896772,measure,para que plantas es bueno el humus de lombriz,45
+8028035,measure,que aporta la incaparina,24
+7496124,measure,con que se acompaña la tortilla de papa,39
+7847012,measure,en que paises esta disponible star+,35
+8242003,measure,qué lenguaje formal,19
+7826289,measure,en que año nacio xiao,21
+7566846,measure,cuando una edo es lineal,24
+7804990,measure,dónde queda zambrano,20
+8118716,measure,que provoca el odio,19
+7819793,measure,en donde se puede pagar con sodexo,34
+7979204,measure,porque el hombre es un ser biopsicosocial,41
+7840495,measure,en que gobierno fue creado olancho,34
+7963420,measure,por qué se estira la goma,25
+7801775,measure,dónde nació el profeta joel,27
+8169089,measure,quien es el guion bajo,22
+7571967,measure,cuanta masa tiene la luz,24
+7671316,measure,cuántas iglesias católicas hay en españa,40
+8006148,measure,porque se cierran los gaps,26
+7916168,measure,para qué sirve la hidrocortisona,32
+7643894,measure,cuantos votos saco el fmln en el salvador,41
+8232385,measure,qué es queratocono,18
+8180596,measure,quien inventó el negativo,25
+7805772,measure,dónde se encuentra hungría,26
+7973299,measure,porque celebramos las fiestas patrias,37
+8162966,measure,quien creó arpanet,18
+7398400,measure,a cuales son los paises del primer mundo,40
+7809650,measure,en cual revolucion industrial estamos,37
+7791442,measure,donde seran transmitidos los premios soberanos 2024,51
+7704439,measure,cómo obtienen el carbono las plantas,36
+8026217,measure,que analiza un neurologo,24
+8192368,measure,quienes elaboran el plan de agua prieta,39
+8218420,measure,qué animal es charmander,24
+7834748,measure,en que contexto historico surgen las ciencias sociales,54
+8067063,measure,que es un texto instructivo,27
+8044855,measure,que descubrimientos hizo heinrich schliemann,44
+8045589,measure,que dia se bendicen los santos oleos,36
+7709576,measure,cómo se realiza el enlace o glucosídico,39
+8124534,measure,que region es oslo,18
+8074843,measure,que fue la revolucion de mayo,29
+7637291,measure,cuantos pasajeros caben en un jet privado,41
+7512625,measure,cual es grupo de holmio,23
+7787618,measure,donde salen los juanetes,24
+8129807,measure,que se le pone al puré de papa,30
+8256094,measure,qué se necesita para que ocurra un desastre,43
+8236740,measure,qué genera el cortisol,22
+7853575,measure,en que temporada van los simpsons,33
+7521798,measure,cual genero del metal es el mas pesado,38
+7736108,measure,de que es la carne de chimi,27
+7821602,measure,en dónde queda el desierto de la tatacoa,40
+7724102,measure,de donde se saca la vainilla artificial,39
+7684439,measure,cuántos hijos tiene un caballito de mar,39
+7602833,measure,cuanto gramos de alcohol es permitido para conducir,51
+7428729,measure,a qué jugador le dicen el matador,33
+7461362,measure,como lo hacen discovery,23
+7747160,measure,de que se murio cerati,22
+8077193,measure,que gama es el samsung a54,26
+8226162,measure,qué dice la fe cristiana respecto a la inquietud del ser humano por el sentido de su existencia,95
+7499511,measure,con quien cantaba miguelito,27
+8059407,measure,que es la ganancia en un amplificador,37
+7991100,measure,porque les llaman chilangos a los del df,40
+8252193,measure,qué quiere decir gracia,23
+8187342,measure,quien revisa los bronquios,26
+7675831,measure,cuánto cuesta la bolsa de portland,34
+7921958,measure,por donde queda la candelaria medellin,38
+8099612,measure,que medico cura la sinusitis,28
+7956479,measure,por qué la asamblea general de las naciones unidas reconoció el derecho al agua,79
+7745979,measure,de que se alimentan gatitos,27
+7603140,measure,cuanto hay de tolu a coveñas,28
+7404832,measure,a granel alimentos,18
+7540526,measure,cuando dejara de funcionar internet explorer,44
+8017428,measure,porque una reaccion es espontanea,33
+7716692,measure,de donde es el area 92,22
