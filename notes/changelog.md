@@ -27,6 +27,11 @@ Protocolo obligatorio para todo agente:
 - **Cambios:** `notes/results.md` añade el cálculo de los tres índices planos y su viabilidad; el análisis completo está en `tesis/knowledge/indices-almacenamiento-fusion.md`.
 - **Resultado:** 160.8 GiB en RAM o 80.4 GiB en GPU para tres índices; no caben en el servidor. Un índice del reranker sí (53.6/26.8 GiB).
 
+## 2026-10-21 — Memoria de índices medida con trazas
+- **Cambios:** `evaluation/mem_trace.py` (muestreo a 1 Hz con capas torch, dispositivo y proceso propio) y `evaluation/scaled_efficiency.py`; `results/scaled_efficiency/memtrace_{2000000,4000000}.csv` y `scale_*.json` con 2 M y 4 M, tres índices, tres repeticiones.
+- **Resultados:** el incremento por índice y por GPU es 1 543 + 980·N_millones MiB; a 14 M son 44.7 GiB por GPU y 89.4 GiB en total. `torch.cuda.memory_reserved` marca 0: FAISS no es visible para PyTorch y la atribución se hace por PID con nvidia-smi.
+- **Decisión:** se reporta la medición por escalamiento, no una corrida a 14 M con tres índices residentes, porque no caben.
+
 ## 2026-10-21 — Limpieza de artefactos y Condorcet definitivo
 - **Cambios:** se eliminan `logs/e5_rbo_gain.log`, `logs/fuse-reranker-combnz-2-3.log`, `logs/fuse-reranker-combmnz-rbc-rrf-isr.log` y `logs/fuse-all-strategies.log`; también los crudos del piloto de eficiencia salvo `pilot/metadata/bge_rep0.json`, y `results/scaled_efficiency/candidates_*.json`.
 - **Decisión:** el registro de Condorcet es el de la etapa B (0.5422/0.8918); se descarta el 0.5415/0.8913 del barrido antiguo, que queda en el historial de git. `logs/hybrid.log` se conserva, pero la variante no se reporta.

@@ -170,6 +170,27 @@ Los 8 351 MiB de RSS de la fusión son los tres *runs* cargados, no los índices
 
 La fusión necesita los tres índices: 160.8 GiB no caben en 125 GiB de RAM, y 80.4 GiB no caben en 48 GiB de las dos A5000. Un solo índice (53.6 GiB en RAM o 26.8 GiB en GPU, 13.4 por GPU) sí cabe: la ruta del reranker es viable en este servidor; la fusión con índices planos, no. El disco sí alcanza (399 GB libres; 172.6 GB de índices), pero el límite es la memoria de trabajo.
 
+### Medición con índices proxy
+
+Se construyeron tres índices `IndexFlatIP` sintéticos de $N$ documentos y 1 024 dimensiones, copiados a las dos GPU con `shard=True` y `useFloat16=True`, y se muestreó la memoria cada segundo. La columna útil es la de **nuestro proceso** (`nvidia-smi --query-compute-apps` filtrado por PID): `torch.cuda.memory_reserved` marca 0 en todas las fases porque FAISS usa su propio asignador y es invisible para PyTorch.
+
+| $N$ | Tras índice 1 | Tras índice 2 | Tras índice 3 | Por GPU (3 índices) | Total (2 GPU) |
+| ---: | ---: | ---: | ---: | ---: | ---: |
+| 2 M | 3 708 MiB | 7 210 MiB | 10 714 MiB | 10.5 GiB | 20.9 GiB |
+| 4 M | 5 666 MiB | 11 126 MiB | 16 592 MiB | 16.2 GiB | 32.4 GiB |
+
+El incremento por índice y por GPU se ajusta a
+
+$$
+M(N) \approx 1\,543 + 980 \cdot N_{\text{millones}} \ \text{MiB},
+$$
+
+donde 980 MiB por millón coincide con el tamaño teórico de la mitad `float16` de los vectores (976.6 MiB) y los 1 543 MiB fijos son compatibles con el búfer temporal de FAISS (~1.5 GiB por dispositivo). A 14 M la fórmula da **15 263 MiB por índice y por GPU**, es decir **44.7 GiB por GPU** y **89.4 GiB en total**: más que los 24 GiB de una tarjeta y más que los 48 GiB de las dos.
+
+RSS del proceso durante la construcción: 20.9–22.0 GiB con 2 M y 33.2–34.0 GiB con 4 M; durante la búsqueda baja a 10.5–10.6 GiB. La memoria de los índices en GPU **no se libera entre construcciones** (3 708 → 7 210 → 10 714), que es el supuesto del argumento de viabilidad.
+
+Archivos: `results/scaled_efficiency/memtrace_{2000000,4000000}.csv`, `scale_{2000000,4000000}.json`; log en `logs/scaled_efficiency.log`.
+
 Consecuencia: la fusión puede ser más barata **por consulta** y, a la vez, no ser desplegable en este servidor. El análisis completo está en `tesis/knowledge/indices-almacenamiento-fusion.md`; una variante comprimida (SQ8, IVF-PQ) requeriría reconstruir los índices y repetir la evaluación, no se puede extrapolar.
 
 ## Límites de recursos de la etapa B
