@@ -11,7 +11,12 @@ Two layers are recorded and must not be confused:
 
 - process layer (``torch.cuda.memory_allocated`` / ``reserved``): only this
   process, immune to other tenants;
-- device layer (``nvidia-smi``): whole GPU, includes other users.
+- device layer (``nvidia-smi``): whole GPU, includes other users;
+- own-process layer (``nvidia-smi --query-compute-apps``): only the CUDA contexts
+  that belong to this PID, which is what isolates FAISS allocations.
+
+FAISS uses its own caching allocator, so ``torch.cuda.memory_allocated`` does not
+see the indexes; the own-process column is the one that attributes them.
 
 CPU side records ``VmRSS`` (current), ``VmHWM`` (peak) and ``VmSize`` (virtual).
 ``VmHWM`` is a global high-water mark: in the per-phase summary it is the peak
@@ -40,6 +45,7 @@ FIELDS = [
     "cuda_allocated_mib",
     "cuda_reserved_mib",
     "gpu_used_mib",
+    "own_gpu_used_mib",
 ]
 
 
@@ -66,6 +72,59 @@ def _gpu_used() -> list[int]:
         return [int(line.strip()) for line in output.splitlines() if line.strip()]
     except (OSError, subprocess.SubprocessError):
         return []
+
+
+_GPU_INDEX_BY_UUID: dict[str, int] = {}
+
+
+def _gpu_index_by_uuid() -> dict[str, int]:
+    if _GPU_INDEX_BY_UUID:
+        return _GPU_INDEX_BY_UUID
+    try:
+        output = subprocess.check_output(
+            ["nvidia-smi", "--query-gpu=index,uuid", "--format=csv,noheader"],
+            text=True,
+            stderr=subprocess.DEVNULL,
+        )
+        for line in output.splitlines():
+            index_text, _, uuid = line.partition(",")
+            _GPU_INDEX_BY_UUID[uuid.strip()] = int(index_text.strip())
+    except (OSError, subprocess.SubprocessError):
+        pass
+    return _GPU_INDEX_BY_UUID
+
+
+def _own_gpu_used() -> list[int]:
+    """GPU memory held by this process, per device index."""
+    try:
+        output = subprocess.check_output(
+            [
+                "nvidia-smi",
+                "--query-compute-apps=pid,gpu_uuid,used_memory",
+                "--format=csv,noheader,nounits",
+            ],
+            text=True,
+            stderr=subprocess.DEVNULL,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return []
+    mapping = _gpu_index_by_uuid()
+    sizes: dict[int, int] = {}
+    my_pid = os.getpid()
+    for line in output.splitlines():
+        parts = [part.strip() for part in line.split(",")]
+        if len(parts) != 3:
+            continue
+        pid_text, uuid, used_text = parts
+        if not pid_text.isdigit() or int(pid_text) != my_pid:
+            continue
+        index = mapping.get(uuid)
+        if index is None:
+            continue
+        sizes[index] = sizes.get(index, 0) + int(used_text)
+    if not sizes:
+        return []
+    return [sizes.get(index, 0) for index in range(max(sizes) + 1)]
 
 
 def _cuda_memory() -> tuple[float, float]:
@@ -128,6 +187,7 @@ class MemoryTrace:
         status = _proc_status()
         allocated, reserved = _cuda_memory()
         gpu = _gpu_used()
+        own = _own_gpu_used()
         self._writer.writerow(
             {
                 "elapsed_s": f"{time.perf_counter() - self._started_at:.3f}",
@@ -138,6 +198,7 @@ class MemoryTrace:
                 "cuda_allocated_mib": f"{allocated:.1f}",
                 "cuda_reserved_mib": f"{reserved:.1f}",
                 "gpu_used_mib": ";".join(str(value) for value in gpu),
+                "own_gpu_used_mib": ";".join(str(value) for value in own),
             }
         )
         self._file.flush()
@@ -174,6 +235,7 @@ def summarize(path: Path) -> list[dict]:
                     "cuda_allocated_mib_max": 0.0,
                     "cuda_reserved_mib_max": 0.0,
                     "gpu_used_mib_max": [],
+                    "own_gpu_used_mib_max": [],
                 },
             )
             entry["samples"] += 1
@@ -185,11 +247,11 @@ def summarize(path: Path) -> list[dict]:
             entry["cuda_reserved_mib_max"] = max(
                 entry["cuda_reserved_mib_max"], float(row["cuda_reserved_mib"])
             )
-            gpu_values = [int(value) for value in row["gpu_used_mib"].split(";") if value]
-            if len(gpu_values) > len(entry["gpu_used_mib_max"]):
-                entry["gpu_used_mib_max"] = gpu_values[:]
-            else:
-                entry["gpu_used_mib_max"] = [
-                    max(a, b) for a, b in zip(entry["gpu_used_mib_max"], gpu_values)
-                ]
+            for column in ("gpu_used_mib", "own_gpu_used_mib"):
+                values = [int(value) for value in row[column].split(";") if value]
+                key = f"{column}_max"
+                if len(values) > len(entry[key]):
+                    entry[key] = values[:]
+                else:
+                    entry[key] = [max(a, b) for a, b in zip(entry[key], values)]
     return list(phases.values())

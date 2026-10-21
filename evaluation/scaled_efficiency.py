@@ -229,6 +229,20 @@ def run_rerankers(qids: list[str], query_map: dict[str, str], candidates: dict[s
     return results
 
 
+def _write_scale(n_docs: int, payload: dict) -> None:
+    """Write the scale payload, preserving a previous reranker block if present.
+
+    The memory-traced reruns skip ``--rerank``; merging keeps the reranker
+    timings measured earlier instead of dropping them.
+    """
+    path = OUT_DIR / f"scale_{n_docs}.json"
+    if path.exists() and "rerankers" not in payload:
+        previous = json.loads(path.read_text(encoding="utf-8"))
+        if "rerankers" in previous:
+            payload["rerankers"] = previous["rerankers"]
+    path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+
 def run_scale(n_docs: int, do_rerank: bool) -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     rows = load_queries()
@@ -266,9 +280,7 @@ def run_scale(n_docs: int, do_rerank: bool) -> None:
         (OUT_DIR / f"candidates_{n_docs}.json").write_text(
             json.dumps(candidate_docs, ensure_ascii=False), encoding="utf-8"
         )
-    (OUT_DIR / f"scale_{n_docs}.json").write_text(
-        json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
-    )
+    _write_scale(n_docs, payload)
     if do_rerank:
         if trace is not None:
             trace.set_phase("rerank_release_indexes")
