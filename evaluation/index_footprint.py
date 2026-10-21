@@ -70,7 +70,7 @@ def gpu_used_mib() -> list[int]:
     return [int(line.strip()) for line in output.splitlines() if line.strip()]
 
 
-def build_and_measure(n_docs: int, dim: int, n_queries: int, chunk: int, run_gpu: bool) -> dict:
+def build_and_measure(n_docs: int, dim: int, n_queries: int, cpu_queries: int, chunk: int, run_gpu: bool) -> dict:
     import faiss  # noqa: F401  (imported here to keep the CLI light)
 
     faiss.omp_set_num_threads(1)
@@ -93,16 +93,17 @@ def build_and_measure(n_docs: int, dim: int, n_queries: int, chunk: int, run_gpu
     log.info("Built index: %d x %d in %.1fs (RSS %.1f GiB)", index.ntotal, index.d, build_s, rss_after / 1024)
 
     queries = rng.standard_normal((n_queries, dim), dtype=np.float32)
+    cpu_subset = queries[: min(cpu_queries, n_queries)]
     cpu_latencies: list[float] = []
     t0 = time.perf_counter()
-    for query in queries:
+    for query in cpu_subset:
         s = time.perf_counter_ns()
         index.search(query.reshape(1, -1), TOP_K)
         cpu_latencies.append((time.perf_counter_ns() - s) / 1e6)
     cpu_batch1_s = time.perf_counter() - t0
     t0 = time.perf_counter()
-    for start in range(0, n_queries, 32):
-        index.search(queries[start : start + 32], TOP_K)
+    for start in range(0, len(cpu_subset), 32):
+        index.search(cpu_subset[start : start + 32], TOP_K)
     cpu_batch32_s = time.perf_counter() - t0
     log.info("CPU search: median %.2f ms, p95 %.2f ms", statistics.median(cpu_latencies), p95(cpu_latencies))
 
@@ -117,8 +118,8 @@ def build_and_measure(n_docs: int, dim: int, n_queries: int, chunk: int, run_gpu
         "build_seconds": build_s,
         "cpu_median_ms": statistics.median(cpu_latencies),
         "cpu_p95_ms": p95(cpu_latencies),
-        "cpu_batch1_qps": n_queries / cpu_batch1_s,
-        "cpu_batch32_qps": n_queries / cpu_batch32_s,
+        "cpu_batch1_qps": len(cpu_subset) / cpu_batch1_s,
+        "cpu_batch32_qps": len(cpu_subset) / cpu_batch32_s,
         "gpu": None,
     }
 
@@ -211,6 +212,7 @@ def main() -> None:
     parser.add_argument("--n", type=int, default=N_DOCS)
     parser.add_argument("--dim", type=int, default=DIM)
     parser.add_argument("--queries", type=int, default=N_QUERIES)
+    parser.add_argument("--cpu-queries", type=int, default=10)
     parser.add_argument("--chunk", type=int, default=100_000)
     parser.add_argument("--no-gpu", action="store_true")
     parser.add_argument("--dry-run", action="store_true", help="print the plan and exit")
@@ -218,7 +220,7 @@ def main() -> None:
     if args.dry_run:
         print(json.dumps(vars(args), indent=2))
         return
-    result = build_and_measure(args.n, args.dim, args.queries, args.chunk, not args.no_gpu)
+    result = build_and_measure(args.n, args.dim, args.queries, args.cpu_queries, args.chunk, not args.no_gpu)
     write_summary(result)
 
 
