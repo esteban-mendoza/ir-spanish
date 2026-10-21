@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Sets up the conda environment for this project.
 # Requirements: conda must be installed (https://docs.anaconda.com/miniconda/)
-# Usage: bash setup_env.sh
+# Usage: bash scripts/setup_env.sh
 
 set -euo pipefail
 

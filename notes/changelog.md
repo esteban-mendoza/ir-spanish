@@ -23,6 +23,10 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-10-20 — Scripts durables en `scripts/`
+- **Cambios:** `setup_env.sh` y `notes/cmds.sh` se mueven a `scripts/`; se elimina del control de versiones `run_b2_b3_after_b6.sh`; README y `scripts/README.md` documentan la regla.
+- **Decisión:** solo se versionan scripts reproducibles; los lanzadores de una sola corrida son temporales y no se commitean.
+
 ## 2026-10-20 — Etapa B: B2 muere por OOM, B3 queda al límite
 - **Cambios:** `notes/results.md` añade la tabla de BordaFuse por combinación y la sección de límites de recursos; se incorporan a git los logs de B2/B3, el muestreo de RSS y `results/fuse_stage_b/`.
 - **Resultados:** B6 846.5 s (0.5363/0.9228); B3 1 259.8 s (0.4962/0.9237) con un pico de 100.2 GiB y 19.4 GB disponibles; B2 con BordaFuse murió por OOM a los 1 519 s (RSS 117.5 GiB, `oom_kill=1`, salida 137). Condorcet B1: 6 567 s y 0.8918 de Recall@100.

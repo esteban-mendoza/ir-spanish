@@ -142,7 +142,7 @@ Requires [Miniconda](https://docs.anaconda.com/miniconda/) (or any conda distrib
 ```bash
 git clone <repo-url>
 cd proyecto
-bash setup_env.sh
+bash scripts/setup_env.sh
 ```
 
 This creates a conda environment named `ir-messirve`, installs `faiss-gpu` via conda,
