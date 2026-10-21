@@ -23,6 +23,11 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-10-21 — Codificación de la primera etapa
+- **Cambios:** `evaluation/first_stage.py`, `results/first_stage/` y `logs/first_stage.log`; 500 consultas, e5-large y bge-m3, lote 1/32.
+- **Resultados:** 14.65 y 13.31 ms de mediana en lote 1; 1.28 ms/consulta en lote 32 para los dos recuperadores extra. La ventaja de la fusión baja de 1 182× a ~75× en lote 1, pero sigue siendo de decenas de veces.
+- **Pendiente:** búsqueda en los índices y almacenamiento; la cifra es una cota inferior.
+
 ## 2026-10-21 — Alcance de la eficiencia: segunda etapa
 - **Cambios:** `notes/results.md` distingue el costo marginal de la segunda etapa del costo total del pipeline y advierte que la fusión usa tres recuperadores y los rerankers uno.
 - **Decisión:** los factores 1 182× y 417× no se presentan como costo de extremo a extremo; la primera etapa queda fuera hasta medirla o declararla como limitación.

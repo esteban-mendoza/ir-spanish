@@ -136,11 +136,26 @@ Banco controlado de 500 consultas de prueba, tres repeticiones y orden intercala
 
 En la **segunda etapa**, la fusión es **dos o tres órdenes de magnitud más barata** que los rerankers. La mediana de latencia pasa de 1.9 ms a 0.41–2.25 s; los cross-encoders son 1 182 y 417 veces más lentos, y el más barato de los tres, `jina-colbert-v2`, 216 veces. Con lote 32 la brecha se reduce a 19–46 veces, pero no desaparece. La ganancia de nDCG@10 de los cross-encoders (+0.025 a +0.028) se paga con ese costo; `jina-colbert-v2` es más barato pero también menos efectivo (0.5019, por debajo de la fusión).
 
-**Alcance del costo.** Estas razones son de la **segunda etapa**: suponen las listas de candidatos ya calculadas. La fusión necesita tres recuperadores de primera etapa (`e5-large`, `bge-m3` y `jina-v5-small`) y los rerankers solo uno (`jina-v5-small`). El costo de codificar las consultas, buscar en los índices y mantener tres índices en memoria o disco no está incluido. Por tanto, la tabla no es el costo total del pipeline y no autoriza a decir que la fusión sea más barata de extremo a extremo; para eso hay que sumar el costo de la primera etapa de cada ruta.
+**Alcance del costo.** Estas razones son de la **segunda etapa**: suponen las listas de candidatos ya calculadas. La fusión necesita tres recuperadores de primera etapa (`e5-large`, `bge-m3` y `jina-v5-small`) y los rerankers solo uno (`jina-v5-small`). La codificación adicional de los dos recuperadores extra se midió aparte: **27.96 ms/consulta con lote 1** y **1.28 ms/consulta con lote 32** (sección siguiente). Es una cota inferior: no incluye la búsqueda en los índices ni el costo de mantener tres índices. Sumando esa codificación, la ventaja de la fusión baja de 1 182× a ~75× frente a `bge-reranker-v2-m3`, a ~27× frente a `jina-reranker-v3` y a ~14× frente a `jina-colbert-v2` (lote 1); con lote 32, a ~43×, ~37× y ~18×. La ventaja se reduce, pero no desaparece.
 
 La razón de throughput del lote 1 no coincide exactamente con la inversa de la razón de latencia mediana porque el throughput usa la media de las latencias y la fusión tiene valores atípicos (una consulta de 4.9 s en la primera repetición; mediana 1.9 ms, p95 2.5 ms). Por eso la comparación principal es la mediana y el p95; el throughput se reporta como complemento. La memoria también importa: `bge-reranker-v2-m3` reserva 5 832 MiB de VRAM y la fusión de seis listas con BordaFuse no cabe en 125 GiB (B2), mientras que B3, con cinco, queda al límite.
 
 Archivos: `results/efficiency/summary.csv`, `summary.json`, `summary.md`, `raw/` y `metadata/`; log en `logs/efficiency_run.log`.
+
+## E3: primera etapa (codificación de consultas)
+
+La diferencia de primera etapa entre las dos rutas son los dos recuperadores extra de la fusión: `e5-large` y `bge-m3`. `jina-v5-small` es común y se cancela. Medimos la codificación de consultas sobre las mismas 500 consultas, con una GPU, lote 1 y lote 32.
+
+| Modelo | Mediana b1 (ms) | P95 b1 (ms) | QPS b1 | QPS b32 | RSS pico (MiB) | VRAM pico (MiB) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| `e5-large` | 14.649 | 15.965 | 67.27 | 1 436.70 | 2 358 | 1 113 |
+| `bge-m3` | 13.306 | 14.813 | 73.93 | 1 700.67 | 4 077 | 1 111 |
+
+Costo adicional de codificación: **27.96 ms/consulta en lote 1** y **1.28 ms/consulta en lote 32**.
+
+Es una **cota inferior** de la primera etapa: no incluye la búsqueda en los índices ni el costo de almacenar y mantener tres índices. Con esa cota, el costo de la fusión queda en ~29.9 ms/consulta (lote 1) o ~22.7 ms (lote 32) frente a 410–2 248 ms de los rerankers. La ventaja relativa baja de 1 182× a 75× en el caso más desfavorable, pero sigue siendo de decenas de veces. Para el costo total habría que medir la búsqueda en los índices; no está incluida.
+
+Archivos: `results/first_stage/summary.csv`, `summary.json`, `summary.md`, `e5.json`, `bge.json`, `e5_batch1.csv`, `bge_batch1.csv`; log en `logs/first_stage.log`.
 
 ## Límites de recursos de la etapa B
 
