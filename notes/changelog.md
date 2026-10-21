@@ -27,6 +27,10 @@ Protocolo obligatorio para todo agente:
 - **Cambios:** `notes/results.md` añade el cálculo de los tres índices planos y su viabilidad; el análisis completo está en `tesis/knowledge/indices-almacenamiento-fusion.md`.
 - **Resultado:** 160.8 GiB en RAM o 80.4 GiB en GPU para tres índices; no caben en el servidor. Un índice del reranker sí (53.6/26.8 GiB).
 
+## 2026-10-21 — Barrido de etapa A con RRF e ISR
+- **Cambios:** `results/fuse_sweep/results.csv` crecerá de 114 a 228 pares; log en `logs/fuse_sweep_rrf_isr.log`.
+- **Decisión:** se añaden RRF e ISR al barrido porque su costo es el mismo que el de los dos algoritmos ya ejecutados y así el mejor subconjunto no depende de CombMNZ.
+
 ## 2026-10-21 — Memoria de índices medida con trazas
 - **Cambios:** `evaluation/mem_trace.py` (muestreo a 1 Hz con capas torch, dispositivo y proceso propio) y `evaluation/scaled_efficiency.py`; `results/scaled_efficiency/memtrace_{2000000,4000000}.csv` y `scale_*.json` con 2 M y 4 M, tres índices, tres repeticiones.
 - **Resultados:** el incremento por índice y por GPU es 1 543 + 980·N_millones MiB; a 14 M son 44.7 GiB por GPU y 89.4 GiB en total. `torch.cuda.memory_reserved` marca 0: FAISS no es visible para PyTorch y la atribución se hace por PID con nvidia-smi. Sumando búsqueda y codificación, la fusión queda en ~191 ms por consulta frente a 482–2 319 ms de los rerankers: 2.5–12× más barata, no dos órdenes de magnitud.
