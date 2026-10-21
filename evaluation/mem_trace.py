@@ -14,6 +14,9 @@ Two layers are recorded and must not be confused:
 - device layer (``nvidia-smi``): whole GPU, includes other users.
 
 CPU side records ``VmRSS`` (current), ``VmHWM`` (peak) and ``VmSize`` (virtual).
+``VmHWM`` is a global high-water mark: in the per-phase summary it is the peak
+*up to the end of that phase*, not the peak *of* that phase.  Use ``rss_mib``
+for per-phase attribution.
 """
 
 from __future__ import annotations
@@ -152,7 +155,11 @@ class MemoryTrace:
 
 
 def summarize(path: Path) -> list[dict]:
-    """Return per-phase peaks from a trace CSV."""
+    """Return per-phase peaks from a trace CSV.
+
+    ``rss_mib_max`` and ``cuda_*_max`` are peaks *within* the phase.
+    ``vmhwm_mib_max`` is the cumulative high-water mark at the end of the phase.
+    """
     phases: dict[str, dict] = {}
     with Path(path).open(newline="", encoding="utf-8") as handle:
         for row in csv.DictReader(handle):
