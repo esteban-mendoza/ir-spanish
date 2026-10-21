@@ -23,6 +23,11 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-10-20 — E4 y E5: líneas base y RBO–ganancia
+- **Cambios:** `results/e4/baselines.md`; `analysis/rbo_gain.py`, `results/e5/rbo_gain.csv`, `results/e5/summary.json` y logs.
+- **Resultados:** la mejor fusión supera a la línea base propietaria en nDCG@10 y Recall@100; el mejor reranker la supera en nDCG@10, no en recall. En E5, RBO correlaciona positivamente con la ganancia en nDCG@10 (Pearson 0.678, IC 95 % 0.521–0.808); con Recall@100 la correlación es débil (0.253, IC −0.025–0.553).
+- **Pendientes:** completar BordaFuse en B2–B5, cerrar la etapa B y escribir el capítulo 5.
+
 ## 2026-10-20 — Sin ablación de longitudes fijas
 - **Cambios:** `notes/results.md` pierde las tablas de q512/d512, q64/d256 y 400 palabras; se eliminan los seis `logs/rerankers-fuse-*.log` de la corrida q512; `rerankers/fuse_sweep.py` deja de citar esa corrida; `rerankers/fuse.py` y `analysis/top_n_per_query.ipynb` ya no mencionan al modelo descartado.
 - **Decisión:** se reporta solo la configuración de longitudes máximas nativas; la ablación de longitudes fijas no se conserva.
@@ -41,6 +46,11 @@ Protocolo obligatorio para todo agente:
 - **Cambios:** `evaluation/rbo.py` y `requirements.txt` vuelven a `ranked-overlap`; `README.md` y `notes/results.md` lo reflejan.
 - **Decisión:** se descarta PyTerrier para RBO por su costo (1000 profundidades y DataFrames, ~30 veces más lento); `ranked-overlap` es MIT, sin dependencias y produce la corrida rápida ya validada.
 - **Estado / pendientes:** los 15 pares de `results/rbo/rbo_pairs.csv` y `logs/rbo_ranked_overlap.log` siguen siendo válidos; no hay que recalcular.
+
+## 2026-10-20 — E2: comparación de los seis algoritmos
+- **Cambios:** `results/evaluation/e2_holm.*` y `e2_bh.*`; `logs/e2_significance.log`.
+- **Resultados:** los 15 pares sobre B1 son significativos; CombMNZ queda primero (0.5517), seguido de RBC (0.5485), RRF (0.5450), Condorcet (0.5422), BordaFuse (0.5414) e ISR (0.5382). La única diferencia que no baja de 1e-4 es BordaFuse–Condorcet (p = 0.0252).
+- **Pendientes:** completar BordaFuse en B2–B5, E4 descriptivo y análisis RBO–ganancia del E5.
 
 ## 2026-10-20 — E1 y E3: significancia
 - **Cambios:** `results/evaluation/e1.*` y `e3.*`; `logs/e1_significance.log`, `logs/e3_significance.log`; corrida de Condorcet B1 con run guardado.

@@ -95,3 +95,18 @@ Promedio sobre las consultas de prueba. Los pares con BM25 usan 169 963 consulta
 | e5-large | bge-m3 | 0.4118 |
 | e5-large | jina-v5-small | 0.4081 |
 | bge-m3 | jina-v5-small | 0.4176 |
+
+## E5: RBO y ganancia
+
+La ganancia se mide como nDCG@10 de la fusión menos nDCG@10 del mejor miembro; la complementariedad de una combinación es el promedio de los RBO de sus pares. Sobre las 57 combinaciones de la etapa A (CombMNZ):
+
+- nDCG@10: Pearson 0.678 (IC 95 % 0.521–0.808), Spearman 0.716 (0.508–0.852).
+- Recall@100: Pearson 0.253 (IC 95 % −0.025–0.553), Spearman 0.360 (0.076–0.588).
+- En el subconjunto de tres o más modelos, la correlación con nDCG@10 se mantiene (0.682) y la de recall deja de ser significativa.
+
+La relación es **positiva**: las combinaciones con RBO alto —los tríos y cuartetos densos— son las que más mejoran sobre su mejor miembro. La complementariedad léxico-semántica por sí sola no explica la ganancia; los pares mixtos tienen RBO bajo pero no siempre superan a su mejor miembro denso. Archivos: `results/e5/rbo_gain.csv` y `results/e5/summary.json`.
+
+## E4: líneas base
+
+La tabla descriptiva está en `results/e4/baselines.md`: la mejor fusión (0.5517 / 0.9231) supera a `text-embedding-3-large` (0.476 / 0.916); el mejor reranker (0.5792 / 0.9039) la supera en nDCG@10 pero no en Recall@100.
+
