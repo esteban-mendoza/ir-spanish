@@ -215,6 +215,22 @@ def aggregate() -> None:
     }
     (OUT_DIR / "summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
+    with (OUT_DIR / "summary.csv").open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=[
+                "model",
+                "median_ms",
+                "p95_ms",
+                "batch_1_qps",
+                "batch_32_qps",
+                "peak_rss_mib",
+                "peak_vram_allocated_mib",
+            ],
+        )
+        writer.writeheader()
+        writer.writerows(rows)
+
     lines = [
         "| Modelo | Mediana (ms) | P95 (ms) | QPS b1 | QPS b32 | RSS pico (MiB) | VRAM pico (MiB) |",
         "| --- | ---: | ---: | ---: | ---: | ---: | ---: |",
