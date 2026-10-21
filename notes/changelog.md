@@ -23,6 +23,10 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-10-21 — Alcance de la eficiencia: segunda etapa
+- **Cambios:** `notes/results.md` distingue el costo marginal de la segunda etapa del costo total del pipeline y advierte que la fusión usa tres recuperadores y los rerankers uno.
+- **Decisión:** los factores 1 182× y 417× no se presentan como costo de extremo a extremo; la primera etapa queda fuera hasta medirla o declararla como limitación.
+
 ## 2026-10-21 — Banco de eficiencia ejecutado
 - **Cambios:** `evaluation/efficiency.py` y `results/efficiency/` con 500 consultas, tres repeticiones, lote 1/32, crudos, metadatos y resumen; logs en `logs/efficiency_run.log` y `logs/efficiency_pilot.log`.
 - **Resultados:** fusión 1.90 ms de mediana; `bge-reranker-v2-m3` 2 247.75 ms (1 182×), `jina-reranker-v3` 793.45 ms (417×) y `jina-colbert-v2` 410.76 ms (216×). VRAM pico: 4 401, 3 153 y 1 385 MiB.
