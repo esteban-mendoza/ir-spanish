@@ -31,3 +31,319 @@ Setting TOKENIZERS_PARALLELISM=false for forked processes.
 13:14:50 | INFO | N=2000000 rep 3 search+fusion 27.25 ms
 13:14:50 | INFO | Wrote /home/jmendoza/ir-spanish/results/scaled_efficiency/scale_2000000.json
 EXIT=0
+=== scaled 4M 2026-10-21T13:18:13-06:00 ===
+13:18:17 | INFO | Loading faiss with AVX512 support.
+13:18:17 | INFO | Successfully loaded faiss with AVX512 support.
+13:18:17 | INFO | ⏱  START: Loading eswiki corpus
+13:18:17 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+13:18:17 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+13:18:17 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+13:18:18 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+13:18:18 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+13:18:18 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+13:18:18 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+13:18:18 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+13:18:18 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+13:18:18 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+13:18:19 | INFO | ⏱  DONE:  Loading eswiki corpus (1.5s)
+13:18:19 | INFO | Original corpus: 14047759 documents
+13:18:19 | INFO | ⏱  START: Formatting and counting words (1 workers)
+Setting TOKENIZERS_PARALLELISM=false for forked processes.
+13:18:19 | WARNING | Setting TOKENIZERS_PARALLELISM=false for forked processes.
+13:18:19 | INFO | ⏱  DONE:  Formatting and counting words (1 workers) (0.7s)
+13:18:19 | INFO | Word-count filter disabled — using all 14047759 documents
+13:24:31 | INFO | Loaded 4000000 document ids
+13:24:32 | INFO | Building e5 proxy with 4000000 docs ...
+13:25:51 | INFO |   e5 on GPU; RSS 9.4 GiB
+13:25:51 | INFO | Building bge proxy with 4000000 docs ...
+13:27:10 | INFO |   bge on GPU; RSS 9.9 GiB
+13:27:10 | INFO | Building jina proxy with 4000000 docs ...
+13:28:28 | INFO |   jina on GPU; RSS 10.4 GiB
+13:28:39 | INFO | N=4000000 rep 1 search+fusion 44.37 ms
+13:28:43 | INFO | N=4000000 rep 2 search+fusion 43.20 ms
+13:28:48 | INFO | N=4000000 rep 3 search+fusion 42.85 ms
+13:28:48 | INFO | Loading reranker bge ...
+13:28:53 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+13:28:53 | INFO | No modules.json found for BAAI/bge-reranker-v2-m3, initializing a new CrossEncoder model.
+13:28:53 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+13:28:53 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+13:28:53 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+13:28:53 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+13:28:53 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+13:28:53 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/393 [00:00<?, ?it/s]Loading weights: 100%|██████████| 393/393 [00:00<00:00, 41760.27it/s]
+13:28:53 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+13:28:53 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+13:28:53 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+13:28:54 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+13:28:54 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+13:28:54 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+13:28:54 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+13:28:54 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+13:28:54 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+13:28:54 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+13:28:54 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+13:28:54 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+13:28:54 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+13:28:54 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+13:28:59 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+13:29:00 | INFO | Loaded BAAI/bge-reranker-v2-m3 in 7.3s
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/jmendoza/ir-spanish/evaluation/scaled_efficiency.py", line 293, in <module>
+    main()
+  File "/home/jmendoza/ir-spanish/evaluation/scaled_efficiency.py", line 289, in main
+    run_scale(args.n, args.rerank)
+  File "/home/jmendoza/ir-spanish/evaluation/scaled_efficiency.py", line 258, in run_scale
+    payload["rerankers"] = run_rerankers(qids, query_map, candidate_docs or {})
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/ir-spanish/evaluation/scaled_efficiency.py", line 190, in run_rerankers
+    system.score_one(qid)
+  File "/home/jmendoza/ir-spanish/evaluation/efficiency.py", line 371, in score_one
+    pairs, spans = self._pairs([query_id])
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/ir-spanish/evaluation/efficiency.py", line 356, in _pairs
+    for doc_id in self.candidates[query_id]:
+                  ~~~~~~~~~~~~~~~^^^^^^^^^^
+KeyError: '7798745'
+EXIT=1
+=== scaled 4M retry 2026-10-21T13:33:40-06:00 ===
+13:33:44 | INFO | Loading faiss with AVX512 support.
+13:33:44 | INFO | Successfully loaded faiss with AVX512 support.
+13:33:44 | INFO | ⏱  START: Loading eswiki corpus
+13:33:44 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+13:33:44 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+13:33:44 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+13:33:44 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+13:33:45 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+13:33:45 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+13:33:45 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+13:33:45 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+13:33:45 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+13:33:45 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+13:33:45 | INFO | ⏱  DONE:  Loading eswiki corpus (1.4s)
+13:33:45 | INFO | Original corpus: 14047759 documents
+13:33:45 | INFO | ⏱  START: Formatting and counting words (1 workers)
+Setting TOKENIZERS_PARALLELISM=false for forked processes.
+13:33:45 | WARNING | Setting TOKENIZERS_PARALLELISM=false for forked processes.
+13:33:46 | INFO | ⏱  DONE:  Formatting and counting words (1 workers) (0.7s)
+13:33:46 | INFO | Word-count filter disabled — using all 14047759 documents
+13:38:18 | INFO | Loaded 4000000 document ids
+13:38:18 | INFO | Building e5 proxy with 4000000 docs ...
+13:39:37 | INFO |   e5 on GPU; RSS 9.4 GiB
+13:39:37 | INFO | Building bge proxy with 4000000 docs ...
+13:40:55 | INFO |   bge on GPU; RSS 9.9 GiB
+13:40:55 | INFO | Building jina proxy with 4000000 docs ...
+13:42:14 | INFO |   jina on GPU; RSS 10.4 GiB
+13:42:25 | INFO | N=4000000 rep 1 search+fusion 44.02 ms
+13:42:29 | INFO | N=4000000 rep 2 search+fusion 44.08 ms
+13:42:34 | INFO | N=4000000 rep 3 search+fusion 44.00 ms
+13:42:35 | INFO | Loading reranker bge ...
+13:42:37 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+13:42:37 | INFO | No modules.json found for BAAI/bge-reranker-v2-m3, initializing a new CrossEncoder model.
+13:42:37 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+13:42:37 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+13:42:37 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+13:42:37 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+13:42:37 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+13:42:37 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/393 [00:00<?, ?it/s]Loading weights: 100%|██████████| 393/393 [00:00<00:00, 40903.28it/s]
+13:42:38 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+13:42:38 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+13:42:38 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+13:42:38 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+13:42:38 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+13:42:38 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+13:42:38 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+13:42:38 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+13:42:38 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+13:42:38 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+13:42:38 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+13:42:38 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+13:42:38 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+13:42:38 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+13:42:42 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+13:42:42 | INFO | Loaded BAAI/bge-reranker-v2-m3 in 5.5s
+13:46:45 | INFO | bge rep 1: median 2304.94 ms
+13:50:36 | INFO | bge rep 2: median 2300.54 ms
+13:54:27 | INFO | bge rep 3: median 2297.85 ms
+13:54:28 | INFO | Loading reranker jina-v3 ...
+13:54:28 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-reranker-v3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+13:54:28 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-reranker-v3/d7d7e73b6ea138ced340b83865931b5dfb6c97aa/config.json "HTTP/1.1 200 OK"
+13:54:28 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-reranker-v3/resolve/main/modeling.py "HTTP/1.1 307 Temporary Redirect"
+13:54:28 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-reranker-v3/d7d7e73b6ea138ced340b83865931b5dfb6c97aa/modeling.py "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/312 [00:00<?, ?it/s]Loading weights: 100%|██████████| 312/312 [00:00<00:00, 36362.76it/s]
+13:54:29 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-reranker-v3/resolve/main/generation_config.json "HTTP/1.1 307 Temporary Redirect"
+13:54:29 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-reranker-v3/d7d7e73b6ea138ced340b83865931b5dfb6c97aa/generation_config.json "HTTP/1.1 200 OK"
+13:54:29 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-reranker-v3/resolve/main/custom_generate/generate.py "HTTP/1.1 404 Not Found"
+13:54:29 | INFO | Loaded jinaai/jina-reranker-v3 in 1.2s
+13:54:29 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-reranker-v3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+13:54:29 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-reranker-v3/d7d7e73b6ea138ced340b83865931b5dfb6c97aa/config.json "HTTP/1.1 200 OK"
+13:54:29 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-reranker-v3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+13:54:29 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-reranker-v3/d7d7e73b6ea138ced340b83865931b5dfb6c97aa/tokenizer_config.json "HTTP/1.1 200 OK"
+13:54:29 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-reranker-v3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+13:54:30 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-reranker-v3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+13:54:31 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-reranker-v3 "HTTP/1.1 200 OK"
+13:55:44 | INFO | jina-v3 rep 1: median 698.50 ms
+13:56:54 | INFO | jina-v3 rep 2: median 698.69 ms
+13:58:03 | INFO | jina-v3 rep 3: median 698.86 ms
+13:58:04 | INFO | Loading reranker colbert ...
+13:58:04 | WARNING | The `tokenizer_kwargs` argument was renamed and is now deprecated. Please use `processor_kwargs` instead.
+13:58:04 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+13:58:04 | INFO | No modules.json found for jinaai/jina-colbert-v2, initializing a new ColBERT model.
+13:58:04 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+13:58:04 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+13:58:04 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+13:58:04 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+13:58:04 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+13:58:04 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+13:58:04 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+`torch_dtype` is deprecated! Use `dtype` instead!
+13:58:05 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/modeling_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+13:58:05 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/modeling_xlm_roberta.py "HTTP/1.1 200 OK"
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+13:58:05 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+13:58:05 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+13:58:05 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+13:58:05 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+13:58:05 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+13:58:05 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+13:58:05 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+13:58:05 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/tokenizer_config.json "HTTP/1.1 200 OK"
+13:58:05 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+13:58:05 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+13:58:08 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/294 [00:00<?, ?it/s]Loading weights: 100%|██████████| 294/294 [00:00<00:00, 45703.47it/s]
+[1mXLMRobertaModel LOAD REPORT[0m from: jinaai/jina-colbert-v2
+Key           | Status     |  | 
+--------------+------------+--+-
+linear.weight | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+13:58:08 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+13:58:08 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+13:58:09 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+13:58:09 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+13:58:09 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+13:58:09 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/tokenizer_config.json "HTTP/1.1 200 OK"
+13:58:09 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+13:58:09 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+13:58:09 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+13:58:09 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+13:58:09 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+13:58:09 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+13:58:09 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+13:58:09 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+13:58:09 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+13:58:09 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+13:58:09 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+13:58:09 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+13:58:09 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+13:58:09 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/tokenizer_config.json "HTTP/1.1 200 OK"
+13:58:10 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+13:58:10 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+13:58:12 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+13:58:12 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/pylate/models/colbert.py:253: FutureWarning: The `get_word_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  hidden_size = self[0].get_word_embedding_dimension()
+13:58:13 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/model.safetensors "HTTP/1.1 302 Found"
+13:58:13 | WARNING | The tokenizer does not support resizing the token embeddings, the prefixes token have not been added to vocabulary.
+13:58:13 | INFO | Loaded jinaai/jina-colbert-v2 in 8.9s
+13:58:13 | WARNING | The `tokenize` method is deprecated, please use `preprocess` instead.
+13:58:54 | INFO | colbert rep 1: median 391.48 ms
+13:59:33 | INFO | colbert rep 2: median 393.49 ms
+14:00:13 | INFO | colbert rep 3: median 393.84 ms
+14:00:14 | INFO | Wrote /home/jmendoza/ir-spanish/results/scaled_efficiency/scale_4000000.json
+EXIT=0
+=== memtrace 2M 2026-10-21T14:02:07-06:00 ===
+14:02:11 | INFO | Loading faiss with AVX512 support.
+14:02:11 | INFO | Successfully loaded faiss with AVX512 support.
+14:02:11 | INFO | ⏱  START: Loading eswiki corpus
+14:02:11 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+14:02:11 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+14:02:11 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+14:02:12 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+14:02:12 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+14:02:12 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+14:02:12 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+14:02:12 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+14:02:12 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+14:02:12 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+14:02:12 | INFO | ⏱  DONE:  Loading eswiki corpus (1.5s)
+14:02:12 | INFO | Original corpus: 14047759 documents
+14:02:12 | INFO | ⏱  START: Formatting and counting words (1 workers)
+Setting TOKENIZERS_PARALLELISM=false for forked processes.
+14:02:12 | WARNING | Setting TOKENIZERS_PARALLELISM=false for forked processes.
+14:02:13 | INFO | ⏱  DONE:  Formatting and counting words (1 workers) (0.7s)
+14:02:13 | INFO | Word-count filter disabled — using all 14047759 documents
+14:06:58 | INFO | Loaded 2000000 document ids
+14:06:58 | INFO | Building e5 proxy with 2000000 docs ...
+14:07:38 | INFO |   e5 on GPU; RSS 9.3 GiB
+14:07:38 | INFO | Building bge proxy with 2000000 docs ...
+14:08:17 | INFO |   bge on GPU; RSS 9.8 GiB
+14:08:17 | INFO | Building jina proxy with 2000000 docs ...
+14:08:56 | INFO |   jina on GPU; RSS 10.3 GiB
+14:09:05 | INFO | N=2000000 rep 1 search+fusion 26.71 ms
+14:09:08 | INFO | N=2000000 rep 2 search+fusion 26.44 ms
+14:09:11 | INFO | N=2000000 rep 3 search+fusion 26.26 ms
+14:09:11 | INFO | Wrote /home/jmendoza/ir-spanish/results/scaled_efficiency/scale_2000000.json
+MEMTRACE_2M_EXIT=0
+=== memtrace 4M 2026-10-21T14:09:17-06:00 ===
+14:09:20 | INFO | Loading faiss with AVX512 support.
+14:09:21 | INFO | Successfully loaded faiss with AVX512 support.
+14:09:21 | INFO | ⏱  START: Loading eswiki corpus
+14:09:21 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+14:09:21 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+14:09:21 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+14:09:21 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+14:09:21 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+14:09:21 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+14:09:22 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+14:09:22 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+14:09:22 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+14:09:22 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+14:09:22 | INFO | ⏱  DONE:  Loading eswiki corpus (1.6s)
+14:09:22 | INFO | Original corpus: 14047759 documents
+14:09:22 | INFO | ⏱  START: Formatting and counting words (1 workers)
+Setting TOKENIZERS_PARALLELISM=false for forked processes.
+14:09:22 | WARNING | Setting TOKENIZERS_PARALLELISM=false for forked processes.
+14:09:23 | INFO | ⏱  DONE:  Formatting and counting words (1 workers) (0.7s)
+14:09:23 | INFO | Word-count filter disabled — using all 14047759 documents
+14:14:03 | INFO | Loaded 4000000 document ids
+14:14:03 | INFO | Building e5 proxy with 4000000 docs ...
+14:15:22 | INFO |   e5 on GPU; RSS 9.4 GiB
+14:15:23 | INFO | Building bge proxy with 4000000 docs ...
+14:16:40 | INFO |   bge on GPU; RSS 9.9 GiB
+14:16:41 | INFO | Building jina proxy with 4000000 docs ...
+14:18:00 | INFO |   jina on GPU; RSS 10.4 GiB
+14:18:11 | INFO | N=4000000 rep 1 search+fusion 44.46 ms
+14:18:16 | INFO | N=4000000 rep 2 search+fusion 43.78 ms
+14:18:20 | INFO | N=4000000 rep 3 search+fusion 42.26 ms
+14:18:20 | INFO | Wrote /home/jmendoza/ir-spanish/results/scaled_efficiency/scale_4000000.json
+MEMTRACE_4M_EXIT=0

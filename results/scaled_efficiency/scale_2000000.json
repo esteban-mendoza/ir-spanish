@@ -2,42 +2,169 @@
   "n_docs": 2000000,
   "n_queries": 100,
   "n_reps": 3,
-  "build_seconds": 118.10430855304003,
-  "rss_mib": 10560.6328125,
+  "build_seconds": 118.12058497220278,
+  "rss_mib": 10561.46875,
   "gpu_delta_mib": [
     10719,
     10719
   ],
   "search_fusion_reps": [
     {
-      "search_median_ms": 18.752906,
-      "search_p95_ms": 19.346981,
-      "search_qps": 49.409387114548664,
-      "fusion_median_ms": 8.482339,
-      "fusion_p95_ms": 8.873189,
-      "fusion_qps": 18.27753527458755,
-      "total_median_ms": 27.333658,
-      "total_p95_ms": 27.684407999999998
+      "search_median_ms": 18.770946000000002,
+      "search_p95_ms": 19.469482,
+      "search_qps": 49.35513866457739,
+      "fusion_median_ms": 7.9568895,
+      "fusion_p95_ms": 9.281815,
+      "fusion_qps": 18.55115883588829,
+      "total_median_ms": 26.7086195,
+      "total_p95_ms": 28.317757999999998
     },
     {
-      "search_median_ms": 18.760101499999998,
-      "search_p95_ms": 18.835449,
-      "search_qps": 53.31964204361652,
-      "fusion_median_ms": 8.639691500000001,
-      "fusion_p95_ms": 8.840878,
-      "fusion_qps": 115.8037810219381,
-      "total_median_ms": 27.4060895,
-      "total_p95_ms": 27.658435
+      "search_median_ms": 18.689403,
+      "search_p95_ms": 18.896928,
+      "search_qps": 53.38550061953713,
+      "fusion_median_ms": 7.7345120000000005,
+      "fusion_p95_ms": 8.484415,
+      "fusion_qps": 129.06723545186193,
+      "total_median_ms": 26.439374,
+      "total_p95_ms": 27.645868
     },
     {
-      "search_median_ms": 18.619279,
-      "search_p95_ms": 18.701875,
-      "search_qps": 53.782923116887595,
-      "fusion_median_ms": 8.619582000000001,
-      "fusion_p95_ms": 8.815979,
-      "fusion_qps": 127.01848052333932,
-      "total_median_ms": 27.2475245,
-      "total_p95_ms": 27.469262
+      "search_median_ms": 18.7322395,
+      "search_p95_ms": 18.961308,
+      "search_qps": 53.24290028140348,
+      "fusion_median_ms": 7.501564500000001,
+      "fusion_p95_ms": 9.018455,
+      "fusion_qps": 128.6333444860587,
+      "total_median_ms": 26.2618795,
+      "total_p95_ms": 28.421999
+    }
+  ],
+  "memory_trace": [
+    {
+      "phase": "start",
+      "samples": 1,
+      "rss_mib_max": 8829.0,
+      "vmhwm_mib_max": 15017.4,
+      "cuda_allocated_mib_max": 0.0,
+      "cuda_reserved_mib_max": 0.0,
+      "gpu_used_mib_max": [
+        4265,
+        24
+      ],
+      "own_gpu_used_mib_max": []
+    },
+    {
+      "phase": "build_e5",
+      "samples": 37,
+      "rss_mib_max": 21410.1,
+      "vmhwm_mib_max": 22113.4,
+      "cuda_allocated_mib_max": 0.0,
+      "cuda_reserved_mib_max": 0.0,
+      "gpu_used_mib_max": [
+        7976,
+        3735
+      ],
+      "own_gpu_used_mib_max": [
+        3708,
+        3708
+      ]
+    },
+    {
+      "phase": "build_e5_gpu",
+      "samples": 1,
+      "rss_mib_max": 17337.4,
+      "vmhwm_mib_max": 22113.4,
+      "cuda_allocated_mib_max": 0.0,
+      "cuda_reserved_mib_max": 0.0,
+      "gpu_used_mib_max": [
+        7976,
+        3735
+      ],
+      "own_gpu_used_mib_max": [
+        3708,
+        3708
+      ]
+    },
+    {
+      "phase": "build_bge",
+      "samples": 37,
+      "rss_mib_max": 22158.7,
+      "vmhwm_mib_max": 22806.2,
+      "cuda_allocated_mib_max": 0.0,
+      "cuda_reserved_mib_max": 0.0,
+      "gpu_used_mib_max": [
+        11480,
+        7235
+      ],
+      "own_gpu_used_mib_max": [
+        7210,
+        7206
+      ]
+    },
+    {
+      "phase": "build_bge_gpu",
+      "samples": 2,
+      "rss_mib_max": 17849.5,
+      "vmhwm_mib_max": 22806.2,
+      "cuda_allocated_mib_max": 0.0,
+      "cuda_reserved_mib_max": 0.0,
+      "gpu_used_mib_max": [
+        11480,
+        7239
+      ],
+      "own_gpu_used_mib_max": [
+        7210,
+        7210
+      ]
+    },
+    {
+      "phase": "build_jina",
+      "samples": 37,
+      "rss_mib_max": 22514.5,
+      "vmhwm_mib_max": 23318.2,
+      "cuda_allocated_mib_max": 0.0,
+      "cuda_reserved_mib_max": 0.0,
+      "gpu_used_mib_max": [
+        14984,
+        10743
+      ],
+      "own_gpu_used_mib_max": [
+        10714,
+        10714
+      ]
+    },
+    {
+      "phase": "build_jina_gpu",
+      "samples": 1,
+      "rss_mib_max": 18361.5,
+      "vmhwm_mib_max": 23318.2,
+      "cuda_allocated_mib_max": 0.0,
+      "cuda_reserved_mib_max": 0.0,
+      "gpu_used_mib_max": [
+        14984,
+        10743
+      ],
+      "own_gpu_used_mib_max": [
+        10714,
+        10714
+      ]
+    },
+    {
+      "phase": "search_fusion",
+      "samples": 16,
+      "rss_mib_max": 10713.0,
+      "vmhwm_mib_max": 23318.2,
+      "cuda_allocated_mib_max": 0.0,
+      "cuda_reserved_mib_max": 0.0,
+      "gpu_used_mib_max": [
+        14986,
+        10745
+      ],
+      "own_gpu_used_mib_max": [
+        10716,
+        10716
+      ]
     }
   ]
 }
