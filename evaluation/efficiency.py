@@ -838,15 +838,42 @@ def _read_raw(system: str, rep: int) -> dict[str, float]:
         }
 
 
-def _bootstrap_ratio(
-    lat_system: list[float], lat_fusion: list[float], rng: random.Random, n_boot: int = 10_000
+def _p95(values: list[float]) -> float:
+    if not values:
+        raise ValueError("empty values")
+    return sorted(values)[max(0, math.ceil(0.95 * len(values)) - 1)]
+
+
+def _median(values: list[float]) -> float:
+    return statistics.median(values)
+
+
+def _paired_scores(system: str, fusion_system: str, reps: list[int]) -> tuple[list[tuple[list[float], list[float]]], list[int]]:
+    pairs = []
+    used_reps = []
+    for rep in reps:
+        lat_system = _read_raw(system, rep)
+        lat_fusion = _read_raw(fusion_system, rep)
+        common = sorted(set(lat_system) & set(lat_fusion))
+        if not common:
+            continue
+        pairs.append(([lat_system[qid] for qid in common], [lat_fusion[qid] for qid in common]))
+        used_reps.append(rep)
+    return pairs, used_reps
+
+
+def _bootstrap_median_ratio(
+    pairs: list[tuple[list[float], list[float]]], rng: random.Random, n_boot: int = 10_000
 ) -> tuple[float, float, float]:
     ratios = []
     for _ in range(n_boot):
-        indices = [rng.randrange(len(lat_system)) for _ in range(len(lat_system))]
-        sample_system = [lat_system[index] for index in indices]
-        sample_fusion = [lat_fusion[index] for index in indices]
-        ratios.append(statistics.median(sample_system) / statistics.median(sample_fusion))
+        rep_ratios = []
+        for lat_system, lat_fusion in pairs:
+            indices = [rng.randrange(len(lat_system)) for _ in range(len(lat_system))]
+            sample_system = [lat_system[index] for index in indices]
+            sample_fusion = [lat_fusion[index] for index in indices]
+            rep_ratios.append(statistics.median(sample_system) / statistics.median(sample_fusion))
+        ratios.append(statistics.median(rep_ratios))
     ratios.sort()
     return (
         statistics.median(ratios),
@@ -855,57 +882,123 @@ def _bootstrap_ratio(
     )
 
 
+SUMMARY_FIELDS = [
+    "system",
+    "label",
+    "n_reps",
+    "median_ms",
+    "p95_ms",
+    "latency_ratio",
+    "p95_ratio",
+    "latency_ratio_ci_low",
+    "latency_ratio_ci_high",
+    "batch_1_qps",
+    "batch_1_docs_per_s",
+    "batch_32_qps",
+    "batch_32_docs_per_s",
+    "throughput_ratio_b1",
+    "throughput_ratio_b32",
+    "peak_rss_mib",
+    "peak_vram_allocated_mib",
+    "peak_vram_reserved_mib",
+]
+
+
 def aggregate(args: argparse.Namespace) -> None:
-    metas = _read_meta()
+    metas = {(system, rep): meta for (system, rep), meta in _read_meta().items() if rep >= 1}
     systems = [system for system in SYSTEMS if any(key[0] == system for key in metas)]
+    fusion_reps = sorted(rep for (name, rep) in metas if name == "fusion")
+    if not fusion_reps:
+        raise SystemExit("No fusion metadata; cannot compute ratios")
+
     summary: list[dict] = []
     rng = random.Random(args.seed)
     for system in systems:
         reps = sorted(rep for (name, rep) in metas if name == system)
         if not reps:
             continue
-        meta = metas[(system, reps[-1])]
-        summary_row = {
-            "system": system,
-            "label": LABELS[system],
-            "n": meta["n"],
-            "median_ms": meta["median_ms"],
-            "p95_ms": meta["p95_ms"],
-            "batch_size": meta["batch_size"],
-            "batch_qps": meta["batch_qps"],
-            "batch_docs_per_s": meta["batch_docs_per_s"],
-            "peak_rss_mib": meta["peak_rss_mib"],
-            "peak_vram_allocated_mib": meta["peak_vram_allocated_mib"],
-        }
+        pairs, used_reps = _paired_scores(system, "fusion", reps)
+        if not used_reps:
+            log.warning("No paired raw data for %s; skipping ratios", system)
+            continue
+
+        system_raw = [_read_raw(system, rep) for rep in used_reps]
+        medians_per_rep = [statistics.median(list(values.values())) for values in system_raw if values]
+        p95_per_rep = [_p95(list(values.values())) for values in system_raw if values]
+        latency_ratio = 1.0
+        p95_ratio = 1.0
+        low = high = 1.0
         if system != "fusion":
-            fusion_rep = reps[0]
-            lat_system = _read_raw(system, fusion_rep)
-            lat_fusion = _read_raw("fusion", fusion_rep)
-            paired = sorted(set(lat_system) & set(lat_fusion))
-            if paired:
-                ratio, low, high = _bootstrap_ratio(
-                    [lat_system[qid] for qid in paired],
-                    [lat_fusion[qid] for qid in paired],
-                    rng,
-                )
-                summary_row.update(
-                    {
-                        "latency_ratio": ratio,
-                        "latency_ratio_ci_low": low,
-                        "latency_ratio_ci_high": high,
-                    }
-                )
-        summary.append(summary_row)
+            rep_median_ratios = []
+            rep_p95_ratios = []
+            for lat_system, lat_fusion in pairs:
+                rep_median_ratios.append(statistics.median(lat_system) / statistics.median(lat_fusion))
+                rep_p95_ratios.append(_p95(lat_system) / _p95(lat_fusion))
+            latency_ratio = statistics.median(rep_median_ratios)
+            p95_ratio = statistics.median(rep_p95_ratios)
+            _, low, high = _bootstrap_median_ratio(pairs, rng)
+
+        fusion_meta = [metas[("fusion", rep)] for rep in used_reps]
+        system_meta = [metas[(system, rep)] for rep in used_reps]
+        qps_b1 = [meta["batch_1_qps"] for meta in system_meta]
+        qps_b32 = [meta["batch_32_qps"] for meta in system_meta]
+        fusion_qps_b1 = [meta["batch_1_qps"] for meta in fusion_meta]
+        fusion_qps_b32 = [meta["batch_32_qps"] for meta in fusion_meta]
+        throughput_b1 = 1.0 if system == "fusion" else statistics.median(
+            [a / b for a, b in zip(qps_b1, fusion_qps_b1)]
+        )
+        throughput_b32 = 1.0 if system == "fusion" else statistics.median(
+            [a / b for a, b in zip(qps_b32, fusion_qps_b32)]
+        )
+
+        summary.append(
+            {
+                "system": system,
+                "label": LABELS[system],
+                "n_reps": len(used_reps),
+                "median_ms": statistics.median(medians_per_rep),
+                "p95_ms": statistics.median(p95_per_rep),
+                "latency_ratio": latency_ratio,
+                "p95_ratio": p95_ratio,
+                "latency_ratio_ci_low": low,
+                "latency_ratio_ci_high": high,
+                "batch_1_qps": statistics.median(qps_b1),
+                "batch_1_docs_per_s": statistics.median([meta["batch_1_docs_per_s"] for meta in system_meta])
+                if system != "fusion"
+                else None,
+                "batch_32_qps": statistics.median(qps_b32),
+                "batch_32_docs_per_s": statistics.median([meta["batch_32_docs_per_s"] for meta in system_meta])
+                if system != "fusion"
+                else None,
+                "throughput_ratio_b1": throughput_b1,
+                "throughput_ratio_b32": throughput_b32,
+                "peak_rss_mib": max(meta["peak_rss_mib"] for meta in system_meta),
+                "peak_vram_allocated_mib": max(meta["peak_vram_allocated_mib"] for meta in system_meta),
+                "peak_vram_reserved_mib": max(meta["peak_vram_reserved_mib"] for meta in system_meta),
+            }
+        )
+
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     summary_path = OUT_DIR / "summary.csv"
-    if summary:
-        with summary_path.open("w", newline="", encoding="utf-8") as handle:
-            writer = csv.DictWriter(handle, fieldnames=list(summary[0]))
-            writer.writeheader()
-            writer.writerows(summary)
+    with summary_path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=SUMMARY_FIELDS)
+        writer.writeheader()
+        writer.writerows(summary)
     with (OUT_DIR / "summary.json").open("w", encoding="utf-8") as handle:
         json.dump(summary, handle, indent=2, ensure_ascii=False)
-    log.info("Wrote %s and summary.json", summary_path)
+
+    lines = [
+        "| Sistema | Reps | Mediana (ms) | P95 (ms) | Razón mediana | IC 95 % | Razón P95 | Throughput b1 | Throughput b32 | RSS pico (MiB) | VRAM pico (MiB) |",
+        "| --- | ---: | ---: | ---: | ---: | --- | ---: | ---: | ---: | ---: | ---: |",
+    ]
+    for row in summary:
+        lines.append(
+            "| {label} | {n_reps} | {median_ms:.3f} | {p95_ms:.3f} | {latency_ratio:.3f} | "
+            "[{latency_ratio_ci_low:.3f}, {latency_ratio_ci_high:.3f}] | {p95_ratio:.3f} | "
+            "{throughput_ratio_b1:.3f} | {throughput_ratio_b32:.3f} | {peak_rss_mib:.0f} | {peak_vram_allocated_mib:.0f} |".format(**row)
+        )
+    (OUT_DIR / "summary.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    log.info("Wrote %s, summary.json and summary.md", summary_path)
 
 
 # ---------------------------------------------------------------------------
