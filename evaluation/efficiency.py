@@ -53,6 +53,7 @@ OUT_DIR = REPO_ROOT / "results" / "efficiency"
 RAW_DIR = OUT_DIR / "raw"
 META_DIR = OUT_DIR / "metadata"
 QUERIES_PATH = OUT_DIR / "queries.csv"
+DOC_LOOKUP_PATH = CACHE_DIR / "efficiency" / "doc_lookup.json"
 
 N_MEASURE = 500
 N_WARMUP = 50
@@ -570,8 +571,47 @@ def _patch_pylate_dense() -> None:
 
 
 # ---------------------------------------------------------------------------
-# Worker
+# Document-text cache
 # ---------------------------------------------------------------------------
+def _load_doc_cache() -> dict[str, str]:
+    if not DOC_LOOKUP_PATH.exists():
+        return {}
+    with DOC_LOOKUP_PATH.open(encoding="utf-8") as handle:
+        return json.load(handle)
+
+
+def prepare_doc_lookup(query_ids: list[str]) -> None:
+    """Build the candidate-document text cache once, outside every worker.
+
+    Loading the 14M-document eswiki corpus in each worker is wasteful: each
+    reranker worker only needs the documents that appear in the 550 sample
+    queries.  The cache lives in the HuggingFace cache directory, not in git.
+    """
+    cache = _load_doc_cache()
+    jina_run = _load_subset(_jina_run_path(), query_ids)
+    needed = {doc_id for query_id in query_ids for doc_id in _top_docs(jina_run, query_id)}
+    del jina_run
+    gc.collect()
+    if needed and needed <= set(cache):
+        log.info("Document cache already covers %d candidates", len(needed))
+        return
+
+    doc_ids, doc_texts, _ = data.load_corpus(1)
+    lookup = {
+        doc_id: text
+        for doc_id, text in zip(doc_ids, doc_texts)
+        if doc_id in needed
+    }
+    del doc_ids, doc_texts
+    gc.collect()
+    DOC_LOOKUP_PATH.parent.mkdir(parents=True, exist_ok=True)
+    tmp = DOC_LOOKUP_PATH.with_suffix(".tmp")
+    with tmp.open("w", encoding="utf-8") as handle:
+        json.dump(lookup, handle, ensure_ascii=False)
+    os.replace(tmp, DOC_LOOKUP_PATH)
+    log.info("Wrote document cache %s (%d/%d candidates)", DOC_LOOKUP_PATH, len(lookup), len(needed))
+
+
 def _load_inputs(system: str, query_ids: list[str]) -> tuple[dict[str, str], dict[str, list[str]], dict[str, str]]:
     query_map_all = _load_query_map()
     query_map = {query_id: query_map_all[query_id] for query_id in query_ids}
@@ -587,15 +627,14 @@ def _load_inputs(system: str, query_ids: list[str]) -> tuple[dict[str, str], dic
     gc.collect()
 
     needed = {doc_id for docs in candidates.values() for doc_id in docs}
-    doc_ids, doc_texts, _ = data.load_corpus(1)
-    doc_lookup = {
-        doc_id: text
-        for doc_id, text in zip(doc_ids, doc_texts)
-        if doc_id in needed
-    }
-    del doc_ids, doc_texts
-    gc.collect()
-    log.info("Document lookup: %d/%d candidates", len(doc_lookup), len(needed))
+    cache = _load_doc_cache()
+    missing = needed - set(cache)
+    if missing:
+        raise SystemExit(
+            f"Document cache is missing {len(missing)} candidates; run --mode pilot or --mode run first"
+        )
+    doc_lookup = {doc_id: cache[doc_id] for doc_id in needed}
+    log.info("Document lookup: %d candidates from cache", len(doc_lookup))
     return query_map, candidates, doc_lookup
 
 
@@ -719,6 +758,9 @@ def worker(args: argparse.Namespace) -> None:
 # ---------------------------------------------------------------------------
 def pilot(args: argparse.Namespace) -> None:
     ensure_queries(args.seed)
+    if any(system != "fusion" for system in args.systems):
+        warmup, measure = _read_queries()
+        prepare_doc_lookup([row["query_id"] for row in warmup + measure])
     for system in args.systems:
         cmd = [
             sys.executable,
@@ -745,6 +787,9 @@ def pilot(args: argparse.Namespace) -> None:
 
 def run(args: argparse.Namespace) -> None:
     ensure_queries(args.seed)
+    if any(system != "fusion" for system in args.systems):
+        warmup, measure = _read_queries()
+        prepare_doc_lookup([row["query_id"] for row in warmup + measure])
     for rep in range(1, args.reps + 1):
         order = list(args.systems)
         random.Random(args.seed + rep).shuffle(order)
