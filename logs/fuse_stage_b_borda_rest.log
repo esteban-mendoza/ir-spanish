@@ -1,0 +1,94 @@
+18:02:44 | INFO | Loading faiss with AVX512 support.
+18:02:44 | INFO | Successfully loaded faiss with AVX512 support.
+18:02:44 | INFO | Models (native lengths): bm25[512/512], splade-v3[512/512], qwen3-0.6b[32768/32768], e5-large[512/512], bge-m3[8192/8192], jina-v5-small[32768/32768]
+18:02:44 | INFO | Strategies: bordafuse
+18:02:44 | INFO | Normalization: min-max
+18:02:44 | INFO | Combination sizes: 2..6
+18:02:44 | INFO | Loading run for bm25 from /home/jmendoza/.cache/messirve_embeddings/bm25_pyserini/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+18:03:11 | INFO | Loading run for splade-v3 from /home/jmendoza/.cache/messirve_embeddings/naver__splade-v3/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+18:03:36 | INFO | Loading run for qwen3-0.6b from /home/jmendoza/.cache/messirve_embeddings/Qwen__Qwen3-Embedding-0.6B/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+18:04:00 | INFO | Loading run for e5-large from /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+18:04:23 | INFO | Loading run for bge-m3 from /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-m3/full_v1.2_q8192_d8192_nofilter/retrieval_run.lz4
+18:04:45 | INFO | Loading run for jina-v5-small from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+18:05:09 | INFO | ⏱  START: Loading cached pruned qrels
+18:05:09 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+18:05:14 | INFO | Total (combination, strategy) pairs: 5
+18:05:14 | INFO | [1/5] fusing bm25+splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (bordafuse, -)
+19:01:19 | INFO | Loading faiss with AVX512 support.
+19:01:19 | INFO | Successfully loaded faiss with AVX512 support.
+19:01:19 | INFO | Models (native lengths): bm25[512/512], splade-v3[512/512], qwen3-0.6b[32768/32768], e5-large[512/512], bge-m3[8192/8192], jina-v5-small[32768/32768]
+19:01:19 | INFO | Strategies: bordafuse
+19:01:19 | INFO | Normalization: min-max
+19:01:19 | INFO | Combination sizes: 2..6
+19:01:19 | INFO | Loading run for bm25 from /home/jmendoza/.cache/messirve_embeddings/bm25_pyserini/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+19:01:46 | INFO | Loading run for splade-v3 from /home/jmendoza/.cache/messirve_embeddings/naver__splade-v3/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+19:02:11 | INFO | Loading run for qwen3-0.6b from /home/jmendoza/.cache/messirve_embeddings/Qwen__Qwen3-Embedding-0.6B/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+19:02:34 | INFO | Loading run for e5-large from /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+19:02:57 | INFO | Loading run for bge-m3 from /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-m3/full_v1.2_q8192_d8192_nofilter/retrieval_run.lz4
+19:03:20 | INFO | Loading run for jina-v5-small from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+19:03:44 | INFO | ⏱  START: Loading cached pruned qrels
+19:03:44 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.3s)
+19:03:48 | INFO | Total (combination, strategy) pairs: 5
+19:03:48 | INFO | [1/5] fusing bm25+splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (bordafuse, -)
+20:45:31 | INFO | Loading faiss with AVX512 support.
+20:45:31 | INFO | Successfully loaded faiss with AVX512 support.
+20:45:31 | INFO | Models (native lengths): bm25[512/512], splade-v3[512/512], qwen3-0.6b[32768/32768], e5-large[512/512], bge-m3[8192/8192], jina-v5-small[32768/32768]
+20:45:31 | INFO | Strategies: bordafuse
+20:45:31 | INFO | Normalization: min-max
+20:45:31 | INFO | Combination sizes: 2..6
+20:45:31 | INFO | Loading run for bm25 from /home/jmendoza/.cache/messirve_embeddings/bm25_pyserini/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+20:45:58 | INFO | Loading run for splade-v3 from /home/jmendoza/.cache/messirve_embeddings/naver__splade-v3/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+20:46:23 | INFO | Loading run for qwen3-0.6b from /home/jmendoza/.cache/messirve_embeddings/Qwen__Qwen3-Embedding-0.6B/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+20:46:46 | INFO | Loading run for e5-large from /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+20:47:09 | INFO | Loading run for bge-m3 from /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-m3/full_v1.2_q8192_d8192_nofilter/retrieval_run.lz4
+20:47:32 | INFO | Loading run for jina-v5-small from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+20:47:56 | INFO | ⏱  START: Loading cached pruned qrels
+20:47:56 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.3s)
+20:48:01 | INFO | Total (combination, strategy) pairs: 1
+20:48:01 | INFO | [1/1] fusing splade-v3+jina-v5-small (bordafuse, -)
+20:54:35 | INFO |   splade-v3+jina-v5-small (bordafuse)                           ndcg@10=0.3858  recall@100=0.8904  mrr@10=0.3204  map=0.3318  p@10=0.0613  p@50=0.0173
+20:54:35 | INFO | [1/1] done splade-v3+jina-v5-small (bordafuse): nDCG@10=0.3858 Recall@100=0.8904 (394.1s)
+20:54:35 | INFO | CSV: results/fuse_stage_b/results.csv
+20:54:35 | INFO | Markdown: results/fuse_stage_b/results.md
+20:55:38 | INFO | Loading faiss with AVX512 support.
+20:55:38 | INFO | Successfully loaded faiss with AVX512 support.
+20:55:38 | INFO | Models (native lengths): bm25[512/512], splade-v3[512/512], qwen3-0.6b[32768/32768], e5-large[512/512], bge-m3[8192/8192], jina-v5-small[32768/32768]
+20:55:38 | INFO | Strategies: bordafuse
+20:55:38 | INFO | Normalization: min-max
+20:55:38 | INFO | Combination sizes: 2..6
+20:55:38 | INFO | Loading run for bm25 from /home/jmendoza/.cache/messirve_embeddings/bm25_pyserini/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+20:56:05 | INFO | Loading run for splade-v3 from /home/jmendoza/.cache/messirve_embeddings/naver__splade-v3/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+20:56:30 | INFO | Loading run for qwen3-0.6b from /home/jmendoza/.cache/messirve_embeddings/Qwen__Qwen3-Embedding-0.6B/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+20:56:53 | INFO | Loading run for e5-large from /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+20:57:17 | INFO | Loading run for bge-m3 from /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-m3/full_v1.2_q8192_d8192_nofilter/retrieval_run.lz4
+20:57:40 | INFO | Loading run for jina-v5-small from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+20:58:04 | INFO | ⏱  START: Loading cached pruned qrels
+20:58:04 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+20:58:08 | INFO | Total (combination, strategy) pairs: 1
+20:58:08 | INFO | [1/1] fusing splade-v3+e5-large+jina-v5-small (bordafuse, -)
+21:08:59 | INFO |   splade-v3+e5-large+jina-v5-small (bordafuse)                  ndcg@10=0.4658  recall@100=0.9119  mrr@10=0.3941  map=0.4023  p@10=0.0715  p@50=0.0180
+21:08:59 | INFO | [1/1] done splade-v3+e5-large+jina-v5-small (bordafuse): nDCG@10=0.4658 Recall@100=0.9119 (651.2s)
+21:08:59 | INFO | CSV: results/fuse_stage_b/results.csv
+21:08:59 | INFO | Markdown: results/fuse_stage_b/results.md
+EXIT=0
+21:09:51 | INFO | Loading faiss with AVX512 support.
+21:09:51 | INFO | Successfully loaded faiss with AVX512 support.
+21:09:51 | INFO | Models (native lengths): bm25[512/512], splade-v3[512/512], qwen3-0.6b[32768/32768], e5-large[512/512], bge-m3[8192/8192], jina-v5-small[32768/32768]
+21:09:51 | INFO | Strategies: bordafuse
+21:09:51 | INFO | Normalization: min-max
+21:09:51 | INFO | Combination sizes: 2..6
+21:09:51 | INFO | Loading run for bm25 from /home/jmendoza/.cache/messirve_embeddings/bm25_pyserini/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+21:10:18 | INFO | Loading run for splade-v3 from /home/jmendoza/.cache/messirve_embeddings/naver__splade-v3/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+21:10:43 | INFO | Loading run for qwen3-0.6b from /home/jmendoza/.cache/messirve_embeddings/Qwen__Qwen3-Embedding-0.6B/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+21:11:06 | INFO | Loading run for e5-large from /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+21:11:29 | INFO | Loading run for bge-m3 from /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-m3/full_v1.2_q8192_d8192_nofilter/retrieval_run.lz4
+21:11:52 | INFO | Loading run for jina-v5-small from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+21:12:16 | INFO | ⏱  START: Loading cached pruned qrels
+21:12:16 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+21:12:21 | INFO | Total (combination, strategy) pairs: 1
+21:12:21 | INFO | [1/1] fusing qwen3-0.6b+e5-large+bge-m3+jina-v5-small (bordafuse, -)
+21:26:27 | INFO |   qwen3-0.6b+e5-large+bge-m3+jina-v5-small (bordafuse)          ndcg@10=0.5363  recall@100=0.9228  mrr@10=0.4725  map=0.4782  p@10=0.0759  p@50=0.0182
+21:26:27 | INFO | [1/1] done qwen3-0.6b+e5-large+bge-m3+jina-v5-small (bordafuse): nDCG@10=0.5363 Recall@100=0.9228 (846.5s)
+21:26:27 | INFO | CSV: results/fuse_stage_b/results.csv
+21:26:27 | INFO | Markdown: results/fuse_stage_b/results.md
+EXIT=0

@@ -1,0 +1,20 @@
+17:15:44 | INFO | Loading faiss with AVX512 support.
+17:15:44 | INFO | Successfully loaded faiss with AVX512 support.
+17:15:44 | INFO | Models (native lengths): bm25[512/512], splade-v3[512/512], qwen3-0.6b[32768/32768], e5-large[512/512], bge-m3[8192/8192], jina-v5-small[32768/32768]
+17:15:44 | INFO | Strategies: bordafuse
+17:15:44 | INFO | Normalization: min-max
+17:15:44 | INFO | Combination sizes: 2..6
+17:15:44 | INFO | Loading run for bm25 from /home/jmendoza/.cache/messirve_embeddings/bm25_pyserini/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+17:16:11 | INFO | Loading run for splade-v3 from /home/jmendoza/.cache/messirve_embeddings/naver__splade-v3/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+17:16:36 | INFO | Loading run for qwen3-0.6b from /home/jmendoza/.cache/messirve_embeddings/Qwen__Qwen3-Embedding-0.6B/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+17:17:00 | INFO | Loading run for e5-large from /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+17:17:23 | INFO | Loading run for bge-m3 from /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-m3/full_v1.2_q8192_d8192_nofilter/retrieval_run.lz4
+17:17:46 | INFO | Loading run for jina-v5-small from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+17:18:10 | INFO | ⏱  START: Loading cached pruned qrels
+17:18:10 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.3s)
+17:18:14 | INFO | Total (combination, strategy) pairs: 1
+17:18:14 | INFO | [1/1] fusing e5-large+bge-m3+jina-v5-small (bordafuse, -)
+17:28:09 | INFO |   e5-large+bge-m3+jina-v5-small (bordafuse)                     ndcg@10=0.5414  recall@100=0.9234  mrr@10=0.4776  map=0.4831  p@10=0.0764  p@50=0.0183
+17:32:22 | INFO | [1/1] done e5-large+bge-m3+jina-v5-small (bordafuse): nDCG@10=0.5414 Recall@100=0.9234 (595.0s)
+17:32:22 | INFO | CSV: results/fuse_stage_b/results.csv
+17:32:22 | INFO | Markdown: results/fuse_stage_b/results.md

@@ -1,0 +1,106 @@
+12:37:23 | INFO | Loading faiss with AVX512 support.
+12:37:23 | INFO | Successfully loaded faiss with AVX512 support.
+12:37:23 | INFO | Models (native lengths): bm25[512/512], splade-v3[512/512], qwen3-0.6b[32768/32768], e5-large[512/512], bge-m3[8192/8192], jina-v5-small[32768/32768]
+12:37:23 | INFO | Strategies: combmnz, rrf, isr, rbc, bordafuse
+12:37:23 | INFO | Normalization: min-max
+12:37:23 | INFO | Combination sizes: 2..6
+12:37:23 | INFO | Loading run for bm25 from /home/jmendoza/.cache/messirve_embeddings/bm25_pyserini/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+12:38:18 | INFO | Loading run for splade-v3 from /home/jmendoza/.cache/messirve_embeddings/naver__splade-v3/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+12:39:07 | INFO | Loading run for qwen3-0.6b from /home/jmendoza/.cache/messirve_embeddings/Qwen__Qwen3-Embedding-0.6B/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+12:39:54 | INFO | Loading run for e5-large from /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+12:40:42 | INFO | Loading run for bge-m3 from /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-m3/full_v1.2_q8192_d8192_nofilter/retrieval_run.lz4
+12:41:28 | INFO | Loading run for jina-v5-small from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+12:42:16 | INFO | ⏱  START: Loading cached pruned qrels
+12:42:17 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.5s)
+12:42:26 | INFO | Total (combination, strategy) pairs: 30
+12:42:26 | INFO | [1/30] fusing bm25+splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (mnz, -)
+12:48:07 | INFO |   bm25+splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (mnz)  ndcg@10=0.5277  recall@100=0.9256  mrr@10=0.4600  map=0.4660  p@10=0.0763  p@50=0.0184
+12:48:07 | INFO | [1/30] done bm25+splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (combmnz): nDCG@10=0.5277 Recall@100=0.9256 (340.8s)
+12:48:07 | INFO | [2/30] fusing splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (mnz, -)
+12:53:07 | INFO |   splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (mnz)      ndcg@10=0.5400  recall@100=0.9225  mrr@10=0.4742  map=0.4796  p@10=0.0770  p@50=0.0183
+12:53:07 | INFO | [2/30] done splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (combmnz): nDCG@10=0.5400 Recall@100=0.9225 (300.3s)
+12:53:07 | INFO | [3/30] fusing qwen3-0.6b+e5-large+bge-m3+jina-v5-small (mnz, -)
+12:57:03 | INFO |   qwen3-0.6b+e5-large+bge-m3+jina-v5-small (mnz)                ndcg@10=0.5482  recall@100=0.9228  mrr@10=0.4843  map=0.4895  p@10=0.0772  p@50=0.0183
+12:57:03 | INFO | [3/30] done qwen3-0.6b+e5-large+bge-m3+jina-v5-small (combmnz): nDCG@10=0.5482 Recall@100=0.9228 (235.8s)
+12:57:03 | INFO | [4/30] fusing splade-v3+e5-large+jina-v5-small (mnz, -)
+13:00:09 | INFO |   splade-v3+e5-large+jina-v5-small (mnz)                        ndcg@10=0.5137  recall@100=0.9112  mrr@10=0.4465  map=0.4524  p@10=0.0748  p@50=0.0180
+13:00:09 | INFO | [4/30] done splade-v3+e5-large+jina-v5-small (combmnz): nDCG@10=0.5137 Recall@100=0.9112 (186.4s)
+13:00:09 | INFO | [5/30] fusing e5-large+bge-m3+jina-v5-small (mnz, -)
+14:21:39 | INFO | Loading faiss with AVX512 support.
+14:21:40 | INFO | Successfully loaded faiss with AVX512 support.
+14:21:40 | INFO | Models (native lengths): bm25[512/512], splade-v3[512/512], qwen3-0.6b[32768/32768], e5-large[512/512], bge-m3[8192/8192], jina-v5-small[32768/32768]
+14:21:40 | INFO | Strategies: combmnz, rrf, isr, rbc, bordafuse
+14:21:40 | INFO | Normalization: min-max
+14:21:40 | INFO | Combination sizes: 2..6
+14:21:40 | INFO | Loading run for bm25 from /home/jmendoza/.cache/messirve_embeddings/bm25_pyserini/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+14:22:07 | INFO | Loading run for splade-v3 from /home/jmendoza/.cache/messirve_embeddings/naver__splade-v3/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+14:22:31 | INFO | Loading run for qwen3-0.6b from /home/jmendoza/.cache/messirve_embeddings/Qwen__Qwen3-Embedding-0.6B/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+14:22:55 | INFO | Loading run for e5-large from /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+14:23:19 | INFO | Loading run for bge-m3 from /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-m3/full_v1.2_q8192_d8192_nofilter/retrieval_run.lz4
+14:23:42 | INFO | Loading run for jina-v5-small from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+14:24:06 | INFO | ⏱  START: Loading cached pruned qrels
+14:24:06 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+14:24:10 | INFO | Total (combination, strategy) pairs: 30
+14:24:10 | INFO | [1/30] skip bm25+splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (combmnz)
+14:24:10 | INFO | [2/30] skip splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (combmnz)
+14:24:10 | INFO | [3/30] skip qwen3-0.6b+e5-large+bge-m3+jina-v5-small (combmnz)
+14:24:10 | INFO | [4/30] skip splade-v3+e5-large+jina-v5-small (combmnz)
+14:24:10 | INFO | [5/30] skip e5-large+bge-m3+jina-v5-small (combmnz)
+14:24:10 | INFO | [6/30] fusing splade-v3+jina-v5-small (mnz, -)
+14:25:33 | INFO |   splade-v3+jina-v5-small (mnz)                                 ndcg@10=0.4326  recall@100=0.8909  mrr@10=0.3687  map=0.3777  p@10=0.0655  p@50=0.0173
+14:25:33 | INFO | [6/30] done splade-v3+jina-v5-small (combmnz): nDCG@10=0.4326 Recall@100=0.8909 (82.5s)
+14:25:33 | INFO | [7/30] fusing bm25+splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (rrf, k=60)
+14:30:34 | INFO |   bm25+splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (rrf, k=60)  ndcg@10=0.4985  recall@100=0.9270  mrr@10=0.4249  map=0.4317  p@10=0.0753  p@50=0.0184
+14:30:34 | INFO | [7/30] done bm25+splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (rrf): nDCG@10=0.4985 Recall@100=0.9270 (301.6s)
+14:30:34 | INFO | [8/30] fusing splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (rrf, k=60)
+14:34:38 | INFO |   splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (rrf, k=60)  ndcg@10=0.5182  recall@100=0.9238  mrr@10=0.4478  map=0.4536  p@10=0.0763  p@50=0.0183
+14:34:38 | INFO | [8/30] done splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (rrf): nDCG@10=0.5182 Recall@100=0.9238 (243.4s)
+14:34:38 | INFO | [9/30] fusing qwen3-0.6b+e5-large+bge-m3+jina-v5-small (rrf, k=60)
+14:37:36 | INFO |   qwen3-0.6b+e5-large+bge-m3+jina-v5-small (rrf, k=60)          ndcg@10=0.5412  recall@100=0.9229  mrr@10=0.4766  map=0.4820  p@10=0.0767  p@50=0.0183
+14:37:36 | INFO | [9/30] done qwen3-0.6b+e5-large+bge-m3+jina-v5-small (rrf): nDCG@10=0.5412 Recall@100=0.9229 (178.6s)
+14:37:36 | INFO | [10/30] fusing splade-v3+e5-large+jina-v5-small (rrf, k=60)
+14:40:01 | INFO |   splade-v3+e5-large+jina-v5-small (rrf, k=60)                  ndcg@10=0.4826  recall@100=0.9119  mrr@10=0.4106  map=0.4176  p@10=0.0733  p@50=0.0181
+14:40:01 | INFO | [10/30] done splade-v3+e5-large+jina-v5-small (rrf): nDCG@10=0.4826 Recall@100=0.9119 (144.8s)
+14:40:01 | INFO | [11/30] fusing e5-large+bge-m3+jina-v5-small (rrf, k=60)
+14:42:16 | INFO |   e5-large+bge-m3+jina-v5-small (rrf, k=60)                     ndcg@10=0.5450  recall@100=0.9234  mrr@10=0.4806  map=0.4859  p@10=0.0770  p@50=0.0183
+14:45:14 | INFO | [11/30] done e5-large+bge-m3+jina-v5-small (rrf): nDCG@10=0.5450 Recall@100=0.9234 (135.3s)
+14:45:14 | INFO | [12/30] fusing splade-v3+jina-v5-small (rrf, k=60)
+14:46:51 | INFO |   splade-v3+jina-v5-small (rrf, k=60)                           ndcg@10=0.3989  recall@100=0.8904  mrr@10=0.3339  map=0.3444  p@10=0.0626  p@50=0.0173
+14:46:51 | INFO | [12/30] done splade-v3+jina-v5-small (rrf): nDCG@10=0.3989 Recall@100=0.8904 (97.6s)
+14:46:51 | INFO | [13/30] fusing bm25+splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (isr, -)
+14:51:55 | INFO |   bm25+splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (isr)  ndcg@10=0.5234  recall@100=0.9211  mrr@10=0.4630  map=0.4693  p@10=0.0738  p@50=0.0181
+14:51:55 | INFO | [13/30] done bm25+splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (isr): nDCG@10=0.5234 Recall@100=0.9211 (303.8s)
+14:51:55 | INFO | [14/30] fusing splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (isr, -)
+14:56:14 | INFO |   splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (isr)      ndcg@10=0.5304  recall@100=0.9200  mrr@10=0.4687  map=0.4746  p@10=0.0748  p@50=0.0181
+14:56:14 | INFO | [14/30] done splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (isr): nDCG@10=0.5304 Recall@100=0.9200 (259.1s)
+14:56:14 | INFO | [15/30] fusing qwen3-0.6b+e5-large+bge-m3+jina-v5-small (isr, -)
+14:59:28 | INFO |   qwen3-0.6b+e5-large+bge-m3+jina-v5-small (isr)                ndcg@10=0.5364  recall@100=0.9222  mrr@10=0.4729  map=0.4785  p@10=0.0760  p@50=0.0182
+14:59:28 | INFO | [15/30] done qwen3-0.6b+e5-large+bge-m3+jina-v5-small (isr): nDCG@10=0.5364 Recall@100=0.9222 (193.9s)
+14:59:28 | INFO | [16/30] fusing splade-v3+e5-large+jina-v5-small (isr, -)
+15:02:00 | INFO |   splade-v3+e5-large+jina-v5-small (isr)                        ndcg@10=0.5059  recall@100=0.9110  mrr@10=0.4443  map=0.4507  p@10=0.0725  p@50=0.0179
+15:02:00 | INFO | [16/30] done splade-v3+e5-large+jina-v5-small (isr): nDCG@10=0.5059 Recall@100=0.9110 (152.4s)
+15:02:00 | INFO | [17/30] fusing e5-large+bge-m3+jina-v5-small (isr, -)
+15:04:25 | INFO |   e5-large+bge-m3+jina-v5-small (isr)                           ndcg@10=0.5382  recall@100=0.9230  mrr@10=0.4743  map=0.4798  p@10=0.0763  p@50=0.0183
+15:07:23 | INFO | [17/30] done e5-large+bge-m3+jina-v5-small (isr): nDCG@10=0.5382 Recall@100=0.9230 (144.5s)
+15:07:23 | INFO | [18/30] fusing splade-v3+jina-v5-small (isr, -)
+15:09:08 | INFO |   splade-v3+jina-v5-small (isr)                                 ndcg@10=0.4437  recall@100=0.8905  mrr@10=0.3764  map=0.3842  p@10=0.0678  p@50=0.0173
+15:09:08 | INFO | [18/30] done splade-v3+jina-v5-small (isr): nDCG@10=0.4437 Recall@100=0.8905 (105.5s)
+15:09:08 | INFO | [19/30] fusing bm25+splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (rbc, phi=0.95)
+15:14:02 | INFO |   bm25+splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (rbc, phi=0.95)  ndcg@10=0.5309  recall@100=0.9164  mrr@10=0.4609  map=0.4660  p@10=0.0773  p@50=0.0181
+15:14:02 | INFO | [19/30] done bm25+splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (rbc): nDCG@10=0.5309 Recall@100=0.9164 (293.3s)
+15:14:02 | INFO | [20/30] fusing splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (rbc, phi=0.95)
+15:18:04 | INFO |   splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (rbc, phi=0.95)  ndcg@10=0.5396  recall@100=0.9157  mrr@10=0.4720  map=0.4769  p@10=0.0774  p@50=0.0181
+15:18:04 | INFO | [20/30] done splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (rbc): nDCG@10=0.5396 Recall@100=0.9157 (242.1s)
+15:18:04 | INFO | [21/30] fusing qwen3-0.6b+e5-large+bge-m3+jina-v5-small (rbc, phi=0.95)
+15:21:06 | INFO |   qwen3-0.6b+e5-large+bge-m3+jina-v5-small (rbc, phi=0.95)      ndcg@10=0.5462  recall@100=0.9193  mrr@10=0.4810  map=0.4860  p@10=0.0774  p@50=0.0182
+15:21:06 | INFO | [21/30] done qwen3-0.6b+e5-large+bge-m3+jina-v5-small (rbc): nDCG@10=0.5462 Recall@100=0.9193 (182.4s)
+15:21:06 | INFO | [22/30] fusing splade-v3+e5-large+jina-v5-small (rbc, phi=0.95)
+15:23:31 | INFO |   splade-v3+e5-large+jina-v5-small (rbc, phi=0.95)              ndcg@10=0.5129  recall@100=0.9074  mrr@10=0.4428  map=0.4478  p@10=0.0755  p@50=0.0178
+15:23:31 | INFO | [22/30] done splade-v3+e5-large+jina-v5-small (rbc): nDCG@10=0.5129 Recall@100=0.9074 (145.0s)
+15:23:31 | INFO | [23/30] fusing e5-large+bge-m3+jina-v5-small (rbc, phi=0.95)
+15:25:49 | INFO |   e5-large+bge-m3+jina-v5-small (rbc, phi=0.95)                 ndcg@10=0.5485  recall@100=0.9206  mrr@10=0.4835  map=0.4884  p@10=0.0775  p@50=0.0182
+15:28:45 | INFO | [23/30] done e5-large+bge-m3+jina-v5-small (rbc): nDCG@10=0.5485 Recall@100=0.9206 (137.9s)
+15:28:45 | INFO | [24/30] fusing splade-v3+jina-v5-small (rbc, phi=0.95)
+15:30:28 | INFO |   splade-v3+jina-v5-small (rbc, phi=0.95)                       ndcg@10=0.4295  recall@100=0.8899  mrr@10=0.3588  map=0.3668  p@10=0.0675  p@50=0.0173
+15:30:28 | INFO | [24/30] done splade-v3+jina-v5-small (rbc): nDCG@10=0.4295 Recall@100=0.8899 (102.2s)
+15:30:28 | INFO | [25/30] fusing bm25+splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (bordafuse, -)

@@ -1,0 +1,1 @@
+/home/jmendoza/ir-spanish/run_b2_b3_after_b6.sh: línea 9: 1579681 Terminado (killed)      /home/jmendoza/miniconda3/envs/proyecto/bin/python -m rerankers.fuse_sweep --strategies bordafuse --combos "$combo" --no-save-runs --out-dir results/fuse_stage_b --runs-dir /home/jmendoza/.cache/messirve_embeddings/fusions_stage_b >> "$log" 2>&1

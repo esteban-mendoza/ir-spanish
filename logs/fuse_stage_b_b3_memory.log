@@ -1,0 +1,23 @@
+=== B3 start 2026-10-20T21:59:49-06:00 ===
+PID=1600599
+21:59:57 | INFO | Loading faiss with AVX512 support.
+21:59:57 | INFO | Successfully loaded faiss with AVX512 support.
+21:59:57 | INFO | Models (native lengths): bm25[512/512], splade-v3[512/512], qwen3-0.6b[32768/32768], e5-large[512/512], bge-m3[8192/8192], jina-v5-small[32768/32768]
+21:59:57 | INFO | Strategies: bordafuse
+21:59:57 | INFO | Normalization: min-max
+21:59:57 | INFO | Combination sizes: 2..6
+21:59:57 | INFO | Loading run for bm25 from /home/jmendoza/.cache/messirve_embeddings/bm25_pyserini/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+22:00:25 | INFO | Loading run for splade-v3 from /home/jmendoza/.cache/messirve_embeddings/naver__splade-v3/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+22:00:49 | INFO | Loading run for qwen3-0.6b from /home/jmendoza/.cache/messirve_embeddings/Qwen__Qwen3-Embedding-0.6B/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+22:01:13 | INFO | Loading run for e5-large from /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+22:01:36 | INFO | Loading run for bge-m3 from /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-m3/full_v1.2_q8192_d8192_nofilter/retrieval_run.lz4
+22:02:00 | INFO | Loading run for jina-v5-small from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+22:02:23 | INFO | ⏱  START: Loading cached pruned qrels
+22:02:23 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.3s)
+22:02:28 | INFO | Total (combination, strategy) pairs: 1
+22:02:28 | INFO | [1/1] fusing splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (bordafuse, -)
+22:23:28 | INFO |   splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (bordafuse)  ndcg@10=0.4962  recall@100=0.9237  mrr@10=0.4252  map=0.4322  p@10=0.0743  p@50=0.0183
+22:23:28 | INFO | [1/1] done splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small (bordafuse): nDCG@10=0.4962 Recall@100=0.9237 (1259.8s)
+22:23:28 | INFO | CSV: results/fuse_stage_b/results.csv
+22:23:28 | INFO | Markdown: results/fuse_stage_b/results.md
+EXIT=0
