@@ -191,7 +191,22 @@ RSS del proceso durante la construcción: 20.9–22.0 GiB con 2 M y 33.2–34.0 
 
 Archivos: `results/scaled_efficiency/memtrace_{2000000,4000000}.csv`, `scale_{2000000,4000000}.json`; log en `logs/scaled_efficiency.log`.
 
-Consecuencia: la fusión puede ser más barata **por consulta** y, a la vez, no ser desplegable en este servidor. El análisis completo está en `tesis/knowledge/indices-almacenamiento-fusion.md`; una variante comprimida (SQ8, IVF-PQ) requeriría reconstruir los índices y repetir la evaluación, no se puede extrapolar.
+### Comparación de cómputo de extremo a extremo (extrapolada a 14 M)
+
+Sumando los componentes medidos por separado y extrapolando la búsqueda con el ajuste lineal, el costo por consulta a 14 M en lote 1 sería:
+
+| Ruta | Codificación | Búsqueda | Segunda etapa | Total | Razón frente a F3 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| F3 (tres índices + fusión) | 57.5 ms | 125.7 ms | 8.2 ms | **191.4 ms** | 1.00 |
+| `bge-reranker-v2-m3` | 29.6 ms | 41.9 ms | 2 247.8 ms | 2 319.2 ms | 12.1× |
+| `jina-reranker-v3` | 29.6 ms | 41.9 ms | 793.5 ms | 864.9 ms | 4.5× |
+| `jina-colbert-v2` | 29.6 ms | 41.9 ms | 410.8 ms | 482.2 ms | 2.5× |
+
+La ventaja de la fusión baja a **2.5–12×** cuando se incluye la búsqueda, porque a 14 M la búsqueda en tres índices (125.7 ms) pesa más que la fusión misma (8.2 ms). Es una **extrapolación** de componentes medidos: la codificación es real a 14 M, el reranker es real, y la búsqueda viene del ajuste lineal de 2 M y 4 M. No hay corrida a 14 M con tres índices porque no caben.
+
+Con esto, la conclusión del experimento 3 queda en dos planos: la fusión es **2.5–12× más barata en cómputo** por consulta, y **no es desplegable** en este servidor con índices planos (44.7 GiB por GPU frente a 24). El reranker es más caro pero cabe.
+
+Una variante comprimida (SQ8, IVF-PQ) requeriría reconstruir los índices y repetir la evaluación; no se puede extrapolar.
 
 ## Límites de recursos de la etapa B
 

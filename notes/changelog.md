@@ -29,7 +29,7 @@ Protocolo obligatorio para todo agente:
 
 ## 2026-10-21 — Memoria de índices medida con trazas
 - **Cambios:** `evaluation/mem_trace.py` (muestreo a 1 Hz con capas torch, dispositivo y proceso propio) y `evaluation/scaled_efficiency.py`; `results/scaled_efficiency/memtrace_{2000000,4000000}.csv` y `scale_*.json` con 2 M y 4 M, tres índices, tres repeticiones.
-- **Resultados:** el incremento por índice y por GPU es 1 543 + 980·N_millones MiB; a 14 M son 44.7 GiB por GPU y 89.4 GiB en total. `torch.cuda.memory_reserved` marca 0: FAISS no es visible para PyTorch y la atribución se hace por PID con nvidia-smi.
+- **Resultados:** el incremento por índice y por GPU es 1 543 + 980·N_millones MiB; a 14 M son 44.7 GiB por GPU y 89.4 GiB en total. `torch.cuda.memory_reserved` marca 0: FAISS no es visible para PyTorch y la atribución se hace por PID con nvidia-smi. Sumando búsqueda y codificación, la fusión queda en ~191 ms por consulta frente a 482–2 319 ms de los rerankers: 2.5–12× más barata, no dos órdenes de magnitud.
 - **Decisión:** se reporta la medición por escalamiento, no una corrida a 14 M con tres índices residentes, porque no caben.
 
 ## 2026-10-21 — Limpieza de artefactos y Condorcet definitivo
