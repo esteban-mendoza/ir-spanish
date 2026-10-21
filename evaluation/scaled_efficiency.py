@@ -157,7 +157,7 @@ def search_and_fuse(indexes: list, doc_ids: list[str], qids: list[str], queries:
                 if idx >= 0
             }
             runs.append(Run({qid: local}, name=qid))
-        if not candidate_docs:
+        if qid not in candidate_docs:
             jina_scores, jina_indices = results[2]
             candidate_docs[qid] = [
                 doc_ids[int(idx)] for idx in jina_indices[0] if idx >= 0
@@ -251,6 +251,9 @@ def run_scale(n_docs: int, do_rerank: bool) -> None:
         (OUT_DIR / f"candidates_{n_docs}.json").write_text(
             json.dumps(candidate_docs, ensure_ascii=False), encoding="utf-8"
         )
+    (OUT_DIR / f"scale_{n_docs}.json").write_text(
+        json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
     if do_rerank:
         del indexes
         gc.collect()
