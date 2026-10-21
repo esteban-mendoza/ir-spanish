@@ -1,0 +1,16 @@
+{
+  "model": "bge",
+  "name": "BAAI/bge-m3",
+  "max_length": 8192,
+  "n": 500,
+  "load_seconds": 6.229541942477226,
+  "median_ms": 13.306071,
+  "p95_ms": 14.813059,
+  "batch_qps": {
+    "1": 73.93386687471775,
+    "32": 1700.6653768253561
+  },
+  "peak_rss_mib": 4076.671875,
+  "peak_vram_allocated_mib": 1111.185546875,
+  "peak_vram_reserved_mib": 1138.0
+}

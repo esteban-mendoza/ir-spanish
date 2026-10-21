@@ -1,0 +1,16 @@
+{
+  "model": "e5",
+  "name": "intfloat/multilingual-e5-large-instruct",
+  "max_length": 512,
+  "n": 500,
+  "load_seconds": 5.406126320362091,
+  "median_ms": 14.649438499999999,
+  "p95_ms": 15.965461,
+  "batch_qps": {
+    "1": 67.27304751102524,
+    "32": 1436.697104157974
+  },
+  "peak_rss_mib": 2358.42578125,
+  "peak_vram_allocated_mib": 1112.85205078125,
+  "peak_vram_reserved_mib": 1142.0
+}
