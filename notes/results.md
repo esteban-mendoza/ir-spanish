@@ -158,6 +158,20 @@ Es una **cota inferior** de la primera etapa: no incluye la búsqueda en los ín
 
 Archivos: `results/first_stage/summary.csv`, `summary.json`, `summary.md`, `e5.json`, `bge.json`, `jina.json`, `e5_batch1.csv`, `bge_batch1.csv`, `jina_batch1.csv`; log en `logs/first_stage.log`.
 
+## Índices y almacenamiento
+
+Los 8 351 MiB de RSS de la fusión son los tres *runs* cargados, no los índices. El corpus tiene 14 047 759 documentos y los tres modelos densos producen vectores de 1 024 dimensiones; con `faiss.IndexFlatIP`:
+
+| Representación | Un índice | Tres índices |
+| --- | ---: | ---: |
+| `float32` (CPU/disco) | 53.59 GiB | 160.76 GiB |
+| `float16` (GPU, sharded) | 26.79 GiB | 80.38 GiB |
+| `int8` (cuantización, no usada) | 13.40 GiB | 40.19 GiB |
+
+La fusión necesita los tres índices: 160.8 GiB no caben en 125 GiB de RAM, y 80.4 GiB no caben en 48 GiB de las dos A5000. Un solo índice (53.6 GiB en RAM o 26.8 GiB en GPU, 13.4 por GPU) sí cabe: la ruta del reranker es viable en este servidor; la fusión con índices planos, no. El disco sí alcanza (399 GB libres; 172.6 GB de índices), pero el límite es la memoria de trabajo.
+
+Consecuencia: la fusión puede ser más barata **por consulta** y, a la vez, no ser desplegable en este servidor. El análisis completo está en `tesis/knowledge/indices-almacenamiento-fusion.md`; una variante comprimida (SQ8, IVF-PQ) requeriría reconstruir los índices y repetir la evaluación, no se puede extrapolar.
+
 ## Límites de recursos de la etapa B
 
 La etapa B se ejecutó en el servidor del IIMAS (125 GiB de RAM, sin swap). B2 —BordaFuse sobre los seis modelos— no terminó: el RSS muestreado llegó a 123 196 256 kB (117.5 GiB) y el 2026-10-20, a las 21:54:29, el cgroup de la sesión registró `oom_kill=1`. El proceso desapareció a las 21:59:40 con código de salida 137 y sin traza de Python. La memoria disponible llegó a 0 kB y el servidor dejó de responder por varios minutos. El pico es una cota inferior: el muestreo era cada 15 s.

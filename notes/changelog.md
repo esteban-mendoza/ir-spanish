@@ -23,6 +23,10 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-10-21 — Índices y almacenamiento
+- **Cambios:** `notes/results.md` añade el cálculo de los tres índices planos y su viabilidad; el análisis completo está en `tesis/knowledge/indices-almacenamiento-fusion.md`.
+- **Resultado:** 160.8 GiB en RAM o 80.4 GiB en GPU para tres índices; no caben en el servidor. Un índice del reranker sí (53.6/26.8 GiB).
+
 ## 2026-10-21 — Jina completa la primera etapa
 - **Cambios:** `evaluation/first_stage.py` mide también `jina-v5-small`; `results/first_stage/` incluye `jina.json`, `jina_batch1.csv`, el resumen y el log.
 - **Resultados:** jina 29.57 ms de mediana en lote 1 y 1.12 ms en lote 32. La codificación total de la primera etapa es 57.53 ms en lote 1 y 2.41 ms en lote 32; los dos recuperadores extra son 27.96/1.28 ms.
