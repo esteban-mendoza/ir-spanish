@@ -631,12 +631,15 @@ def worker(args: argparse.Namespace) -> None:
     all_ids = warmup_ids + measure_ids
     query_map, candidates, doc_lookup = _load_inputs(args.system, all_ids)
 
+    # Fusion runs on CPU; do not touch the CUDA context for it.
+    device = "cpu" if args.system == "fusion" else args.device
+
     if args.system == "fusion":
         # Fusion needs the three runs; load them inside FusionSystem.
         system = FusionSystem(all_ids, query_map)
     else:
         system = _build_system(
-            args.system, all_ids, query_map, candidates, doc_lookup, args.device
+            args.system, all_ids, query_map, candidates, doc_lookup, device
         )
 
     valid = set(system.query_ids)
@@ -649,7 +652,7 @@ def worker(args: argparse.Namespace) -> None:
     for query_id in warmup_ids:
         system.score_one(query_id)
 
-    _reset_gpu_peak(args.device)
+    _reset_gpu_peak(device)
     rows: list[dict] = []
     for query_id in measure_ids:
         _order, latency_ms = system.score_one(query_id)
@@ -669,15 +672,15 @@ def worker(args: argparse.Namespace) -> None:
         "label": LABELS[args.system],
         "rep": args.rep,
         "n": len(latencies),
-        "device": args.device,
+        "device": device,
         "load_seconds": getattr(system, "load_seconds", None),
         "median_ms": statistics.median(latencies) if latencies else None,
         "p95_ms": float(sorted(latencies)[max(0, math.ceil(0.95 * len(latencies)) - 1)])
         if latencies
         else None,
         "peak_rss_mib": _rss_mib(),
-        "peak_vram_allocated_mib": _gpu_peak_mib(args.device)[0],
-        "peak_vram_reserved_mib": _gpu_peak_mib(args.device)[1],
+        "peak_vram_allocated_mib": _gpu_peak_mib(device)[0],
+        "peak_vram_reserved_mib": _gpu_peak_mib(device)[1],
         "batch_qps": None,
         "batch_docs_per_s": None,
         "batch_size": None,
@@ -687,11 +690,11 @@ def worker(args: argparse.Namespace) -> None:
         if batch_size <= 1:
             qps = len(latencies) / (sum(latencies) / 1000.0) if latencies else 0.0
         else:
-            _sync(args.device)
+            _sync(device)
             started = time.perf_counter_ns()
             for start in range(0, len(measure_ids), batch_size):
                 system.score_batch(measure_ids[start : start + batch_size])
-            _sync(args.device)
+            _sync(device)
             elapsed_s = (time.perf_counter_ns() - started) / 1e9
             qps = len(measure_ids) / elapsed_s if elapsed_s > 0 else 0.0
         docs_per_s = qps * TOP_K if args.system != "fusion" else None
