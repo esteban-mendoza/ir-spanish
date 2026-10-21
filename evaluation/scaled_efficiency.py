@@ -43,6 +43,7 @@ from ranx import Run, fuse
 
 from utils import data
 from evaluation.efficiency import BgeSystem, ColbertSystem, JinaV3System
+from evaluation.mem_trace import MemoryTrace, summarize as summarize_trace
 
 log = logging.getLogger(__name__)
 
@@ -95,7 +96,7 @@ def load_doc_ids(n_docs: int) -> list[str]:
 _DOC_TEXTS: dict[str, str] = {}
 
 
-def build_proxy_indexes(n_docs: int, doc_ids: list[str], seed: int) -> tuple[list, float, list[int]]:
+def build_proxy_indexes(n_docs: int, doc_ids: list[str], seed: int, trace: MemoryTrace | None = None) -> tuple[list, float, list[int]]:
     import faiss
 
     faiss.omp_set_num_threads(1)
@@ -105,6 +106,8 @@ def build_proxy_indexes(n_docs: int, doc_ids: list[str], seed: int) -> tuple[lis
     indexes = []
     chunk = 100_000
     for alias in ALIASES:
+        if trace is not None:
+            trace.set_phase(f"build_{alias}")
         log.info("Building %s proxy with %d docs ...", alias, n_docs)
         cpu_index = faiss.IndexFlatIP(DIM)
         added = 0
@@ -118,6 +121,8 @@ def build_proxy_indexes(n_docs: int, doc_ids: list[str], seed: int) -> tuple[lis
         options.shard = True
         options.useFloat16 = True
         gpu_index = faiss.index_cpu_to_all_gpus(cpu_index, co=options)
+        if trace is not None:
+            trace.set_phase(f"build_{alias}_gpu")
         indexes.append(gpu_index)
         del cpu_index
         gc.collect()
@@ -138,11 +143,14 @@ def gpu_used_mib() -> list[int]:
     return [int(line.strip()) for line in output.splitlines() if line.strip()]
 
 
-def search_and_fuse(indexes: list, doc_ids: list[str], qids: list[str], queries: np.ndarray) -> dict:
+def search_and_fuse(indexes: list, doc_ids: list[str], qids: list[str], queries: np.ndarray,
+                    trace: MemoryTrace | None = None) -> dict:
     search_times: list[float] = []
     fusion_times: list[float] = []
     candidate_docs: dict[str, list[str]] = {}
     for qid, query in zip(qids, queries):
+        if trace is not None:
+            trace.set_phase("search_fusion")
         torch.cuda.synchronize()
         t0 = time.perf_counter_ns()
         results = [index.search(query.reshape(1, -1), TOP_K) for index in indexes]
@@ -179,17 +187,22 @@ def search_and_fuse(indexes: list, doc_ids: list[str], qids: list[str], queries:
     }
 
 
-def run_rerankers(qids: list[str], query_map: dict[str, str], candidates: dict[str, list[str]]) -> dict:
+def run_rerankers(qids: list[str], query_map: dict[str, str], candidates: dict[str, list[str]],
+                  trace: MemoryTrace | None = None) -> dict:
     needed = {doc_id for docs in candidates.values() for doc_id in docs}
     doc_lookup = {doc_id: _DOC_TEXTS.get(doc_id, "") for doc_id in needed}
     results = {}
     for name, cls in (("bge", BgeSystem), ("jina-v3", JinaV3System), ("colbert", ColbertSystem)):
         log.info("Loading reranker %s ...", name)
+        if trace is not None:
+            trace.set_phase(f"rerank_{name}_load")
         system = cls(qids, query_map, candidates, doc_lookup, "cuda:0")
         for qid in qids[:5]:
             system.score_one(qid)
         per_rep = []
         for rep in range(1, N_REPS + 1):
+            if trace is not None:
+                trace.set_phase(f"rerank_{name}")
             lats = []
             for qid in qids:
                 _, latency = system.score_one(qid)
@@ -222,7 +235,9 @@ def run_scale(n_docs: int, do_rerank: bool) -> None:
     qids = [row["query_id"] for row in rows]
     query_map = {row["query_id"]: row["query"] for row in rows}
     doc_ids = load_doc_ids(n_docs)
-    indexes, build_s, gpu_delta = build_proxy_indexes(n_docs, doc_ids, SEED)
+    trace = MemoryTrace(OUT_DIR / f"memtrace_{n_docs}.csv", interval_s=1.0)
+    trace.start()
+    indexes, build_s, gpu_delta = build_proxy_indexes(n_docs, doc_ids, SEED, trace)
     rss = rss_mib()
 
     rng = np.random.default_rng(SEED + 1)
@@ -230,7 +245,7 @@ def run_scale(n_docs: int, do_rerank: bool) -> None:
     reps = []
     candidate_docs = None
     for rep in range(1, N_REPS + 1):
-        result = search_and_fuse(indexes, doc_ids, qids, queries)
+        result = search_and_fuse(indexes, doc_ids, qids, queries, trace)
         if candidate_docs is None:
             candidate_docs = result.pop("candidate_docs")
         else:
@@ -255,10 +270,14 @@ def run_scale(n_docs: int, do_rerank: bool) -> None:
         json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
     if do_rerank:
+        if trace is not None:
+            trace.set_phase("rerank_release_indexes")
         del indexes
         gc.collect()
         torch.cuda.empty_cache()
-        payload["rerankers"] = run_rerankers(qids, query_map, candidate_docs or {})
+        payload["rerankers"] = run_rerankers(qids, query_map, candidate_docs or {}, trace)
+    trace.stop()
+    payload["memory_trace"] = summarize_trace(OUT_DIR / f"memtrace_{n_docs}.csv")
     (OUT_DIR / f"scale_{n_docs}.json").write_text(
         json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
