@@ -58,6 +58,23 @@
 
 B2 con los cuatro algoritmos rápidos sí terminó (CombMNZ 0.5277, RBC 0.5309, ISR 0.5234 y RRF 0.4985 de nDCG@10), así que la inviabilidad es específica de BordaFuse con seis listas, no de la combinación de seis modelos. La combinación completa tampoco mejora el nDCG@10 de B1 con esos algoritmos.
 
+## Evaluación exhaustiva con cuatro algoritmos (57 subconjuntos)
+
+La etapa A se completó con los cuatro algoritmos rápidos: 228 fusiones (57 subconjuntos × 4) en `results/fuse_sweep/results.csv`. Los tiempos medidos fueron 2.35 h para CombMNZ, 2.50 h para RBC, 2.55 h para RRF y 2.83 h para ISR.
+
+**El mejor subconjunto es el mismo en los cuatro algoritmos:** `e5-large+bge-m3+jina-v5-small`.
+
+| Algoritmo | Mejor subconjunto | nDCG@10 | Recall@100 | Media tam. 3 | Media tam. 6 |
+| --- | --- | ---: | ---: | ---: | ---: |
+| CombMNZ | `e5+bge-m3+jina` | 0.5517 | 0.9231 | 0.4843 | 0.5277 |
+| RBC (φ=0.95) | `e5+bge-m3+jina` | 0.5485 | 0.9206 | 0.4825 | 0.5309 |
+| RRF (k=60) | `e5+bge-m3+jina` | 0.5450 | 0.9234 | 0.4563 | 0.4985 |
+| ISR | `e5+bge-m3+jina` | 0.5382 | 0.9230 | 0.4805 | 0.5234 |
+
+La media por tamaño crece con el número de modelos en los cuatro algoritmos, pero el máximo global está en un trío: añadir más listas sube el promedio y baja el máximo. CombMNZ y RBC son casi intercambiables (0.5517 frente a 0.5485); RRF es el más débil en las combinaciones pequeñas y el más fuerte en recall; ISR queda entre ambos.
+
+Los valores de la tabla anterior de este documento (CombMNZ y RBC) siguen siendo válidos; esta sección añade la comparación entre algoritmos.
+
 ## Fusiones exhaustivas (57 subconjuntos, longitudes nativas)
 
 Barrido completo con CombMNZ y RBC $\varphi = 0.95$. El CSV completo está en `results/fuse_sweep/results.csv`.

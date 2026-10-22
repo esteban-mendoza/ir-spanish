@@ -27,6 +27,11 @@ Protocolo obligatorio para todo agente:
 - **Cambios:** `notes/results.md` añade el cálculo de los tres índices planos y su viabilidad; el análisis completo está en `tesis/knowledge/indices-almacenamiento-fusion.md`.
 - **Resultado:** 160.8 GiB en RAM o 80.4 GiB en GPU para tres índices; no caben en el servidor. Un índice del reranker sí (53.6/26.8 GiB).
 
+## 2026-10-21 — Etapa A completa con cuatro algoritmos
+- **Cambios:** `results/fuse_sweep/results.csv` y `results.md` con 228 fusiones; `notes/results.md` añade la comparación entre algoritmos.
+- **Resultados:** el mejor subconjunto es `e5-large+bge-m3+jina-v5-small` en los cuatro (0.5517 CombMNZ, 0.5485 RBC, 0.5450 RRF, 0.5382 ISR). La media por tamaño crece con el número de modelos, pero el máximo está en un trío.
+- **Pendiente:** recalcular la correlación del E5 para los cuatro algoritmos.
+
 ## 2026-10-21 — Barrido de etapa A con RRF e ISR
 - **Cambios:** `results/fuse_sweep/results.csv` crecerá de 114 a 228 pares; log en `logs/fuse_sweep_rrf_isr.log`.
 - **Decisión:** se añaden RRF e ISR al barrido porque su costo es el mismo que el de los dos algoritmos ya ejecutados y así el mejor subconjunto no depende de CombMNZ.
