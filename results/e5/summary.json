@@ -1,4 +1,6 @@
 {
+  "strategy": "combmnz",
+  "label": "CombMNZ",
   "ndcg": {
     "all": {
       "n": 57,
