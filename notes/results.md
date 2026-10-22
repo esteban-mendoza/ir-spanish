@@ -128,13 +128,24 @@ Promedio sobre las consultas de prueba. Los pares con BM25 usan 169 963 consulta
 
 ## E5: RBO y ganancia
 
-La ganancia se mide como nDCG@10 de la fusión menos nDCG@10 del mejor miembro; la complementariedad de una combinación es el promedio de los RBO de sus pares. Sobre las 57 combinaciones de la etapa A (CombMNZ):
+La ganancia se mide como nDCG@10 de la fusión menos nDCG@10 del mejor miembro; la complementariedad de una combinación es el promedio de los RBO de sus pares. Se calcula para los cuatro algoritmos de la evaluación exhaustiva, sobre las 57 combinaciones de la etapa A:
 
-- nDCG@10: Pearson 0.678 (IC 95 % 0.521–0.808), Spearman 0.716 (0.508–0.852).
-- Recall@100: Pearson 0.253 (IC 95 % −0.025–0.553), Spearman 0.360 (0.076–0.588).
-- En el subconjunto de tres o más modelos, la correlación con nDCG@10 se mantiene (0.682) y la de recall deja de ser significativa.
+| Algoritmo | nDCG@10: Pearson (IC 95 %) | nDCG@10: Spearman | Recall@100: Pearson (IC 95 %) | Recall@100: Spearman |
+| --- | --- | ---: | --- | ---: |
+| CombMNZ | 0.678 (0.521–0.808) | 0.716 | 0.253 (−0.025–0.553) | 0.360 |
+| RBC (φ=0.95) | 0.661 (0.504–0.789) | 0.689 | 0.311 (0.028–0.623) | 0.434 |
+| RRF (k=60) | 0.749 (0.586–0.874) | 0.764 | 0.258 (−0.019–0.547) | 0.360 |
+| ISR | 0.681 (0.537–0.799) | 0.710 | 0.280 (−0.002–0.583) | 0.393 |
 
-La relación es **positiva**: las combinaciones con RBO alto —los tríos y cuartetos densos— son las que más mejoran sobre su mejor miembro. La complementariedad léxico-semántica por sí sola no explica la ganancia; los pares mixtos tienen RBO bajo pero no siempre superan a su mejor miembro denso. Archivos: `results/e5/rbo_gain.csv` y `results/e5/summary.json`.
+En el subconjunto de tres o más modelos (42 combinaciones), la correlación con nDCG@10 se mantiene en los cuatro: 0.682, 0.661, 0.778 y 0.676.
+
+La relación con nDCG@10 es **positiva y estable**: el intervalo al 95 % queda entero por encima de 0.5 en los cuatro algoritmos, con un rango de 0.66 a 0.75. La conclusión no depende de haber elegido CombMNZ; RRF es el que muestra la asociación más fuerte y RBC la más débil, pero la diferencia entre ambos es menor que el ancho de sus intervalos.
+
+Con Recall@100 la relación es **débil y no concluyente**: 0.25–0.31, y solo RBC excluye el cero por poco (0.028). La complementariedad explica la ganancia en la métrica primaria, no en el recall.
+
+La lectura sustantiva no cambia: las combinaciones con RBO alto —los tríos y cuartetos densos— son las que más mejoran sobre su mejor miembro. La complementariedad léxico-semántica por sí sola no explica la ganancia; los pares mixtos tienen RBO bajo y no siempre superan a su mejor miembro denso.
+
+Archivos: `results/e5/summary_all.md` y `summary_all.json` (tabla comparativa), `rbo_gain_{combmnz,rbc,rrf,isr}.csv` y `summary_{rbc,rrf,isr}.json`, más `rbo_gain.csv` y `summary.json` de CombMNZ.
 
 ## E4: líneas base
 

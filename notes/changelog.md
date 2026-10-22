@@ -27,6 +27,11 @@ Protocolo obligatorio para todo agente:
 - **Cambios:** `notes/results.md` añade el cálculo de los tres índices planos y su viabilidad; el análisis completo está en `tesis/knowledge/indices-almacenamiento-fusion.md`.
 - **Resultado:** 160.8 GiB en RAM o 80.4 GiB en GPU para tres índices; no caben en el servidor. Un índice del reranker sí (53.6/26.8 GiB).
 
+## 2026-10-21 — E5 por algoritmo
+- **Cambios:** `analysis/rbo_gain.py` acepta `--strategy` (uno o `all`); `results/e5/` con los cuatro pares de archivos y `summary_all.md`/`.json`.
+- **Resultados:** la correlación RBO–ganancia en nDCG@10 es estable: 0.678 (CombMNZ), 0.661 (RBC), 0.749 (RRF) y 0.681 (ISR), con intervalos enteros por encima de 0.5. En Recall@100 es débil (0.25–0.31).
+- **Decisión:** la conclusión del experimento 5 deja de depender de CombMNZ; se reportan las cuatro correlaciones como análisis descriptivo.
+
 ## 2026-10-21 — Etapa A completa con cuatro algoritmos
 - **Cambios:** `results/fuse_sweep/results.csv` y `results.md` con 228 fusiones; `notes/results.md` añade la comparación entre algoritmos.
 - **Resultados:** el mejor subconjunto es `e5-large+bge-m3+jina-v5-small` en los cuatro (0.5517 CombMNZ, 0.5485 RBC, 0.5450 RRF, 0.5382 ISR). La media por tamaño crece con el número de modelos, pero el máximo está en un trío.
