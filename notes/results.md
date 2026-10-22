@@ -202,7 +202,7 @@ Sumando los componentes medidos por separado y extrapolando la búsqueda con el 
 | `jina-reranker-v3` | 29.6 ms | 41.9 ms | 793.5 ms | 864.9 ms | 4.5× |
 | `jina-colbert-v2` | 29.6 ms | 41.9 ms | 410.8 ms | 482.2 ms | 2.5× |
 
-La ventaja de la fusión baja a **2.5–12×** cuando se incluye la búsqueda, porque a 14 M la búsqueda en tres índices (125.7 ms) pesa más que la fusión misma (8.2 ms). Es una **extrapolación** de componentes medidos: la codificación es real a 14 M, el reranker es real, y la búsqueda viene del ajuste lineal de 2 M y 4 M. No hay corrida a 14 M con tres índices porque no caben.
+La ventaja de la fusión baja a **2.5–12×** cuando se incluye la búsqueda, porque a 14 M la búsqueda en tres índices (125.7 ms) pesa más que la fusión misma (8.2 ms). Es una **extrapolación** de componentes medidos: la codificación es real a 14 M, el reranker es real, y la búsqueda viene del ajuste lineal de 2 M y 4 M. No hay una ejecución a 14 M con tres índices porque no caben.
 
 Con esto, la conclusión del experimento 3 queda en dos planos: la fusión es **2.5–12× más barata en cómputo** por consulta, y **no es desplegable** en este servidor con índices planos (44.7 GiB por GPU frente a 24). El reranker es más caro pero cabe.
 
