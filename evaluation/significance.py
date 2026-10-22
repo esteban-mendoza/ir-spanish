@@ -26,6 +26,33 @@ def paired_t_test(a: np.ndarray, b: np.ndarray) -> tuple[float, float]:
     return float(result.statistic), float(result.pvalue)
 
 
+def paired_mean_ci(
+    a: np.ndarray,
+    b: np.ndarray,
+    alpha: float = 0.05,
+) -> dict[str, float | int]:
+    """Mean paired difference and its two-sided Student t confidence interval.
+
+    ``a`` and ``b`` are aligned per-query scores.  The interval uses the
+    ``1 - alpha / 2`` quantile of the t distribution with ``n - 1`` degrees of
+    freedom, which is the same inferential framework as ``paired_t_test``.
+    """
+    differences = np.asarray(a, dtype=np.float64) - np.asarray(b, dtype=np.float64)
+    n = int(differences.size)
+    if n < 2:
+        raise ValueError("At least two paired observations are required")
+    mean = float(np.mean(differences))
+    se = float(np.std(differences, ddof=1) / np.sqrt(n))
+    critical = float(stats.t.ppf(1.0 - alpha / 2.0, n - 1))
+    return {
+        "mean": mean,
+        "se": se,
+        "low": mean - critical * se,
+        "high": mean + critical * se,
+        "n": n,
+    }
+
+
 def permutation_test(
     a: np.ndarray,
     b: np.ndarray,

@@ -4,10 +4,15 @@ The family has three comparisons (best fusion against each reranker), so the
 Holm-Bonferroni correction is applied over three p-values.  The two reranker
 comparisons are not a family of six: the question is whether fusion is
 competitive with each reranker, not how the rerankers compare among themselves.
+
+The metric and the output suffix are configurable so that the same script
+reports nDCG@10 and Recall@100, the two primary effectiveness metrics.  The
+correction is applied within each metric.
 """
 
 from __future__ import annotations
 
+import argparse
 import logging
 from pathlib import Path
 
@@ -16,7 +21,7 @@ import numpy as np
 from utils import retrieval
 
 from .compare import load_qrels, per_query_scores, write_csv, write_markdown
-from .significance import holm_bonferroni, paired_t_test, permutation_test
+from .significance import holm_bonferroni, paired_mean_ci, paired_t_test, permutation_test
 
 log = logging.getLogger(__name__)
 
@@ -48,9 +53,28 @@ N_PERMUTATIONS = 10_000
 SEED = 42
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--metric",
+        default=METRIC,
+        help="Metric to compare (default: ndcg@10).",
+    )
+    parser.add_argument(
+        "--suffix",
+        default="",
+        help="Suffix for the output files (for example, _recall).",
+    )
+    return parser.parse_args()
+
+
 def main() -> None:
+    args = parse_args()
     if not BEST_FUSION.exists():
         raise SystemExit(f"Missing fused run: {BEST_FUSION}")
+    missing = [str(path) for path in RERANKERS.values() if not path.exists()]
+    if missing:
+        raise SystemExit("Missing reranker runs:\n" + "\n".join(missing))
 
     qrels = load_qrels()
     names = ["B1-CombMNZ", *RERANKERS]
@@ -63,7 +87,7 @@ def main() -> None:
         run.name = name
         runs.append(run)
 
-    scores = {name: per_query_scores(qrels, run, METRIC) for name, run in zip(names, runs)}
+    scores = {name: per_query_scores(qrels, run, args.metric) for name, run in zip(names, runs)}
     base = scores[names[0]]
 
     rows = []
@@ -76,15 +100,18 @@ def main() -> None:
             n_permutations=N_PERMUTATIONS,
             seed=SEED,
         )
+        ci = paired_mean_ci(base, other)
         rows.append(
             {
                 "run_a": names[0],
                 "run_b": name,
-                "metric": METRIC,
+                "metric": args.metric,
                 "n_queries": int(base.size),
                 "mean_a": float(np.mean(base)),
                 "mean_b": float(np.mean(other)),
                 "diff": float(np.mean(base) - np.mean(other)),
+                "ci_low": float(ci["low"]),
+                "ci_high": float(ci["high"]),
                 "t_stat": t_stat,
                 "p_student": p_student,
                 "p_permutation": p_permutation,
@@ -101,16 +128,18 @@ def main() -> None:
         row["p_adjusted"] = float(p_adj)
         row["significant"] = bool(p_adj <= ALPHA)
         log.info(
-            "%s vs %s: Δ=%+.4f p=%.4g p_Holm=%.4g",
+            "%s vs %s: Δ=%+.4f [%.4f, %.4f] p=%.4g p_Holm=%.4g",
             row["run_a"],
             row["run_b"],
             row["diff"],
+            row["ci_low"],
+            row["ci_high"],
             row["p_value"],
             row["p_adjusted"],
         )
 
-    csv_path = OUT_DIR / "e3.csv"
-    md_path = OUT_DIR / "e3.md"
+    csv_path = OUT_DIR / f"e3{args.suffix}.csv"
+    md_path = OUT_DIR / f"e3{args.suffix}.md"
     write_csv(rows, csv_path)
     write_markdown(rows, md_path)
     log.info("CSV: %s", csv_path)

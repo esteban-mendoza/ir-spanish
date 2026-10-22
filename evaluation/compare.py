@@ -25,7 +25,7 @@ from ranx import evaluate
 # utils.__init__ sets up logging and NUMA/threading env-vars
 from utils import cache, data, retrieval
 
-from .significance import CORRECTIONS, paired_t_test, permutation_test
+from .significance import CORRECTIONS, paired_mean_ci, paired_t_test, permutation_test
 
 log = logging.getLogger(__name__)
 
@@ -39,6 +39,8 @@ FIELDS = [
     "mean_a",
     "mean_b",
     "diff",
+    "ci_low",
+    "ci_high",
     "t_stat",
     "p_student",
     "p_permutation",
@@ -128,6 +130,8 @@ def compare_runs(
             else:
                 p_value = p_student
 
+            ci = paired_mean_ci(a, b)
+
             rows.append(
                 {
                     "run_a": names[i],
@@ -137,6 +141,8 @@ def compare_runs(
                     "mean_a": float(np.mean(a)),
                     "mean_b": float(np.mean(b)),
                     "diff": float(np.mean(a) - np.mean(b)),
+                    "ci_low": float(ci["low"]),
+                    "ci_high": float(ci["high"]),
                     "t_stat": t_stat,
                     "p_student": p_student,
                     "p_permutation": p_permutation,
@@ -174,18 +180,22 @@ def format_p(value: float) -> str:
 
 def write_markdown(rows: list[dict], path: Path) -> None:
     header = (
-        "| sistema A | sistema B | media A | media B | Δ | p | p ajustada | significativa |\n"
-        "| --- | --- | ---: | ---: | ---: | ---: | ---: | :---: |\n"
+        "| sistema A | sistema B | media A | media B | Δ | IC 95 % | p | p ajustada | significativa |\n"
+        "| --- | --- | ---: | ---: | ---: | --- | ---: | ---: | :---: |\n"
     )
     lines = []
     for row in rows:
+        ci_low = row.get("ci_low")
+        ci_high = row.get("ci_high")
+        ci = "" if ci_low is None or ci_high is None else f"[{ci_low:.4f}, {ci_high:.4f}]"
         lines.append(
-            "| {a} | {b} | {ma:.4f} | {mb:.4f} | {d:+.4f} | {p} | {pa} | {sig} |".format(
+            "| {a} | {b} | {ma:.4f} | {mb:.4f} | {d:+.4f} | {ci} | {p} | {pa} | {sig} |".format(
                 a=row["run_a"],
                 b=row["run_b"],
                 ma=row["mean_a"],
                 mb=row["mean_b"],
                 d=row["diff"],
+                ci=ci,
                 p=format_p(row["p_value"]),
                 pa=format_p(row["p_adjusted"]),
                 sig="sí" if row["significant"] else "no",

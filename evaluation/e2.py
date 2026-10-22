@@ -2,10 +2,13 @@
 
 All 15 pairs are computed once; the Holm-Bonferroni and Benjamini-Hochberg
 adjustments are then applied to the same p-values and written as two tables.
+The metric and the output suffix are configurable so that the same script
+reports nDCG@10 and Recall@100, the two primary effectiveness metrics.
 """
 
 from __future__ import annotations
 
+import argparse
 import logging
 from pathlib import Path
 
@@ -41,7 +44,23 @@ N_PERMUTATIONS = 10_000
 SEED = 42
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--metric",
+        default=METRIC,
+        help="Metric to compare (default: ndcg@10).",
+    )
+    parser.add_argument(
+        "--suffix",
+        default="",
+        help="Suffix for the output files (for example, _recall).",
+    )
+    return parser.parse_args()
+
+
 def main() -> None:
+    args = parse_args()
     missing = [str(path) for path in PATHS if not path.exists()]
     if missing:
         raise SystemExit("Missing runs:\n" + "\n".join(missing))
@@ -58,7 +77,7 @@ def main() -> None:
         qrels=qrels,
         runs=runs,
         names=NAMES,
-        metric=METRIC,
+        metric=args.metric,
         test="both",
         correction="none",
         n_permutations=N_PERMUTATIONS,
@@ -74,8 +93,8 @@ def main() -> None:
             row["significant"] = bool(p_adj <= ALPHA)
             row["correction"] = correction
 
-        csv_path = OUT_DIR / f"e2_{correction}.csv"
-        md_path = OUT_DIR / f"e2_{correction}.md"
+        csv_path = OUT_DIR / f"e2_{correction}{args.suffix}.csv"
+        md_path = OUT_DIR / f"e2_{correction}{args.suffix}.md"
         write_csv(rows, csv_path)
         write_markdown(rows, md_path)
         log.info("%s: %s", correction, csv_path)
