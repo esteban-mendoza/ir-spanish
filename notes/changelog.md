@@ -23,6 +23,11 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-10-22 — Dos métricas primarias y resultados de Recall@100
+- **Cambios:** `evaluation/significance.py` añade `paired_mean_ci`; `compare.py` reporta IC; `e2.py` y `e3.py` aceptan `--metric`/`--suffix`; nuevo `e1_recall.py`; `results/evaluation/` con `e1_recall.*`, `e2_*_recall.*` y `e3_recall.*`, y sus logs.
+- **Resultados:** E1 Recall@100 CombMNZ +0.0192 [0.0183, 0.0202] y Condorcet −0.0120; E2 Recall@100 no distingue a los cuatro primeros tras Holm y solo RBC (0.0025) y Condorcet (0.0312) se separan; E3 la fusión +0.0192 [0.0183, 0.0202] sobre los tres reordenadores, estructural.
+- **Pendientes:** ninguno de cómputo; el análisis por consulta del E5 y la actualización de las conclusiones quedan en la tesis.
+
 ## 2026-10-21 — Índices y almacenamiento
 - **Cambios:** `notes/results.md` añade el cálculo de los tres índices planos y su viabilidad; el análisis completo está en `tesis/knowledge/indices-almacenamiento-fusion.md`.
 - **Resultado:** 160.8 GiB en RAM o 80.4 GiB en GPU para tres índices; no caben en el servidor. Un índice del reranker sí (53.6/26.8 GiB).

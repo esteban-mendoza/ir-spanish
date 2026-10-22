@@ -45,6 +45,44 @@
 | e5-large+bge-m3+jina-v5-small | bordafuse |          | 0.5414  | 0.9234     | 0.4776 | 0.4831 | 0.0764       | 0.0183       |
 | e5-large+bge-m3+jina-v5-small | condorcet |          | 0.5422  | 0.8918     | 0.4791 | 0.4837 | 0.0763       | 0.0177       |
 
+## Dos métricas primarias: IC y pruebas (2026-10-22)
+
+La t pareada de dos colas y su IC del 95\,\% se calculan por consulta con `paired_mean_ci`; cada métrica primaria se corrige con Holm dentro de su familia. Los IC de nDCG@10 están en `results/evaluation/e1.csv`, `e2_holm.csv` y `e3.csv`; los de Recall@100, en `e1_recall.*`, `e2_holm_recall.*` y `e3_recall.*`.
+
+### E1: Recall@100 frente a jina-v5-small
+
+| fusión | Recall@100 | Δ | IC 95 % | p |
+| --- | ---: | ---: | --- | --- |
+| CombMNZ | 0.9231 | +0.0192 | [0.0183, 0.0202] | <0.0001 |
+| RBC | 0.9206 | +0.0167 | [0.0157, 0.0177] | — |
+| RRF | 0.9234 | +0.0195 | [0.0185, 0.0205] | — |
+| Condorcet | 0.8918 | −0.0120 | [−0.0131, −0.0109] | — |
+| BordaFuse | 0.9234 | +0.0195 | [0.0186, 0.0205] | — |
+| ISR | 0.9230 | +0.0191 | [0.0181, 0.0201] | — |
+
+La comparación principal es CombMNZ; p de la t y de la permutación <0.0001; Holm sobre nDCG@10 y Recall@100 <0.0001. Las otras cinco fusiones son descriptivas.
+
+### E2: Recall@100 por algoritmo
+
+| algoritmo | Recall@100 | Δ vs. CombMNZ | IC 95 % | p Holm | significativa |
+| --- | ---: | ---: | --- | ---: | :---: |
+| CombMNZ | 0.9231 | — | — | — | — |
+| RBC | 0.9206 | −0.00251 | [−0.00291, −0.00210] | <0.0001 | sí |
+| RRF | 0.9234 | +0.00028 | [−0.00002, 0.00059] | 0.1972 | no |
+| Condorcet | 0.8918 | −0.03124 | [−0.03225, −0.03023] | <0.0001 | sí |
+| BordaFuse | 0.9234 | +0.00031 | [0.00001, 0.00061] | 0.1601 | no |
+| ISR | 0.9230 | −0.00010 | [−0.00038, 0.00017] | 0.9020 | no |
+
+En nDCG@10 los 15 pares sobreviven a Holm; en Recall@100, no: las diferencias entre los cuatro primeros son de 0.0004 o menos y varias no sobreviven, y solo RBC (0.0025) y Condorcet (0.0312) se separan. Benjamini--Hochberg conduce a las mismas decisiones en las dos métricas.
+
+### E3: Recall@100 fusión vs. reordenadores
+
+| comparación | Δ | IC 95 % | p Holm |
+| --- | ---: | --- | ---: |
+| Fusión vs. los tres reordenadores | +0.0192 | [0.0183, 0.0202] | <0.0001 |
+
+Los tres reordenadores tienen Recall@100 = 0.9039, el de su lista de entrada; la ventaja de la fusión es estructural.
+
 ## Etapa B: BordaFuse por combinación
 
 | # | Combinación | Modelos | Tiempo (s) | nDCG@10 | Recall@100 | Estado |
