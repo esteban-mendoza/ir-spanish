@@ -1,13 +1,20 @@
 """Experiment 5: relationship between RBO complementarity and fusion gain.
 
-For every subset of the Stage A sweep (CombMNZ), the complementarity of the
-subset is the mean RBO of its member pairs.  The gain is the fusion nDCG@10
-minus the nDCG@10 of the best member.  The script reports Pearson and
-Spearman correlations with a bootstrap interval over combinations.
+For every subset of the Stage A sweep, the complementarity of the subset is the
+mean RBO of its member pairs.  The gain is the fusion nDCG@10 minus the
+nDCG@10 of the best member.  The script reports Pearson and Spearman
+correlations with a bootstrap interval over combinations.
+
+The Stage A sweep covers four algorithms (CombMNZ, RBC, RRF and ISR).  The
+correlation is computed for each one, so the relationship can be checked for
+dependence on the fusion algorithm:
+
+    python -m analysis.rbo_gain --strategy all
 """
 
 from __future__ import annotations
 
+import argparse
 import csv
 import itertools
 import json
@@ -30,6 +37,8 @@ INDIVIDUAL = {
     "jina-v5-small": (0.5115, 0.9039),
 }
 
+STRATEGIES = ("combmnz", "rbc", "rrf", "isr")
+LABELS = {"combmnz": "CombMNZ", "rbc": "RBC (φ=0.95)", "rrf": "RRF (k=60)", "isr": "ISR"}
 N_BOOTSTRAP = 10_000
 SEED = 42
 
@@ -47,12 +56,12 @@ def subset_complementarity(members: list[str], rbo: dict[tuple[str, str], float]
     return float(np.mean([rbo[tuple(sorted(pair))] for pair in pairs]))
 
 
-def load_rows() -> list[dict]:
+def load_rows(strategy: str = "combmnz") -> list[dict]:
     rows = []
     rbo = load_rbo()
     with STAGE_A.open(newline="") as handle:
         for row in csv.DictReader(handle):
-            if row["strategy"] != "combmnz":
+            if row["strategy"] != strategy:
                 continue
             members = row["combo"].split("+")
             ndcg = float(row["ndcg@10"])
@@ -110,12 +119,16 @@ def bootstrap(rows: list[dict], gain_key: str, n_bootstrap: int = N_BOOTSTRAP, s
     }
 
 
-def main() -> None:
+def run_strategy(strategy: str) -> dict:
+    """Compute the RBO-gain analysis for one fusion algorithm."""
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    rows = load_rows()
+    rows = load_rows(strategy)
+    if not rows:
+        raise SystemExit(f"No rows for strategy {strategy}")
     rows.sort(key=lambda row: (row["size"], -row["gain_ndcg"]))
 
-    csv_path = OUT_DIR / "rbo_gain.csv"
+    suffix = "" if strategy == "combmnz" else f"_{strategy}"
+    csv_path = OUT_DIR / f"rbo_gain{suffix}.csv"
     with csv_path.open("w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(rows[0].keys()))
         writer.writeheader()
@@ -123,6 +136,8 @@ def main() -> None:
 
     rows_ge_3 = [row for row in rows if row["size"] >= 3]
     summary = {
+        "strategy": strategy,
+        "label": LABELS[strategy],
         "ndcg": {
             "all": correlations(rows, "gain_ndcg"),
             "size_ge_3": correlations(rows_ge_3, "gain_ndcg"),
@@ -134,12 +149,60 @@ def main() -> None:
             "bootstrap": bootstrap(rows, "gain_recall"),
         },
     }
-    summary_path = OUT_DIR / "summary.json"
+    summary_path = OUT_DIR / f"summary{suffix}.json"
     summary_path.write_text(json.dumps(summary, indent=2, ensure_ascii=False) + "\n")
-
     print(json.dumps(summary, indent=2, ensure_ascii=False))
     print(f"CSV: {csv_path}")
     print(f"JSON: {summary_path}")
+    return summary
+
+
+def write_comparison(summaries: list[dict]) -> None:
+    """Write a cross-algorithm comparison table."""
+    lines = [
+        "# Experimento 5 por algoritmo",
+        "",
+        "| Algoritmo | n | nDCG: Pearson (IC 95 %) | nDCG: Spearman | Recall: Pearson (IC 95 %) | Recall: Spearman |",
+        "| --- | ---: | --- | ---: | --- | ---: |",
+    ]
+    for s in summaries:
+        nd, rc = s["ndcg"], s["recall"]
+        lines.append(
+            "| {label} | {n} | {r:.3f} ({lo:.3f}, {hi:.3f}) | {rho:.3f} | {rr:.3f} ({rlo:.3f}, {rhi:.3f}) | {rrho:.3f} |".format(
+                label=s["label"],
+                n=nd["all"]["n"],
+                r=nd["all"]["pearson_r"],
+                lo=nd["bootstrap"]["pearson_ci95"][0],
+                hi=nd["bootstrap"]["pearson_ci95"][1],
+                rho=nd["all"]["spearman_rho"],
+                rr=rc["all"]["pearson_r"],
+                rlo=rc["bootstrap"]["pearson_ci95"][0],
+                rhi=rc["bootstrap"]["pearson_ci95"][1],
+                rrho=rc["all"]["spearman_rho"],
+            )
+        )
+    path = OUT_DIR / "summary_all.md"
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    (OUT_DIR / "summary_all.json").write_text(
+        json.dumps(summaries, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+    print(f"TABLA: {path}")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--strategy",
+        default="combmnz",
+        choices=(*STRATEGIES, "all"),
+        help="Fusion algorithm to analyse (default: combmnz; 'all' runs the four).",
+    )
+    args = parser.parse_args()
+    if args.strategy == "all":
+        summaries = [run_strategy(name) for name in STRATEGIES]
+        write_comparison(summaries)
+    else:
+        run_strategy(args.strategy)
 
 
 if __name__ == "__main__":
