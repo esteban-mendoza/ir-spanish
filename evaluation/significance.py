@@ -1,20 +1,25 @@
 """Statistical comparison utilities for retrieval runs.
 
-Pairwise tests and multiple-comparison corrections used in the thesis:
+Thin wrappers around maintained implementations:
 
-- paired two-sided Student t-test for mean effectiveness;
-- paired permutation test as a robust confirmation;
-- Holm-Bonferroni (FWER) and Benjamini-Hochberg (FDR) corrections.
+- paired two-sided Student t-test: ``scipy.stats.ttest_rel``;
+- paired mean difference and its confidence interval:
+  ``statsmodels.stats.weightstats.DescrStatsW``;
+- paired permutation test:
+  ``scipy.stats.permutation_test`` (sign-flip, ``permutation_type="samples"``);
+- Holm-Bonferroni and Benjamini-Hochberg adjusted p-values:
+  ``statsmodels.stats.multitest.multipletests``.
 
-The module is intentionally independent of ``ranx.compare`` so that the
-corrections are explicit and reproducible.  See
-``tesis/knowledge/urbano-et-al-2019-pruebas-estadisticas.md`` for the rationale.
+The public API is kept stable for the experiment scripts.  See
+``tesis/knowledge/metricas-y-correcciones-multiples.md`` for the rationale.
 """
 
 from __future__ import annotations
 
 import numpy as np
 from scipy import stats
+from statsmodels.stats.multitest import multipletests
+from statsmodels.stats.weightstats import DescrStatsW
 
 
 def paired_t_test(a: np.ndarray, b: np.ndarray) -> tuple[float, float]:
@@ -33,23 +38,23 @@ def paired_mean_ci(
 ) -> dict[str, float | int]:
     """Mean paired difference and its two-sided Student t confidence interval.
 
-    ``a`` and ``b`` are aligned per-query scores.  The interval uses the
-    ``1 - alpha / 2`` quantile of the t distribution with ``n - 1`` degrees of
-    freedom, which is the same inferential framework as ``paired_t_test``.
+    ``a`` and ``b`` are aligned per-query scores.  The interval is the
+    ``tconfint_mean`` interval of ``statsmodels`` for the paired differences.
     """
     differences = np.asarray(a, dtype=np.float64) - np.asarray(b, dtype=np.float64)
-    n = int(differences.size)
-    if n < 2:
+    if differences.size < 2:
         raise ValueError("At least two paired observations are required")
-    mean = float(np.mean(differences))
-    se = float(np.std(differences, ddof=1) / np.sqrt(n))
-    critical = float(stats.t.ppf(1.0 - alpha / 2.0, n - 1))
+    if not np.all(np.isfinite(differences)):
+        raise ValueError("Paired differences contain non-finite values")
+
+    descr = DescrStatsW(differences)
+    low, high = descr.tconfint_mean(alpha=alpha)
     return {
-        "mean": mean,
-        "se": se,
-        "low": mean - critical * se,
-        "high": mean + critical * se,
-        "n": n,
+        "mean": float(descr.mean),
+        "se": float(descr.std_mean),
+        "low": float(low),
+        "high": float(high),
+        "n": int(differences.size),
     }
 
 
@@ -62,55 +67,58 @@ def permutation_test(
 ) -> float:
     """Two-sided paired permutation test for the difference of means.
 
-    Under the null hypothesis the two systems are exchangeable, so the sign of
-    each per-query difference is equally likely.  The p-value is the fraction
-    of paired replicates whose absolute mean difference is at least the
-    observed one.  Replicates are generated in chunks to bound memory use.
+    The paired differences are sign-flipped at random
+    (``permutation_type="samples"``) and the p-value is the fraction of
+    replicates whose absolute mean is at least the observed one.  The
+    ``chunk_size`` argument is passed to SciPy as ``batch`` and bounds the
+    memory used per batch.
     """
-    differences = np.asarray(a, dtype=np.float32) - np.asarray(b, dtype=np.float32)
-    observed = float(np.mean(differences, dtype=np.float64))
-    rng = np.random.default_rng(seed)
-    extreme = 0
-    remaining = n_permutations
-    while remaining > 0:
-        size = min(chunk_size, remaining)
-        signs = rng.integers(0, 2, size=(size, differences.size), dtype=np.int8)
-        signs = signs.astype(np.float32) * 2.0 - 1.0
-        replicated = signs @ differences / differences.size
-        extreme += int(np.sum(np.abs(replicated) >= abs(observed)))
-        remaining -= size
-    return (extreme + 1) / (n_permutations + 1)
+    differences = np.asarray(a, dtype=np.float64) - np.asarray(b, dtype=np.float64)
+    if differences.size < 2:
+        raise ValueError("At least two paired observations are required")
+    if not np.all(np.isfinite(differences)):
+        raise ValueError("Paired differences contain non-finite values")
+    if n_permutations < 1:
+        raise ValueError("n_permutations must be positive")
+    if chunk_size < 1:
+        raise ValueError("chunk_size must be positive")
+
+    result = stats.permutation_test(
+        (differences,),
+        np.mean,
+        permutation_type="samples",
+        n_resamples=n_permutations,
+        alternative="two-sided",
+        random_state=seed,
+        batch=chunk_size,
+    )
+    return float(result.pvalue)
+
+
+def _adjusted(pvalues: np.ndarray, method: str) -> np.ndarray:
+    """Adjusted p-values for a multiple-testing method, in the input order."""
+    p = np.asarray(pvalues, dtype=float)
+    if p.size == 0:
+        return p
+    if not np.all(np.isfinite(p)) or np.any((p < 0.0) | (p > 1.0)):
+        raise ValueError("p-values must be finite and in [0, 1]")
+    _, corrected, _, _ = multipletests(
+        p,
+        alpha=0.05,
+        method=method,
+        returnsorted=False,
+    )
+    return np.asarray(corrected, dtype=float)
 
 
 def holm_bonferroni(pvalues: np.ndarray) -> np.ndarray:
     """Holm-Bonferroni step-down adjusted p-values (FWER control)."""
-    p = np.asarray(pvalues, dtype=float)
-    if p.size == 0:
-        return p
-    order = np.argsort(p)
-    adjusted = np.empty_like(p)
-    running = 0.0
-    for rank, index in enumerate(order):
-        candidate = (p.size - rank) * p[index]
-        running = max(running, candidate)
-        adjusted[index] = running
-    return np.minimum(adjusted, 1.0)
+    return _adjusted(pvalues, "holm")
 
 
 def benjamini_hochberg(pvalues: np.ndarray) -> np.ndarray:
     """Benjamini-Hochberg step-up adjusted p-values (FDR control)."""
-    p = np.asarray(pvalues, dtype=float)
-    if p.size == 0:
-        return p
-    order = np.argsort(p)
-    adjusted = np.empty_like(p)
-    running = 1.0
-    for rank in range(p.size - 1, -1, -1):
-        index = order[rank]
-        candidate = p.size * p[index] / (rank + 1)
-        running = min(running, candidate)
-        adjusted[index] = running
-    return np.minimum(adjusted, 1.0)
+    return _adjusted(pvalues, "fdr_bh")
 
 
 CORRECTIONS = {

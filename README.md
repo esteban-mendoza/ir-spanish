@@ -99,6 +99,9 @@ We evaluate on [**MessIRve**](https://huggingface.co/datasets/spanish-ir/messirv
 - Holm–Bonferroni correction (FWER).
 - Benjamini–Hochberg correction (FDR), as a sensitivity analysis.
 
+Implemented with `scipy` and `statsmodels`; `evaluation/significance.py` keeps a
+thin wrapper API so the experiment scripts do not depend on their internals.
+
 ## Complementarity
 
 RBO is implemented in `evaluation/rbo.py` using the MIT-licensed `ranked-overlap` package.
@@ -114,7 +117,9 @@ RBO is implemented in `evaluation/rbo.py` using the MIT-licensed `ranked-overlap
 
 | Tool                                                     | Purpose                                                             |
 | -------------------------------------------------------- | ------------------------------------------------------------------- |
-| [`ranx`](https://github.com/AmenRa/ranx)                 | Rank fusion, evaluation metrics, and statistical significance tests |
+| [`ranx`](https://github.com/AmenRa/ranx)                 | Rank fusion and evaluation metrics                                  |
+| [`scipy`](https://scipy.org/)                            | Paired t-test and permutation test                                  |
+| [`statsmodels`](https://www.statsmodels.org/)            | Confidence intervals and multiple-testing corrections               |
 | [`sentence-transformers`](https://www.sbert.net/)        | Dense and sparse embedding models                                   |
 | [`pyserini`](https://github.com/castorini/pyserini)      | BM25 indexing and retrieval                                         |
 | [`datasets`](https://huggingface.co/docs/datasets)       | Loading MessIRve and the Wikipedia corpus from HuggingFace          |
