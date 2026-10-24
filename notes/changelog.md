@@ -23,6 +23,11 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-10-23 — Limpieza de logs de evaluación
+- **Cambios:** se eliminan los seis logs `e1_significance.log`, `e1_recall.log`, `e2_significance.log`, `e2_recall.log`, `e3_significance.log` y `e3_recall.log`, previos a la migración estadística; quedan los `*_statsmodels.log`.
+- **Decisión:** los CSV y logs regenerados con `scipy`/`statsmodels` son la referencia; el historial de git conserva los antiguos.
+- **Estado / pendientes:** sin pendientes.
+
 ## 2026-10-23 — Pruebas estadísticas sobre scipy/statsmodels
 - **Cambios:** `evaluation/significance.py` pasa a envoltorios de `scipy.stats` y `statsmodels` (intervalo con `DescrStatsW`, Holm/BH con `multipletests`, permutación con `permutation_test`); `requirements.txt` declara `scipy` y `statsmodels`; el README lo refleja.
 - **Decisión:** se elimina el código propio de intervalo, correcciones y permutación; la API pública se conserva para no tocar los experimentos.
