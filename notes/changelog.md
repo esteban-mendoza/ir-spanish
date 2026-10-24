@@ -26,7 +26,7 @@ Protocolo obligatorio para todo agente:
 ## 2026-10-23 — Pruebas estadísticas sobre scipy/statsmodels
 - **Cambios:** `evaluation/significance.py` pasa a envoltorios de `scipy.stats` y `statsmodels` (intervalo con `DescrStatsW`, Holm/BH con `multipletests`, permutación con `permutation_test`); `requirements.txt` declara `scipy` y `statsmodels`; el README lo refleja.
 - **Decisión:** se elimina el código propio de intervalo, correcciones y permutación; la API pública se conserva para no tocar los experimentos.
-- **Estado / pendientes:** regenerar los CSV de E1–E3; los valores de permutación cambian por el generador, las decisiones no.
+- **Estado / pendientes:** CSV de E1–E3 regenerados; las columnas deterministas no cambian y solo se movió `p_permutation`.
 
 ## 2026-10-22 — Dos métricas primarias y resultados de Recall@100
 - **Cambios:** `evaluation/significance.py` añade `paired_mean_ci`; `compare.py` reporta IC; `e2.py` y `e3.py` aceptan `--metric`/`--suffix`; nuevo `e1_recall.py`; `results/evaluation/` con `e1_recall.*`, `e2_*_recall.*` y `e3_recall.*`, y sus logs.

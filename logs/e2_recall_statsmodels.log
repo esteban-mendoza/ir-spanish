@@ -1,0 +1,14 @@
+17:00:11 | INFO | Loading faiss with AVX512 support.
+17:00:11 | INFO | Successfully loaded faiss with AVX512 support.
+17:00:14 | INFO | ⏱  START: Loading cached pruned qrels
+17:00:14 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.3s)
+17:00:19 | INFO | Loading CombMNZ from /home/jmendoza/.cache/messirve_embeddings/fusions_stage_b/combmnz__e5-large+bge-m3+jina-v5-small.lz4
+17:01:09 | INFO | Loading RRF from /home/jmendoza/.cache/messirve_embeddings/fusions_stage_b/rrf__e5-large+bge-m3+jina-v5-small.lz4
+17:01:54 | INFO | Loading ISR from /home/jmendoza/.cache/messirve_embeddings/fusions_stage_b/isr__e5-large+bge-m3+jina-v5-small.lz4
+17:02:38 | INFO | Loading RBC from /home/jmendoza/.cache/messirve_embeddings/fusions_stage_b/rbc__e5-large+bge-m3+jina-v5-small.lz4
+17:03:22 | INFO | Loading BordaFuse from /home/jmendoza/.cache/messirve_embeddings/fusions_stage_b/bordafuse__e5-large+bge-m3+jina-v5-small.lz4
+17:04:08 | INFO | Loading Condorcet from /home/jmendoza/.cache/messirve_embeddings/fusions_stage_b_condorcet/condorcet__e5-large+bge-m3+jina-v5-small.lz4
+17:53:08 | INFO | holm: /home/jmendoza/ir-spanish/results/evaluation/e2_holm_recall.csv
+17:53:08 | INFO | holm: /home/jmendoza/ir-spanish/results/evaluation/e2_holm_recall.md
+17:53:08 | INFO | bh: /home/jmendoza/ir-spanish/results/evaluation/e2_bh_recall.csv
+17:53:08 | INFO | bh: /home/jmendoza/ir-spanish/results/evaluation/e2_bh_recall.md

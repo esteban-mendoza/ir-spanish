@@ -1,0 +1,18 @@
+14:45:19 | INFO | Loading faiss with AVX512 support.
+14:45:19 | INFO | Successfully loaded faiss with AVX512 support.
+14:45:32 | INFO | ⏱  START: Loading cached pruned qrels
+14:45:33 | INFO | ⏱  DONE:  Loading cached pruned qrels (1.4s)
+14:46:00 | INFO | Loading reference jina-v5-small from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+14:49:30 | INFO | Loading CombMNZ from /home/jmendoza/.cache/messirve_embeddings/fusions_stage_b/combmnz__e5-large+bge-m3+jina-v5-small.lz4
+15:14:46 | INFO | nDCG@10 sanity: CI [0.0391, 0.0413], p=0, p_Holm=0
+15:14:46 | INFO | Recall@100 principal: Δ=+0.0192 CI [0.0183, 0.0202] p=0 p_Holm=0
+15:14:46 | INFO | CombMNZ: Recall@100=0.9231 Δ=+0.0192 CI [0.0183, 0.0202]
+15:14:46 | INFO | Loading RBC from /home/jmendoza/.cache/messirve_embeddings/fusions_stage_b/rbc__e5-large+bge-m3+jina-v5-small.lz4
+15:17:22 | INFO | RBC: Recall@100=0.9206 Δ=+0.0167 CI [0.0157, 0.0177]
+15:17:22 | INFO | Loading RRF from /home/jmendoza/.cache/messirve_embeddings/fusions_stage_b/rrf__e5-large+bge-m3+jina-v5-small.lz4
+15:20:04 | INFO | RRF: Recall@100=0.9234 Δ=+0.0195 CI [0.0185, 0.0205]
+15:20:04 | INFO | Loading Condorcet from /home/jmendoza/.cache/messirve_embeddings/fusions_stage_b_condorcet/condorcet__e5-large+bge-m3+jina-v5-small.lz4
+15:23:47 | INFO | Condorcet: Recall@100=0.8918 Δ=-0.0120 CI [-0.0131, -0.0109]
+15:23:47 | INFO | Loading BordaFuse from /home/jmendoza/.cache/messirve_embeddings/fusions_stage_b/bordafuse__e5-large+bge-m3+jina-v5-small.lz4
+15:27:30 | INFO | BordaFuse: Recall@100=0.9234 Δ=+0.0195 CI [0.0186, 0.0205]
+15:27:30 | INFO | Loading ISR from /home/jmendoza/.cache/messirve_embeddings/fusions_stage_b/isr__e5-large+bge-m3+jina-v5-small.lz4

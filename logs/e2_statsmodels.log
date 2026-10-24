@@ -1,0 +1,10 @@
+14:45:19 | INFO | Loading faiss with AVX512 support.
+14:45:19 | INFO | Successfully loaded faiss with AVX512 support.
+14:45:32 | INFO | ⏱  START: Loading cached pruned qrels
+14:45:34 | INFO | ⏱  DONE:  Loading cached pruned qrels (1.5s)
+14:46:00 | INFO | Loading CombMNZ from /home/jmendoza/.cache/messirve_embeddings/fusions_stage_b/combmnz__e5-large+bge-m3+jina-v5-small.lz4
+14:50:14 | INFO | Loading RRF from /home/jmendoza/.cache/messirve_embeddings/fusions_stage_b/rrf__e5-large+bge-m3+jina-v5-small.lz4
+14:54:31 | INFO | Loading ISR from /home/jmendoza/.cache/messirve_embeddings/fusions_stage_b/isr__e5-large+bge-m3+jina-v5-small.lz4
+14:58:28 | INFO | Loading RBC from /home/jmendoza/.cache/messirve_embeddings/fusions_stage_b/rbc__e5-large+bge-m3+jina-v5-small.lz4
+15:02:06 | INFO | Loading BordaFuse from /home/jmendoza/.cache/messirve_embeddings/fusions_stage_b/bordafuse__e5-large+bge-m3+jina-v5-small.lz4
+15:05:22 | INFO | Loading Condorcet from /home/jmendoza/.cache/messirve_embeddings/fusions_stage_b_condorcet/condorcet__e5-large+bge-m3+jina-v5-small.lz4
