@@ -23,6 +23,10 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-10-26 — Se retira el pipeline que fusionaba y luego reordenaba
+- **Cambios:** se eliminan `rerankers/hybrid.py` y su log `logs/hybrid.log`, el comando de `scripts/cmds.sh` y la sección «Hybrid» de `notes/results.md`; la nota de eficiencia de E3 en `tesis/` deja de excluirlo.
+- **Decisión:** la variante que fusionaba con CombMNZ y reordenaba con `jina-reranker-v3` no está en los objetivos de investigación y nunca se reportó; el historial de git conserva el código y la corrida.
+
 ## 2026-10-23 — Limpieza de logs de evaluación
 - **Cambios:** se eliminan los seis logs `e1_significance.log`, `e1_recall.log`, `e2_significance.log`, `e2_recall.log`, `e3_significance.log` y `e3_recall.log`, previos a la migración estadística; quedan los `*_statsmodels.log`.
 - **Decisión:** los CSV y logs regenerados con `scipy`/`statsmodels` son la referencia; el historial de git conserva los antiguos.
