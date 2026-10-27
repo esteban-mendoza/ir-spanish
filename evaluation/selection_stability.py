@@ -42,8 +42,12 @@ def ranking(rows: list[dict], key: str) -> dict[str, float]:
     return {row[key]: float(row["ndcg@10"]) for row in rows}
 
 
+def top_names(values: dict[str, float], k: int) -> list[str]:
+    return sorted(values, key=lambda name: -values[name])[:k]
+
+
 def top_set(values: dict[str, float], k: int) -> set[str]:
-    return set(sorted(values, key=lambda name: -values[name])[:k])
+    return set(top_names(values, k))
 
 
 def correlations(common: list[str], pilot: dict[str, float], test: dict[str, float]) -> dict:
@@ -128,8 +132,8 @@ def main() -> None:
     lines.append("")
     lines.append(
         f"Spearman = {single_corr['spearman']:.4f}; Kendall = {single_corr['kendall']:.4f}. "
-        f"Top-3 piloto: {', '.join(sorted(top_set(pilot_single, 3)))}; "
-        f"top-3 prueba: {', '.join(sorted(top_set(test_single, 3)))}."
+        f"Top-3 piloto: {', '.join(top_names(pilot_single, 3))}; "
+        f"top-3 prueba: {', '.join(top_names(test_single, 3))}."
     )
     lines.append("")
     lines.append("## Fusiones (57 subconjuntos, CombMNZ)")
