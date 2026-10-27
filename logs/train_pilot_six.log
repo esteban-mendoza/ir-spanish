@@ -1,0 +1,366 @@
+===== 2026-10-26T23:14:06-06:00 — bm25 =====
+23:14:10 | INFO | Loading faiss with AVX512 support.
+23:14:10 | INFO | Successfully loaded faiss with AVX512 support.
+WARNING: Using incubator modules: jdk.incubator.vector
+[0;93m2026-10-26 23:14:14.401485036 [W:onnxruntime:Default, device_discovery.cc:325 DiscoverDevicesForPlatform] GPU device discovery failed: device_discovery.cc:92 ReadFileContents Failed to open file: "/sys/class/drm/card0/device/vendor"[m
+23:14:14 | INFO | ⏱  START: Loading pilot corpus from /home/jmendoza/.cache/messirve_embeddings/pilot/corpus
+23:14:14 | INFO | ⏱  DONE:  Loading pilot corpus from /home/jmendoza/.cache/messirve_embeddings/pilot/corpus (0.0s)
+23:14:14 | INFO | Pilot corpus: 317750 documents
+23:14:22 | INFO | ⏱  START: Loading cached pruned qrels
+23:14:23 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+23:14:27 | INFO | ⏱  START: Building Lucene index (317750 docs)
+2026-10-26 23:14:27,959 INFO  [main] index.SimpleIndexer (SimpleIndexer.java:130) - Using language-specific analyzer
+2026-10-26 23:14:27,963 INFO  [main] index.SimpleIndexer (SimpleIndexer.java:131) - Language: es
+oct 26, 2026 11:14:27 P. M. org.apache.lucene.store.MemorySegmentIndexInputProvider <init>
+INFORMACIÓN: Using MemorySegmentIndexInput with Java 21; to disable start with -Dorg.apache.lucene.store.MMapDirectory.enableMemorySegments=false
+23:14:44 | INFO | ⏱  DONE:  Building Lucene index (317750 docs) (16.2s)
+23:14:44 | INFO | Lucene index saved to /home/jmendoza/.cache/messirve_embeddings/bm25_pyserini/full_v1.2_q512_d512_nofilter_pilot/lucene_index
+23:14:44 | INFO | ⏱  START: BM25 search (156949 queries x top-100)
+23:24:10 | INFO | ⏱  DONE:  BM25 search (156949 queries x top-100) (566.7s)
+23:26:13 | INFO | Saved retrieval run to /home/jmendoza/.cache/messirve_embeddings/bm25_pyserini/full_v1.2_q512_d512_nofilter_pilot/retrieval_run.lz4
+23:26:29 | INFO | 
+23:26:29 | INFO | ╔══════════════════════════════════════════════════╗
+23:26:29 | INFO | ║  RESULTS — bm25_pyserini                         ║
+23:26:29 | INFO | ╠══════════════════════════════════════════════════╣
+23:26:29 | INFO | ║  ndcg@10          0.2251                         ║
+23:26:29 | INFO | ║  recall@100       0.6779                         ║
+23:26:29 | INFO | ║  mrr@10           0.1827                         ║
+23:26:29 | INFO | ║  map              0.1933                         ║
+23:26:29 | INFO | ║  precision@10     0.0376                         ║
+23:26:29 | INFO | ║  precision@50     0.0123                         ║
+23:26:29 | INFO | ╚══════════════════════════════════════════════════╝
+===== 2026-10-26T23:26:32-06:00 — splade-v3 =====
+23:26:38 | INFO | Loading faiss with AVX512 support.
+23:26:38 | INFO | Successfully loaded faiss with AVX512 support.
+23:26:38 | INFO | ⏱  START: Loading cached pruned qrels
+23:26:38 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+23:26:46 | INFO | ⏱  START: Sparse retrieval on 2 GPUs (156949 queries × top-100)
+23:26:46 | INFO |   Shard 0 on cuda:0: rows [0, 158875) — 0.3 GiB
+23:26:47 | INFO |   Shard 1 on cuda:1: rows [158875, 317750) — 0.3 GiB
+23:26:48 | INFO |   Searched 500 / 156949 queries
+23:26:48 | INFO |   Searched 1000 / 156949 queries
+23:26:49 | INFO |   Searched 1500 / 156949 queries
+23:26:49 | INFO |   Searched 2000 / 156949 queries
+23:26:50 | INFO |   Searched 2500 / 156949 queries
+23:26:50 | INFO |   Searched 3000 / 156949 queries
+23:26:50 | INFO |   Searched 3500 / 156949 queries
+23:26:51 | INFO |   Searched 4000 / 156949 queries
+23:26:51 | INFO |   Searched 4500 / 156949 queries
+23:26:51 | INFO |   Searched 5000 / 156949 queries
+23:26:52 | INFO |   Searched 5500 / 156949 queries
+23:26:52 | INFO |   Searched 6000 / 156949 queries
+23:26:53 | INFO |   Searched 6500 / 156949 queries
+23:26:53 | INFO |   Searched 7000 / 156949 queries
+23:26:53 | INFO |   Searched 7500 / 156949 queries
+23:26:54 | INFO |   Searched 8000 / 156949 queries
+23:26:54 | INFO |   Searched 8500 / 156949 queries
+23:26:55 | INFO |   Searched 9000 / 156949 queries
+23:26:55 | INFO |   Searched 9500 / 156949 queries
+23:26:55 | INFO |   Searched 10000 / 156949 queries
+23:26:56 | INFO |   Searched 10500 / 156949 queries
+23:26:56 | INFO |   Searched 11000 / 156949 queries
+23:26:56 | INFO |   Searched 11500 / 156949 queries
+23:26:57 | INFO |   Searched 12000 / 156949 queries
+23:26:57 | INFO |   Searched 12500 / 156949 queries
+23:26:58 | INFO |   Searched 13000 / 156949 queries
+23:26:58 | INFO |   Searched 13500 / 156949 queries
+23:26:58 | INFO |   Searched 14000 / 156949 queries
+23:26:59 | INFO |   Searched 14500 / 156949 queries
+23:26:59 | INFO |   Searched 15000 / 156949 queries
+23:26:59 | INFO |   Searched 15500 / 156949 queries
+23:27:00 | INFO |   Searched 16000 / 156949 queries
+23:27:00 | INFO |   Searched 16500 / 156949 queries
+23:27:01 | INFO |   Searched 17000 / 156949 queries
+23:27:01 | INFO |   Searched 17500 / 156949 queries
+23:27:01 | INFO |   Searched 18000 / 156949 queries
+23:27:02 | INFO |   Searched 18500 / 156949 queries
+23:27:02 | INFO |   Searched 19000 / 156949 queries
+23:27:02 | INFO |   Searched 19500 / 156949 queries
+23:27:03 | INFO |   Searched 20000 / 156949 queries
+23:27:03 | INFO |   Searched 20500 / 156949 queries
+23:27:04 | INFO |   Searched 21000 / 156949 queries
+23:27:04 | INFO |   Searched 21500 / 156949 queries
+23:27:04 | INFO |   Searched 22000 / 156949 queries
+23:27:05 | INFO |   Searched 22500 / 156949 queries
+23:27:05 | INFO |   Searched 23000 / 156949 queries
+23:27:06 | INFO |   Searched 23500 / 156949 queries
+23:27:06 | INFO |   Searched 24000 / 156949 queries
+23:27:06 | INFO |   Searched 24500 / 156949 queries
+23:27:07 | INFO |   Searched 25000 / 156949 queries
+23:27:07 | INFO |   Searched 25500 / 156949 queries
+23:27:07 | INFO |   Searched 26000 / 156949 queries
+23:27:08 | INFO |   Searched 26500 / 156949 queries
+23:27:08 | INFO |   Searched 27000 / 156949 queries
+23:27:09 | INFO |   Searched 27500 / 156949 queries
+23:27:09 | INFO |   Searched 28000 / 156949 queries
+23:27:09 | INFO |   Searched 28500 / 156949 queries
+23:27:10 | INFO |   Searched 29000 / 156949 queries
+23:27:10 | INFO |   Searched 29500 / 156949 queries
+23:27:11 | INFO |   Searched 30000 / 156949 queries
+23:27:11 | INFO |   Searched 30500 / 156949 queries
+23:27:11 | INFO |   Searched 31000 / 156949 queries
+23:27:12 | INFO |   Searched 31500 / 156949 queries
+23:27:12 | INFO |   Searched 32000 / 156949 queries
+23:27:12 | INFO |   Searched 32500 / 156949 queries
+23:27:13 | INFO |   Searched 33000 / 156949 queries
+23:27:13 | INFO |   Searched 33500 / 156949 queries
+23:27:14 | INFO |   Searched 34000 / 156949 queries
+23:27:14 | INFO |   Searched 34500 / 156949 queries
+23:27:14 | INFO |   Searched 35000 / 156949 queries
+23:27:15 | INFO |   Searched 35500 / 156949 queries
+23:27:15 | INFO |   Searched 36000 / 156949 queries
+23:27:16 | INFO |   Searched 36500 / 156949 queries
+23:27:16 | INFO |   Searched 37000 / 156949 queries
+23:27:16 | INFO |   Searched 37500 / 156949 queries
+23:27:17 | INFO |   Searched 38000 / 156949 queries
+23:27:17 | INFO |   Searched 38500 / 156949 queries
+23:27:17 | INFO |   Searched 39000 / 156949 queries
+23:27:18 | INFO |   Searched 39500 / 156949 queries
+23:27:18 | INFO |   Searched 40000 / 156949 queries
+23:27:19 | INFO |   Searched 40500 / 156949 queries
+23:27:19 | INFO |   Searched 41000 / 156949 queries
+23:27:19 | INFO |   Searched 41500 / 156949 queries
+23:27:20 | INFO |   Searched 42000 / 156949 queries
+23:27:20 | INFO |   Searched 42500 / 156949 queries
+23:27:21 | INFO |   Searched 43000 / 156949 queries
+23:27:21 | INFO |   Searched 43500 / 156949 queries
+23:27:21 | INFO |   Searched 44000 / 156949 queries
+23:27:22 | INFO |   Searched 44500 / 156949 queries
+23:27:22 | INFO |   Searched 45000 / 156949 queries
+23:27:22 | INFO |   Searched 45500 / 156949 queries
+23:27:23 | INFO |   Searched 46000 / 156949 queries
+23:27:23 | INFO |   Searched 46500 / 156949 queries
+23:27:24 | INFO |   Searched 47000 / 156949 queries
+23:27:24 | INFO |   Searched 47500 / 156949 queries
+23:27:24 | INFO |   Searched 48000 / 156949 queries
+23:27:25 | INFO |   Searched 48500 / 156949 queries
+23:27:25 | INFO |   Searched 49000 / 156949 queries
+23:27:26 | INFO |   Searched 49500 / 156949 queries
+23:27:26 | INFO |   Searched 50000 / 156949 queries
+23:27:26 | INFO |   Searched 50500 / 156949 queries
+23:27:27 | INFO |   Searched 51000 / 156949 queries
+23:27:27 | INFO |   Searched 51500 / 156949 queries
+23:27:28 | INFO |   Searched 52000 / 156949 queries
+23:27:28 | INFO |   Searched 52500 / 156949 queries
+23:27:28 | INFO |   Searched 53000 / 156949 queries
+23:27:29 | INFO |   Searched 53500 / 156949 queries
+23:27:29 | INFO |   Searched 54000 / 156949 queries
+23:27:30 | INFO |   Searched 54500 / 156949 queries
+23:27:30 | INFO |   Searched 55000 / 156949 queries
+23:27:30 | INFO |   Searched 55500 / 156949 queries
+23:27:31 | INFO |   Searched 56000 / 156949 queries
+23:27:31 | INFO |   Searched 56500 / 156949 queries
+23:27:32 | INFO |   Searched 57000 / 156949 queries
+23:27:32 | INFO |   Searched 57500 / 156949 queries
+23:27:32 | INFO |   Searched 58000 / 156949 queries
+23:27:33 | INFO |   Searched 58500 / 156949 queries
+23:27:33 | INFO |   Searched 59000 / 156949 queries
+23:27:34 | INFO |   Searched 59500 / 156949 queries
+23:27:34 | INFO |   Searched 60000 / 156949 queries
+23:27:34 | INFO |   Searched 60500 / 156949 queries
+23:27:35 | INFO |   Searched 61000 / 156949 queries
+23:27:35 | INFO |   Searched 61500 / 156949 queries
+23:27:36 | INFO |   Searched 62000 / 156949 queries
+23:27:36 | INFO |   Searched 62500 / 156949 queries
+23:27:36 | INFO |   Searched 63000 / 156949 queries
+23:27:37 | INFO |   Searched 63500 / 156949 queries
+23:27:37 | INFO |   Searched 64000 / 156949 queries
+23:27:38 | INFO |   Searched 64500 / 156949 queries
+23:27:38 | INFO |   Searched 65000 / 156949 queries
+23:27:38 | INFO |   Searched 65500 / 156949 queries
+23:27:39 | INFO |   Searched 66000 / 156949 queries
+23:27:39 | INFO |   Searched 66500 / 156949 queries
+23:27:40 | INFO |   Searched 67000 / 156949 queries
+23:27:40 | INFO |   Searched 67500 / 156949 queries
+23:27:40 | INFO |   Searched 68000 / 156949 queries
+23:27:41 | INFO |   Searched 68500 / 156949 queries
+23:27:41 | INFO |   Searched 69000 / 156949 queries
+23:27:42 | INFO |   Searched 69500 / 156949 queries
+23:27:42 | INFO |   Searched 70000 / 156949 queries
+23:27:42 | INFO |   Searched 70500 / 156949 queries
+23:27:43 | INFO |   Searched 71000 / 156949 queries
+23:27:43 | INFO |   Searched 71500 / 156949 queries
+23:27:44 | INFO |   Searched 72000 / 156949 queries
+23:27:44 | INFO |   Searched 72500 / 156949 queries
+23:27:44 | INFO |   Searched 73000 / 156949 queries
+23:27:45 | INFO |   Searched 73500 / 156949 queries
+23:27:45 | INFO |   Searched 74000 / 156949 queries
+23:27:46 | INFO |   Searched 74500 / 156949 queries
+23:27:46 | INFO |   Searched 75000 / 156949 queries
+23:27:46 | INFO |   Searched 75500 / 156949 queries
+23:27:47 | INFO |   Searched 76000 / 156949 queries
+23:27:47 | INFO |   Searched 76500 / 156949 queries
+23:27:48 | INFO |   Searched 77000 / 156949 queries
+23:27:48 | INFO |   Searched 77500 / 156949 queries
+23:27:48 | INFO |   Searched 78000 / 156949 queries
+23:27:49 | INFO |   Searched 78500 / 156949 queries
+23:27:49 | INFO |   Searched 79000 / 156949 queries
+23:27:50 | INFO |   Searched 79500 / 156949 queries
+23:27:50 | INFO |   Searched 80000 / 156949 queries
+23:27:50 | INFO |   Searched 80500 / 156949 queries
+23:27:51 | INFO |   Searched 81000 / 156949 queries
+23:27:51 | INFO |   Searched 81500 / 156949 queries
+23:27:52 | INFO |   Searched 82000 / 156949 queries
+23:27:52 | INFO |   Searched 82500 / 156949 queries
+23:27:52 | INFO |   Searched 83000 / 156949 queries
+23:27:53 | INFO |   Searched 83500 / 156949 queries
+23:27:53 | INFO |   Searched 84000 / 156949 queries
+23:27:54 | INFO |   Searched 84500 / 156949 queries
+23:27:54 | INFO |   Searched 85000 / 156949 queries
+23:27:54 | INFO |   Searched 85500 / 156949 queries
+23:27:55 | INFO |   Searched 86000 / 156949 queries
+23:27:55 | INFO |   Searched 86500 / 156949 queries
+23:27:56 | INFO |   Searched 87000 / 156949 queries
+23:27:56 | INFO |   Searched 87500 / 156949 queries
+23:27:56 | INFO |   Searched 88000 / 156949 queries
+23:27:57 | INFO |   Searched 88500 / 156949 queries
+23:27:57 | INFO |   Searched 89000 / 156949 queries
+23:27:58 | INFO |   Searched 89500 / 156949 queries
+23:27:58 | INFO |   Searched 90000 / 156949 queries
+23:27:59 | INFO |   Searched 90500 / 156949 queries
+23:27:59 | INFO |   Searched 91000 / 156949 queries
+23:27:59 | INFO |   Searched 91500 / 156949 queries
+23:28:00 | INFO |   Searched 92000 / 156949 queries
+23:28:00 | INFO |   Searched 92500 / 156949 queries
+23:28:01 | INFO |   Searched 93000 / 156949 queries
+23:28:01 | INFO |   Searched 93500 / 156949 queries
+23:28:01 | INFO |   Searched 94000 / 156949 queries
+23:28:02 | INFO |   Searched 94500 / 156949 queries
+23:28:02 | INFO |   Searched 95000 / 156949 queries
+23:28:03 | INFO |   Searched 95500 / 156949 queries
+23:28:03 | INFO |   Searched 96000 / 156949 queries
+23:28:03 | INFO |   Searched 96500 / 156949 queries
+23:28:04 | INFO |   Searched 97000 / 156949 queries
+23:28:04 | INFO |   Searched 97500 / 156949 queries
+23:28:05 | INFO |   Searched 98000 / 156949 queries
+23:28:05 | INFO |   Searched 98500 / 156949 queries
+23:28:05 | INFO |   Searched 99000 / 156949 queries
+23:28:06 | INFO |   Searched 99500 / 156949 queries
+23:28:06 | INFO |   Searched 100000 / 156949 queries
+23:28:07 | INFO |   Searched 100500 / 156949 queries
+23:28:07 | INFO |   Searched 101000 / 156949 queries
+23:28:07 | INFO |   Searched 101500 / 156949 queries
+23:28:08 | INFO |   Searched 102000 / 156949 queries
+23:28:08 | INFO |   Searched 102500 / 156949 queries
+23:28:09 | INFO |   Searched 103000 / 156949 queries
+23:28:09 | INFO |   Searched 103500 / 156949 queries
+23:28:10 | INFO |   Searched 104000 / 156949 queries
+23:28:10 | INFO |   Searched 104500 / 156949 queries
+23:28:10 | INFO |   Searched 105000 / 156949 queries
+23:28:11 | INFO |   Searched 105500 / 156949 queries
+23:28:11 | INFO |   Searched 106000 / 156949 queries
+23:28:12 | INFO |   Searched 106500 / 156949 queries
+23:28:12 | INFO |   Searched 107000 / 156949 queries
+23:28:12 | INFO |   Searched 107500 / 156949 queries
+23:28:13 | INFO |   Searched 108000 / 156949 queries
+23:28:13 | INFO |   Searched 108500 / 156949 queries
+23:28:14 | INFO |   Searched 109000 / 156949 queries
+23:28:14 | INFO |   Searched 109500 / 156949 queries
+23:28:14 | INFO |   Searched 110000 / 156949 queries
+23:28:15 | INFO |   Searched 110500 / 156949 queries
+23:28:15 | INFO |   Searched 111000 / 156949 queries
+23:28:16 | INFO |   Searched 111500 / 156949 queries
+23:28:16 | INFO |   Searched 112000 / 156949 queries
+23:28:17 | INFO |   Searched 112500 / 156949 queries
+23:28:17 | INFO |   Searched 113000 / 156949 queries
+23:28:17 | INFO |   Searched 113500 / 156949 queries
+23:28:18 | INFO |   Searched 114000 / 156949 queries
+23:28:18 | INFO |   Searched 114500 / 156949 queries
+23:28:19 | INFO |   Searched 115000 / 156949 queries
+23:28:19 | INFO |   Searched 115500 / 156949 queries
+23:28:19 | INFO |   Searched 116000 / 156949 queries
+23:28:20 | INFO |   Searched 116500 / 156949 queries
+23:28:20 | INFO |   Searched 117000 / 156949 queries
+23:28:21 | INFO |   Searched 117500 / 156949 queries
+23:28:21 | INFO |   Searched 118000 / 156949 queries
+23:28:22 | INFO |   Searched 118500 / 156949 queries
+23:28:22 | INFO |   Searched 119000 / 156949 queries
+23:28:22 | INFO |   Searched 119500 / 156949 queries
+23:28:23 | INFO |   Searched 120000 / 156949 queries
+23:28:23 | INFO |   Searched 120500 / 156949 queries
+23:28:24 | INFO |   Searched 121000 / 156949 queries
+23:28:24 | INFO |   Searched 121500 / 156949 queries
+23:28:25 | INFO |   Searched 122000 / 156949 queries
+23:28:25 | INFO |   Searched 122500 / 156949 queries
+23:28:25 | INFO |   Searched 123000 / 156949 queries
+23:28:26 | INFO |   Searched 123500 / 156949 queries
+23:28:26 | INFO |   Searched 124000 / 156949 queries
+23:28:27 | INFO |   Searched 124500 / 156949 queries
+23:28:27 | INFO |   Searched 125000 / 156949 queries
+23:28:28 | INFO |   Searched 125500 / 156949 queries
+23:28:28 | INFO |   Searched 126000 / 156949 queries
+23:28:28 | INFO |   Searched 126500 / 156949 queries
+23:28:29 | INFO |   Searched 127000 / 156949 queries
+23:28:29 | INFO |   Searched 127500 / 156949 queries
+23:28:30 | INFO |   Searched 128000 / 156949 queries
+23:28:30 | INFO |   Searched 128500 / 156949 queries
+23:28:31 | INFO |   Searched 129000 / 156949 queries
+23:28:31 | INFO |   Searched 129500 / 156949 queries
+23:28:32 | INFO |   Searched 130000 / 156949 queries
+23:28:32 | INFO |   Searched 130500 / 156949 queries
+23:28:32 | INFO |   Searched 131000 / 156949 queries
+23:28:33 | INFO |   Searched 131500 / 156949 queries
+23:28:33 | INFO |   Searched 132000 / 156949 queries
+23:28:34 | INFO |   Searched 132500 / 156949 queries
+23:28:34 | INFO |   Searched 133000 / 156949 queries
+23:28:35 | INFO |   Searched 133500 / 156949 queries
+23:28:35 | INFO |   Searched 134000 / 156949 queries
+23:28:35 | INFO |   Searched 134500 / 156949 queries
+23:28:36 | INFO |   Searched 135000 / 156949 queries
+23:28:36 | INFO |   Searched 135500 / 156949 queries
+23:28:37 | INFO |   Searched 136000 / 156949 queries
+23:28:37 | INFO |   Searched 136500 / 156949 queries
+23:28:38 | INFO |   Searched 137000 / 156949 queries
+23:28:38 | INFO |   Searched 137500 / 156949 queries
+23:28:38 | INFO |   Searched 138000 / 156949 queries
+23:28:39 | INFO |   Searched 138500 / 156949 queries
+23:28:39 | INFO |   Searched 139000 / 156949 queries
+23:28:40 | INFO |   Searched 139500 / 156949 queries
+23:28:40 | INFO |   Searched 140000 / 156949 queries
+23:28:41 | INFO |   Searched 140500 / 156949 queries
+23:28:41 | INFO |   Searched 141000 / 156949 queries
+23:28:41 | INFO |   Searched 141500 / 156949 queries
+23:28:42 | INFO |   Searched 142000 / 156949 queries
+23:28:42 | INFO |   Searched 142500 / 156949 queries
+23:28:43 | INFO |   Searched 143000 / 156949 queries
+23:28:43 | INFO |   Searched 143500 / 156949 queries
+23:28:44 | INFO |   Searched 144000 / 156949 queries
+23:28:44 | INFO |   Searched 144500 / 156949 queries
+23:28:44 | INFO |   Searched 145000 / 156949 queries
+23:28:45 | INFO |   Searched 145500 / 156949 queries
+23:28:45 | INFO |   Searched 146000 / 156949 queries
+23:28:46 | INFO |   Searched 146500 / 156949 queries
+23:28:46 | INFO |   Searched 147000 / 156949 queries
+23:28:47 | INFO |   Searched 147500 / 156949 queries
+23:28:47 | INFO |   Searched 148000 / 156949 queries
+23:28:48 | INFO |   Searched 148500 / 156949 queries
+23:28:48 | INFO |   Searched 149000 / 156949 queries
+23:28:48 | INFO |   Searched 149500 / 156949 queries
+23:28:49 | INFO |   Searched 150000 / 156949 queries
+23:28:49 | INFO |   Searched 150500 / 156949 queries
+23:28:50 | INFO |   Searched 151000 / 156949 queries
+23:28:50 | INFO |   Searched 151500 / 156949 queries
+23:28:51 | INFO |   Searched 152000 / 156949 queries
+23:28:51 | INFO |   Searched 152500 / 156949 queries
+23:28:51 | INFO |   Searched 153000 / 156949 queries
+23:28:52 | INFO |   Searched 153500 / 156949 queries
+23:28:52 | INFO |   Searched 154000 / 156949 queries
+23:28:53 | INFO |   Searched 154500 / 156949 queries
+23:28:53 | INFO |   Searched 155000 / 156949 queries
+23:28:54 | INFO |   Searched 155500 / 156949 queries
+23:28:54 | INFO |   Searched 156000 / 156949 queries
+23:28:54 | INFO |   Searched 156500 / 156949 queries
+23:28:55 | INFO | ⏱  DONE:  Sparse retrieval on 2 GPUs (156949 queries × top-100) (129.2s)
+23:31:02 | INFO | Saved retrieval run to /home/jmendoza/.cache/messirve_embeddings/naver__splade-v3/full_v1.2_q512_d512_nofilter_pilot/retrieval_run.lz4
+23:31:16 | INFO | 
+23:31:16 | INFO | ╔══════════════════════════════════════════════════╗
+23:31:16 | INFO | ║  RESULTS — splade-v3                             ║
+23:31:16 | INFO | ╠══════════════════════════════════════════════════╣
+23:31:16 | INFO | ║  ndcg@10          0.2380                         ║
+23:31:16 | INFO | ║  recall@100       0.6928                         ║
+23:31:16 | INFO | ║  mrr@10           0.1925                         ║
+23:31:16 | INFO | ║  map              0.2028                         ║
+23:31:16 | INFO | ║  precision@10     0.0400                         ║
+23:31:16 | INFO | ║  precision@50     0.0127                         ║
+23:31:16 | INFO | ╚══════════════════════════════════════════════════╝
+===== 2026-10-26T23:31:20-06:00 — done =====

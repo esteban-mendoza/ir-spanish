@@ -47,6 +47,20 @@
       "ndcg@10": 0.5316874032711718,
       "recall@100": 0.9306510395096497,
       "rank": 4
+    },
+    {
+      "model": "splade-v3",
+      "family": "disperso",
+      "ndcg@10": 0.23803630825045452,
+      "recall@100": 0.6927985099193581,
+      "rank": 5
+    },
+    {
+      "model": "bm25",
+      "family": "léxico",
+      "ndcg@10": 0.22514283492579745,
+      "recall@100": 0.6778977035002878,
+      "rank": 6
     }
   ],
   "top_fusions": [
@@ -55,41 +69,62 @@
       "strategy": "combmnz",
       "ndcg@10": 0.625321,
       "recall@100": 0.980883,
-      "rank": 1
+      "per_query_path": "/home/jmendoza/.cache/messirve_embeddings/train_selection/per_query/combmnz__e5-large+bge-m3+jina-v5-small.npy",
+      "rank": 1,
+      "diff_vs_best": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0
     },
     {
       "combo": "bge-m3+jina-v5-small",
       "strategy": "combmnz",
       "ndcg@10": 0.621024,
       "recall@100": 0.978905,
-      "rank": 2
+      "per_query_path": "/home/jmendoza/.cache/messirve_embeddings/train_selection/per_query/combmnz__bge-m3+jina-v5-small.npy",
+      "rank": 2,
+      "diff_vs_best": -0.004299412254944346,
+      "ci_low": -0.005034148038235537,
+      "ci_high": -0.003564676471653073
     },
     {
       "combo": "qwen3-0.6b+e5-large+bge-m3+jina-v5-small",
       "strategy": "combmnz",
       "ndcg@10": 0.620665,
       "recall@100": 0.979755,
-      "rank": 3
+      "per_query_path": "/home/jmendoza/.cache/messirve_embeddings/train_selection/per_query/combmnz__qwen3-0.6b+e5-large+bge-m3+jina-v5-small.npy",
+      "rank": 3,
+      "diff_vs_best": -0.004657825945637795,
+      "ci_low": -0.005249428507456844,
+      "ci_high": -0.004066223383818731
     },
     {
       "combo": "e5-large+jina-v5-small",
       "strategy": "combmnz",
       "ndcg@10": 0.617238,
       "recall@100": 0.979166,
-      "rank": 4
+      "per_query_path": "/home/jmendoza/.cache/messirve_embeddings/train_selection/per_query/combmnz__e5-large+jina-v5-small.npy",
+      "rank": 4,
+      "diff_vs_best": -0.008086889104527373,
+      "ci_low": -0.008792662678931262,
+      "ci_high": -0.007381115530123547
     },
     {
       "combo": "qwen3-0.6b+bge-m3+jina-v5-small",
       "strategy": "combmnz",
       "ndcg@10": 0.61313,
       "recall@100": 0.977433,
-      "rank": 5
+      "per_query_path": "/home/jmendoza/.cache/messirve_embeddings/train_selection/per_query/combmnz__qwen3-0.6b+bge-m3+jina-v5-small.npy",
+      "rank": 5,
+      "diff_vs_best": -0.012197141212271334,
+      "ci_low": -0.013047413423572981,
+      "ci_high": -0.011346869000969763
     },
     {
       "combo": "qwen3-0.6b+e5-large+jina-v5-small",
       "strategy": "combmnz",
       "ndcg@10": 0.612356,
       "recall@100": 0.978144,
+      "per_query_path": "/home/jmendoza/.cache/messirve_embeddings/train_selection/per_query/combmnz__qwen3-0.6b+e5-large+jina-v5-small.npy",
       "rank": 6
     },
     {
@@ -97,27 +132,31 @@
       "strategy": "combmnz",
       "ndcg@10": 0.603249,
       "recall@100": 0.968822,
+      "per_query_path": "/home/jmendoza/.cache/messirve_embeddings/train_selection/per_query/combmnz__qwen3-0.6b+e5-large+bge-m3.npy",
       "rank": 7
     },
     {
-      "combo": "qwen3-0.6b+jina-v5-small",
+      "combo": "splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small",
       "strategy": "combmnz",
-      "ndcg@10": 0.594193,
-      "recall@100": 0.97347,
+      "ndcg@10": 0.603019,
+      "recall@100": 0.978891,
+      "per_query_path": "/home/jmendoza/.cache/messirve_embeddings/train_selection/per_query/combmnz__splade-v3+qwen3-0.6b+e5-large+bge-m3+jina-v5-small.npy",
       "rank": 8
     },
     {
-      "combo": "e5-large+bge-m3",
+      "combo": "splade-v3+e5-large+bge-m3+jina-v5-small",
       "strategy": "combmnz",
-      "ndcg@10": 0.59282,
-      "recall@100": 0.96612,
+      "ndcg@10": 0.597869,
+      "recall@100": 0.978904,
+      "per_query_path": "/home/jmendoza/.cache/messirve_embeddings/train_selection/per_query/combmnz__splade-v3+e5-large+bge-m3+jina-v5-small.npy",
       "rank": 9
     },
     {
-      "combo": "qwen3-0.6b+bge-m3",
+      "combo": "bm25+qwen3-0.6b+e5-large+bge-m3+jina-v5-small",
       "strategy": "combmnz",
-      "ndcg@10": 0.588129,
-      "recall@100": 0.955456,
+      "ndcg@10": 0.596972,
+      "recall@100": 0.979631,
+      "per_query_path": "/home/jmendoza/.cache/messirve_embeddings/train_selection/per_query/combmnz__bm25+qwen3-0.6b+e5-large+bge-m3+jina-v5-small.npy",
       "rank": 10
     }
   ],
@@ -126,25 +165,43 @@
       "strategy": "combmnz",
       "ndcg@10": 0.625321,
       "recall@100": 0.980883,
+      "per_query_path": "",
       "rank": 1
     },
     {
       "strategy": "rbc",
       "ndcg@10": 0.621999,
       "recall@100": 0.979885,
+      "per_query_path": "",
       "rank": 2
     },
     {
       "strategy": "rrf",
       "ndcg@10": 0.61859,
       "recall@100": 0.98055,
+      "per_query_path": "",
       "rank": 3
+    },
+    {
+      "strategy": "condorcet",
+      "ndcg@10": 0.618266,
+      "recall@100": 0.967774,
+      "per_query_path": "",
+      "rank": 4
     },
     {
       "strategy": "isr",
       "ndcg@10": 0.616275,
       "recall@100": 0.980554,
-      "rank": 4
+      "per_query_path": "",
+      "rank": 5
+    },
+    {
+      "strategy": "bordafuse",
+      "ndcg@10": 0.615387,
+      "recall@100": 0.980619,
+      "per_query_path": "",
+      "rank": 6
     }
   ],
   "trio": {
@@ -152,12 +209,17 @@
     "strategy": "combmnz",
     "ndcg@10": 0.625321,
     "recall@100": 0.980883,
-    "rank": 1
+    "per_query_path": "/home/jmendoza/.cache/messirve_embeddings/train_selection/per_query/combmnz__e5-large+bge-m3+jina-v5-small.npy",
+    "rank": 1,
+    "diff_vs_best": 0.0,
+    "ci_low": 0.0,
+    "ci_high": 0.0
   },
   "reference_algorithm": {
     "strategy": "combmnz",
     "ndcg@10": 0.625321,
     "recall@100": 0.980883,
+    "per_query_path": "",
     "rank": 1
   },
   "agreement": {

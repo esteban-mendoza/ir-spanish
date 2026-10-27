@@ -1,0 +1,7 @@
+rank,model,family,ndcg@10,recall@100
+1,jina-v5-small,denso,0.511468,0.903863
+2,bge-m3,denso,0.481796,0.874085
+3,e5-large,denso,0.467546,0.866644
+4,qwen3-0.6b,denso,0.446820,0.842294
+5,splade-v3,disperso,0.195554,0.572471
+6,bm25,léxico,0.184772,0.572457

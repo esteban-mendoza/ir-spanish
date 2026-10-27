@@ -1,0 +1,26 @@
+02:43:49 | INFO | Loading faiss with AVX512 support.
+02:43:49 | INFO | Successfully loaded faiss with AVX512 support.
+02:43:50 | INFO | Models (native lengths): e5-large[512/512], bge-m3[8192/8192], jina-v5-small[32768/32768]
+02:43:50 | INFO | Strategies: combmnz, rbc, rrf, isr, bordafuse, condorcet
+02:43:50 | INFO | Normalization: min-max
+02:43:50 | INFO | Combination sizes: 2..3
+02:43:50 | INFO | Loading run for e5-large from /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter_pilot/retrieval_run.lz4
+02:44:14 | INFO | Loading run for bge-m3 from /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-m3/full_v1.2_q8192_d8192_nofilter_pilot/retrieval_run.lz4
+02:44:37 | INFO | Loading run for jina-v5-small from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter_pilot/retrieval_run.lz4
+02:44:58 | INFO | ⏱  START: Loading cached pruned qrels
+02:44:58 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+02:45:02 | INFO | Total (combination, strategy) pairs: 6
+02:45:02 | INFO | [1/6] skip e5-large+bge-m3+jina-v5-small (combmnz)
+02:45:02 | INFO | [2/6] skip e5-large+bge-m3+jina-v5-small (rbc)
+02:45:02 | INFO | [3/6] skip e5-large+bge-m3+jina-v5-small (rrf)
+02:45:02 | INFO | [4/6] fusing e5-large+bge-m3+jina-v5-small (isr, -)
+02:47:15 | INFO |   e5-large+bge-m3+jina-v5-small (isr)                           ndcg@10=0.6163  recall@100=0.9806  mrr@10=0.5451  map=0.5485  p@10=0.0870  p@50=0.0198
+02:47:15 | INFO | [4/6] done e5-large+bge-m3+jina-v5-small (isr): nDCG@10=0.6163 Recall@100=0.9806 (133.7s)
+02:47:15 | INFO | [5/6] fusing e5-large+bge-m3+jina-v5-small (bordafuse, -)
+02:55:54 | INFO |   e5-large+bge-m3+jina-v5-small (bordafuse)                     ndcg@10=0.6154  recall@100=0.9806  mrr@10=0.5458  map=0.5494  p@10=0.0863  p@50=0.0198
+02:55:54 | INFO | [5/6] done e5-large+bge-m3+jina-v5-small (bordafuse): nDCG@10=0.6154 Recall@100=0.9806 (518.2s)
+02:55:54 | INFO | [6/6] fusing e5-large+bge-m3+jina-v5-small (condorcet, -)
+04:01:10 | INFO |   e5-large+bge-m3+jina-v5-small (condorcet)                     ndcg@10=0.6183  recall@100=0.9678  mrr@10=0.5485  map=0.5516  p@10=0.0867  p@50=0.0196
+04:01:10 | INFO | [6/6] done e5-large+bge-m3+jina-v5-small (condorcet): nDCG@10=0.6183 Recall@100=0.9678 (3916.6s)
+04:01:10 | INFO | CSV: results/train_pilot/algorithm_check_six/results.csv
+04:01:10 | INFO | Markdown: results/train_pilot/algorithm_check_six/results.md

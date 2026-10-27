@@ -1,0 +1,17 @@
+04:09:11 | INFO | Loading faiss with AVX512 support.
+04:09:11 | INFO | Successfully loaded faiss with AVX512 support.
+04:09:11 | INFO | ⏱  START: Loading training qrels
+04:09:11 | INFO | ⏱  START: Loading cached pruned qrels
+04:09:11 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+04:09:16 | INFO | ⏱  DONE:  Loading training qrels (5.2s)
+04:09:16 | INFO | ⏱  START: Evaluating the individual models
+04:09:16 | INFO | Loading run for bm25 from /home/jmendoza/.cache/messirve_embeddings/bm25_pyserini/full_v1.2_q512_d512_nofilter_pilot/retrieval_run.lz4
+04:09:40 | INFO | Loading run for splade-v3 from /home/jmendoza/.cache/messirve_embeddings/naver__splade-v3/full_v1.2_q512_d512_nofilter_pilot/retrieval_run.lz4
+04:10:02 | INFO | Loading run for qwen3-0.6b from /home/jmendoza/.cache/messirve_embeddings/Qwen__Qwen3-Embedding-0.6B/full_v1.2_q32768_d32768_nofilter_pilot/retrieval_run.lz4
+04:10:22 | INFO | Loading run for e5-large from /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter_pilot/retrieval_run.lz4
+04:10:44 | INFO | Loading run for bge-m3 from /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-m3/full_v1.2_q8192_d8192_nofilter_pilot/retrieval_run.lz4
+04:11:05 | INFO | Loading run for jina-v5-small from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter_pilot/retrieval_run.lz4
+04:12:54 | INFO | ⏱  DONE:  Evaluating the individual models (217.4s)
+04:12:54 | INFO | Report: /home/jmendoza/ir-spanish/results/train_pilot/selection.md
+04:12:54 | INFO | Single models: /home/jmendoza/ir-spanish/results/train_pilot/single_models.csv
+04:12:54 | INFO | Agreement: {'top3_matches': True, 'first_stage_matches': True, 'trio_is_best_fusion': True, 'reference_algorithm_is_best': True}
