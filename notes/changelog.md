@@ -23,6 +23,11 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-10-26 — Piloto denso de selección sobre entrenamiento
+- **Cambios:** `utils/data.py`, `utils/cache.py`, `utils/retrieval.py`, `rerankers/fuse_sweep.py`, `evaluation/train_selection.py`, `scripts/build_train_pilot.py`, `scripts/run_train_pilot.sh` y `scripts/run_train_pilot_analysis.sh`; `results/train_pilot/` y logs del piloto. El piloto usa 10 000 artículos y los cuatro modelos densos.
+- **Decisiones:** la regla de selección es el top-3 individual y CombMNZ como referencia; BM25 y SPLADE quedan fuera del piloto por Java 11 y por un *run* de SPLADE que no se guardó. El piloto no se usa como evidencia.
+- **Estado / pendientes:** el piloto coincide con el trío y CombMNZ; la fase definitiva (corpus completo, seis modelos) requiere JDK 21 para BM25, corregir la ruta de caché de `bm25.py` y revisar el guardado de SPLADE.
+
 ## 2026-10-26 — Se retira el pipeline que fusionaba y luego reordenaba
 - **Cambios:** se eliminan `rerankers/hybrid.py` y su log `logs/hybrid.log`, el comando de `scripts/cmds.sh` y la sección «Hybrid» de `notes/results.md`; la nota de eficiencia de E3 en `tesis/` deja de excluirlo.
 - **Decisión:** la variante que fusionaba con CombMNZ y reordenaba con `jina-reranker-v3` no está en los objetivos de investigación y nunca se reportó; el historial de git conserva el código y la corrida.

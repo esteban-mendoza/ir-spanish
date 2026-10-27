@@ -36,3 +36,12 @@ tlmgr list --only-installed
 # Jupyter tunnel
 jupyter lab --no-browser --port=8888
 ssh -N -L 8888:localhost:8888 iimas
+
+# Training pilot (closed corpus; see results/train_pilot/README.md)
+export JAVA_HOME=$HOME/jdk21/jdk-21.0.13+9
+export PATH=$JAVA_HOME/bin:$PATH
+cd ~/ir-spanish
+export MESSIRVE_PILOT=$HOME/.cache/messirve_embeddings/pilot
+python -m scripts.build_train_pilot --out-dir "$MESSIRVE_PILOT"
+bash scripts/run_train_pilot.sh
+bash scripts/run_train_pilot_analysis.sh

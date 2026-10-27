@@ -1,5 +1,20 @@
 # Results
 
+## Piloto de selección sobre entrenamiento (2026-10-26)
+
+Piloto exploratorio con un corpus cerrado de 10 000 artículos de entrenamiento (317 750 documentos, 156 949 consultas, 161 644 juicios; filtro `match_score == 1` y `expanded_search == False`). Incluye solo los cuatro modelos densos: BM25 y `splade-v3` quedaron fuera por problemas de entorno. **No es evidencia para la tesis**; las métricas absolutas están infladas por el corpus reducido.
+
+| modelo | nDCG@10 | Recall@100 |
+| --- | ---: | ---: |
+| `jina-v5-small` | 0.6075 | 0.9758 |
+| `bge-m3` | 0.5629 | 0.9477 |
+| `e5-large` | 0.5452 | 0.9513 |
+| `Qwen3-Embedding-0.6B` | 0.5317 | 0.9307 |
+
+El trío `e5-large` + `bge-m3` + `jina-v5-small` con CombMNZ es la mejor de las 11 fusiones densas (0.6253 / 0.9809), seguida de `bge-m3` + `jina-v5-small` (0.6210) y del cuarteto con `Qwen3` (0.6207). En la comprobación de algoritmos sobre el trío, CombMNZ (0.6253) supera a RBC (0.6220), RRF (0.6186) e ISR (0.6163). La regla de selección coincide con los sistemas reportados: top-3 individual, `jina-v5-small` como primera etapa y CombMNZ como referencia.
+
+Detalle, comandos y límites: `results/train_pilot/README.md`, `selection.md`, `sweep/results.csv` y `algorithm_check/results.csv`. La fase definitiva (corpus completo, seis modelos) queda pendiente; BM25 necesita JDK 21 y hay que corregir su ruta de caché, y SPLADE no guardó el *run* del piloto.
+
 ## Resultados previos
 
 | Model                         | nDCG@10 | Recall@100 |
