@@ -156,10 +156,10 @@ def write_markdown(
         lines.append("# Piloto de selección sobre la partición de entrenamiento")
         lines.append("")
         lines.append(
-            "> **Piloto exploratorio.** Corpus cerrado de "
+            "> **Piloto de selección.** Corpus cerrado de "
             f"{metadata['n_articles']} artículos y {metadata['n_documents']} documentos. "
-            "Las métricas absolutas no son comparables con las de prueba y este informe "
-            "no es evidencia para la tesis; sirve para validar la tubería y ver una primera señal."
+            "Las métricas absolutas no son comparables con las de prueba; el piloto es el "
+            "entorno de selección. La transferencia al corpus completo se mide en `stability.md`."
         )
     else:
         lines.append("# Selección sobre la partición de entrenamiento")
@@ -265,15 +265,15 @@ def write_markdown(
         f"**{'sí' if agreement['trio_is_best_fusion'] else 'no'}**."
     )
     lines.append(
-        f"- ¿El algoritmo de referencia es el mejor de los cuatro? "
+        f"- ¿El algoritmo de referencia es el mejor de los seis? "
         f"**{'sí' if agreement['reference_algorithm_is_best'] else 'no'}**."
     )
     if is_pilot:
         lines.append("")
         lines.append(
-            "En el piloto estas coincidencias son solo una señal: el corpus cerrado "
-            "puede cambiar el orden de los sistemas. La decisión definitiva requiere "
-            "el corpus completo."
+            "Estas coincidencias son la evidencia de selección. El análisis de "
+            "estabilidad (`stability.md`) comprueba que el orden se reproduce en la "
+            "partición de prueba; la diferencia del top-5 es la limitación residual."
         )
 
     path.write_text("\n".join(lines) + "\n")
