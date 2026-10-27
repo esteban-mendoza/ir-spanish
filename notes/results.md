@@ -1,8 +1,8 @@
 # Results
 
-## Piloto de selección sobre entrenamiento (2026-10-26)
+## Selección sobre el subconjunto piloto de entrenamiento (2026-10-27)
 
-Piloto exploratorio con un corpus cerrado de 10 000 artículos de entrenamiento (317 750 documentos, 156 949 consultas, 161 644 juicios; filtro `match_score == 1` y `expanded_search == False`). Incluye solo los cuatro modelos densos: BM25 y `splade-v3` quedaron fuera por problemas de entorno. **No es evidencia para la tesis**; las métricas absolutas están infladas por el corpus reducido.
+El subconjunto piloto de 10 000 artículos es el **entorno de selección**: 317 750 documentos, 156 949 consultas y 161 644 juicios, con el filtro `match_score == 1` y `expanded_search == False`. La partición de prueba se usa para evaluar y para el análisis descriptivo de estabilidad; no para elegir. No se usa la partición de entrenamiento completa.
 
 | modelo | nDCG@10 | Recall@100 |
 | --- | ---: | ---: |
@@ -10,10 +10,14 @@ Piloto exploratorio con un corpus cerrado de 10 000 artículos de entrenamiento 
 | `bge-m3` | 0.5629 | 0.9477 |
 | `e5-large` | 0.5452 | 0.9513 |
 | `Qwen3-Embedding-0.6B` | 0.5317 | 0.9307 |
+| `splade-v3` | 0.2380 | 0.6928 |
+| `BM25` | 0.2251 | 0.6779 |
 
-El trío `e5-large` + `bge-m3` + `jina-v5-small` con CombMNZ es la mejor de las 11 fusiones densas (0.6253 / 0.9809), seguida de `bge-m3` + `jina-v5-small` (0.6210) y del cuarteto con `Qwen3` (0.6207). En la comprobación de algoritmos sobre el trío, CombMNZ (0.6253) supera a RBC (0.6220), RRF (0.6186) e ISR (0.6163). La regla de selección coincide con los sistemas reportados: top-3 individual, `jina-v5-small` como primera etapa y CombMNZ como referencia.
+El trío `e5-large` + `bge-m3` + `jina-v5-small` con CombMNZ es la mejor de las 57 fusiones (0.6253 / 0.9809); la segunda es `bge-m3` + `jina-v5-small` (0.6210; Δ = −0.0043, IC 95 % [−0.0050, −0.0036]) y la tercera el cuarteto con `Qwen3` (0.6207; Δ = −0.0047, IC [−0.0052, −0.0041]). La ventaja es distinguible de cero pero menor que el umbral práctico de 0.01; la regla del top-3 individual y la simplicidad resuelven el empate. CombMNZ es el mejor de los seis algoritmos: 0.6253 frente a RBC 0.6220, RRF 0.6186, Condorcet 0.6183, ISR 0.6163 y BordaFuse 0.6154.
 
-Detalle, comandos y límites: `results/train_pilot/README.md`, `selection.md`, `sweep/results.csv` y `algorithm_check/results.csv`. La fase definitiva (corpus completo, seis modelos) queda pendiente; BM25 necesita JDK 21 y hay que corregir su ruta de caché, y SPLADE no guardó el *run* del piloto.
+La estabilidad piloto–prueba es alta: modelos individuales Spearman 1.0000 y Kendall 1.0000 (mismo orden); 57 fusiones Spearman 0.9726 y Kendall 0.8784 (trío mejor en ambos, top-3 3/3, top-5 3/5); algoritmos Spearman 0.9429 y Kendall 0.8667 (CombMNZ mejor en ambos). La diferencia del top-5 se debe a dos combinaciones mixtas con SPLADE que la prueba coloca 4.ª y 5.ª y el piloto más abajo; quedan por debajo del trío.
+
+Detalle: `results/train_pilot/README.md`, `selection.md`, `stability.md`, `sweep_all/` y `algorithm_check_six/`; métricas de prueba en `results/test_selection/`. La tesis debe reescribirse con esta selección; la limitación residual es el corpus cerrado.
 
 ## Resultados previos
 

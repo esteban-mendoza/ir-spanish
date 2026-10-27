@@ -23,6 +23,11 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-10-27 — Selección completa sobre el subconjunto piloto
+- **Cambios:** seis modelos en el piloto (BM25 con JDK 21 y SPLADE corregido), 57 subconjuntos, seis algoritmos sobre el trío, `results/train_pilot/` con `selection.md`, `stability.md`, `sweep_all/` y `algorithm_check_six/`, y `results/test_selection/` con las métricas de prueba.
+- **Decisiones:** el subconjunto de 10 000 artículos es el **entorno de selección**; la partición de prueba se usa para evaluar y para el análisis descriptivo de estabilidad; no se usa la partición de entrenamiento completa. Regla: top-3 individual + CombMNZ; coinciden con los sistemas reportados.
+- **Estado / pendientes:** estabilidad individual 1.0, fusiones 0.9726 y algoritmos 0.9429; top-1/top-3 coinciden; top-5 3/5 por combinaciones mixtas con SPLADE. La tesis debe reescribirse; la limitación residual es el corpus cerrado.
+
 ## 2026-10-26 — Piloto denso de selección sobre entrenamiento
 - **Cambios:** `utils/data.py`, `utils/cache.py`, `utils/retrieval.py`, `rerankers/fuse_sweep.py`, `evaluation/train_selection.py`, `scripts/build_train_pilot.py`, `scripts/run_train_pilot.sh` y `scripts/run_train_pilot_analysis.sh`; `results/train_pilot/` y logs del piloto. El piloto usa 10 000 artículos y los cuatro modelos densos.
 - **Decisiones:** la regla de selección es el top-3 individual y CombMNZ como referencia; BM25 y SPLADE quedan fuera del piloto por Java 11 y por un *run* de SPLADE que no se guardó. El piloto no se usa como evidencia.
