@@ -1,0 +1,479 @@
+===== 2026-10-26T20:06:54-06:00 — jina_v5_small =====
+20:07:02 | INFO | Loading faiss with AVX512 support.
+20:07:02 | INFO | Successfully loaded faiss with AVX512 support.
+20:07:02 | INFO |   qrels : ✓ cached
+20:07:02 | INFO |   doc   : ✗ incomplete  [0 chunks on disk]
+20:07:02 | INFO |   query : ✗ incomplete  [0 chunks on disk]
+20:07:02 | INFO | ⏱  START: Loading pilot corpus from /home/jmendoza/.cache/messirve_embeddings/pilot/corpus
+20:07:02 | INFO | ⏱  DONE:  Loading pilot corpus from /home/jmendoza/.cache/messirve_embeddings/pilot/corpus (0.0s)
+20:07:02 | INFO | Pilot corpus: 317750 documents
+20:07:11 | INFO | ⏱  START: Loading cached pruned qrels
+20:07:11 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+20:07:16 | INFO | ⏱  START: Loading SentenceTransformer
+20:07:16 | WARNING | The `tokenizer_kwargs` argument was renamed and is now deprecated. Please use `processor_kwargs` instead.
+20:07:16 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+20:07:16 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/modules.json "HTTP/1.1 200 OK"
+20:07:16 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+20:07:16 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/config_sentence_transformers.json "HTTP/1.1 200 OK"
+20:07:16 | INFO | Loading SentenceTransformer model from jinaai/jina-embeddings-v5-text-small-retrieval.
+20:07:16 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+20:07:16 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/config_sentence_transformers.json "HTTP/1.1 200 OK"
+20:07:17 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+20:07:17 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/README.md "HTTP/1.1 200 OK"
+20:07:17 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+20:07:17 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/modules.json "HTTP/1.1 200 OK"
+20:07:17 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_bert_config.json "HTTP/1.1 404 Not Found"
+20:07:17 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_roberta_config.json "HTTP/1.1 404 Not Found"
+20:07:17 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_distilbert_config.json "HTTP/1.1 404 Not Found"
+20:07:17 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_camembert_config.json "HTTP/1.1 404 Not Found"
+20:07:17 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_albert_config.json "HTTP/1.1 404 Not Found"
+20:07:17 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_xlm-roberta_config.json "HTTP/1.1 404 Not Found"
+20:07:17 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_xlnet_config.json "HTTP/1.1 404 Not Found"
+20:07:17 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+20:07:18 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+20:07:18 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/config.json "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:  50%|█████     | 155/310 [00:00<00:00, 1448.65it/s]Loading weights:  97%|█████████▋| 300/310 [00:00<00:00, 1378.10it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 1431.85it/s]
+20:07:18 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+20:07:18 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+20:07:18 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+20:07:19 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+20:07:19 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+20:07:19 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/tokenizer_config.json "HTTP/1.1 200 OK"
+20:07:19 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+20:07:19 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/config.json "HTTP/1.1 200 OK"
+20:07:19 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+20:07:19 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/config.json "HTTP/1.1 200 OK"
+20:07:19 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+20:07:19 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/tokenizer_config.json "HTTP/1.1 200 OK"
+20:07:19 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-embeddings-v5-text-small-retrieval/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+20:07:19 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-embeddings-v5-text-small-retrieval/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+20:07:22 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-embeddings-v5-text-small-retrieval "HTTP/1.1 200 OK"
+20:07:22 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+20:07:22 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+20:07:22 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-embeddings-v5-text-small-retrieval "HTTP/1.1 200 OK"
+20:07:22 | INFO | Loaded 2 prompts with these keys: ['query', 'document']
+20:07:22 | INFO | ⏱  DONE:  Loading SentenceTransformer (6.1s)
+20:07:22 | INFO | ⏱  START: Starting pool on ['cuda:0', 'cuda:1']
+20:07:22 | INFO | Starting multi-process pool on devices: cuda:0, cuda:1
+20:07:49 | INFO | Loading faiss with AVX512 support.
+20:07:49 | INFO | Successfully loaded faiss with AVX512 support.
+20:07:55 | INFO | Loading faiss with AVX512 support.
+20:07:55 | INFO | Successfully loaded faiss with AVX512 support.
+20:07:55 | INFO | ⏱  DONE:  Starting pool on ['cuda:0', 'cuda:1'] (33.7s)
+20:07:56 | INFO | ── Chunk 1/7 [0–49999] max_words=20 → seq=512 batch=128 ──
+20:07:56 | INFO | Switching max_seq_length 32768 → 512 — restarting pool
+20:07:56 | INFO | Starting multi-process pool on devices: cuda:0, cuda:1
+20:08:02 | INFO | Loading faiss with AVX512 support.
+20:08:02 | INFO | Successfully loaded faiss with AVX512 support.
+20:08:08 | INFO | Loading faiss with AVX512 support.
+20:08:08 | INFO | Successfully loaded faiss with AVX512 support.
+20:08:08 | WARNING | The `sentences` argument was renamed and is now deprecated. Please use `inputs` instead.
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:04<01:29,  4.72s/it]Chunks:  10%|█         | 2/20 [00:05<00:40,  2.27s/it]Chunks:  15%|█▌        | 3/20 [00:07<00:38,  2.29s/it]Chunks:  20%|██        | 4/20 [00:08<00:25,  1.61s/it]Chunks:  25%|██▌       | 5/20 [00:10<00:27,  1.86s/it]Chunks:  30%|███       | 6/20 [00:11<00:20,  1.49s/it]Chunks:  35%|███▌      | 7/20 [00:14<00:26,  2.05s/it]Chunks:  40%|████      | 8/20 [00:14<00:18,  1.52s/it]Chunks:  45%|████▌     | 9/20 [00:17<00:22,  2.02s/it]Chunks:  50%|█████     | 10/20 [00:18<00:15,  1.56s/it]Chunks:  55%|█████▌    | 11/20 [00:21<00:19,  2.15s/it]Chunks:  60%|██████    | 12/20 [00:22<00:13,  1.66s/it]Chunks:  65%|██████▌   | 13/20 [00:26<00:16,  2.30s/it]Chunks:  70%|███████   | 14/20 [00:26<00:10,  1.80s/it]Chunks:  75%|███████▌  | 15/20 [00:30<00:11,  2.37s/it]Chunks:  80%|████████  | 16/20 [00:31<00:07,  1.99s/it]Chunks:  85%|████████▌ | 17/20 [00:35<00:07,  2.56s/it]Chunks:  90%|█████████ | 18/20 [00:36<00:04,  2.05s/it]Chunks:  95%|█████████▌| 19/20 [00:41<00:02,  2.84s/it]Chunks: 100%|██████████| 20/20 [00:41<00:00,  2.05s/it]Chunks: 100%|██████████| 20/20 [00:41<00:00,  2.07s/it]
+20:08:49 | INFO |   Saved chunk_0000.npy (50000×1024, 195.3 MB)
+20:08:50 | INFO | ── Chunk 2/7 [50000–99999] max_words=38 → seq=512 batch=128 ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:05<01:38,  5.17s/it]Chunks:  10%|█         | 2/20 [00:05<00:40,  2.23s/it]Chunks:  15%|█▌        | 3/20 [00:11<01:04,  3.81s/it]Chunks:  25%|██▌       | 5/20 [00:16<00:49,  3.32s/it]Chunks:  30%|███       | 6/20 [00:17<00:35,  2.53s/it]Chunks:  35%|███▌      | 7/20 [00:23<00:45,  3.49s/it]Chunks:  40%|████      | 8/20 [00:23<00:31,  2.62s/it]Chunks:  45%|████▌     | 9/20 [00:30<00:40,  3.69s/it]Chunks:  50%|█████     | 10/20 [00:30<00:26,  2.65s/it]Chunks:  55%|█████▌    | 11/20 [00:37<00:35,  3.97s/it]Chunks:  60%|██████    | 12/20 [00:37<00:23,  2.97s/it]Chunks:  65%|██████▌   | 13/20 [00:45<00:30,  4.38s/it]Chunks:  70%|███████   | 14/20 [00:46<00:19,  3.32s/it]Chunks:  75%|███████▌  | 15/20 [00:52<00:21,  4.27s/it]Chunks:  80%|████████  | 16/20 [00:54<00:13,  3.41s/it]Chunks:  85%|████████▌ | 17/20 [01:01<00:13,  4.38s/it]Chunks:  90%|█████████ | 18/20 [01:02<00:07,  3.51s/it]Chunks:  95%|█████████▌| 19/20 [01:09<00:04,  4.44s/it]Chunks: 100%|██████████| 20/20 [01:10<00:00,  3.49s/it]Chunks: 100%|██████████| 20/20 [01:10<00:00,  3.52s/it]
+20:10:00 | INFO |   Saved chunk_0001.npy (50000×1024, 195.3 MB)
+20:10:01 | INFO | ── Chunk 3/7 [100000–149999] max_words=55 → seq=512 batch=128 ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:07<02:28,  7.84s/it]Chunks:  15%|█▌        | 3/20 [00:16<01:28,  5.18s/it]Chunks:  20%|██        | 4/20 [00:16<00:55,  3.44s/it]Chunks:  25%|██▌       | 5/20 [00:25<01:19,  5.31s/it]Chunks:  35%|███▌      | 7/20 [00:34<01:04,  4.95s/it]Chunks:  40%|████      | 8/20 [00:35<00:45,  3.75s/it]Chunks:  45%|████▌     | 9/20 [00:44<00:57,  5.26s/it]Chunks:  50%|█████     | 10/20 [00:44<00:38,  3.85s/it]Chunks:  55%|█████▌    | 11/20 [00:54<00:49,  5.50s/it]Chunks:  60%|██████    | 12/20 [00:54<00:32,  4.01s/it]Chunks:  65%|██████▌   | 13/20 [01:04<00:39,  5.69s/it]Chunks:  70%|███████   | 14/20 [01:04<00:24,  4.12s/it]Chunks:  75%|███████▌  | 15/20 [01:15<00:29,  5.97s/it]Chunks:  80%|████████  | 16/20 [01:15<00:16,  4.24s/it]Chunks:  85%|████████▌ | 17/20 [01:25<00:18,  6.02s/it]Chunks:  90%|█████████ | 18/20 [01:25<00:08,  4.34s/it]Chunks:  95%|█████████▌| 19/20 [01:36<00:06,  6.10s/it]Chunks: 100%|██████████| 20/20 [01:37<00:00,  4.65s/it]Chunks: 100%|██████████| 20/20 [01:37<00:00,  4.86s/it]
+20:11:38 | INFO |   Saved chunk_0002.npy (50000×1024, 195.3 MB)
+20:11:38 | INFO | ── Chunk 4/7 [150000–199999] max_words=75 → seq=512 batch=128 ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:10<03:25, 10.83s/it]Chunks:  10%|█         | 2/20 [00:11<01:25,  4.76s/it]Chunks:  15%|█▌        | 3/20 [00:22<02:07,  7.48s/it]Chunks:  20%|██        | 4/20 [00:24<01:24,  5.30s/it]Chunks:  25%|██▌       | 5/20 [00:33<01:44,  6.99s/it]Chunks:  30%|███       | 6/20 [00:36<01:15,  5.41s/it]Chunks:  35%|███▌      | 7/20 [00:46<01:29,  6.85s/it]Chunks:  40%|████      | 8/20 [00:48<01:06,  5.57s/it]Chunks:  45%|████▌     | 9/20 [00:59<01:16,  6.98s/it]Chunks:  50%|█████     | 10/20 [01:01<00:55,  5.55s/it]Chunks:  55%|█████▌    | 11/20 [01:11<01:03,  7.04s/it]Chunks:  60%|██████    | 12/20 [01:14<00:46,  5.76s/it]Chunks:  65%|██████▌   | 13/20 [01:25<00:50,  7.16s/it]Chunks:  70%|███████   | 14/20 [01:28<00:35,  5.92s/it]Chunks:  75%|███████▌  | 15/20 [01:38<00:36,  7.35s/it]Chunks:  80%|████████  | 16/20 [01:41<00:24,  6.01s/it]Chunks:  85%|████████▌ | 17/20 [01:52<00:22,  7.51s/it]Chunks:  90%|█████████ | 18/20 [01:56<00:13,  6.55s/it]Chunks:  95%|█████████▌| 19/20 [02:07<00:07,  7.61s/it]Chunks: 100%|██████████| 20/20 [02:10<00:00,  6.50s/it]Chunks: 100%|██████████| 20/20 [02:10<00:00,  6.55s/it]
+20:13:50 | INFO |   Saved chunk_0003.npy (50000×1024, 195.3 MB)
+20:13:50 | INFO | ── Chunk 5/7 [200000–249999] max_words=103 → seq=512 batch=128 ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:14<04:36, 14.58s/it]Chunks:  10%|█         | 2/20 [00:14<01:49,  6.09s/it]Chunks:  15%|█▌        | 3/20 [00:29<02:50, 10.01s/it]Chunks:  20%|██        | 4/20 [00:30<01:44,  6.52s/it]Chunks:  25%|██▌       | 5/20 [00:44<02:17,  9.18s/it]Chunks:  30%|███       | 6/20 [00:46<01:33,  6.66s/it]Chunks:  35%|███▌      | 7/20 [00:59<01:55,  8.88s/it]Chunks:  40%|████      | 8/20 [01:03<01:26,  7.17s/it]Chunks:  45%|████▌     | 9/20 [01:16<01:39,  9.06s/it]Chunks:  50%|█████     | 10/20 [01:20<01:14,  7.43s/it]Chunks:  55%|█████▌    | 11/20 [01:32<01:21,  9.07s/it]Chunks:  60%|██████    | 12/20 [01:37<01:02,  7.77s/it]Chunks:  65%|██████▌   | 13/20 [01:50<01:04,  9.24s/it]Chunks:  70%|███████   | 14/20 [01:55<00:47,  7.93s/it]Chunks:  75%|███████▌  | 15/20 [02:07<00:46,  9.36s/it]Chunks:  80%|████████  | 16/20 [02:13<00:32,  8.21s/it]Chunks:  85%|████████▌ | 17/20 [02:26<00:28,  9.65s/it]Chunks:  90%|█████████ | 18/20 [02:32<00:17,  8.53s/it]Chunks:  95%|█████████▌| 19/20 [02:45<00:09,  9.90s/it]Chunks: 100%|██████████| 20/20 [02:51<00:00,  8.65s/it]Chunks: 100%|██████████| 20/20 [02:51<00:00,  8.56s/it]
+20:16:41 | INFO |   Saved chunk_0004.npy (50000×1024, 195.3 MB)
+20:16:42 | INFO | ── Chunk 6/7 [250000–299999] max_words=169 → seq=512 batch=128 ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:19<06:11, 19.55s/it]Chunks:  10%|█         | 2/20 [00:19<02:29,  8.30s/it]Chunks:  15%|█▌        | 3/20 [00:39<03:47, 13.38s/it]Chunks:  20%|██        | 4/20 [00:40<02:14,  8.42s/it]Chunks:  25%|██▌       | 5/20 [00:59<03:06, 12.44s/it]Chunks:  30%|███       | 6/20 [01:01<02:03,  8.85s/it]Chunks:  35%|███▌      | 7/20 [01:22<02:44, 12.68s/it]Chunks:  40%|████      | 8/20 [01:24<01:50,  9.24s/it]Chunks:  45%|████▌     | 9/20 [01:44<02:21, 12.87s/it]Chunks:  50%|█████     | 10/20 [01:47<01:36,  9.66s/it]Chunks:  55%|█████▌    | 11/20 [02:08<01:58, 13.16s/it]Chunks:  60%|██████    | 12/20 [02:11<01:20, 10.02s/it]Chunks:  65%|██████▌   | 13/20 [02:33<01:36, 13.79s/it]Chunks:  70%|███████   | 14/20 [02:35<01:01, 10.23s/it]Chunks:  75%|███████▌  | 15/20 [03:01<01:13, 14.76s/it]Chunks:  80%|████████  | 16/20 [03:02<00:43, 10.78s/it]Chunks:  85%|████████▌ | 17/20 [03:29<00:46, 15.52s/it]Chunks:  90%|█████████ | 18/20 [03:31<00:23, 11.61s/it]Chunks:  95%|█████████▌| 19/20 [03:58<00:16, 16.14s/it]Chunks: 100%|██████████| 20/20 [04:01<00:00, 12.20s/it]Chunks: 100%|██████████| 20/20 [04:01<00:00, 12.07s/it]
+20:20:43 | INFO |   Saved chunk_0005.npy (50000×1024, 195.3 MB)
+20:20:43 | INFO | ── Chunk 7/7 [300000–317749] max_words=1245 → seq=2048 batch=32 ──
+20:20:43 | INFO | Switching max_seq_length 512 → 2048 — restarting pool
+20:20:44 | INFO | Starting multi-process pool on devices: cuda:0, cuda:1
+20:20:49 | INFO | Loading faiss with AVX512 support.
+20:20:49 | INFO | Successfully loaded faiss with AVX512 support.
+20:20:55 | INFO | Loading faiss with AVX512 support.
+20:20:55 | INFO | Successfully loaded faiss with AVX512 support.
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:13<04:10, 13.19s/it]Chunks:  10%|█         | 2/20 [00:13<01:40,  5.61s/it]Chunks:  15%|█▌        | 3/20 [00:24<02:16,  8.02s/it]Chunks:  20%|██        | 4/20 [00:24<01:20,  5.00s/it]Chunks:  25%|██▌       | 5/20 [00:35<01:48,  7.21s/it]Chunks:  30%|███       | 6/20 [00:36<01:09,  4.99s/it]Chunks:  35%|███▌      | 7/20 [00:48<01:32,  7.12s/it]Chunks:  40%|████      | 8/20 [00:48<00:59,  4.97s/it]Chunks:  45%|████▌     | 9/20 [01:01<01:21,  7.38s/it]Chunks:  55%|█████▌    | 11/20 [01:14<01:03,  7.10s/it]Chunks:  60%|██████    | 12/20 [01:14<00:42,  5.34s/it]Chunks:  65%|██████▌   | 13/20 [01:28<00:53,  7.67s/it]Chunks:  70%|███████   | 14/20 [01:29<00:34,  5.77s/it]Chunks:  75%|███████▌  | 15/20 [01:44<00:40,  8.20s/it]Chunks:  80%|████████  | 16/20 [01:45<00:25,  6.31s/it]Chunks:  85%|████████▌ | 17/20 [02:01<00:26,  8.96s/it]Chunks:  90%|█████████ | 18/20 [02:04<00:14,  7.27s/it]Chunks:  95%|█████████▌| 19/20 [02:20<00:10, 10.05s/it]Chunks: 100%|██████████| 20/20 [02:32<00:00, 10.47s/it]Chunks: 100%|██████████| 20/20 [02:32<00:00,  7.62s/it]
+20:23:28 | INFO |   Saved chunk_0006.npy (17750×1024, 69.3 MB)
+20:23:29 | INFO | Merging 7 chunks (317750 rows, 1024 dims) …
+20:23:31 | INFO | Switching max_seq_length 2048 → 32768 — restarting pool
+20:23:31 | INFO | Starting multi-process pool on devices: cuda:0, cuda:1
+20:23:37 | INFO | Loading faiss with AVX512 support.
+20:23:37 | INFO | Successfully loaded faiss with AVX512 support.
+20:23:43 | INFO | Loading faiss with AVX512 support.
+20:23:43 | INFO | Successfully loaded faiss with AVX512 support.
+Chunks:   0%|          | 0/32 [00:00<?, ?it/s]Chunks:   3%|▎         | 1/32 [00:05<02:44,  5.30s/it]Chunks:   6%|▋         | 2/32 [00:05<01:14,  2.50s/it]Chunks:   9%|▉         | 3/32 [00:08<01:11,  2.47s/it]Chunks:  12%|█▎        | 4/32 [00:08<00:48,  1.75s/it]Chunks:  16%|█▌        | 5/32 [00:11<00:52,  1.96s/it]Chunks:  19%|█▉        | 6/32 [00:11<00:39,  1.54s/it]Chunks:  22%|██▏       | 7/32 [00:14<00:46,  1.86s/it]Chunks:  25%|██▌       | 8/32 [00:15<00:35,  1.47s/it]Chunks:  28%|██▊       | 9/32 [00:18<00:44,  1.92s/it]Chunks:  31%|███▏      | 10/32 [00:18<00:33,  1.51s/it]Chunks:  34%|███▍      | 11/32 [00:21<00:42,  2.04s/it]Chunks:  38%|███▊      | 12/32 [00:22<00:30,  1.51s/it]Chunks:  41%|████      | 13/32 [00:24<00:36,  1.90s/it]Chunks:  44%|████▍     | 14/32 [00:25<00:24,  1.37s/it]Chunks:  47%|████▋     | 15/32 [00:27<00:30,  1.82s/it]Chunks:  50%|█████     | 16/32 [00:28<00:21,  1.37s/it]Chunks:  53%|█████▎    | 17/32 [00:31<00:27,  1.85s/it]Chunks:  56%|█████▋    | 18/32 [00:31<00:18,  1.34s/it]Chunks:  59%|█████▉    | 19/32 [00:34<00:23,  1.81s/it]Chunks:  62%|██████▎   | 20/32 [00:34<00:16,  1.35s/it]Chunks:  66%|██████▌   | 21/32 [00:37<00:19,  1.76s/it]Chunks:  69%|██████▉   | 22/32 [00:37<00:13,  1.33s/it]Chunks:  72%|███████▏  | 23/32 [00:40<00:15,  1.69s/it]Chunks:  75%|███████▌  | 24/32 [00:40<00:10,  1.36s/it]Chunks:  78%|███████▊  | 25/32 [00:43<00:11,  1.67s/it]Chunks:  81%|████████▏ | 26/32 [00:44<00:08,  1.44s/it]Chunks:  84%|████████▍ | 27/32 [00:46<00:08,  1.60s/it]Chunks:  88%|████████▊ | 28/32 [00:47<00:05,  1.46s/it]Chunks:  91%|█████████ | 29/32 [00:49<00:04,  1.62s/it]Chunks:  94%|█████████▍| 30/32 [00:50<00:03,  1.53s/it]Chunks:  97%|█████████▋| 31/32 [00:51<00:01,  1.42s/it]Chunks: 100%|██████████| 32/32 [00:52<00:00,  1.20s/it]Chunks: 100%|██████████| 32/32 [00:52<00:00,  1.64s/it]
+20:24:38 | INFO | Transferring FAISS index to 2 GPU(s) ...
+20:24:38 | INFO | FAISS index placed on GPU(s) (sharded, float16).
+20:24:38 | INFO | Running FAISS search (156949 queries x top-100) ...
+20:26:53 | INFO | Saved retrieval run to /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter_pilot/retrieval_run.lz4
+20:27:00 | INFO | 
+20:27:00 | INFO | ╔══════════════════════════════════════════════════╗
+20:27:00 | INFO | ║  RESULTS — jina-embeddings-v5-text-small-retrieval ║
+20:27:00 | INFO | ╠══════════════════════════════════════════════════╣
+20:27:00 | INFO | ║  ndcg@10          0.6075                         ║
+20:27:00 | INFO | ║  recall@100       0.9758                         ║
+20:27:00 | INFO | ║  mrr@10           0.5349                         ║
+20:27:00 | INFO | ║  map              0.5382                         ║
+20:27:00 | INFO | ║  precision@10     0.0865                         ║
+20:27:00 | INFO | ║  precision@50     0.0197                         ║
+20:27:00 | INFO | ╚══════════════════════════════════════════════════╝
+/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+===== 2026-10-26T20:27:03-06:00 — bge_m3 =====
+20:27:09 | INFO | Loading faiss with AVX512 support.
+20:27:09 | INFO | Successfully loaded faiss with AVX512 support.
+20:27:09 | INFO |   qrels : ✓ cached
+20:27:09 | INFO |   doc   : ✗ incomplete  [0 chunks on disk]
+20:27:09 | INFO |   query : ✗ incomplete  [0 chunks on disk]
+20:27:09 | INFO | ⏱  START: Loading pilot corpus from /home/jmendoza/.cache/messirve_embeddings/pilot/corpus
+20:27:09 | INFO | ⏱  DONE:  Loading pilot corpus from /home/jmendoza/.cache/messirve_embeddings/pilot/corpus (0.0s)
+20:27:09 | INFO | Pilot corpus: 317750 documents
+20:27:17 | INFO | ⏱  START: Loading cached pruned qrels
+20:27:18 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+20:27:22 | INFO | ⏱  START: Loading SentenceTransformer
+20:27:23 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+20:27:23 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/modules.json "HTTP/1.1 200 OK"
+20:27:23 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+20:27:23 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config_sentence_transformers.json "HTTP/1.1 200 OK"
+20:27:23 | INFO | Loading SentenceTransformer model from BAAI/bge-m3.
+20:27:23 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+20:27:23 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config_sentence_transformers.json "HTTP/1.1 200 OK"
+20:27:23 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+20:27:23 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/README.md "HTTP/1.1 200 OK"
+20:27:23 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+20:27:24 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/modules.json "HTTP/1.1 200 OK"
+20:27:24 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
+20:27:24 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/sentence_bert_config.json "HTTP/1.1 200 OK"
+20:27:24 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+20:27:24 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+20:27:24 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config.json "HTTP/1.1 200 OK"
+20:27:24 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/model.safetensors "HTTP/1.1 404 Not Found"
+20:27:24 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3 "HTTP/1.1 200 OK"
+20:27:24 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/commits/main "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]20:27:24 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/discussions?p=0 "HTTP/1.1 200 OK"
+20:27:25 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/commits/refs%2Fpr%2F130 "HTTP/1.1 200 OK"
+20:27:25 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/refs%2Fpr%2F130/model.safetensors.index.json "HTTP/1.1 404 Not Found"
+20:27:25 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/refs%2Fpr%2F130/model.safetensors "HTTP/1.1 302 Found"
+Loading weights:   1%|▏         | 5/391 [00:00<00:59,  6.51it/s]Loading weights: 100%|██████████| 391/391 [00:00<00:00, 486.10it/s]
+20:27:25 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+20:27:25 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+20:27:25 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+20:27:26 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+20:27:26 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+20:27:26 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/tokenizer_config.json "HTTP/1.1 200 OK"
+20:27:26 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+20:27:26 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config.json "HTTP/1.1 200 OK"
+20:27:26 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+20:27:26 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config.json "HTTP/1.1 200 OK"
+20:27:26 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+20:27:26 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/tokenizer_config.json "HTTP/1.1 200 OK"
+20:27:26 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+20:27:26 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+20:27:29 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3 "HTTP/1.1 200 OK"
+20:27:29 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+20:27:29 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+20:27:29 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3 "HTTP/1.1 200 OK"
+20:27:29 | INFO | ⏱  DONE:  Loading SentenceTransformer (6.4s)
+20:27:29 | INFO | ⏱  START: Starting pool on ['cuda:0', 'cuda:1']
+20:27:29 | INFO | Starting multi-process pool on devices: cuda:0, cuda:1
+20:27:35 | INFO | Loading faiss with AVX512 support.
+20:27:35 | INFO | Successfully loaded faiss with AVX512 support.
+20:27:41 | INFO | Loading faiss with AVX512 support.
+20:27:41 | INFO | Successfully loaded faiss with AVX512 support.
+20:27:41 | INFO | ⏱  DONE:  Starting pool on ['cuda:0', 'cuda:1'] (12.5s)
+20:27:42 | INFO | ── Chunk 1/7 [0–49999] max_words=20 → seq=512 batch=128 ──
+20:27:42 | INFO | Switching max_seq_length 8192 → 512 — restarting pool
+20:27:42 | INFO | Starting multi-process pool on devices: cuda:0, cuda:1
+20:27:47 | INFO | Loading faiss with AVX512 support.
+20:27:47 | INFO | Successfully loaded faiss with AVX512 support.
+20:27:54 | INFO | Loading faiss with AVX512 support.
+20:27:54 | INFO | Successfully loaded faiss with AVX512 support.
+20:27:54 | WARNING | The `sentences` argument was renamed and is now deprecated. Please use `inputs` instead.
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:02<00:52,  2.78s/it]Chunks:  10%|█         | 2/20 [00:03<00:33,  1.86s/it]Chunks:  20%|██        | 4/20 [00:05<00:17,  1.10s/it]Chunks:  30%|███       | 6/20 [00:06<00:12,  1.13it/s]Chunks:  35%|███▌      | 7/20 [00:06<00:09,  1.36it/s]Chunks:  40%|████      | 8/20 [00:07<00:09,  1.21it/s]Chunks:  45%|████▌     | 9/20 [00:08<00:07,  1.41it/s]Chunks:  50%|█████     | 10/20 [00:09<00:08,  1.19it/s]Chunks:  55%|█████▌    | 11/20 [00:09<00:06,  1.43it/s]Chunks:  60%|██████    | 12/20 [00:11<00:06,  1.15it/s]Chunks:  65%|██████▌   | 13/20 [00:11<00:05,  1.37it/s]Chunks:  70%|███████   | 14/20 [00:12<00:05,  1.07it/s]Chunks:  75%|███████▌  | 15/20 [00:13<00:03,  1.28it/s]Chunks:  80%|████████  | 16/20 [00:14<00:03,  1.02it/s]Chunks:  85%|████████▌ | 17/20 [00:15<00:02,  1.19it/s]Chunks:  90%|█████████ | 18/20 [00:16<00:02,  1.02s/it]Chunks:  95%|█████████▌| 19/20 [00:17<00:00,  1.12it/s]Chunks: 100%|██████████| 20/20 [00:18<00:00,  1.01it/s]Chunks: 100%|██████████| 20/20 [00:18<00:00,  1.07it/s]
+20:28:13 | INFO |   Saved chunk_0000.npy (50000×1024, 195.3 MB)
+20:28:13 | INFO | ── Chunk 2/7 [50000–99999] max_words=38 → seq=512 batch=128 ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:02<00:41,  2.19s/it]Chunks:  15%|█▌        | 3/20 [00:04<00:24,  1.41s/it]Chunks:  20%|██        | 4/20 [00:04<00:15,  1.02it/s]Chunks:  25%|██▌       | 5/20 [00:06<00:20,  1.37s/it]Chunks:  30%|███       | 6/20 [00:07<00:14,  1.03s/it]Chunks:  35%|███▌      | 7/20 [00:09<00:18,  1.41s/it]Chunks:  40%|████      | 8/20 [00:09<00:13,  1.09s/it]Chunks:  45%|████▌     | 9/20 [00:11<00:15,  1.45s/it]Chunks:  50%|█████     | 10/20 [00:12<00:11,  1.14s/it]Chunks:  55%|█████▌    | 11/20 [00:14<00:13,  1.53s/it]Chunks:  60%|██████    | 12/20 [00:15<00:09,  1.19s/it]Chunks:  65%|██████▌   | 13/20 [00:17<00:11,  1.59s/it]Chunks:  70%|███████   | 14/20 [00:18<00:07,  1.26s/it]Chunks:  75%|███████▌  | 15/20 [00:21<00:08,  1.78s/it]Chunks:  80%|████████  | 16/20 [00:21<00:05,  1.45s/it]Chunks:  85%|████████▌ | 17/20 [00:24<00:05,  1.77s/it]Chunks:  90%|█████████ | 18/20 [00:25<00:02,  1.46s/it]Chunks:  95%|█████████▌| 19/20 [00:27<00:01,  1.81s/it]Chunks: 100%|██████████| 20/20 [00:28<00:00,  1.43s/it]Chunks: 100%|██████████| 20/20 [00:28<00:00,  1.42s/it]
+20:28:42 | INFO |   Saved chunk_0001.npy (50000×1024, 195.3 MB)
+20:28:42 | INFO | ── Chunk 3/7 [100000–149999] max_words=55 → seq=512 batch=128 ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:03<01:03,  3.36s/it]Chunks:  15%|█▌        | 3/20 [00:06<00:36,  2.18s/it]Chunks:  25%|██▌       | 5/20 [00:10<00:29,  2.00s/it]Chunks:  30%|███       | 6/20 [00:10<00:21,  1.51s/it]Chunks:  35%|███▌      | 7/20 [00:14<00:27,  2.11s/it]Chunks:  45%|████▌     | 9/20 [00:18<00:22,  2.06s/it]Chunks:  55%|█████▌    | 11/20 [00:22<00:18,  2.06s/it]Chunks:  60%|██████    | 12/20 [00:22<00:13,  1.64s/it]Chunks:  65%|██████▌   | 13/20 [00:26<00:15,  2.20s/it]Chunks:  70%|███████   | 14/20 [00:26<00:10,  1.69s/it]Chunks:  75%|███████▌  | 15/20 [00:30<00:11,  2.32s/it]Chunks:  80%|████████  | 16/20 [00:31<00:06,  1.74s/it]Chunks:  85%|████████▌ | 17/20 [00:35<00:07,  2.45s/it]Chunks:  90%|█████████ | 18/20 [00:35<00:03,  1.81s/it]Chunks:  95%|█████████▌| 19/20 [00:39<00:02,  2.54s/it]Chunks: 100%|██████████| 20/20 [00:40<00:00,  1.85s/it]Chunks: 100%|██████████| 20/20 [00:40<00:00,  2.00s/it]
+20:29:22 | INFO |   Saved chunk_0002.npy (50000×1024, 195.3 MB)
+20:29:23 | INFO | ── Chunk 4/7 [150000–199999] max_words=75 → seq=512 batch=128 ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:04<01:28,  4.68s/it]Chunks:  15%|█▌        | 3/20 [00:09<00:51,  3.02s/it]Chunks:  20%|██        | 4/20 [00:09<00:32,  2.04s/it]Chunks:  25%|██▌       | 5/20 [00:14<00:43,  2.92s/it]Chunks:  30%|███       | 6/20 [00:14<00:29,  2.11s/it]Chunks:  35%|███▌      | 7/20 [00:19<00:38,  2.92s/it]Chunks:  40%|████      | 8/20 [00:20<00:25,  2.17s/it]Chunks:  45%|████▌     | 9/20 [00:24<00:32,  2.95s/it]Chunks:  50%|█████     | 10/20 [00:25<00:22,  2.22s/it]Chunks:  55%|█████▌    | 11/20 [00:30<00:27,  3.01s/it]Chunks:  60%|██████    | 12/20 [00:30<00:18,  2.32s/it]Chunks:  65%|██████▌   | 13/20 [00:35<00:21,  3.05s/it]Chunks:  70%|███████   | 14/20 [00:36<00:14,  2.38s/it]Chunks:  75%|███████▌  | 15/20 [00:41<00:15,  3.16s/it]Chunks:  80%|████████  | 16/20 [00:42<00:09,  2.48s/it]Chunks:  85%|████████▌ | 17/20 [00:47<00:09,  3.25s/it]Chunks:  90%|█████████ | 18/20 [00:48<00:05,  2.61s/it]Chunks:  95%|█████████▌| 19/20 [00:53<00:03,  3.32s/it]Chunks: 100%|██████████| 20/20 [00:54<00:00,  2.63s/it]Chunks: 100%|██████████| 20/20 [00:54<00:00,  2.72s/it]
+20:30:17 | INFO |   Saved chunk_0003.npy (50000×1024, 195.3 MB)
+20:30:18 | INFO | ── Chunk 5/7 [200000–249999] max_words=103 → seq=512 batch=128 ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:06<01:57,  6.20s/it]Chunks:  10%|█         | 2/20 [00:06<00:48,  2.69s/it]Chunks:  15%|█▌        | 3/20 [00:12<01:12,  4.29s/it]Chunks:  20%|██        | 4/20 [00:12<00:43,  2.71s/it]Chunks:  25%|██▌       | 5/20 [00:19<01:00,  4.00s/it]Chunks:  30%|███       | 6/20 [00:19<00:38,  2.77s/it]Chunks:  35%|███▌      | 7/20 [00:25<00:51,  3.96s/it]Chunks:  40%|████      | 8/20 [00:26<00:34,  2.88s/it]Chunks:  45%|████▌     | 9/20 [00:33<00:44,  4.05s/it]Chunks:  50%|█████     | 10/20 [00:33<00:29,  2.92s/it]Chunks:  55%|█████▌    | 11/20 [00:40<00:37,  4.13s/it]Chunks:  60%|██████    | 12/20 [00:40<00:24,  3.01s/it]Chunks:  65%|██████▌   | 13/20 [00:47<00:29,  4.21s/it]Chunks:  70%|███████   | 14/20 [00:48<00:19,  3.17s/it]Chunks:  75%|███████▌  | 15/20 [00:55<00:21,  4.25s/it]Chunks:  80%|████████  | 16/20 [00:56<00:12,  3.22s/it]Chunks:  85%|████████▌ | 17/20 [01:03<00:13,  4.38s/it]Chunks:  90%|█████████ | 18/20 [01:04<00:06,  3.32s/it]Chunks:  95%|█████████▌| 19/20 [01:11<00:04,  4.47s/it]Chunks: 100%|██████████| 20/20 [01:12<00:00,  3.37s/it]Chunks: 100%|██████████| 20/20 [01:12<00:00,  3.61s/it]
+20:31:30 | INFO |   Saved chunk_0004.npy (50000×1024, 195.3 MB)
+20:31:30 | INFO | ── Chunk 6/7 [250000–299999] max_words=169 → seq=512 batch=128 ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:08<02:41,  8.49s/it]Chunks:  15%|█▌        | 3/20 [00:17<01:31,  5.40s/it]Chunks:  20%|██        | 4/20 [00:17<00:58,  3.68s/it]Chunks:  25%|██▌       | 5/20 [00:25<01:18,  5.22s/it]Chunks:  30%|███       | 6/20 [00:26<00:53,  3.79s/it]Chunks:  35%|███▌      | 7/20 [00:35<01:08,  5.27s/it]Chunks:  40%|████      | 8/20 [00:36<00:47,  3.92s/it]Chunks:  45%|████▌     | 9/20 [00:44<00:59,  5.37s/it]Chunks:  50%|█████     | 10/20 [00:45<00:41,  4.10s/it]Chunks:  55%|█████▌    | 11/20 [00:54<00:49,  5.55s/it]Chunks:  60%|██████    | 12/20 [00:56<00:34,  4.31s/it]Chunks:  65%|██████▌   | 13/20 [01:05<00:40,  5.79s/it]Chunks:  70%|███████   | 14/20 [01:07<00:27,  4.55s/it]Chunks:  75%|███████▌  | 15/20 [01:16<00:29,  5.98s/it]Chunks:  80%|████████  | 16/20 [01:18<00:19,  4.83s/it]Chunks:  85%|████████▌ | 17/20 [01:28<00:19,  6.37s/it]Chunks:  90%|█████████ | 18/20 [01:31<00:10,  5.32s/it]Chunks:  95%|█████████▌| 19/20 [01:41<00:06,  6.61s/it]Chunks: 100%|██████████| 20/20 [01:43<00:00,  5.49s/it]Chunks: 100%|██████████| 20/20 [01:43<00:00,  5.20s/it]
+20:33:15 | INFO |   Saved chunk_0005.npy (50000×1024, 195.3 MB)
+20:33:15 | INFO | ── Chunk 7/7 [300000–317749] max_words=1245 → seq=2048 batch=32 ──
+20:33:15 | INFO | Switching max_seq_length 512 → 2048 — restarting pool
+20:33:15 | INFO | Starting multi-process pool on devices: cuda:0, cuda:1
+20:33:21 | INFO | Loading faiss with AVX512 support.
+20:33:21 | INFO | Successfully loaded faiss with AVX512 support.
+20:33:27 | INFO | Loading faiss with AVX512 support.
+20:33:27 | INFO | Successfully loaded faiss with AVX512 support.
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:06<01:59,  6.28s/it]Chunks:  10%|█         | 2/20 [00:07<00:58,  3.27s/it]Chunks:  15%|█▌        | 3/20 [00:11<00:58,  3.43s/it]Chunks:  20%|██        | 4/20 [00:12<00:39,  2.49s/it]Chunks:  25%|██▌       | 5/20 [00:15<00:43,  2.93s/it]Chunks:  30%|███       | 6/20 [00:16<00:32,  2.32s/it]Chunks:  35%|███▌      | 7/20 [00:20<00:37,  2.86s/it]Chunks:  40%|████      | 8/20 [00:21<00:27,  2.29s/it]Chunks:  45%|████▌     | 9/20 [00:26<00:31,  2.89s/it]Chunks:  50%|█████     | 10/20 [00:27<00:23,  2.34s/it]Chunks:  55%|█████▌    | 11/20 [00:31<00:26,  2.98s/it]Chunks:  60%|██████    | 12/20 [00:32<00:19,  2.43s/it]Chunks:  65%|██████▌   | 13/20 [00:37<00:21,  3.13s/it]Chunks:  70%|███████   | 14/20 [00:39<00:15,  2.60s/it]Chunks:  75%|███████▌  | 15/20 [00:44<00:16,  3.31s/it]Chunks:  80%|████████  | 16/20 [00:45<00:11,  2.84s/it]Chunks:  85%|████████▌ | 17/20 [00:51<00:10,  3.58s/it]Chunks:  90%|█████████ | 18/20 [00:53<00:06,  3.22s/it]Chunks:  95%|█████████▌| 19/20 [00:59<00:04,  4.07s/it]Chunks: 100%|██████████| 20/20 [01:04<00:00,  4.42s/it]Chunks: 100%|██████████| 20/20 [01:04<00:00,  3.24s/it]
+20:34:32 | INFO |   Saved chunk_0006.npy (17750×1024, 69.3 MB)
+20:34:32 | INFO | Merging 7 chunks (317750 rows, 1024 dims) …
+20:34:35 | INFO | Switching max_seq_length 2048 → 8192 — restarting pool
+20:34:35 | INFO | Starting multi-process pool on devices: cuda:0, cuda:1
+20:34:40 | INFO | Loading faiss with AVX512 support.
+20:34:40 | INFO | Successfully loaded faiss with AVX512 support.
+20:34:47 | INFO | Loading faiss with AVX512 support.
+20:34:47 | INFO | Successfully loaded faiss with AVX512 support.
+Chunks:   0%|          | 0/32 [00:00<?, ?it/s]Chunks:   3%|▎         | 1/32 [00:03<01:36,  3.13s/it]Chunks:   6%|▋         | 2/32 [00:04<00:59,  1.98s/it]Chunks:  12%|█▎        | 4/32 [00:05<00:32,  1.15s/it]Chunks:  19%|█▉        | 6/32 [00:06<00:23,  1.10it/s]Chunks:  22%|██▏       | 7/32 [00:07<00:17,  1.41it/s]Chunks:  25%|██▌       | 8/32 [00:08<00:19,  1.22it/s]Chunks:  28%|██▊       | 9/32 [00:08<00:14,  1.56it/s]Chunks:  31%|███▏      | 10/32 [00:09<00:18,  1.21it/s]Chunks:  38%|███▊      | 12/32 [00:10<00:14,  1.36it/s]Chunks:  44%|████▍     | 14/32 [00:12<00:12,  1.46it/s]Chunks:  47%|████▋     | 15/32 [00:12<00:11,  1.49it/s]Chunks:  50%|█████     | 16/32 [00:13<00:12,  1.25it/s]Chunks:  53%|█████▎    | 17/32 [00:14<00:09,  1.55it/s]Chunks:  56%|█████▋    | 18/32 [00:15<00:10,  1.31it/s]Chunks:  59%|█████▉    | 19/32 [00:15<00:08,  1.62it/s]Chunks:  62%|██████▎   | 20/32 [00:16<00:08,  1.34it/s]Chunks:  66%|██████▌   | 21/32 [00:16<00:06,  1.65it/s]Chunks:  69%|██████▉   | 22/32 [00:17<00:07,  1.40it/s]Chunks:  72%|███████▏  | 23/32 [00:18<00:05,  1.70it/s]Chunks:  75%|███████▌  | 24/32 [00:18<00:05,  1.42it/s]Chunks:  78%|███████▊  | 25/32 [00:19<00:03,  1.78it/s]Chunks:  81%|████████▏ | 26/32 [00:20<00:04,  1.39it/s]Chunks:  84%|████████▍ | 27/32 [00:20<00:02,  1.81it/s]Chunks:  88%|████████▊ | 28/32 [00:21<00:02,  1.40it/s]Chunks:  91%|█████████ | 29/32 [00:21<00:01,  1.78it/s]Chunks:  94%|█████████▍| 30/32 [00:22<00:01,  1.37it/s]Chunks:  97%|█████████▋| 31/32 [00:23<00:00,  1.73it/s]Chunks: 100%|██████████| 32/32 [00:23<00:00,  2.14it/s]Chunks: 100%|██████████| 32/32 [00:23<00:00,  1.37it/s]
+20:35:13 | INFO | Transferring FAISS index to 2 GPU(s) ...
+20:35:14 | INFO | FAISS index placed on GPU(s) (sharded, float16).
+20:35:14 | INFO | Running FAISS search (156949 queries x top-100) ...
+20:37:29 | INFO | Saved retrieval run to /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-m3/full_v1.2_q8192_d8192_nofilter_pilot/retrieval_run.lz4
+20:37:36 | INFO | 
+20:37:36 | INFO | ╔══════════════════════════════════════════════════╗
+20:37:36 | INFO | ║  RESULTS — bge-m3                                ║
+20:37:36 | INFO | ╠══════════════════════════════════════════════════╣
+20:37:36 | INFO | ║  ndcg@10          0.5629                         ║
+20:37:36 | INFO | ║  recall@100       0.9477                         ║
+20:37:36 | INFO | ║  mrr@10           0.4941                         ║
+20:37:36 | INFO | ║  map              0.4984                         ║
+20:37:36 | INFO | ║  precision@10     0.0808                         ║
+20:37:36 | INFO | ║  precision@50     0.0190                         ║
+20:37:36 | INFO | ╚══════════════════════════════════════════════════╝
+/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+===== 2026-10-26T20:37:40-06:00 — e5_large =====
+20:37:45 | INFO | Loading faiss with AVX512 support.
+20:37:45 | INFO | Successfully loaded faiss with AVX512 support.
+20:37:45 | INFO |   qrels : ✓ cached
+20:37:45 | INFO |   doc   : ✗ incomplete  [0 chunks on disk]
+20:37:45 | INFO |   query : ✗ incomplete  [0 chunks on disk]
+20:37:45 | INFO | ⏱  START: Loading pilot corpus from /home/jmendoza/.cache/messirve_embeddings/pilot/corpus
+20:37:45 | INFO | ⏱  DONE:  Loading pilot corpus from /home/jmendoza/.cache/messirve_embeddings/pilot/corpus (0.0s)
+20:37:45 | INFO | Pilot corpus: 317750 documents
+20:37:54 | INFO | ⏱  START: Loading cached pruned qrels
+20:37:54 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+20:37:59 | INFO | ⏱  START: Loading SentenceTransformer
+20:37:59 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+20:37:59 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/modules.json "HTTP/1.1 200 OK"
+20:37:59 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+20:37:59 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/config_sentence_transformers.json "HTTP/1.1 200 OK"
+20:37:59 | INFO | Loading SentenceTransformer model from intfloat/multilingual-e5-large-instruct.
+20:37:59 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+20:37:59 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/config_sentence_transformers.json "HTTP/1.1 200 OK"
+20:37:59 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+20:38:00 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/README.md "HTTP/1.1 200 OK"
+20:38:00 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+20:38:00 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/modules.json "HTTP/1.1 200 OK"
+20:38:00 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/sentence_bert_config.json "HTTP/1.1 404 Not Found"
+20:38:00 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/sentence_roberta_config.json "HTTP/1.1 404 Not Found"
+20:38:00 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/sentence_distilbert_config.json "HTTP/1.1 404 Not Found"
+20:38:00 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/sentence_camembert_config.json "HTTP/1.1 404 Not Found"
+20:38:00 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/sentence_albert_config.json "HTTP/1.1 404 Not Found"
+20:38:00 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/sentence_xlm-roberta_config.json "HTTP/1.1 307 Temporary Redirect"
+20:38:00 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/sentence_xlm-roberta_config.json "HTTP/1.1 200 OK"
+20:38:00 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+20:38:00 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+20:38:01 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/config.json "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights:  65%|██████▌   | 256/391 [00:00<00:00, 2416.80it/s]Loading weights: 100%|██████████| 391/391 [00:00<00:00, 2246.93it/s]
+20:38:01 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+20:38:01 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+20:38:01 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+20:38:01 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+20:38:01 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+20:38:01 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/tokenizer_config.json "HTTP/1.1 200 OK"
+20:38:02 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+20:38:02 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/config.json "HTTP/1.1 200 OK"
+20:38:02 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+20:38:02 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/config.json "HTTP/1.1 200 OK"
+20:38:02 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+20:38:02 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/tokenizer_config.json "HTTP/1.1 200 OK"
+20:38:02 | INFO | HTTP Request: GET https://huggingface.co/api/models/intfloat/multilingual-e5-large-instruct/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+20:38:02 | INFO | HTTP Request: GET https://huggingface.co/api/models/intfloat/multilingual-e5-large-instruct/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+20:38:04 | INFO | HTTP Request: GET https://huggingface.co/api/models/intfloat/multilingual-e5-large-instruct "HTTP/1.1 200 OK"
+20:38:04 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+20:38:04 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+20:38:04 | INFO | HTTP Request: GET https://huggingface.co/api/models/intfloat/multilingual-e5-large-instruct "HTTP/1.1 200 OK"
+20:38:04 | INFO | ⏱  DONE:  Loading SentenceTransformer (5.8s)
+20:38:04 | INFO | ⏱  START: Starting pool on ['cuda:0', 'cuda:1']
+20:38:04 | INFO | Starting multi-process pool on devices: cuda:0, cuda:1
+20:38:11 | INFO | Loading faiss with AVX512 support.
+20:38:11 | INFO | Successfully loaded faiss with AVX512 support.
+20:38:17 | INFO | Loading faiss with AVX512 support.
+20:38:17 | INFO | Successfully loaded faiss with AVX512 support.
+20:38:17 | INFO | ⏱  DONE:  Starting pool on ['cuda:0', 'cuda:1'] (13.1s)
+20:38:18 | INFO | ── Chunk 1/7 [0–49999] max_words=20 → seq=512 batch=128 ──
+20:38:18 | WARNING | The `sentences` argument was renamed and is now deprecated. Please use `inputs` instead.
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:02<00:54,  2.85s/it]Chunks:  10%|█         | 2/20 [00:03<00:31,  1.76s/it]Chunks:  15%|█▌        | 3/20 [00:04<00:18,  1.07s/it]Chunks:  20%|██        | 4/20 [00:05<00:17,  1.09s/it]Chunks:  25%|██▌       | 5/20 [00:05<00:11,  1.32it/s]Chunks:  30%|███       | 6/20 [00:06<00:12,  1.13it/s]Chunks:  35%|███▌      | 7/20 [00:06<00:09,  1.38it/s]Chunks:  40%|████      | 8/20 [00:07<00:09,  1.21it/s]Chunks:  45%|████▌     | 9/20 [00:08<00:07,  1.40it/s]Chunks:  50%|█████     | 10/20 [00:09<00:08,  1.21it/s]Chunks:  55%|█████▌    | 11/20 [00:09<00:06,  1.42it/s]Chunks:  60%|██████    | 12/20 [00:11<00:07,  1.14it/s]Chunks:  65%|██████▌   | 13/20 [00:11<00:05,  1.36it/s]Chunks:  70%|███████   | 14/20 [00:13<00:05,  1.06it/s]Chunks:  75%|███████▌  | 15/20 [00:13<00:03,  1.30it/s]Chunks:  80%|████████  | 16/20 [00:14<00:03,  1.00it/s]Chunks:  85%|████████▌ | 17/20 [00:15<00:02,  1.21it/s]Chunks:  90%|█████████ | 18/20 [00:16<00:02,  1.04s/it]Chunks:  95%|█████████▌| 19/20 [00:17<00:00,  1.13it/s]Chunks: 100%|██████████| 20/20 [00:18<00:00,  1.00s/it]Chunks: 100%|██████████| 20/20 [00:18<00:00,  1.07it/s]
+20:38:37 | INFO |   Saved chunk_0000.npy (50000×1024, 195.3 MB)
+20:38:37 | INFO | ── Chunk 2/7 [50000–99999] max_words=38 → seq=512 batch=128 ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:02<00:41,  2.20s/it]Chunks:  15%|█▌        | 3/20 [00:04<00:24,  1.43s/it]Chunks:  25%|██▌       | 5/20 [00:06<00:19,  1.29s/it]Chunks:  30%|███       | 6/20 [00:07<00:14,  1.01s/it]Chunks:  35%|███▌      | 7/20 [00:09<00:18,  1.38s/it]Chunks:  40%|████      | 8/20 [00:09<00:12,  1.06s/it]Chunks:  45%|████▌     | 9/20 [00:12<00:15,  1.45s/it]Chunks:  50%|█████     | 10/20 [00:12<00:10,  1.10s/it]Chunks:  55%|█████▌    | 11/20 [00:14<00:13,  1.53s/it]Chunks:  60%|██████    | 12/20 [00:15<00:09,  1.18s/it]Chunks:  65%|██████▌   | 13/20 [00:17<00:11,  1.60s/it]Chunks:  70%|███████   | 14/20 [00:18<00:07,  1.25s/it]Chunks:  75%|███████▌  | 15/20 [00:21<00:09,  1.82s/it]Chunks:  80%|████████  | 16/20 [00:21<00:05,  1.43s/it]Chunks:  85%|████████▌ | 17/20 [00:24<00:05,  1.82s/it]Chunks:  90%|█████████ | 18/20 [00:25<00:02,  1.45s/it]Chunks:  95%|█████████▌| 19/20 [00:28<00:01,  1.87s/it]Chunks: 100%|██████████| 20/20 [00:28<00:00,  1.43s/it]Chunks: 100%|██████████| 20/20 [00:28<00:00,  1.43s/it]
+20:39:06 | INFO |   Saved chunk_0001.npy (50000×1024, 195.3 MB)
+20:39:06 | INFO | ── Chunk 3/7 [100000–149999] max_words=55 → seq=512 batch=128 ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:03<01:06,  3.49s/it]Chunks:  15%|█▌        | 3/20 [00:07<00:38,  2.24s/it]Chunks:  25%|██▌       | 5/20 [00:10<00:30,  2.02s/it]Chunks:  30%|███       | 6/20 [00:10<00:21,  1.52s/it]Chunks:  35%|███▌      | 7/20 [00:14<00:27,  2.13s/it]Chunks:  45%|████▌     | 9/20 [00:18<00:22,  2.07s/it]Chunks:  55%|█████▌    | 11/20 [00:22<00:18,  2.07s/it]Chunks:  60%|██████    | 12/20 [00:22<00:13,  1.66s/it]Chunks:  65%|██████▌   | 13/20 [00:26<00:15,  2.21s/it]Chunks:  70%|███████   | 14/20 [00:27<00:10,  1.73s/it]Chunks:  75%|███████▌  | 15/20 [00:31<00:11,  2.33s/it]Chunks:  80%|████████  | 16/20 [00:31<00:07,  1.78s/it]Chunks:  85%|████████▌ | 17/20 [00:35<00:07,  2.45s/it]Chunks:  90%|█████████ | 18/20 [00:35<00:03,  1.84s/it]Chunks:  95%|█████████▌| 19/20 [00:40<00:02,  2.53s/it]Chunks: 100%|██████████| 20/20 [00:40<00:00,  1.88s/it]Chunks: 100%|██████████| 20/20 [00:40<00:00,  2.02s/it]
+20:39:47 | INFO |   Saved chunk_0002.npy (50000×1024, 195.3 MB)
+20:39:47 | INFO | ── Chunk 4/7 [150000–199999] max_words=75 → seq=512 batch=128 ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:04<01:30,  4.76s/it]Chunks:  15%|█▌        | 3/20 [00:09<00:51,  3.01s/it]Chunks:  20%|██        | 4/20 [00:09<00:32,  2.06s/it]Chunks:  25%|██▌       | 5/20 [00:14<00:43,  2.92s/it]Chunks:  30%|███       | 6/20 [00:14<00:29,  2.13s/it]Chunks:  35%|███▌      | 7/20 [00:19<00:38,  2.93s/it]Chunks:  40%|████      | 8/20 [00:20<00:26,  2.18s/it]Chunks:  45%|████▌     | 9/20 [00:24<00:32,  2.96s/it]Chunks:  50%|█████     | 10/20 [00:25<00:22,  2.23s/it]Chunks:  55%|█████▌    | 11/20 [00:30<00:27,  3.02s/it]Chunks:  60%|██████    | 12/20 [00:31<00:18,  2.35s/it]Chunks:  65%|██████▌   | 13/20 [00:35<00:21,  3.04s/it]Chunks:  70%|███████   | 14/20 [00:36<00:14,  2.43s/it]Chunks:  75%|███████▌  | 15/20 [00:41<00:15,  3.14s/it]Chunks:  80%|████████  | 16/20 [00:42<00:10,  2.53s/it]Chunks:  85%|████████▌ | 17/20 [00:47<00:09,  3.23s/it]Chunks:  90%|█████████ | 18/20 [00:48<00:05,  2.66s/it]Chunks:  95%|█████████▌| 19/20 [00:53<00:03,  3.29s/it]Chunks: 100%|██████████| 20/20 [00:54<00:00,  2.67s/it]Chunks: 100%|██████████| 20/20 [00:54<00:00,  2.74s/it]
+20:40:42 | INFO |   Saved chunk_0003.npy (50000×1024, 195.3 MB)
+20:40:42 | INFO | ── Chunk 5/7 [200000–249999] max_words=103 → seq=512 batch=128 ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:06<01:58,  6.22s/it]Chunks:  10%|█         | 2/20 [00:06<00:48,  2.72s/it]Chunks:  15%|█▌        | 3/20 [00:12<01:13,  4.31s/it]Chunks:  20%|██        | 4/20 [00:12<00:43,  2.72s/it]Chunks:  25%|██▌       | 5/20 [00:19<01:00,  4.05s/it]Chunks:  30%|███       | 6/20 [00:19<00:38,  2.78s/it]Chunks:  35%|███▌      | 7/20 [00:26<00:52,  4.00s/it]Chunks:  40%|████      | 8/20 [00:26<00:34,  2.88s/it]Chunks:  45%|████▌     | 9/20 [00:33<00:45,  4.10s/it]Chunks:  50%|█████     | 10/20 [00:33<00:29,  2.95s/it]Chunks:  55%|█████▌    | 11/20 [00:40<00:37,  4.16s/it]Chunks:  60%|██████    | 12/20 [00:41<00:24,  3.02s/it]Chunks:  65%|██████▌   | 13/20 [00:48<00:29,  4.24s/it]Chunks:  70%|███████   | 14/20 [00:48<00:19,  3.17s/it]Chunks:  75%|███████▌  | 15/20 [00:55<00:21,  4.28s/it]Chunks:  80%|████████  | 16/20 [00:56<00:12,  3.19s/it]Chunks:  85%|████████▌ | 17/20 [01:03<00:13,  4.44s/it]Chunks:  90%|█████████ | 18/20 [01:04<00:06,  3.32s/it]Chunks:  95%|█████████▌| 19/20 [01:11<00:04,  4.55s/it]Chunks: 100%|██████████| 20/20 [01:12<00:00,  3.39s/it]Chunks: 100%|██████████| 20/20 [01:12<00:00,  3.63s/it]
+20:41:55 | INFO |   Saved chunk_0004.npy (50000×1024, 195.3 MB)
+20:41:56 | INFO | ── Chunk 6/7 [250000–299999] max_words=169 → seq=512 batch=128 ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:08<02:42,  8.55s/it]Chunks:  15%|█▌        | 3/20 [00:17<01:32,  5.43s/it]Chunks:  20%|██        | 4/20 [00:17<00:58,  3.69s/it]Chunks:  25%|██▌       | 5/20 [00:26<01:18,  5.24s/it]Chunks:  30%|███       | 6/20 [00:26<00:53,  3.80s/it]Chunks:  35%|███▌      | 7/20 [00:35<01:08,  5.29s/it]Chunks:  40%|████      | 8/20 [00:36<00:47,  3.92s/it]Chunks:  45%|████▌     | 9/20 [00:44<00:59,  5.42s/it]Chunks:  50%|█████     | 10/20 [00:46<00:41,  4.11s/it]Chunks:  55%|█████▌    | 11/20 [00:55<00:50,  5.59s/it]Chunks:  60%|██████    | 12/20 [00:56<00:34,  4.33s/it]Chunks:  65%|██████▌   | 13/20 [01:05<00:40,  5.81s/it]Chunks:  70%|███████   | 14/20 [01:07<00:27,  4.56s/it]Chunks:  75%|███████▌  | 15/20 [01:16<00:30,  6.03s/it]Chunks:  80%|████████  | 16/20 [01:18<00:19,  4.84s/it]Chunks:  85%|████████▌ | 17/20 [01:29<00:19,  6.45s/it]Chunks:  90%|█████████ | 18/20 [01:31<00:10,  5.30s/it]Chunks:  95%|█████████▌| 19/20 [01:41<00:06,  6.69s/it]Chunks: 100%|██████████| 20/20 [01:44<00:00,  5.49s/it]Chunks: 100%|██████████| 20/20 [01:44<00:00,  5.22s/it]
+20:43:40 | INFO |   Saved chunk_0005.npy (50000×1024, 195.3 MB)
+20:43:41 | INFO | ── Chunk 7/7 [300000–317749] max_words=1245 → seq=512 batch=128 ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:04<01:31,  4.81s/it]Chunks:  10%|█         | 2/20 [00:04<00:37,  2.08s/it]Chunks:  15%|█▌        | 3/20 [00:09<00:58,  3.41s/it]Chunks:  25%|██▌       | 5/20 [00:14<00:43,  2.87s/it]Chunks:  30%|███       | 6/20 [00:15<00:30,  2.17s/it]Chunks:  35%|███▌      | 7/20 [00:20<00:37,  2.92s/it]Chunks:  40%|████      | 8/20 [00:20<00:26,  2.23s/it]Chunks:  45%|████▌     | 9/20 [00:25<00:33,  3.07s/it]Chunks:  50%|█████     | 10/20 [00:26<00:23,  2.31s/it]Chunks:  55%|█████▌    | 11/20 [00:31<00:28,  3.15s/it]Chunks:  60%|██████    | 12/20 [00:32<00:19,  2.48s/it]Chunks:  65%|██████▌   | 13/20 [00:37<00:23,  3.36s/it]Chunks:  70%|███████   | 14/20 [00:38<00:16,  2.68s/it]Chunks:  75%|███████▌  | 15/20 [00:44<00:17,  3.53s/it]Chunks:  80%|████████  | 16/20 [00:45<00:11,  2.92s/it]Chunks:  85%|████████▌ | 17/20 [00:51<00:11,  3.82s/it]Chunks:  90%|█████████ | 18/20 [00:53<00:06,  3.22s/it]Chunks:  95%|█████████▌| 19/20 [01:00<00:04,  4.20s/it]Chunks: 100%|██████████| 20/20 [01:02<00:00,  3.55s/it]Chunks: 100%|██████████| 20/20 [01:02<00:00,  3.10s/it]
+20:44:43 | INFO |   Saved chunk_0006.npy (17750×1024, 69.3 MB)
+20:44:43 | INFO | Merging 7 chunks (317750 rows, 1024 dims) …
+Chunks:   0%|          | 0/32 [00:00<?, ?it/s]Chunks:   3%|▎         | 1/32 [00:03<01:43,  3.34s/it]Chunks:   9%|▉         | 3/32 [00:06<00:59,  2.05s/it]Chunks:  12%|█▎        | 4/32 [00:06<00:39,  1.42s/it]Chunks:  16%|█▌        | 5/32 [00:09<00:52,  1.96s/it]Chunks:  19%|█▉        | 6/32 [00:10<00:36,  1.40s/it]Chunks:  22%|██▏       | 7/32 [00:13<00:48,  1.95s/it]Chunks:  25%|██▌       | 8/32 [00:13<00:33,  1.38s/it]Chunks:  28%|██▊       | 9/32 [00:16<00:44,  1.95s/it]Chunks:  31%|███▏      | 10/32 [00:16<00:31,  1.45s/it]Chunks:  34%|███▍      | 11/32 [00:19<00:40,  1.93s/it]Chunks:  38%|███▊      | 12/32 [00:20<00:28,  1.43s/it]Chunks:  41%|████      | 13/32 [00:23<00:36,  1.90s/it]Chunks:  44%|████▍     | 14/32 [00:23<00:24,  1.38s/it]Chunks:  47%|████▋     | 15/32 [00:26<00:32,  1.90s/it]Chunks:  50%|█████     | 16/32 [00:26<00:22,  1.41s/it]Chunks:  53%|█████▎    | 17/32 [00:29<00:28,  1.93s/it]Chunks:  56%|█████▋    | 18/32 [00:29<00:19,  1.38s/it]Chunks:  59%|█████▉    | 19/32 [00:33<00:24,  1.90s/it]Chunks:  62%|██████▎   | 20/32 [00:33<00:16,  1.39s/it]Chunks:  66%|██████▌   | 21/32 [00:36<00:22,  2.03s/it]Chunks:  69%|██████▉   | 22/32 [00:36<00:14,  1.46s/it]Chunks:  72%|███████▏  | 23/32 [00:39<00:17,  1.95s/it]Chunks:  75%|███████▌  | 24/32 [00:40<00:11,  1.40s/it]Chunks:  78%|███████▊  | 25/32 [00:43<00:13,  1.90s/it]Chunks:  81%|████████▏ | 26/32 [00:43<00:08,  1.41s/it]Chunks:  84%|████████▍ | 27/32 [00:46<00:09,  1.87s/it]Chunks:  88%|████████▊ | 28/32 [00:46<00:05,  1.40s/it]Chunks:  91%|█████████ | 29/32 [00:49<00:05,  1.88s/it]Chunks:  94%|█████████▍| 30/32 [00:50<00:02,  1.42s/it]Chunks:  97%|█████████▋| 31/32 [00:51<00:01,  1.37s/it]Chunks: 100%|██████████| 32/32 [00:52<00:00,  1.38s/it]Chunks: 100%|██████████| 32/32 [00:52<00:00,  1.65s/it]
+20:45:41 | INFO | Transferring FAISS index to 2 GPU(s) ...
+20:45:42 | INFO | FAISS index placed on GPU(s) (sharded, float16).
+20:45:42 | INFO | Running FAISS search (156949 queries x top-100) ...
+20:48:02 | INFO | Saved retrieval run to /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter_pilot/retrieval_run.lz4
+20:48:09 | INFO | 
+20:48:09 | INFO | ╔══════════════════════════════════════════════════╗
+20:48:09 | INFO | ║  RESULTS — multilingual-e5-large-instruct        ║
+20:48:09 | INFO | ╠══════════════════════════════════════════════════╣
+20:48:09 | INFO | ║  ndcg@10          0.5452                         ║
+20:48:09 | INFO | ║  recall@100       0.9513                         ║
+20:48:09 | INFO | ║  mrr@10           0.4769                         ║
+20:48:09 | INFO | ║  map              0.4820                         ║
+20:48:09 | INFO | ║  precision@10     0.0789                         ║
+20:48:09 | INFO | ║  precision@50     0.0189                         ║
+20:48:09 | INFO | ╚══════════════════════════════════════════════════╝
+/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 2 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+===== 2026-10-26T20:48:11-06:00 — qwen =====
+20:48:17 | INFO | Loading faiss with AVX512 support.
+20:48:17 | INFO | Successfully loaded faiss with AVX512 support.
+20:48:17 | INFO |   qrels : ✓ cached
+20:48:17 | INFO |   doc   : ✗ incomplete  [0 chunks on disk]
+20:48:17 | INFO |   query : ✗ incomplete  [0 chunks on disk]
+20:48:17 | INFO | ⏱  START: Loading pilot corpus from /home/jmendoza/.cache/messirve_embeddings/pilot/corpus
+20:48:18 | INFO | ⏱  DONE:  Loading pilot corpus from /home/jmendoza/.cache/messirve_embeddings/pilot/corpus (0.0s)
+20:48:18 | INFO | Pilot corpus: 317750 documents
+20:48:26 | INFO | ⏱  START: Loading cached pruned qrels
+20:48:26 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+20:48:31 | INFO | ⏱  START: Loading SentenceTransformer
+20:48:31 | WARNING | The `tokenizer_kwargs` argument was renamed and is now deprecated. Please use `processor_kwargs` instead.
+20:48:31 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+20:48:31 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-Embedding-0.6B/97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3/modules.json "HTTP/1.1 200 OK"
+20:48:32 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+20:48:32 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-Embedding-0.6B/97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3/config_sentence_transformers.json "HTTP/1.1 200 OK"
+20:48:32 | INFO | Loading SentenceTransformer model from Qwen/Qwen3-Embedding-0.6B.
+20:48:32 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+20:48:32 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-Embedding-0.6B/97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3/config_sentence_transformers.json "HTTP/1.1 200 OK"
+20:48:32 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+20:48:32 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-Embedding-0.6B/97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3/README.md "HTTP/1.1 200 OK"
+20:48:32 | INFO | HTTP Request: GET https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-Embedding-0.6B/97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3/README.md "HTTP/1.1 200 OK"
+20:48:32 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+20:48:32 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-Embedding-0.6B/97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3/modules.json "HTTP/1.1 200 OK"
+20:48:32 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/sentence_bert_config.json "HTTP/1.1 404 Not Found"
+20:48:32 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/sentence_roberta_config.json "HTTP/1.1 404 Not Found"
+20:48:33 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/sentence_distilbert_config.json "HTTP/1.1 404 Not Found"
+20:48:33 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/sentence_camembert_config.json "HTTP/1.1 404 Not Found"
+20:48:33 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/sentence_albert_config.json "HTTP/1.1 404 Not Found"
+20:48:33 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/sentence_xlm-roberta_config.json "HTTP/1.1 404 Not Found"
+20:48:33 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/sentence_xlnet_config.json "HTTP/1.1 404 Not Found"
+20:48:33 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+20:48:33 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+20:48:33 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-Embedding-0.6B/97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3/config.json "HTTP/1.1 200 OK"
+20:48:33 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/model.safetensors "HTTP/1.1 302 Found"
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:  19%|█▉        | 59/310 [00:00<00:00, 538.37it/s]Loading weights:  36%|███▋      | 113/310 [00:00<00:00, 335.89it/s]Loading weights:  49%|████▊     | 151/310 [00:00<00:00, 308.83it/s]Loading weights:  59%|█████▉    | 184/310 [00:00<00:00, 287.23it/s]Loading weights:  69%|██████▉   | 214/310 [00:00<00:00, 277.71it/s]Loading weights:  78%|███████▊  | 243/310 [00:00<00:00, 273.47it/s]Loading weights:  87%|████████▋ | 271/310 [00:00<00:00, 267.07it/s]Loading weights:  96%|█████████▌| 298/310 [00:01<00:00, 266.66it/s]Loading weights: 100%|██████████| 310/310 [00:01<00:00, 294.23it/s]
+20:48:35 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+20:48:35 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+20:48:35 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+20:48:35 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+20:48:35 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+20:48:36 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-Embedding-0.6B/97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3/tokenizer_config.json "HTTP/1.1 200 OK"
+20:48:36 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+20:48:36 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-Embedding-0.6B/97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3/config.json "HTTP/1.1 200 OK"
+20:48:36 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+20:48:36 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-Embedding-0.6B/97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3/config.json "HTTP/1.1 200 OK"
+20:48:36 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+20:48:36 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-Embedding-0.6B/97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3/tokenizer_config.json "HTTP/1.1 200 OK"
+20:48:36 | INFO | HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-Embedding-0.6B/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+20:48:36 | INFO | HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-Embedding-0.6B/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+20:48:36 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/vocab.json "HTTP/1.1 307 Temporary Redirect"
+20:48:36 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-Embedding-0.6B/97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3/vocab.json "HTTP/1.1 200 OK"
+20:48:37 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/merges.txt "HTTP/1.1 307 Temporary Redirect"
+20:48:37 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-Embedding-0.6B/97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3/merges.txt "HTTP/1.1 200 OK"
+20:48:37 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/tokenizer.json "HTTP/1.1 302 Found"
+20:48:37 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/added_tokens.json "HTTP/1.1 404 Not Found"
+20:48:37 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/special_tokens_map.json "HTTP/1.1 404 Not Found"
+20:48:37 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/chat_template.jinja "HTTP/1.1 404 Not Found"
+20:48:38 | INFO | HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-Embedding-0.6B "HTTP/1.1 200 OK"
+20:48:38 | INFO | HTTP Request: HEAD https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+20:48:38 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/Qwen/Qwen3-Embedding-0.6B/97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+20:48:38 | INFO | HTTP Request: GET https://huggingface.co/api/models/Qwen/Qwen3-Embedding-0.6B "HTTP/1.1 200 OK"
+20:48:38 | INFO | Loaded 1 prompt with these keys: ['query']
+20:48:38 | INFO | ⏱  DONE:  Loading SentenceTransformer (7.1s)
+20:48:38 | INFO | ⏱  START: Starting pool on ['cuda:0', 'cuda:1']
+20:48:38 | INFO | Starting multi-process pool on devices: cuda:0, cuda:1
+20:49:05 | INFO | Loading faiss with AVX512 support.
+20:49:05 | INFO | Successfully loaded faiss with AVX512 support.
+20:49:11 | INFO | Loading faiss with AVX512 support.
+20:49:11 | INFO | Successfully loaded faiss with AVX512 support.
+20:49:11 | INFO | ⏱  DONE:  Starting pool on ['cuda:0', 'cuda:1'] (33.1s)
+20:49:11 | INFO | ── Chunk 1/7 [0–49999] max_words=20 → seq=512 batch=128 ──
+20:49:11 | INFO | Switching max_seq_length 32768 → 512 — restarting pool
+20:49:12 | INFO | Starting multi-process pool on devices: cuda:0, cuda:1
+20:49:17 | INFO | Loading faiss with AVX512 support.
+20:49:17 | INFO | Successfully loaded faiss with AVX512 support.
+20:49:23 | INFO | Loading faiss with AVX512 support.
+20:49:23 | INFO | Successfully loaded faiss with AVX512 support.
+20:49:24 | WARNING | The `sentences` argument was renamed and is now deprecated. Please use `inputs` instead.
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:04<01:23,  4.40s/it]Chunks:  10%|█         | 2/20 [00:05<00:43,  2.39s/it]Chunks:  15%|█▌        | 3/20 [00:07<00:36,  2.17s/it]Chunks:  20%|██        | 4/20 [00:08<00:27,  1.69s/it]Chunks:  25%|██▌       | 5/20 [00:10<00:26,  1.77s/it]Chunks:  30%|███       | 6/20 [00:11<00:21,  1.53s/it]Chunks:  35%|███▌      | 7/20 [00:14<00:25,  1.96s/it]Chunks:  40%|████      | 8/20 [00:14<00:18,  1.58s/it]Chunks:  45%|████▌     | 9/20 [00:17<00:21,  1.99s/it]Chunks:  50%|█████     | 10/20 [00:18<00:16,  1.63s/it]Chunks:  55%|█████▌    | 11/20 [00:21<00:19,  2.14s/it]Chunks:  60%|██████    | 12/20 [00:22<00:13,  1.73s/it]Chunks:  65%|██████▌   | 13/20 [00:26<00:16,  2.32s/it]Chunks:  70%|███████   | 14/20 [00:27<00:11,  1.92s/it]Chunks:  75%|███████▌  | 15/20 [00:31<00:12,  2.47s/it]Chunks:  80%|████████  | 16/20 [00:32<00:08,  2.12s/it]Chunks:  85%|████████▌ | 17/20 [00:36<00:08,  2.77s/it]Chunks:  90%|█████████ | 18/20 [00:37<00:04,  2.15s/it]Chunks:  95%|█████████▌| 19/20 [00:42<00:03,  3.01s/it]Chunks: 100%|██████████| 20/20 [00:42<00:00,  2.16s/it]Chunks: 100%|██████████| 20/20 [00:42<00:00,  2.13s/it]
+20:50:06 | INFO |   Saved chunk_0000.npy (50000×1024, 195.3 MB)
+20:50:07 | INFO | ── Chunk 2/7 [50000–99999] max_words=38 → seq=512 batch=128 ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:05<01:41,  5.32s/it]Chunks:  10%|█         | 2/20 [00:05<00:41,  2.30s/it]Chunks:  15%|█▌        | 3/20 [00:11<01:06,  3.92s/it]Chunks:  20%|██        | 4/20 [00:11<00:39,  2.45s/it]Chunks:  25%|██▌       | 5/20 [00:17<00:56,  3.76s/it]Chunks:  30%|███       | 6/20 [00:17<00:36,  2.59s/it]Chunks:  35%|███▌      | 7/20 [00:24<00:48,  3.76s/it]Chunks:  40%|████      | 8/20 [00:24<00:31,  2.63s/it]Chunks:  45%|████▌     | 9/20 [00:30<00:42,  3.88s/it]Chunks:  50%|█████     | 10/20 [00:31<00:27,  2.73s/it]Chunks:  55%|█████▌    | 11/20 [00:38<00:36,  4.02s/it]Chunks:  60%|██████    | 12/20 [00:38<00:24,  3.01s/it]Chunks:  65%|██████▌   | 13/20 [00:46<00:31,  4.51s/it]Chunks:  70%|███████   | 14/20 [00:47<00:19,  3.28s/it]Chunks:  75%|███████▌  | 15/20 [00:54<00:22,  4.45s/it]Chunks:  80%|████████  | 16/20 [00:55<00:13,  3.37s/it]Chunks:  85%|████████▌ | 17/20 [01:02<00:13,  4.56s/it]Chunks:  90%|█████████ | 18/20 [01:03<00:06,  3.42s/it]Chunks:  95%|█████████▌| 19/20 [01:10<00:04,  4.69s/it]Chunks: 100%|██████████| 20/20 [01:11<00:00,  3.43s/it]Chunks: 100%|██████████| 20/20 [01:11<00:00,  3.57s/it]
+20:51:19 | INFO |   Saved chunk_0001.npy (50000×1024, 195.3 MB)
+20:51:19 | INFO | ── Chunk 3/7 [100000–149999] max_words=55 → seq=512 batch=128 ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:08<02:37,  8.26s/it]Chunks:  10%|█         | 2/20 [00:08<01:02,  3.49s/it]Chunks:  15%|█▌        | 3/20 [00:17<01:39,  5.84s/it]Chunks:  20%|██        | 4/20 [00:17<00:58,  3.65s/it]Chunks:  25%|██▌       | 5/20 [00:25<01:21,  5.44s/it]Chunks:  30%|███       | 6/20 [00:26<00:52,  3.78s/it]Chunks:  35%|███▌      | 7/20 [00:35<01:10,  5.43s/it]Chunks:  40%|████      | 8/20 [00:36<00:47,  3.96s/it]Chunks:  45%|████▌     | 9/20 [00:45<01:00,  5.51s/it]Chunks:  50%|█████     | 10/20 [00:45<00:40,  4.00s/it]Chunks:  55%|█████▌    | 11/20 [00:54<00:50,  5.57s/it]Chunks:  60%|██████    | 12/20 [00:55<00:33,  4.20s/it]Chunks:  65%|██████▌   | 13/20 [01:04<00:39,  5.69s/it]Chunks:  70%|███████   | 14/20 [01:05<00:25,  4.26s/it]Chunks:  75%|███████▌  | 15/20 [01:16<00:30,  6.02s/it]Chunks:  80%|████████  | 16/20 [01:16<00:17,  4.33s/it]Chunks:  85%|████████▌ | 17/20 [01:26<00:18,  6.07s/it]Chunks:  90%|█████████ | 18/20 [01:27<00:08,  4.43s/it]Chunks:  95%|█████████▌| 19/20 [01:37<00:06,  6.15s/it]Chunks: 100%|██████████| 20/20 [01:38<00:00,  4.75s/it]Chunks: 100%|██████████| 20/20 [01:38<00:00,  4.94s/it]
+20:52:58 | INFO |   Saved chunk_0002.npy (50000×1024, 195.3 MB)
+20:52:58 | INFO | ── Chunk 4/7 [150000–199999] max_words=75 → seq=512 batch=128 ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:11<03:35, 11.36s/it]Chunks:  10%|█         | 2/20 [00:11<01:27,  4.84s/it]Chunks:  15%|█▌        | 3/20 [00:22<02:09,  7.63s/it]Chunks:  20%|██        | 4/20 [00:24<01:23,  5.21s/it]Chunks:  25%|██▌       | 5/20 [00:34<01:47,  7.17s/it]Chunks:  30%|███       | 6/20 [00:36<01:15,  5.38s/it]Chunks:  35%|███▌      | 7/20 [00:46<01:31,  7.00s/it]Chunks:  40%|████      | 8/20 [00:49<01:06,  5.56s/it]Chunks:  45%|████▌     | 9/20 [00:59<01:17,  7.06s/it]Chunks:  50%|█████     | 10/20 [01:01<00:55,  5.52s/it]Chunks:  55%|█████▌    | 11/20 [01:13<01:05,  7.24s/it]Chunks:  60%|██████    | 12/20 [01:15<00:45,  5.70s/it]Chunks:  65%|██████▌   | 13/20 [01:26<00:51,  7.34s/it]Chunks:  70%|███████   | 14/20 [01:28<00:35,  5.88s/it]Chunks:  75%|███████▌  | 15/20 [01:40<00:37,  7.59s/it]Chunks:  80%|████████  | 16/20 [01:42<00:24,  6.02s/it]Chunks:  85%|████████▌ | 17/20 [01:54<00:23,  7.81s/it]Chunks:  90%|█████████ | 18/20 [01:58<00:13,  6.56s/it]Chunks:  95%|█████████▌| 19/20 [02:09<00:07,  7.90s/it]Chunks: 100%|██████████| 20/20 [02:12<00:00,  6.47s/it]Chunks: 100%|██████████| 20/20 [02:12<00:00,  6.63s/it]
+20:55:11 | INFO |   Saved chunk_0003.npy (50000×1024, 195.3 MB)
+20:55:11 | INFO | ── Chunk 5/7 [200000–249999] max_words=103 → seq=512 batch=128 ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:15<04:45, 15.05s/it]Chunks:  15%|█▌        | 3/20 [00:30<02:42,  9.55s/it]Chunks:  20%|██        | 4/20 [00:31<01:45,  6.57s/it]Chunks:  25%|██▌       | 5/20 [00:45<02:15,  9.04s/it]Chunks:  30%|███       | 6/20 [00:46<01:33,  6.65s/it]Chunks:  35%|███▌      | 7/20 [01:00<01:55,  8.85s/it]Chunks:  40%|████      | 8/20 [01:04<01:26,  7.21s/it]Chunks:  45%|████▌     | 9/20 [01:17<01:40,  9.18s/it]Chunks:  50%|█████     | 10/20 [01:21<01:14,  7.48s/it]Chunks:  55%|█████▌    | 11/20 [01:34<01:22,  9.18s/it]Chunks:  60%|██████    | 12/20 [01:38<01:02,  7.75s/it]Chunks:  65%|██████▌   | 13/20 [01:51<01:05,  9.35s/it]Chunks:  70%|███████   | 14/20 [01:56<00:47,  7.95s/it]Chunks:  75%|███████▌  | 15/20 [02:09<00:47,  9.51s/it]Chunks:  80%|████████  | 16/20 [02:14<00:32,  8.22s/it]Chunks:  85%|████████▌ | 17/20 [02:28<00:29,  9.75s/it]Chunks:  90%|█████████ | 18/20 [02:34<00:17,  8.59s/it]Chunks:  95%|█████████▌| 19/20 [02:47<00:10, 10.05s/it]Chunks: 100%|██████████| 20/20 [02:53<00:00,  8.80s/it]Chunks: 100%|██████████| 20/20 [02:53<00:00,  8.67s/it]
+20:58:05 | INFO |   Saved chunk_0004.npy (50000×1024, 195.3 MB)
+20:58:05 | INFO | ── Chunk 6/7 [250000–299999] max_words=169 → seq=512 batch=128 ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:19<06:17, 19.85s/it]Chunks:  15%|█▌        | 3/20 [00:40<03:37, 12.78s/it]Chunks:  20%|██        | 4/20 [00:40<02:15,  8.45s/it]Chunks:  25%|██▌       | 5/20 [01:01<03:05, 12.39s/it]Chunks:  30%|███       | 6/20 [01:02<02:05,  8.94s/it]Chunks:  35%|███▌      | 7/20 [01:23<02:45, 12.72s/it]Chunks:  40%|████      | 8/20 [01:26<01:54,  9.51s/it]Chunks:  45%|████▌     | 9/20 [01:46<02:22, 12.93s/it]Chunks:  50%|█████     | 10/20 [01:49<01:39,  9.94s/it]Chunks:  55%|█████▌    | 11/20 [02:10<01:58, 13.20s/it]Chunks:  60%|██████    | 12/20 [02:13<01:21, 10.25s/it]Chunks:  65%|██████▌   | 13/20 [02:36<01:37, 13.87s/it]Chunks:  70%|███████   | 14/20 [02:39<01:03, 10.58s/it]Chunks:  75%|███████▌  | 15/20 [03:03<01:13, 14.70s/it]Chunks:  80%|████████  | 16/20 [03:06<00:44, 11.16s/it]Chunks:  85%|████████▌ | 17/20 [03:31<00:46, 15.34s/it]Chunks:  90%|█████████ | 18/20 [03:35<00:24, 12.05s/it]Chunks:  95%|█████████▌| 19/20 [04:00<00:15, 15.96s/it]Chunks: 100%|██████████| 20/20 [04:05<00:00, 12.61s/it]Chunks: 100%|██████████| 20/20 [04:05<00:00, 12.28s/it]
+21:02:11 | INFO |   Saved chunk_0005.npy (50000×1024, 195.3 MB)
+21:02:12 | INFO | ── Chunk 7/7 [300000–317749] max_words=1245 → seq=2048 batch=32 ──
+21:02:12 | INFO | Switching max_seq_length 512 → 2048 — restarting pool
+21:02:12 | INFO | Starting multi-process pool on devices: cuda:0, cuda:1
+21:02:17 | INFO | Loading faiss with AVX512 support.
+21:02:17 | INFO | Successfully loaded faiss with AVX512 support.
+21:02:24 | INFO | Loading faiss with AVX512 support.
+21:02:24 | INFO | Successfully loaded faiss with AVX512 support.
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:13<04:15, 13.47s/it]Chunks:  10%|█         | 2/20 [00:14<01:46,  5.93s/it]Chunks:  15%|█▌        | 3/20 [00:25<02:22,  8.41s/it]Chunks:  20%|██        | 4/20 [00:25<01:23,  5.19s/it]Chunks:  25%|██▌       | 5/20 [00:36<01:49,  7.32s/it]Chunks:  30%|███       | 6/20 [00:38<01:13,  5.24s/it]Chunks:  35%|███▌      | 7/20 [00:49<01:33,  7.21s/it]Chunks:  40%|████      | 8/20 [00:50<01:03,  5.29s/it]Chunks:  45%|████▌     | 9/20 [01:02<01:21,  7.40s/it]Chunks:  50%|█████     | 10/20 [01:03<00:53,  5.37s/it]Chunks:  55%|█████▌    | 11/20 [01:16<01:09,  7.67s/it]Chunks:  60%|██████    | 12/20 [01:17<00:44,  5.60s/it]Chunks:  65%|██████▌   | 13/20 [01:30<00:56,  8.03s/it]Chunks:  70%|███████   | 14/20 [01:31<00:35,  5.95s/it]Chunks:  75%|███████▌  | 15/20 [01:46<00:42,  8.50s/it]Chunks:  80%|████████  | 16/20 [01:47<00:25,  6.38s/it]Chunks:  85%|████████▌ | 17/20 [02:03<00:27,  9.20s/it]Chunks:  90%|█████████ | 18/20 [02:06<00:14,  7.27s/it]Chunks:  95%|█████████▌| 19/20 [02:23<00:10, 10.39s/it]Chunks: 100%|██████████| 20/20 [02:34<00:00, 10.42s/it]Chunks: 100%|██████████| 20/20 [02:34<00:00,  7.72s/it]
+21:04:58 | INFO |   Saved chunk_0006.npy (17750×1024, 69.3 MB)
+21:04:59 | INFO | Merging 7 chunks (317750 rows, 1024 dims) …
+21:05:01 | INFO | Switching max_seq_length 2048 → 32768 — restarting pool
+21:05:01 | INFO | Starting multi-process pool on devices: cuda:0, cuda:1
+21:05:07 | INFO | Loading faiss with AVX512 support.
+21:05:07 | INFO | Successfully loaded faiss with AVX512 support.
+21:05:13 | INFO | Loading faiss with AVX512 support.
+21:05:13 | INFO | Successfully loaded faiss with AVX512 support.
+Chunks:   0%|          | 0/32 [00:00<?, ?it/s]Chunks:   3%|▎         | 1/32 [00:08<04:14,  8.20s/it]Chunks:   6%|▋         | 2/32 [00:08<01:51,  3.72s/it]Chunks:   9%|▉         | 3/32 [00:14<02:10,  4.51s/it]Chunks:  12%|█▎        | 4/32 [00:14<01:23,  2.98s/it]Chunks:  16%|█▌        | 5/32 [00:20<01:44,  3.88s/it]Chunks:  19%|█▉        | 6/32 [00:20<01:11,  2.75s/it]Chunks:  22%|██▏       | 7/32 [00:26<01:33,  3.72s/it]Chunks:  25%|██▌       | 8/32 [00:27<01:05,  2.72s/it]Chunks:  28%|██▊       | 9/32 [00:32<01:24,  3.68s/it]Chunks:  31%|███▏      | 10/32 [00:33<01:01,  2.82s/it]Chunks:  34%|███▍      | 11/32 [00:40<01:21,  3.87s/it]Chunks:  38%|███▊      | 12/32 [00:40<00:56,  2.83s/it]Chunks:  41%|████      | 13/32 [00:46<01:10,  3.72s/it]Chunks:  44%|████▍     | 14/32 [00:46<00:48,  2.70s/it]Chunks:  47%|████▋     | 15/32 [00:52<01:02,  3.66s/it]Chunks:  50%|█████     | 16/32 [00:52<00:42,  2.65s/it]Chunks:  53%|█████▎    | 17/32 [00:58<00:54,  3.62s/it]Chunks:  56%|█████▋    | 18/32 [00:59<00:36,  2.64s/it]Chunks:  59%|█████▉    | 19/32 [01:04<00:46,  3.58s/it]Chunks:  62%|██████▎   | 20/32 [01:05<00:31,  2.60s/it]Chunks:  66%|██████▌   | 21/32 [01:11<00:39,  3.58s/it]Chunks:  69%|██████▉   | 22/32 [01:11<00:26,  2.66s/it]Chunks:  72%|███████▏  | 23/32 [01:17<00:31,  3.55s/it]Chunks:  75%|███████▌  | 24/32 [01:17<00:21,  2.68s/it]Chunks:  78%|███████▊  | 25/32 [01:23<00:24,  3.45s/it]Chunks:  81%|████████▏ | 26/32 [01:24<00:16,  2.74s/it]Chunks:  84%|████████▍ | 27/32 [01:29<00:17,  3.40s/it]Chunks:  88%|████████▊ | 28/32 [01:30<00:10,  2.72s/it]Chunks:  91%|█████████ | 29/32 [01:35<00:10,  3.45s/it]Chunks:  94%|█████████▍| 30/32 [01:36<00:05,  2.73s/it]Chunks:  97%|█████████▋| 31/32 [01:38<00:02,  2.63s/it]Chunks: 100%|██████████| 32/32 [01:41<00:00,  2.65s/it]Chunks: 100%|██████████| 32/32 [01:41<00:00,  3.17s/it]
+21:06:57 | INFO | Transferring FAISS index to 2 GPU(s) ...
+21:06:58 | INFO | FAISS index placed on GPU(s) (sharded, float16).
+21:06:58 | INFO | Running FAISS search (156949 queries x top-100) ...
+21:09:15 | INFO | Saved retrieval run to /home/jmendoza/.cache/messirve_embeddings/Qwen__Qwen3-Embedding-0.6B/full_v1.2_q32768_d32768_nofilter_pilot/retrieval_run.lz4
+21:09:21 | INFO | 
+21:09:21 | INFO | ╔══════════════════════════════════════════════════╗
+21:09:21 | INFO | ║  RESULTS — Qwen3-Embedding-0.6B                  ║
+21:09:21 | INFO | ╠══════════════════════════════════════════════════╣
+21:09:21 | INFO | ║  ndcg@10          0.5317                         ║
+21:09:21 | INFO | ║  recall@100       0.9307                         ║
+21:09:21 | INFO | ║  mrr@10           0.4643                         ║
+21:09:21 | INFO | ║  map              0.4693                         ║
+21:09:21 | INFO | ║  precision@10     0.0772                         ║
+21:09:21 | INFO | ║  precision@50     0.0185                         ║
+21:09:21 | INFO | ╚══════════════════════════════════════════════════╝
+/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+===== 2026-10-26T21:09:25-06:00 — bm25 =====
+21:09:28 | INFO | Loading faiss with AVX512 support.
+21:09:28 | INFO | Successfully loaded faiss with AVX512 support.
+Error occurred during initialization of boot layer
+java.lang.module.FindException: Module jdk.incubator.vector not found

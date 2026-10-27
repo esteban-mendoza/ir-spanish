@@ -1,0 +1,5 @@
+combo,strategy,params,ndcg@10,recall@100,mrr@10,map,precision@10,precision@50,elapsed_s,run_path
+e5-large+bge-m3+jina-v5-small,combmnz,,0.625321,0.980883,0.555701,0.559043,0.087295,0.019846,114.1,
+e5-large+bge-m3+jina-v5-small,rbc,phi=0.95,0.621999,0.979885,0.551055,0.554423,0.087404,0.019833,143.8,
+e5-large+bge-m3+jina-v5-small,rrf,k=60,0.618590,0.980550,0.548559,0.552030,0.086769,0.019809,139.3,
+e5-large+bge-m3+jina-v5-small,isr,,0.616275,0.980554,0.545078,0.548525,0.087044,0.019848,143.8,

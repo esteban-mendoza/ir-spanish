@@ -1,0 +1,410 @@
+21:15:03 | INFO | Loading faiss with AVX512 support.
+21:15:03 | INFO | Successfully loaded faiss with AVX512 support.
+21:15:03 | INFO | ⏱  START: Loading pilot corpus from /home/jmendoza/.cache/messirve_embeddings/pilot/corpus
+21:15:03 | INFO | ⏱  DONE:  Loading pilot corpus from /home/jmendoza/.cache/messirve_embeddings/pilot/corpus (0.0s)
+21:15:03 | INFO | Pilot corpus: 317750 documents
+21:15:14 | INFO | ⏱  START: Loading cached pruned qrels
+21:15:14 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+21:15:20 | INFO | ⏱  START: Loading SparseEncoder
+21:15:20 | INFO | HTTP Request: HEAD https://huggingface.co/naver/splade-v3/resolve/main/modules.json "HTTP/1.1 200 OK"
+21:15:20 | INFO | HTTP Request: HEAD https://huggingface.co/naver/splade-v3/resolve/main/config_sentence_transformers.json "HTTP/1.1 200 OK"
+21:15:20 | INFO | Loading SparseEncoder model from naver/splade-v3.
+21:15:20 | INFO | HTTP Request: HEAD https://huggingface.co/naver/splade-v3/resolve/main/config_sentence_transformers.json "HTTP/1.1 200 OK"
+21:15:20 | INFO | HTTP Request: HEAD https://huggingface.co/naver/splade-v3/resolve/main/README.md "HTTP/1.1 200 OK"
+21:15:20 | INFO | HTTP Request: HEAD https://huggingface.co/naver/splade-v3/resolve/main/modules.json "HTTP/1.1 200 OK"
+21:15:20 | INFO | HTTP Request: HEAD https://huggingface.co/naver/splade-v3/resolve/main/sentence_bert_config.json "HTTP/1.1 200 OK"
+21:15:20 | INFO | HTTP Request: HEAD https://huggingface.co/naver/splade-v3/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+21:15:20 | INFO | HTTP Request: HEAD https://huggingface.co/naver/splade-v3/resolve/main/config.json "HTTP/1.1 200 OK"
+21:15:21 | INFO | HTTP Request: HEAD https://huggingface.co/naver/splade-v3/resolve/main/model.safetensors "HTTP/1.1 404 Not Found"
+21:15:21 | INFO | HTTP Request: GET https://huggingface.co/api/models/naver/splade-v3 "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/204 [00:00<?, ?it/s]Loading weights: 100%|██████████| 204/204 [00:00<00:00, 33057.92it/s]
+21:15:21 | INFO | HTTP Request: GET https://huggingface.co/api/models/naver/splade-v3/commits/main "HTTP/1.1 200 OK"
+[1mBertForMaskedLM LOAD REPORT[0m from: naver/splade-v3
+Key                          | Status     |  | 
+-----------------------------+------------+--+-
+bert.embeddings.position_ids | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+21:15:21 | INFO | HTTP Request: GET https://huggingface.co/api/models/naver/splade-v3/discussions?p=0 "HTTP/1.1 200 OK"
+21:15:21 | INFO | HTTP Request: GET https://huggingface.co/api/models/naver/splade-v3/commits/refs%2Fpr%2F1 "HTTP/1.1 200 OK"
+21:15:21 | INFO | HTTP Request: HEAD https://huggingface.co/naver/splade-v3/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+21:15:21 | INFO | HTTP Request: HEAD https://huggingface.co/naver/splade-v3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+21:15:21 | INFO | HTTP Request: HEAD https://huggingface.co/naver/splade-v3/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+21:15:21 | INFO | HTTP Request: HEAD https://huggingface.co/naver/splade-v3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+21:15:21 | INFO | HTTP Request: HEAD https://huggingface.co/naver/splade-v3/resolve/main/tokenizer_config.json "HTTP/1.1 200 OK"
+21:15:21 | INFO | HTTP Request: POST https://safetensors-convert.hf.space/call/run "HTTP/1.1 405 Method Not Allowed"
+Exception in thread Thread-auto_conversion:
+Traceback (most recent call last):
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+    self.run()
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/threading.py", line 1012, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/safetensors_conversion.py", line 117, in auto_conversion
+    raise e
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/safetensors_conversion.py", line 96, in auto_conversion
+    sha = get_conversion_pr_reference(api, pretrained_model_name_or_path, **cached_file_kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/safetensors_conversion.py", line 72, in get_conversion_pr_reference
+    spawn_conversion(token, private, model_id)
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/safetensors_conversion.py", line 49, in spawn_conversion
+    event_id = result["event_id"]
+               ~~~~~~^^^^^^^^^^^^
+KeyError: 'event_id'
+21:15:21 | INFO | HTTP Request: HEAD https://huggingface.co/naver/splade-v3/resolve/main/config.json "HTTP/1.1 200 OK"
+21:15:21 | INFO | HTTP Request: HEAD https://huggingface.co/naver/splade-v3/resolve/main/config.json "HTTP/1.1 200 OK"
+21:15:22 | INFO | HTTP Request: HEAD https://huggingface.co/naver/splade-v3/resolve/main/tokenizer_config.json "HTTP/1.1 200 OK"
+21:15:22 | INFO | HTTP Request: GET https://huggingface.co/api/models/naver/splade-v3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+21:15:22 | INFO | HTTP Request: GET https://huggingface.co/api/models/naver/splade-v3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+21:15:22 | INFO | HTTP Request: HEAD https://huggingface.co/naver/splade-v3/resolve/main/1_SpladePooling/config.json "HTTP/1.1 200 OK"
+21:15:22 | INFO | HTTP Request: GET https://huggingface.co/api/models/naver/splade-v3 "HTTP/1.1 200 OK"
+21:15:22 | INFO | ⏱  DONE:  Loading SparseEncoder (2.5s)
+21:15:22 | INFO | ⏱  START: Starting pool on ['cuda:0', 'cuda:1']
+21:15:22 | INFO | Starting multi-process pool on devices: cuda:0, cuda:1
+21:15:28 | INFO | Loading faiss with AVX512 support.
+21:15:28 | INFO | Successfully loaded faiss with AVX512 support.
+21:15:34 | INFO | Loading faiss with AVX512 support.
+21:15:34 | INFO | Successfully loaded faiss with AVX512 support.
+21:15:34 | INFO | ⏱  DONE:  Starting pool on ['cuda:0', 'cuda:1'] (12.2s)
+21:15:34 | INFO | ── Chunk 1/7 [0–49999] ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:15<04:45, 15.02s/it]Chunks:  10%|█         | 2/20 [00:16<02:07,  7.09s/it]Chunks:  15%|█▌        | 3/20 [00:28<02:38,  9.30s/it]Chunks:  20%|██        | 4/20 [00:30<01:41,  6.34s/it]Chunks:  25%|██▌       | 5/20 [00:43<02:13,  8.89s/it]Chunks:  30%|███       | 6/20 [00:44<01:24,  6.01s/it]Chunks:  35%|███▌      | 7/20 [00:55<01:42,  7.88s/it]Chunks:  40%|████      | 8/20 [00:58<01:14,  6.18s/it]Chunks:  45%|████▌     | 9/20 [01:09<01:25,  7.81s/it]Chunks:  50%|█████     | 10/20 [01:13<01:04,  6.50s/it]Chunks:  55%|█████▌    | 11/20 [01:22<01:05,  7.26s/it]Chunks:  60%|██████    | 12/20 [01:27<00:52,  6.55s/it]Chunks:  65%|██████▌   | 13/20 [01:35<00:49,  7.14s/it]Chunks:  70%|███████   | 14/20 [01:39<00:36,  6.04s/it]Chunks:  75%|███████▌  | 15/20 [01:49<00:37,  7.42s/it]Chunks:  80%|████████  | 16/20 [01:53<00:24,  6.16s/it]Chunks:  85%|████████▌ | 17/20 [02:03<00:21,  7.29s/it]Chunks:  90%|█████████ | 18/20 [02:06<00:12,  6.05s/it]Chunks:  95%|█████████▌| 19/20 [02:15<00:07,  7.17s/it]Chunks: 100%|██████████| 20/20 [02:17<00:00,  5.61s/it]Chunks: 100%|██████████| 20/20 [02:17<00:00,  6.90s/it]
+21:17:58 | INFO |   Saved chunk_0000.npz (50000×30522, 11769543 nnz, 90.0 MB)
+21:17:58 | INFO | ── Chunk 2/7 [50000–99999] ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:13<04:25, 13.99s/it]Chunks:  10%|█         | 2/20 [00:15<01:58,  6.57s/it]Chunks:  15%|█▌        | 3/20 [00:25<02:16,  8.06s/it]Chunks:  20%|██        | 4/20 [00:27<01:30,  5.68s/it]Chunks:  25%|██▌       | 5/20 [00:36<01:46,  7.13s/it]Chunks:  30%|███       | 6/20 [00:39<01:19,  5.70s/it]Chunks:  35%|███▌      | 7/20 [00:49<01:30,  6.92s/it]Chunks:  40%|████      | 8/20 [00:52<01:09,  5.76s/it]Chunks:  45%|████▌     | 9/20 [01:01<01:15,  6.85s/it]Chunks:  50%|█████     | 10/20 [01:04<00:55,  5.58s/it]Chunks:  55%|█████▌    | 11/20 [01:14<01:01,  6.84s/it]Chunks:  60%|██████    | 12/20 [01:17<00:45,  5.72s/it]Chunks:  65%|██████▌   | 13/20 [01:25<00:45,  6.57s/it]Chunks:  70%|███████   | 14/20 [01:30<00:35,  5.87s/it]Chunks:  75%|███████▌  | 15/20 [01:38<00:32,  6.58s/it]Chunks:  80%|████████  | 16/20 [01:42<00:22,  5.68s/it]Chunks:  85%|████████▌ | 17/20 [01:52<00:21,  7.20s/it]Chunks:  90%|█████████ | 18/20 [01:56<00:12,  6.02s/it]Chunks:  95%|█████████▌| 19/20 [02:05<00:07,  7.17s/it]Chunks: 100%|██████████| 20/20 [02:07<00:00,  5.66s/it]Chunks: 100%|██████████| 20/20 [02:07<00:00,  6.40s/it]
+21:20:12 | INFO |   Saved chunk_0001.npz (50000×30522, 11749673 nnz, 89.8 MB)
+21:20:12 | INFO | ── Chunk 3/7 [100000–149999] ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:13<04:20, 13.74s/it]Chunks:  10%|█         | 2/20 [00:13<01:44,  5.78s/it]Chunks:  15%|█▌        | 3/20 [00:25<02:23,  8.46s/it]Chunks:  20%|██        | 4/20 [00:26<01:26,  5.40s/it]Chunks:  25%|██▌       | 5/20 [00:38<01:56,  7.77s/it]Chunks:  30%|███       | 6/20 [00:38<01:12,  5.20s/it]Chunks:  35%|███▌      | 7/20 [00:50<01:37,  7.54s/it]Chunks:  40%|████      | 8/20 [00:52<01:07,  5.64s/it]Chunks:  45%|████▌     | 9/20 [01:03<01:21,  7.44s/it]Chunks:  50%|█████     | 10/20 [01:04<00:53,  5.38s/it]Chunks:  55%|█████▌    | 11/20 [01:17<01:07,  7.54s/it]Chunks:  60%|██████    | 12/20 [01:18<00:45,  5.69s/it]Chunks:  65%|██████▌   | 13/20 [01:28<00:49,  7.14s/it]Chunks:  70%|███████   | 14/20 [01:30<00:32,  5.36s/it]Chunks:  75%|███████▌  | 15/20 [01:43<00:38,  7.62s/it]Chunks:  80%|████████  | 16/20 [01:43<00:22,  5.52s/it]Chunks:  85%|████████▌ | 17/20 [01:57<00:24,  8.08s/it]Chunks:  90%|█████████ | 18/20 [01:58<00:11,  5.87s/it]Chunks:  95%|█████████▌| 19/20 [02:09<00:07,  7.39s/it]Chunks: 100%|██████████| 20/20 [02:09<00:00,  5.24s/it]Chunks: 100%|██████████| 20/20 [02:09<00:00,  6.48s/it]
+21:22:28 | INFO |   Saved chunk_0002.npz (50000×30522, 11668591 nnz, 89.2 MB)
+21:22:28 | INFO | ── Chunk 4/7 [150000–199999] ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:14<04:39, 14.73s/it]Chunks:  10%|█         | 2/20 [00:15<01:55,  6.43s/it]Chunks:  15%|█▌        | 3/20 [00:26<02:24,  8.50s/it]Chunks:  20%|██        | 4/20 [00:27<01:28,  5.51s/it]Chunks:  25%|██▌       | 5/20 [00:38<01:51,  7.43s/it]Chunks:  30%|███       | 6/20 [00:38<01:12,  5.18s/it]Chunks:  35%|███▌      | 7/20 [00:49<01:32,  7.09s/it]Chunks:  40%|████      | 8/20 [00:50<00:58,  4.87s/it]Chunks:  45%|████▌     | 9/20 [01:01<01:17,  7.07s/it]Chunks:  55%|█████▌    | 11/20 [01:13<00:57,  6.40s/it]Chunks:  60%|██████    | 12/20 [01:14<00:41,  5.17s/it]Chunks:  65%|██████▌   | 13/20 [01:28<00:51,  7.38s/it]Chunks:  70%|███████   | 14/20 [01:28<00:32,  5.43s/it]Chunks:  75%|███████▌  | 15/20 [01:39<00:35,  7.11s/it]Chunks:  80%|████████  | 16/20 [01:40<00:20,  5.13s/it]Chunks:  85%|████████▌ | 17/20 [01:51<00:20,  6.93s/it]Chunks:  90%|█████████ | 18/20 [01:51<00:10,  5.02s/it]Chunks:  95%|█████████▌| 19/20 [02:02<00:06,  6.77s/it]Chunks: 100%|██████████| 20/20 [02:03<00:00,  4.93s/it]Chunks: 100%|██████████| 20/20 [02:03<00:00,  6.17s/it]
+21:24:37 | INFO |   Saved chunk_0003.npz (50000×30522, 11408039 nnz, 87.2 MB)
+21:24:37 | INFO | ── Chunk 5/7 [200000–249999] ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:13<04:23, 13.85s/it]Chunks:  10%|█         | 2/20 [00:14<01:44,  5.81s/it]Chunks:  15%|█▌        | 3/20 [00:25<02:23,  8.42s/it]Chunks:  20%|██        | 4/20 [00:25<01:23,  5.24s/it]Chunks:  25%|██▌       | 5/20 [00:38<02:00,  8.05s/it]Chunks:  30%|███       | 6/20 [00:39<01:18,  5.58s/it]Chunks:  35%|███▌      | 7/20 [00:51<01:37,  7.49s/it]Chunks:  40%|████      | 8/20 [00:51<01:02,  5.20s/it]Chunks:  45%|████▌     | 9/20 [01:03<01:18,  7.18s/it]Chunks:  50%|█████     | 10/20 [01:03<00:50,  5.02s/it]Chunks:  55%|█████▌    | 11/20 [01:14<01:01,  6.84s/it]Chunks:  60%|██████    | 12/20 [01:14<00:39,  4.88s/it]Chunks:  65%|██████▌   | 13/20 [01:25<00:47,  6.82s/it]Chunks:  70%|███████   | 14/20 [01:26<00:30,  5.04s/it]Chunks:  75%|███████▌  | 15/20 [01:37<00:33,  6.73s/it]Chunks:  80%|████████  | 16/20 [01:38<00:20,  5.10s/it]Chunks:  85%|████████▌ | 17/20 [01:48<00:19,  6.55s/it]Chunks:  90%|█████████ | 18/20 [01:50<00:10,  5.07s/it]Chunks:  95%|█████████▌| 19/20 [02:00<00:06,  6.62s/it]Chunks: 100%|██████████| 20/20 [02:01<00:00,  4.95s/it]Chunks: 100%|██████████| 20/20 [02:01<00:00,  6.08s/it]
+21:26:44 | INFO |   Saved chunk_0004.npz (50000×30522, 11425096 nnz, 87.4 MB)
+21:26:45 | INFO | ── Chunk 6/7 [250000–299999] ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:12<04:00, 12.63s/it]Chunks:  10%|█         | 2/20 [00:12<01:36,  5.36s/it]Chunks:  15%|█▌        | 3/20 [00:23<02:14,  7.91s/it]Chunks:  20%|██        | 4/20 [00:24<01:17,  4.86s/it]Chunks:  25%|██▌       | 5/20 [00:37<01:59,  7.98s/it]Chunks:  30%|███       | 6/20 [00:37<01:14,  5.33s/it]Chunks:  35%|███▌      | 7/20 [00:49<01:35,  7.36s/it]Chunks:  40%|████      | 8/20 [00:50<01:05,  5.50s/it]Chunks:  45%|████▌     | 9/20 [01:00<01:16,  6.96s/it]Chunks:  50%|█████     | 10/20 [01:01<00:51,  5.13s/it]Chunks:  55%|█████▌    | 11/20 [01:13<01:04,  7.16s/it]Chunks:  60%|██████    | 12/20 [01:14<00:41,  5.20s/it]Chunks:  65%|██████▌   | 13/20 [01:27<00:53,  7.65s/it]Chunks:  70%|███████   | 14/20 [01:28<00:33,  5.63s/it]Chunks:  75%|███████▌  | 15/20 [01:40<00:38,  7.60s/it]Chunks:  85%|████████▌ | 17/20 [01:54<00:21,  7.17s/it]Chunks:  90%|█████████ | 18/20 [01:55<00:11,  5.74s/it]Chunks:  95%|█████████▌| 19/20 [02:06<00:07,  7.15s/it]Chunks: 100%|██████████| 20/20 [02:08<00:00,  5.60s/it]Chunks: 100%|██████████| 20/20 [02:08<00:00,  6.41s/it]
+21:28:59 | INFO |   Saved chunk_0005.npz (50000×30522, 11713797 nnz, 89.6 MB)
+21:28:59 | INFO | ── Chunk 7/7 [300000–317749] ──
+Chunks:   0%|          | 0/20 [00:00<?, ?it/s]Chunks:   5%|▌         | 1/20 [00:09<03:07,  9.87s/it]Chunks:  10%|█         | 2/20 [00:10<01:16,  4.28s/it]Chunks:  15%|█▌        | 3/20 [00:14<01:10,  4.14s/it]Chunks:  20%|██        | 4/20 [00:15<00:46,  2.89s/it]Chunks:  25%|██▌       | 5/20 [00:18<00:48,  3.20s/it]Chunks:  30%|███       | 6/20 [00:20<00:38,  2.73s/it]Chunks:  35%|███▌      | 7/20 [00:24<00:38,  2.96s/it]Chunks:  40%|████      | 8/20 [00:25<00:30,  2.57s/it]Chunks:  45%|████▌     | 9/20 [00:29<00:31,  2.83s/it]Chunks:  50%|█████     | 10/20 [00:30<00:23,  2.31s/it]Chunks:  55%|█████▌    | 11/20 [00:34<00:25,  2.85s/it]Chunks:  60%|██████    | 12/20 [00:35<00:18,  2.28s/it]Chunks:  65%|██████▌   | 13/20 [00:41<00:24,  3.44s/it]Chunks:  70%|███████   | 14/20 [00:42<00:16,  2.79s/it]Chunks:  75%|███████▌  | 15/20 [00:46<00:15,  3.07s/it]Chunks:  80%|████████  | 16/20 [00:47<00:10,  2.52s/it]Chunks:  85%|████████▌ | 17/20 [00:51<00:08,  2.86s/it]Chunks:  90%|█████████ | 18/20 [00:53<00:04,  2.45s/it]Chunks:  95%|█████████▌| 19/20 [00:56<00:02,  2.82s/it]Chunks: 100%|██████████| 20/20 [00:58<00:00,  2.40s/it]Chunks: 100%|██████████| 20/20 [00:58<00:00,  2.91s/it]
+21:29:59 | INFO |   Saved chunk_0006.npz (17750×30522, 4324123 nnz, 33.1 MB)
+21:30:00 | INFO | Merging 7 sparse chunks …
+Chunks:   0%|          | 0/32 [00:00<?, ?it/s]Chunks:   3%|▎         | 1/32 [00:03<01:36,  3.11s/it]Chunks:   9%|▉         | 3/32 [00:05<00:49,  1.72s/it]Chunks:  12%|█▎        | 4/32 [00:05<00:33,  1.20s/it]Chunks:  16%|█▌        | 5/32 [00:08<00:44,  1.64s/it]Chunks:  22%|██▏       | 7/32 [00:11<00:37,  1.50s/it]Chunks:  28%|██▊       | 9/32 [00:13<00:33,  1.47s/it]Chunks:  34%|███▍      | 11/32 [00:16<00:29,  1.40s/it]Chunks:  38%|███▊      | 12/32 [00:16<00:22,  1.15s/it]Chunks:  41%|████      | 13/32 [00:19<00:29,  1.54s/it]Chunks:  44%|████▍     | 14/32 [00:19<00:21,  1.19s/it]Chunks:  47%|████▋     | 15/32 [00:22<00:26,  1.56s/it]Chunks:  50%|█████     | 16/32 [00:22<00:18,  1.18s/it]Chunks:  53%|█████▎    | 17/32 [00:24<00:23,  1.57s/it]Chunks:  56%|█████▋    | 18/32 [00:25<00:16,  1.17s/it]Chunks:  59%|█████▉    | 19/32 [00:27<00:19,  1.52s/it]Chunks:  62%|██████▎   | 20/32 [00:27<00:13,  1.14s/it]Chunks:  66%|██████▌   | 21/32 [00:30<00:16,  1.52s/it]Chunks:  69%|██████▉   | 22/32 [00:30<00:11,  1.14s/it]Chunks:  72%|███████▏  | 23/32 [00:32<00:13,  1.53s/it]Chunks:  75%|███████▌  | 24/32 [00:32<00:08,  1.10s/it]Chunks:  78%|███████▊  | 25/32 [00:35<00:10,  1.46s/it]Chunks:  81%|████████▏ | 26/32 [00:35<00:06,  1.13s/it]Chunks:  84%|████████▍ | 27/32 [00:37<00:07,  1.45s/it]Chunks:  88%|████████▊ | 28/32 [00:38<00:04,  1.13s/it]Chunks:  91%|█████████ | 29/32 [00:40<00:04,  1.49s/it]Chunks:  94%|█████████▍| 30/32 [00:40<00:02,  1.15s/it]Chunks:  97%|█████████▋| 31/32 [00:41<00:01,  1.13s/it]Chunks: 100%|██████████| 32/32 [00:42<00:00,  1.12s/it]Chunks: 100%|██████████| 32/32 [00:42<00:00,  1.34s/it]
+21:31:17 | INFO | ⏱  START: Sparse retrieval on 2 GPUs (156949 queries × top-100)
+21:31:18 | INFO |   Shard 0 on cuda:0: rows [0, 158875) — 0.3 GiB
+21:31:18 | INFO |   Shard 1 on cuda:1: rows [158875, 317750) — 0.3 GiB
+21:31:19 | INFO |   Searched 500 / 156949 queries
+21:31:20 | INFO |   Searched 1000 / 156949 queries
+21:31:20 | INFO |   Searched 1500 / 156949 queries
+21:31:20 | INFO |   Searched 2000 / 156949 queries
+21:31:21 | INFO |   Searched 2500 / 156949 queries
+21:31:21 | INFO |   Searched 3000 / 156949 queries
+21:31:22 | INFO |   Searched 3500 / 156949 queries
+21:31:22 | INFO |   Searched 4000 / 156949 queries
+21:31:23 | INFO |   Searched 4500 / 156949 queries
+21:31:23 | INFO |   Searched 5000 / 156949 queries
+21:31:23 | INFO |   Searched 5500 / 156949 queries
+21:31:24 | INFO |   Searched 6000 / 156949 queries
+21:31:24 | INFO |   Searched 6500 / 156949 queries
+21:31:25 | INFO |   Searched 7000 / 156949 queries
+21:31:25 | INFO |   Searched 7500 / 156949 queries
+21:31:25 | INFO |   Searched 8000 / 156949 queries
+21:31:26 | INFO |   Searched 8500 / 156949 queries
+21:31:26 | INFO |   Searched 9000 / 156949 queries
+21:31:27 | INFO |   Searched 9500 / 156949 queries
+21:31:27 | INFO |   Searched 10000 / 156949 queries
+21:31:28 | INFO |   Searched 10500 / 156949 queries
+21:31:28 | INFO |   Searched 11000 / 156949 queries
+21:31:29 | INFO |   Searched 11500 / 156949 queries
+21:31:29 | INFO |   Searched 12000 / 156949 queries
+21:31:29 | INFO |   Searched 12500 / 156949 queries
+21:31:30 | INFO |   Searched 13000 / 156949 queries
+21:31:30 | INFO |   Searched 13500 / 156949 queries
+21:31:31 | INFO |   Searched 14000 / 156949 queries
+21:31:31 | INFO |   Searched 14500 / 156949 queries
+21:31:32 | INFO |   Searched 15000 / 156949 queries
+21:31:32 | INFO |   Searched 15500 / 156949 queries
+21:31:33 | INFO |   Searched 16000 / 156949 queries
+21:31:33 | INFO |   Searched 16500 / 156949 queries
+21:31:33 | INFO |   Searched 17000 / 156949 queries
+21:31:34 | INFO |   Searched 17500 / 156949 queries
+21:31:34 | INFO |   Searched 18000 / 156949 queries
+21:31:35 | INFO |   Searched 18500 / 156949 queries
+21:31:35 | INFO |   Searched 19000 / 156949 queries
+21:31:36 | INFO |   Searched 19500 / 156949 queries
+21:31:36 | INFO |   Searched 20000 / 156949 queries
+21:31:36 | INFO |   Searched 20500 / 156949 queries
+21:31:37 | INFO |   Searched 21000 / 156949 queries
+21:31:37 | INFO |   Searched 21500 / 156949 queries
+21:31:38 | INFO |   Searched 22000 / 156949 queries
+21:31:38 | INFO |   Searched 22500 / 156949 queries
+21:31:39 | INFO |   Searched 23000 / 156949 queries
+21:31:39 | INFO |   Searched 23500 / 156949 queries
+21:31:40 | INFO |   Searched 24000 / 156949 queries
+21:31:40 | INFO |   Searched 24500 / 156949 queries
+21:31:40 | INFO |   Searched 25000 / 156949 queries
+21:31:41 | INFO |   Searched 25500 / 156949 queries
+21:31:41 | INFO |   Searched 26000 / 156949 queries
+21:31:42 | INFO |   Searched 26500 / 156949 queries
+21:31:42 | INFO |   Searched 27000 / 156949 queries
+21:31:43 | INFO |   Searched 27500 / 156949 queries
+21:31:43 | INFO |   Searched 28000 / 156949 queries
+21:31:43 | INFO |   Searched 28500 / 156949 queries
+21:31:44 | INFO |   Searched 29000 / 156949 queries
+21:31:44 | INFO |   Searched 29500 / 156949 queries
+21:31:45 | INFO |   Searched 30000 / 156949 queries
+21:31:45 | INFO |   Searched 30500 / 156949 queries
+21:31:46 | INFO |   Searched 31000 / 156949 queries
+21:31:46 | INFO |   Searched 31500 / 156949 queries
+21:31:47 | INFO |   Searched 32000 / 156949 queries
+21:31:47 | INFO |   Searched 32500 / 156949 queries
+21:31:48 | INFO |   Searched 33000 / 156949 queries
+21:31:48 | INFO |   Searched 33500 / 156949 queries
+21:31:48 | INFO |   Searched 34000 / 156949 queries
+21:31:49 | INFO |   Searched 34500 / 156949 queries
+21:31:49 | INFO |   Searched 35000 / 156949 queries
+21:31:50 | INFO |   Searched 35500 / 156949 queries
+21:31:50 | INFO |   Searched 36000 / 156949 queries
+21:31:51 | INFO |   Searched 36500 / 156949 queries
+21:31:51 | INFO |   Searched 37000 / 156949 queries
+21:31:51 | INFO |   Searched 37500 / 156949 queries
+21:31:52 | INFO |   Searched 38000 / 156949 queries
+21:31:52 | INFO |   Searched 38500 / 156949 queries
+21:31:53 | INFO |   Searched 39000 / 156949 queries
+21:31:53 | INFO |   Searched 39500 / 156949 queries
+21:31:54 | INFO |   Searched 40000 / 156949 queries
+21:31:54 | INFO |   Searched 40500 / 156949 queries
+21:31:55 | INFO |   Searched 41000 / 156949 queries
+21:31:55 | INFO |   Searched 41500 / 156949 queries
+21:31:56 | INFO |   Searched 42000 / 156949 queries
+21:31:56 | INFO |   Searched 42500 / 156949 queries
+21:31:56 | INFO |   Searched 43000 / 156949 queries
+21:31:57 | INFO |   Searched 43500 / 156949 queries
+21:31:57 | INFO |   Searched 44000 / 156949 queries
+21:31:58 | INFO |   Searched 44500 / 156949 queries
+21:31:58 | INFO |   Searched 45000 / 156949 queries
+21:31:59 | INFO |   Searched 45500 / 156949 queries
+21:31:59 | INFO |   Searched 46000 / 156949 queries
+21:32:00 | INFO |   Searched 46500 / 156949 queries
+21:32:00 | INFO |   Searched 47000 / 156949 queries
+21:32:00 | INFO |   Searched 47500 / 156949 queries
+21:32:01 | INFO |   Searched 48000 / 156949 queries
+21:32:01 | INFO |   Searched 48500 / 156949 queries
+21:32:02 | INFO |   Searched 49000 / 156949 queries
+21:32:02 | INFO |   Searched 49500 / 156949 queries
+21:32:03 | INFO |   Searched 50000 / 156949 queries
+21:32:03 | INFO |   Searched 50500 / 156949 queries
+21:32:04 | INFO |   Searched 51000 / 156949 queries
+21:32:04 | INFO |   Searched 51500 / 156949 queries
+21:32:05 | INFO |   Searched 52000 / 156949 queries
+21:32:05 | INFO |   Searched 52500 / 156949 queries
+21:32:05 | INFO |   Searched 53000 / 156949 queries
+21:32:06 | INFO |   Searched 53500 / 156949 queries
+21:32:06 | INFO |   Searched 54000 / 156949 queries
+21:32:07 | INFO |   Searched 54500 / 156949 queries
+21:32:07 | INFO |   Searched 55000 / 156949 queries
+21:32:08 | INFO |   Searched 55500 / 156949 queries
+21:32:08 | INFO |   Searched 56000 / 156949 queries
+21:32:09 | INFO |   Searched 56500 / 156949 queries
+21:32:09 | INFO |   Searched 57000 / 156949 queries
+21:32:09 | INFO |   Searched 57500 / 156949 queries
+21:32:10 | INFO |   Searched 58000 / 156949 queries
+21:32:10 | INFO |   Searched 58500 / 156949 queries
+21:32:11 | INFO |   Searched 59000 / 156949 queries
+21:32:11 | INFO |   Searched 59500 / 156949 queries
+21:32:12 | INFO |   Searched 60000 / 156949 queries
+21:32:12 | INFO |   Searched 60500 / 156949 queries
+21:32:13 | INFO |   Searched 61000 / 156949 queries
+21:32:13 | INFO |   Searched 61500 / 156949 queries
+21:32:13 | INFO |   Searched 62000 / 156949 queries
+21:32:14 | INFO |   Searched 62500 / 156949 queries
+21:32:14 | INFO |   Searched 63000 / 156949 queries
+21:32:15 | INFO |   Searched 63500 / 156949 queries
+21:32:15 | INFO |   Searched 64000 / 156949 queries
+21:32:16 | INFO |   Searched 64500 / 156949 queries
+21:32:16 | INFO |   Searched 65000 / 156949 queries
+21:32:17 | INFO |   Searched 65500 / 156949 queries
+21:32:17 | INFO |   Searched 66000 / 156949 queries
+21:32:17 | INFO |   Searched 66500 / 156949 queries
+21:32:18 | INFO |   Searched 67000 / 156949 queries
+21:32:18 | INFO |   Searched 67500 / 156949 queries
+21:32:19 | INFO |   Searched 68000 / 156949 queries
+21:32:19 | INFO |   Searched 68500 / 156949 queries
+21:32:20 | INFO |   Searched 69000 / 156949 queries
+21:32:20 | INFO |   Searched 69500 / 156949 queries
+21:32:21 | INFO |   Searched 70000 / 156949 queries
+21:32:21 | INFO |   Searched 70500 / 156949 queries
+21:32:21 | INFO |   Searched 71000 / 156949 queries
+21:32:22 | INFO |   Searched 71500 / 156949 queries
+21:32:22 | INFO |   Searched 72000 / 156949 queries
+21:32:23 | INFO |   Searched 72500 / 156949 queries
+21:32:23 | INFO |   Searched 73000 / 156949 queries
+21:32:24 | INFO |   Searched 73500 / 156949 queries
+21:32:24 | INFO |   Searched 74000 / 156949 queries
+21:32:24 | INFO |   Searched 74500 / 156949 queries
+21:32:25 | INFO |   Searched 75000 / 156949 queries
+21:32:25 | INFO |   Searched 75500 / 156949 queries
+21:32:26 | INFO |   Searched 76000 / 156949 queries
+21:32:26 | INFO |   Searched 76500 / 156949 queries
+21:32:27 | INFO |   Searched 77000 / 156949 queries
+21:32:27 | INFO |   Searched 77500 / 156949 queries
+21:32:28 | INFO |   Searched 78000 / 156949 queries
+21:32:28 | INFO |   Searched 78500 / 156949 queries
+21:32:28 | INFO |   Searched 79000 / 156949 queries
+21:32:29 | INFO |   Searched 79500 / 156949 queries
+21:32:29 | INFO |   Searched 80000 / 156949 queries
+21:32:30 | INFO |   Searched 80500 / 156949 queries
+21:32:30 | INFO |   Searched 81000 / 156949 queries
+21:32:31 | INFO |   Searched 81500 / 156949 queries
+21:32:31 | INFO |   Searched 82000 / 156949 queries
+21:32:32 | INFO |   Searched 82500 / 156949 queries
+21:32:32 | INFO |   Searched 83000 / 156949 queries
+21:32:32 | INFO |   Searched 83500 / 156949 queries
+21:32:33 | INFO |   Searched 84000 / 156949 queries
+21:32:33 | INFO |   Searched 84500 / 156949 queries
+21:32:34 | INFO |   Searched 85000 / 156949 queries
+21:32:34 | INFO |   Searched 85500 / 156949 queries
+21:32:35 | INFO |   Searched 86000 / 156949 queries
+21:32:35 | INFO |   Searched 86500 / 156949 queries
+21:32:35 | INFO |   Searched 87000 / 156949 queries
+21:32:36 | INFO |   Searched 87500 / 156949 queries
+21:32:36 | INFO |   Searched 88000 / 156949 queries
+21:32:37 | INFO |   Searched 88500 / 156949 queries
+21:32:37 | INFO |   Searched 89000 / 156949 queries
+21:32:38 | INFO |   Searched 89500 / 156949 queries
+21:32:38 | INFO |   Searched 90000 / 156949 queries
+21:32:39 | INFO |   Searched 90500 / 156949 queries
+21:32:39 | INFO |   Searched 91000 / 156949 queries
+21:32:39 | INFO |   Searched 91500 / 156949 queries
+21:32:40 | INFO |   Searched 92000 / 156949 queries
+21:32:40 | INFO |   Searched 92500 / 156949 queries
+21:32:41 | INFO |   Searched 93000 / 156949 queries
+21:32:41 | INFO |   Searched 93500 / 156949 queries
+21:32:42 | INFO |   Searched 94000 / 156949 queries
+21:32:42 | INFO |   Searched 94500 / 156949 queries
+21:32:42 | INFO |   Searched 95000 / 156949 queries
+21:32:43 | INFO |   Searched 95500 / 156949 queries
+21:32:43 | INFO |   Searched 96000 / 156949 queries
+21:32:44 | INFO |   Searched 96500 / 156949 queries
+21:32:44 | INFO |   Searched 97000 / 156949 queries
+21:32:45 | INFO |   Searched 97500 / 156949 queries
+21:32:45 | INFO |   Searched 98000 / 156949 queries
+21:32:45 | INFO |   Searched 98500 / 156949 queries
+21:32:46 | INFO |   Searched 99000 / 156949 queries
+21:32:46 | INFO |   Searched 99500 / 156949 queries
+21:32:47 | INFO |   Searched 100000 / 156949 queries
+21:32:47 | INFO |   Searched 100500 / 156949 queries
+21:32:48 | INFO |   Searched 101000 / 156949 queries
+21:32:48 | INFO |   Searched 101500 / 156949 queries
+21:32:48 | INFO |   Searched 102000 / 156949 queries
+21:32:49 | INFO |   Searched 102500 / 156949 queries
+21:32:49 | INFO |   Searched 103000 / 156949 queries
+21:32:50 | INFO |   Searched 103500 / 156949 queries
+21:32:50 | INFO |   Searched 104000 / 156949 queries
+21:32:51 | INFO |   Searched 104500 / 156949 queries
+21:32:51 | INFO |   Searched 105000 / 156949 queries
+21:32:51 | INFO |   Searched 105500 / 156949 queries
+21:32:52 | INFO |   Searched 106000 / 156949 queries
+21:32:52 | INFO |   Searched 106500 / 156949 queries
+21:32:53 | INFO |   Searched 107000 / 156949 queries
+21:32:53 | INFO |   Searched 107500 / 156949 queries
+21:32:54 | INFO |   Searched 108000 / 156949 queries
+21:32:54 | INFO |   Searched 108500 / 156949 queries
+21:32:54 | INFO |   Searched 109000 / 156949 queries
+21:32:55 | INFO |   Searched 109500 / 156949 queries
+21:32:55 | INFO |   Searched 110000 / 156949 queries
+21:32:56 | INFO |   Searched 110500 / 156949 queries
+21:32:56 | INFO |   Searched 111000 / 156949 queries
+21:32:57 | INFO |   Searched 111500 / 156949 queries
+21:32:57 | INFO |   Searched 112000 / 156949 queries
+21:32:57 | INFO |   Searched 112500 / 156949 queries
+21:32:58 | INFO |   Searched 113000 / 156949 queries
+21:32:58 | INFO |   Searched 113500 / 156949 queries
+21:32:59 | INFO |   Searched 114000 / 156949 queries
+21:32:59 | INFO |   Searched 114500 / 156949 queries
+21:32:59 | INFO |   Searched 115000 / 156949 queries
+21:33:00 | INFO |   Searched 115500 / 156949 queries
+21:33:00 | INFO |   Searched 116000 / 156949 queries
+21:33:01 | INFO |   Searched 116500 / 156949 queries
+21:33:01 | INFO |   Searched 117000 / 156949 queries
+21:33:02 | INFO |   Searched 117500 / 156949 queries
+21:33:02 | INFO |   Searched 118000 / 156949 queries
+21:33:02 | INFO |   Searched 118500 / 156949 queries
+21:33:03 | INFO |   Searched 119000 / 156949 queries
+21:33:03 | INFO |   Searched 119500 / 156949 queries
+21:33:04 | INFO |   Searched 120000 / 156949 queries
+21:33:04 | INFO |   Searched 120500 / 156949 queries
+21:33:05 | INFO |   Searched 121000 / 156949 queries
+21:33:05 | INFO |   Searched 121500 / 156949 queries
+21:33:05 | INFO |   Searched 122000 / 156949 queries
+21:33:06 | INFO |   Searched 122500 / 156949 queries
+21:33:06 | INFO |   Searched 123000 / 156949 queries
+21:33:07 | INFO |   Searched 123500 / 156949 queries
+21:33:07 | INFO |   Searched 124000 / 156949 queries
+21:33:08 | INFO |   Searched 124500 / 156949 queries
+21:33:08 | INFO |   Searched 125000 / 156949 queries
+21:33:08 | INFO |   Searched 125500 / 156949 queries
+21:33:09 | INFO |   Searched 126000 / 156949 queries
+21:33:09 | INFO |   Searched 126500 / 156949 queries
+21:33:10 | INFO |   Searched 127000 / 156949 queries
+21:33:10 | INFO |   Searched 127500 / 156949 queries
+21:33:11 | INFO |   Searched 128000 / 156949 queries
+21:33:11 | INFO |   Searched 128500 / 156949 queries
+21:33:12 | INFO |   Searched 129000 / 156949 queries
+21:33:12 | INFO |   Searched 129500 / 156949 queries
+21:33:12 | INFO |   Searched 130000 / 156949 queries
+21:33:13 | INFO |   Searched 130500 / 156949 queries
+21:33:13 | INFO |   Searched 131000 / 156949 queries
+21:33:14 | INFO |   Searched 131500 / 156949 queries
+21:33:14 | INFO |   Searched 132000 / 156949 queries
+21:33:15 | INFO |   Searched 132500 / 156949 queries
+21:33:15 | INFO |   Searched 133000 / 156949 queries
+21:33:15 | INFO |   Searched 133500 / 156949 queries
+21:33:16 | INFO |   Searched 134000 / 156949 queries
+21:33:16 | INFO |   Searched 134500 / 156949 queries
+21:33:17 | INFO |   Searched 135000 / 156949 queries
+21:33:17 | INFO |   Searched 135500 / 156949 queries
+21:33:18 | INFO |   Searched 136000 / 156949 queries
+21:33:18 | INFO |   Searched 136500 / 156949 queries
+21:33:18 | INFO |   Searched 137000 / 156949 queries
+21:33:19 | INFO |   Searched 137500 / 156949 queries
+21:33:19 | INFO |   Searched 138000 / 156949 queries
+21:33:20 | INFO |   Searched 138500 / 156949 queries
+21:33:20 | INFO |   Searched 139000 / 156949 queries
+21:33:21 | INFO |   Searched 139500 / 156949 queries
+21:33:21 | INFO |   Searched 140000 / 156949 queries
+21:33:21 | INFO |   Searched 140500 / 156949 queries
+21:33:22 | INFO |   Searched 141000 / 156949 queries
+21:33:22 | INFO |   Searched 141500 / 156949 queries
+21:33:23 | INFO |   Searched 142000 / 156949 queries
+21:33:23 | INFO |   Searched 142500 / 156949 queries
+21:33:24 | INFO |   Searched 143000 / 156949 queries
+21:33:24 | INFO |   Searched 143500 / 156949 queries
+21:33:24 | INFO |   Searched 144000 / 156949 queries
+21:33:25 | INFO |   Searched 144500 / 156949 queries
+21:33:25 | INFO |   Searched 145000 / 156949 queries
+21:33:26 | INFO |   Searched 145500 / 156949 queries
+21:33:26 | INFO |   Searched 146000 / 156949 queries
+21:33:27 | INFO |   Searched 146500 / 156949 queries
+21:33:27 | INFO |   Searched 147000 / 156949 queries
+21:33:28 | INFO |   Searched 147500 / 156949 queries
+21:33:28 | INFO |   Searched 148000 / 156949 queries
+21:33:28 | INFO |   Searched 148500 / 156949 queries
+21:33:29 | INFO |   Searched 149000 / 156949 queries
+21:33:29 | INFO |   Searched 149500 / 156949 queries
+21:33:30 | INFO |   Searched 150000 / 156949 queries
+21:33:30 | INFO |   Searched 150500 / 156949 queries
+21:33:31 | INFO |   Searched 151000 / 156949 queries
+21:33:31 | INFO |   Searched 151500 / 156949 queries
+21:33:31 | INFO |   Searched 152000 / 156949 queries
+21:33:32 | INFO |   Searched 152500 / 156949 queries
+21:33:32 | INFO |   Searched 153000 / 156949 queries
+21:33:33 | INFO |   Searched 153500 / 156949 queries
+21:33:33 | INFO |   Searched 154000 / 156949 queries
+21:33:34 | INFO |   Searched 154500 / 156949 queries
+21:33:34 | INFO |   Searched 155000 / 156949 queries
+21:33:34 | INFO |   Searched 155500 / 156949 queries
+21:33:35 | INFO |   Searched 156000 / 156949 queries
+21:33:35 | INFO |   Searched 156500 / 156949 queries
+21:33:36 | INFO | ⏱  DONE:  Sparse retrieval on 2 GPUs (156949 queries × top-100) (138.9s)
+/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 8 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

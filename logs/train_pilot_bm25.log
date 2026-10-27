@@ -1,0 +1,20 @@
+21:15:49 | INFO | Loading faiss with AVX512 support.
+21:15:49 | INFO | Successfully loaded faiss with AVX512 support.
+WARNING: Using incubator modules: jdk.incubator.vector
+[0;93m2026-10-26 21:16:01.101534997 [W:onnxruntime:Default, device_discovery.cc:325 DiscoverDevicesForPlatform] GPU device discovery failed: device_discovery.cc:92 ReadFileContents Failed to open file: "/sys/class/drm/card0/device/vendor"[m
+21:16:01 | INFO | Loading cached retrieval run from /home/jmendoza/.cache/messirve_embeddings/bm25_pyserini/full_v1.2_nofilter/retrieval_run.lz4
+21:17:23 | INFO | ⏱  START: Loading cached pruned qrels
+21:17:24 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.6s)
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/jmendoza/ir-spanish/baselines/bm25.py", line 133, in <module>
+    retrieval.run_evaluation(qrels, ranx_run, MODEL_SLUG)
+  File "/home/jmendoza/ir-spanish/utils/retrieval.py", line 121, in run_evaluation
+    results: dict[str, float] = evaluate(qrels, run, metrics=["ndcg@10", "recall@100", "mrr@10", "map", "precision@10", "precision@50"])
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/ranx/meta/evaluate.py", line 135, in evaluate
+    check_keys(qrels, run)
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/ranx/meta/evaluate.py", line 61, in check_keys
+    qrels.keys() == run.keys()
+AssertionError: Qrels and Run query ids do not match. Pass `make_comparable=True` to add empty results for queries missing from the run and remove those not appearing in qrels.

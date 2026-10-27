@@ -1,0 +1,169 @@
+{
+  "pilot": true,
+  "metadata": {
+    "kind": "train_pilot",
+    "dataset": "spanish-ir/messirve",
+    "corpus": "spanish-ir/eswiki_20240401_corpus",
+    "country": "full",
+    "revision": "1.2",
+    "filter": {
+      "match_score": 1.0,
+      "expanded_search": false
+    },
+    "seed": 42,
+    "requested_articles": 10000,
+    "n_articles": 10000,
+    "n_documents": 317750,
+    "n_queries": 156949,
+    "n_judgments": 161644,
+    "created_utc": "2026-10-27T02:06:31+00:00",
+    "git_commit": "db24667"
+  },
+  "single_models": [
+    {
+      "model": "jina-v5-small",
+      "family": "denso",
+      "ndcg@10": 0.6075041426440503,
+      "recall@100": 0.9758297281282455,
+      "rank": 1
+    },
+    {
+      "model": "bge-m3",
+      "family": "denso",
+      "ndcg@10": 0.5628646811068138,
+      "recall@100": 0.9476779081102777,
+      "rank": 2
+    },
+    {
+      "model": "e5-large",
+      "family": "denso",
+      "ndcg@10": 0.5452132226651945,
+      "recall@100": 0.9513261207993255,
+      "rank": 3
+    },
+    {
+      "model": "qwen3-0.6b",
+      "family": "denso",
+      "ndcg@10": 0.5316874032711718,
+      "recall@100": 0.9306510395096497,
+      "rank": 4
+    }
+  ],
+  "top_fusions": [
+    {
+      "combo": "e5-large+bge-m3+jina-v5-small",
+      "strategy": "combmnz",
+      "ndcg@10": 0.625321,
+      "recall@100": 0.980883,
+      "rank": 1
+    },
+    {
+      "combo": "bge-m3+jina-v5-small",
+      "strategy": "combmnz",
+      "ndcg@10": 0.621024,
+      "recall@100": 0.978905,
+      "rank": 2
+    },
+    {
+      "combo": "qwen3-0.6b+e5-large+bge-m3+jina-v5-small",
+      "strategy": "combmnz",
+      "ndcg@10": 0.620665,
+      "recall@100": 0.979755,
+      "rank": 3
+    },
+    {
+      "combo": "e5-large+jina-v5-small",
+      "strategy": "combmnz",
+      "ndcg@10": 0.617238,
+      "recall@100": 0.979166,
+      "rank": 4
+    },
+    {
+      "combo": "qwen3-0.6b+bge-m3+jina-v5-small",
+      "strategy": "combmnz",
+      "ndcg@10": 0.61313,
+      "recall@100": 0.977433,
+      "rank": 5
+    },
+    {
+      "combo": "qwen3-0.6b+e5-large+jina-v5-small",
+      "strategy": "combmnz",
+      "ndcg@10": 0.612356,
+      "recall@100": 0.978144,
+      "rank": 6
+    },
+    {
+      "combo": "qwen3-0.6b+e5-large+bge-m3",
+      "strategy": "combmnz",
+      "ndcg@10": 0.603249,
+      "recall@100": 0.968822,
+      "rank": 7
+    },
+    {
+      "combo": "qwen3-0.6b+jina-v5-small",
+      "strategy": "combmnz",
+      "ndcg@10": 0.594193,
+      "recall@100": 0.97347,
+      "rank": 8
+    },
+    {
+      "combo": "e5-large+bge-m3",
+      "strategy": "combmnz",
+      "ndcg@10": 0.59282,
+      "recall@100": 0.96612,
+      "rank": 9
+    },
+    {
+      "combo": "qwen3-0.6b+bge-m3",
+      "strategy": "combmnz",
+      "ndcg@10": 0.588129,
+      "recall@100": 0.955456,
+      "rank": 10
+    }
+  ],
+  "algorithms": [
+    {
+      "strategy": "combmnz",
+      "ndcg@10": 0.625321,
+      "recall@100": 0.980883,
+      "rank": 1
+    },
+    {
+      "strategy": "rbc",
+      "ndcg@10": 0.621999,
+      "recall@100": 0.979885,
+      "rank": 2
+    },
+    {
+      "strategy": "rrf",
+      "ndcg@10": 0.61859,
+      "recall@100": 0.98055,
+      "rank": 3
+    },
+    {
+      "strategy": "isr",
+      "ndcg@10": 0.616275,
+      "recall@100": 0.980554,
+      "rank": 4
+    }
+  ],
+  "trio": {
+    "combo": "e5-large+bge-m3+jina-v5-small",
+    "strategy": "combmnz",
+    "ndcg@10": 0.625321,
+    "recall@100": 0.980883,
+    "rank": 1
+  },
+  "reference_algorithm": {
+    "strategy": "combmnz",
+    "ndcg@10": 0.625321,
+    "recall@100": 0.980883,
+    "rank": 1
+  },
+  "agreement": {
+    "top3_matches": true,
+    "first_stage_matches": true,
+    "trio_is_best_fusion": true,
+    "reference_algorithm_is_best": true
+  }
+}

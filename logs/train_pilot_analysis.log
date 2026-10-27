@@ -1,0 +1,94 @@
+===== 2026-10-26T21:36:20-06:00 — algorithm check =====
+21:36:24 | INFO | Loading faiss with AVX512 support.
+21:36:24 | INFO | Successfully loaded faiss with AVX512 support.
+21:36:24 | INFO | Models (native lengths): qwen3-0.6b[32768/32768], e5-large[512/512], bge-m3[8192/8192], jina-v5-small[32768/32768]
+21:36:24 | INFO | Strategies: combmnz, rbc, rrf, isr
+21:36:24 | INFO | Normalization: min-max
+21:36:24 | INFO | Combination sizes: 2..4
+21:36:24 | INFO | Loading run for qwen3-0.6b from /home/jmendoza/.cache/messirve_embeddings/Qwen__Qwen3-Embedding-0.6B/full_v1.2_q32768_d32768_nofilter_pilot/retrieval_run.lz4
+21:36:48 | INFO | Loading run for e5-large from /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter_pilot/retrieval_run.lz4
+21:37:10 | INFO | Loading run for bge-m3 from /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-m3/full_v1.2_q8192_d8192_nofilter_pilot/retrieval_run.lz4
+21:37:31 | INFO | Loading run for jina-v5-small from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter_pilot/retrieval_run.lz4
+21:37:52 | INFO | ⏱  START: Loading cached pruned qrels
+21:37:52 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+21:37:56 | INFO | Total (combination, strategy) pairs: 4
+21:37:56 | INFO | [1/4] fusing e5-large+bge-m3+jina-v5-small (mnz, -)
+21:39:50 | INFO |   e5-large+bge-m3+jina-v5-small (mnz)                           ndcg@10=0.6253  recall@100=0.9809  mrr@10=0.5557  map=0.5590  p@10=0.0873  p@50=0.0198
+21:39:50 | INFO | [1/4] done e5-large+bge-m3+jina-v5-small (combmnz): nDCG@10=0.6253 Recall@100=0.9809 (114.1s)
+21:39:50 | INFO | [2/4] fusing e5-large+bge-m3+jina-v5-small (rbc, phi=0.95)
+21:42:14 | INFO |   e5-large+bge-m3+jina-v5-small (rbc, phi=0.95)                 ndcg@10=0.6220  recall@100=0.9799  mrr@10=0.5511  map=0.5544  p@10=0.0874  p@50=0.0198
+21:42:14 | INFO | [2/4] done e5-large+bge-m3+jina-v5-small (rbc): nDCG@10=0.6220 Recall@100=0.9799 (143.8s)
+21:42:14 | INFO | [3/4] fusing e5-large+bge-m3+jina-v5-small (rrf, k=60)
+21:44:33 | INFO |   e5-large+bge-m3+jina-v5-small (rrf, k=60)                     ndcg@10=0.6186  recall@100=0.9805  mrr@10=0.5486  map=0.5520  p@10=0.0868  p@50=0.0198
+21:44:33 | INFO | [3/4] done e5-large+bge-m3+jina-v5-small (rrf): nDCG@10=0.6186 Recall@100=0.9805 (139.3s)
+21:44:33 | INFO | [4/4] fusing e5-large+bge-m3+jina-v5-small (isr, -)
+21:46:57 | INFO |   e5-large+bge-m3+jina-v5-small (isr)                           ndcg@10=0.6163  recall@100=0.9806  mrr@10=0.5451  map=0.5485  p@10=0.0870  p@50=0.0198
+21:46:57 | INFO | [4/4] done e5-large+bge-m3+jina-v5-small (isr): nDCG@10=0.6163 Recall@100=0.9806 (143.8s)
+21:46:57 | INFO | CSV: results/train_pilot/algorithm_check/results.csv
+21:46:57 | INFO | Markdown: results/train_pilot/algorithm_check/results.md
+===== 2026-10-26T21:47:00-06:00 — 11-subset sweep (CombMNZ) =====
+21:47:04 | INFO | Loading faiss with AVX512 support.
+21:47:04 | INFO | Successfully loaded faiss with AVX512 support.
+21:47:04 | INFO | Models (native lengths): qwen3-0.6b[32768/32768], e5-large[512/512], bge-m3[8192/8192], jina-v5-small[32768/32768]
+21:47:04 | INFO | Strategies: combmnz
+21:47:04 | INFO | Normalization: min-max
+21:47:04 | INFO | Combination sizes: 2..4
+21:47:04 | INFO | Loading run for qwen3-0.6b from /home/jmendoza/.cache/messirve_embeddings/Qwen__Qwen3-Embedding-0.6B/full_v1.2_q32768_d32768_nofilter_pilot/retrieval_run.lz4
+21:47:28 | INFO | Loading run for e5-large from /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter_pilot/retrieval_run.lz4
+21:47:50 | INFO | Loading run for bge-m3 from /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-m3/full_v1.2_q8192_d8192_nofilter_pilot/retrieval_run.lz4
+21:48:11 | INFO | Loading run for jina-v5-small from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter_pilot/retrieval_run.lz4
+21:48:32 | INFO | ⏱  START: Loading cached pruned qrels
+21:48:32 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+21:48:36 | INFO | Total (combination, strategy) pairs: 11
+21:48:36 | INFO | [1/11] fusing qwen3-0.6b+e5-large+bge-m3+jina-v5-small (mnz, -)
+21:51:04 | INFO |   qwen3-0.6b+e5-large+bge-m3+jina-v5-small (mnz)                ndcg@10=0.6207  recall@100=0.9798  mrr@10=0.5508  map=0.5542  p@10=0.0869  p@50=0.0198
+21:51:04 | INFO | [1/11] done qwen3-0.6b+e5-large+bge-m3+jina-v5-small (combmnz): nDCG@10=0.6207 Recall@100=0.9798 (147.5s)
+21:51:04 | INFO | [2/11] fusing qwen3-0.6b+e5-large+bge-m3 (mnz, -)
+21:53:11 | INFO |   qwen3-0.6b+e5-large+bge-m3 (mnz)                              ndcg@10=0.6032  recall@100=0.9688  mrr@10=0.5340  map=0.5376  p@10=0.0850  p@50=0.0195
+21:53:11 | INFO | [2/11] done qwen3-0.6b+e5-large+bge-m3 (combmnz): nDCG@10=0.6032 Recall@100=0.9688 (127.0s)
+21:53:11 | INFO | [3/11] fusing qwen3-0.6b+e5-large+jina-v5-small (mnz, -)
+21:55:09 | INFO |   qwen3-0.6b+e5-large+jina-v5-small (mnz)                       ndcg@10=0.6124  recall@100=0.9781  mrr@10=0.5422  map=0.5459  p@10=0.0862  p@50=0.0198
+21:55:09 | INFO | [3/11] done qwen3-0.6b+e5-large+jina-v5-small (combmnz): nDCG@10=0.6124 Recall@100=0.9781 (117.7s)
+21:55:09 | INFO | [4/11] fusing qwen3-0.6b+bge-m3+jina-v5-small (mnz, -)
+21:57:07 | INFO |   qwen3-0.6b+bge-m3+jina-v5-small (mnz)                         ndcg@10=0.6131  recall@100=0.9774  mrr@10=0.5430  map=0.5466  p@10=0.0862  p@50=0.0197
+21:57:07 | INFO | [4/11] done qwen3-0.6b+bge-m3+jina-v5-small (combmnz): nDCG@10=0.6131 Recall@100=0.9774 (118.0s)
+21:57:07 | INFO | [5/11] fusing e5-large+bge-m3+jina-v5-small (mnz, -)
+21:59:05 | INFO |   e5-large+bge-m3+jina-v5-small (mnz)                           ndcg@10=0.6253  recall@100=0.9809  mrr@10=0.5557  map=0.5590  p@10=0.0873  p@50=0.0198
+21:59:05 | INFO | [5/11] done e5-large+bge-m3+jina-v5-small (combmnz): nDCG@10=0.6253 Recall@100=0.9809 (118.7s)
+21:59:05 | INFO | [6/11] fusing qwen3-0.6b+e5-large (mnz, -)
+22:00:31 | INFO |   qwen3-0.6b+e5-large (mnz)                                     ndcg@10=0.5820  recall@100=0.9637  mrr@10=0.5126  map=0.5167  p@10=0.0829  p@50=0.0193
+22:00:31 | INFO | [6/11] done qwen3-0.6b+e5-large (combmnz): nDCG@10=0.5820 Recall@100=0.9637 (85.7s)
+22:00:31 | INFO | [7/11] fusing qwen3-0.6b+bge-m3 (mnz, -)
+22:01:57 | INFO |   qwen3-0.6b+bge-m3 (mnz)                                       ndcg@10=0.5881  recall@100=0.9555  mrr@10=0.5197  map=0.5234  p@10=0.0832  p@50=0.0192
+22:01:57 | INFO | [7/11] done qwen3-0.6b+bge-m3 (combmnz): nDCG@10=0.5881 Recall@100=0.9555 (85.7s)
+22:01:57 | INFO | [8/11] fusing qwen3-0.6b+jina-v5-small (mnz, -)
+22:03:24 | INFO |   qwen3-0.6b+jina-v5-small (mnz)                                ndcg@10=0.5942  recall@100=0.9735  mrr@10=0.5237  map=0.5277  p@10=0.0845  p@50=0.0196
+22:03:24 | INFO | [8/11] done qwen3-0.6b+jina-v5-small (combmnz): nDCG@10=0.5942 Recall@100=0.9735 (87.0s)
+22:03:24 | INFO | [9/11] fusing e5-large+bge-m3 (mnz, -)
+22:04:50 | INFO |   e5-large+bge-m3 (mnz)                                         ndcg@10=0.5928  recall@100=0.9661  mrr@10=0.5239  map=0.5277  p@10=0.0838  p@50=0.0194
+22:04:50 | INFO | [9/11] done e5-large+bge-m3 (combmnz): nDCG@10=0.5928 Recall@100=0.9661 (86.6s)
+22:04:50 | INFO | [10/11] fusing e5-large+jina-v5-small (mnz, -)
+22:06:16 | INFO |   e5-large+jina-v5-small (mnz)                                  ndcg@10=0.6172  recall@100=0.9792  mrr@10=0.5469  map=0.5504  p@10=0.0867  p@50=0.0198
+22:06:16 | INFO | [10/11] done e5-large+jina-v5-small (combmnz): nDCG@10=0.6172 Recall@100=0.9792 (85.5s)
+22:06:16 | INFO | [11/11] fusing bge-m3+jina-v5-small (mnz, -)
+22:07:41 | INFO |   bge-m3+jina-v5-small (mnz)                                    ndcg@10=0.6210  recall@100=0.9789  mrr@10=0.5500  map=0.5532  p@10=0.0873  p@50=0.0198
+22:07:41 | INFO | [11/11] done bge-m3+jina-v5-small (combmnz): nDCG@10=0.6210 Recall@100=0.9789 (85.6s)
+22:07:41 | INFO | CSV: results/train_pilot/sweep/results.csv
+22:07:41 | INFO | Markdown: results/train_pilot/sweep/results.md
+===== 2026-10-26T22:07:44-06:00 — selection report =====
+22:07:48 | INFO | Loading faiss with AVX512 support.
+22:07:48 | INFO | Successfully loaded faiss with AVX512 support.
+22:07:48 | INFO | ⏱  START: Loading training qrels
+22:07:48 | INFO | ⏱  START: Loading cached pruned qrels
+22:07:48 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+22:07:53 | INFO | ⏱  DONE:  Loading training qrels (5.1s)
+22:07:53 | INFO | ⏱  START: Evaluating the individual models
+22:07:53 | INFO | Loading run for qwen3-0.6b from /home/jmendoza/.cache/messirve_embeddings/Qwen__Qwen3-Embedding-0.6B/full_v1.2_q32768_d32768_nofilter_pilot/retrieval_run.lz4
+22:08:17 | INFO | Loading run for e5-large from /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter_pilot/retrieval_run.lz4
+22:08:38 | INFO | Loading run for bge-m3 from /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-m3/full_v1.2_q8192_d8192_nofilter_pilot/retrieval_run.lz4
+22:08:59 | INFO | Loading run for jina-v5-small from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter_pilot/retrieval_run.lz4
+22:10:18 | INFO | ⏱  DONE:  Evaluating the individual models (144.6s)
+22:10:18 | INFO | Report: /home/jmendoza/ir-spanish/results/train_pilot/selection.md
+22:10:18 | INFO | Single models: /home/jmendoza/ir-spanish/results/train_pilot/single_models.csv
+22:10:18 | INFO | Agreement: {'top3_matches': True, 'first_stage_matches': True, 'trio_is_best_fusion': True, 'reference_algorithm_is_best': True}
+===== 2026-10-26T22:10:19-06:00 — done =====
