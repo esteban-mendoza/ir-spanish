@@ -118,7 +118,12 @@ def run_evaluation(
     Returns:
         A dict mapping metric names to their computed float values.
     """
-    results: dict[str, float] = evaluate(qrels, run, metrics=["ndcg@10", "recall@100", "mrr@10", "map", "precision@10", "precision@50"])
+    results: dict[str, float] = evaluate(
+        qrels,
+        run,
+        metrics=["ndcg@10", "recall@100", "mrr@10", "map", "precision@10", "precision@50"],
+        make_comparable=True,
+    )
 
     if mode == "inline":
         _log_inline(results, model_name, strategy, params)

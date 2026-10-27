@@ -166,6 +166,11 @@ def parse_args() -> argparse.Namespace:
         help="Comma-separated strategy keys (default: combmnz,rbc).",
     )
     parser.add_argument(
+        "--models",
+        default="",
+        help="Comma-separated model aliases to include (default: all six).",
+    )
+    parser.add_argument(
         "--combos",
         default="",
         help="Comma-separated combination names to run (default: all).",
@@ -213,14 +218,25 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
 
+    models = MODELS
+    if args.models.strip():
+        wanted = [value.strip() for value in args.models.split(",") if value.strip()]
+        known = {model.alias for model in MODELS}
+        unknown = [value for value in wanted if value not in known]
+        if unknown:
+            raise SystemExit(f"Unknown models: {unknown}. Available: {sorted(known)}")
+        models = [model for model in MODELS if model.alias in set(wanted)]
+        if len(models) < 2:
+            raise SystemExit("Need at least two models")
+
     strategy_keys = [s.strip() for s in args.strategies.split(",") if s.strip()]
     unknown = [s for s in strategy_keys if s not in STRATEGIES]
     if unknown:
         raise SystemExit(f"Unknown strategies: {unknown}. Available: {sorted(STRATEGIES)}")
-    if not (2 <= args.min_size <= args.max_size <= len(MODELS)):
+    if not (2 <= args.min_size <= args.max_size <= len(models)):
         raise SystemExit("Need 2 <= min-size <= max-size <= number of models")
 
-    alias_to_index = {m.alias: i for i, m in enumerate(MODELS)}
+    alias_to_index = {m.alias: i for i, m in enumerate(models)}
     selected = set()
     if args.combos.strip():
         for raw in args.combos.split(","):
@@ -233,7 +249,7 @@ def main() -> None:
             indices = tuple(sorted(alias_to_index[part] for part in parts))
             if not (args.min_size <= len(indices) <= args.max_size):
                 raise SystemExit(f"Combination {raw!r} is outside the size range")
-            selected.add("+".join(MODELS[i].alias for i in indices))
+            selected.add("+".join(models[i].alias for i in indices))
 
     save_selected = set()
     if args.save_combos.strip():
@@ -245,7 +261,7 @@ def main() -> None:
             if unknown_models:
                 raise SystemExit(f"Unknown models in {raw!r}: {unknown_models}")
             indices = tuple(sorted(alias_to_index[part] for part in parts))
-            save_selected.add("+".join(MODELS[i].alias for i in indices))
+            save_selected.add("+".join(models[i].alias for i in indices))
 
     norm = None if args.norm.lower() == "none" else args.norm
     args.out_dir.mkdir(parents=True, exist_ok=True)
@@ -256,19 +272,19 @@ def main() -> None:
 
     done = set() if args.no_resume else read_done(csv_path)
 
-    log.info("Models (native lengths): %s", ", ".join(f"{m.alias}[{m.max_q_len}/{m.max_d_len}]" for m in MODELS))
+    log.info("Models (native lengths): %s", ", ".join(f"{m.alias}[{m.max_q_len}/{m.max_d_len}]" for m in models))
     log.info("Strategies: %s", ", ".join(strategy_keys))
     log.info("Normalization: %s", norm or "none")
     log.info("Combination sizes: %d..%d", args.min_size, args.max_size)
 
-    runs = load_runs(MODELS)
+    runs = load_runs(models)
     qrels = load_qrels()
 
     if selected:
         total = len(selected) * len(strategy_keys)
     else:
         total = sum(
-            len(list(itertools.combinations(range(len(MODELS)), size)))
+            len(list(itertools.combinations(range(len(models)), size)))
             for size in range(args.max_size, args.min_size - 1, -1)
         ) * len(strategy_keys)
     log.info("Total (combination, strategy) pairs: %d", total)
@@ -287,9 +303,9 @@ def main() -> None:
             params_str = format_params(params)
 
             for size in range(args.max_size, args.min_size - 1, -1):
-                combos = list(itertools.combinations(range(len(MODELS)), size))
+                combos = list(itertools.combinations(range(len(models)), size))
                 for indices in combos:
-                    combo = "+".join(MODELS[i].alias for i in indices)
+                    combo = "+".join(models[i].alias for i in indices)
                     if selected and combo not in selected:
                         continue
                     index += 1

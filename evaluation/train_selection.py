@@ -46,10 +46,10 @@ def read_csv(path: Path) -> list[dict]:
         return list(csv.DictReader(handle))
 
 
-def load_single_models(qrels) -> list[dict]:
-    runs = load_runs(MODELS)
+def load_single_models(qrels, models) -> list[dict]:
+    runs = load_runs(models)
     rows = []
-    for model, run in zip(MODELS, runs):
+    for model, run in zip(models, runs):
         result = retrieval.run_evaluation(qrels, run, model.alias, mode="quiet")
         rows.append(
             {
@@ -150,6 +150,7 @@ def write_markdown(
         lines.append(f"- Juicios: {metadata.get('n_judgments', '—')}")
         lines.append(f"- Filtro: {metadata.get('filter', '—')}")
         lines.append(f"- Semilla: {metadata.get('seed', '—')}")
+        lines.append(f"- Modelos: {', '.join('`' + row['model'] + '`' for row in single)}")
         lines.append(f"- Commit: `{metadata.get('git_commit', '—')}`")
         lines.append("")
 
@@ -247,6 +248,11 @@ def parse_args() -> argparse.Namespace:
         help=f"Directory for the report (default: {DEFAULT_OUT_DIR}).",
     )
     parser.add_argument(
+        "--models",
+        default="",
+        help="Comma-separated model aliases to include (default: all six).",
+    )
+    parser.add_argument(
         "--sweep",
         type=Path,
         default=None,
@@ -267,11 +273,22 @@ def main() -> None:
     sweep_path = args.sweep or out_dir / "sweep" / "results.csv"
     algorithm_path = args.algorithm_check or out_dir / "algorithm_check" / "results.csv"
 
+    models = MODELS
+    if args.models.strip():
+        wanted = [value.strip() for value in args.models.split(",") if value.strip()]
+        known = {model.alias for model in MODELS}
+        unknown = [value for value in wanted if value not in known]
+        if unknown:
+            raise SystemExit(f"Unknown models: {unknown}. Available: {sorted(known)}")
+        models = [model for model in MODELS if model.alias in set(wanted)]
+        if len(models) < 2:
+            raise SystemExit("Need at least two models")
+
     with Timer("Loading training qrels"):
         qrels = load_qrels()
 
-    with Timer("Evaluating the six individual models"):
-        single = load_single_models(qrels)
+    with Timer("Evaluating the individual models"):
+        single = load_single_models(qrels, models)
 
     sweep = load_sweep(sweep_path)
     algorithms = load_algorithm_check(algorithm_path)
