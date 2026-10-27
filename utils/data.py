@@ -7,7 +7,9 @@ from __future__ import annotations
 import gc
 import json
 import logging
+import os
 from collections import defaultdict
+from pathlib import Path
 
 import datasets
 from ranx import Qrels
@@ -23,6 +25,12 @@ COUNTRY = "full"
 DATASET_VERSION = "1.2"
 CORPUS_NAME = "spanish-ir/eswiki_20240401_corpus"
 MAX_WORD_COUNT = None
+
+# When this variable points to a pilot directory, the data layer reads the
+# pilot qrels, query map and corpus instead of the full MessIRve partition.
+# The cache layer adds a matching suffix so pilot artifacts never mix with
+# the test or full-training caches.
+PILOT_ENV = "MESSIRVE_PILOT"
 
 
 # ---------------------------------------------------------------------------
@@ -118,6 +126,12 @@ def get_pruned_qrels_and_queries(
                       cache miss — pass None when the cache is known to be valid.
         dataset_cache_dir: Directory where pruned_qrels.json and pruned_q_map.json are stored.
     """
+    pilot_dir = os.environ.get(PILOT_ENV)
+    if pilot_dir:
+        # In pilot mode the qrels are built once by scripts/build_train_pilot.py
+        # and live in the pilot directory; never rebuild them from the full split.
+        dataset_cache_dir = Path(pilot_dir)
+
     qrels_cache_path = dataset_cache_dir / "pruned_qrels.json"
     query_map_cache_path = dataset_cache_dir / "pruned_q_map.json"
 
@@ -129,6 +143,12 @@ def get_pruned_qrels_and_queries(
             with open(query_map_cache_path, "r") as f:
                 pruned_query_map = json.load(f)
         return Qrels(pruned_qrels_dict), pruned_query_map
+
+    if pilot_dir:
+        raise RuntimeError(
+            f"Pilot qrels cache not found in {dataset_cache_dir}. "
+            "Run scripts/build_train_pilot.py first."
+        )
 
     # 2. Compute from scratch if cache is missing
     if kept_doc_ids is None:
@@ -188,17 +208,40 @@ def _batch_format_and_count(batch: dict) -> dict:
     return batch
 
 
+def _load_pilot_corpus(pilot_dir: Path):
+    """Load the pre-built closed corpus of a training pilot."""
+    corpus_path = pilot_dir / "corpus"
+    if not corpus_path.exists():
+        raise FileNotFoundError(
+            f"Pilot corpus not found at {corpus_path}. "
+            "Run scripts/build_train_pilot.py first."
+        )
+    with Timer(f"Loading pilot corpus from {corpus_path}"):
+        corpus = datasets.load_from_disk(str(corpus_path))
+    log.info("Pilot corpus: %d documents", len(corpus))
+    return (
+        list(corpus["str_docid"]),
+        list(corpus["full_text"]),
+        list(corpus["word_count"]),
+    )
+
+
 def load_corpus(num_workers: int):
     """Load the eswiki corpus and format documents.
 
     When MAX_WORD_COUNT is set, documents exceeding that word count are excluded.
     When MAX_WORD_COUNT is None, all documents are kept.
+    When MESSIRVE_PILOT is set, load the closed pilot corpus instead.
 
     Returns:
         doc_ids:     List of document IDs (strings) for the kept documents.
         doc_texts:   List of formatted full-text strings for the kept documents.
         word_counts: List of word counts (ints) for each document.
     """
+    pilot_dir = os.environ.get(PILOT_ENV)
+    if pilot_dir:
+        return _load_pilot_corpus(Path(pilot_dir))
+
     with Timer("Loading eswiki corpus"):
         corpus_dataset = datasets.load_dataset(CORPUS_NAME, num_proc=num_workers)
         # Some dataset versions use 'train' as the only split name

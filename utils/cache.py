@@ -28,6 +28,15 @@ import numpy as np
 
 log = logging.getLogger(__name__)
 
+# When MESSIRVE_PILOT points to a pilot directory, dataset artifacts live there
+# and every model cache gets a _pilot suffix, so pilot runs never collide with
+# the test or full-training caches.
+PILOT_ENV = "MESSIRVE_PILOT"
+
+
+def _pilot_suffix() -> str:
+    return "_pilot" if os.environ.get(PILOT_ENV) else ""
+
 
 # ---------------------------------------------------------------------------
 # Cache path builders
@@ -47,8 +56,12 @@ def dataset_cache_base(cache_dir: Path, country: str, version: str, max_words: i
     """Return the model-agnostic cache directory for filtered qrels and query maps.
 
     This directory is shared across all models that use the same dataset configuration,
-    so the expensive qrels-pruning step only runs once.
+    so the expensive qrels-pruning step only runs once. In pilot mode it is the
+    pilot directory that scripts/build_train_pilot.py prepared.
     """
+    pilot_dir = os.environ.get(PILOT_ENV)
+    if pilot_dir:
+        return Path(pilot_dir)
     return cache_dir / "shared_datasets" / f"{country}_v{version}_{_filter_suffix(max_words)}"
 
 
@@ -69,7 +82,7 @@ def cache_base(
     return (
         cache_dir
         / model_slug(model_name)
-        / f"{country}_v{version}_q{max_query_length}_d{max_doc_length}_{_filter_suffix(max_word_count)}"
+        / f"{country}_v{version}_q{max_query_length}_d{max_doc_length}_{_filter_suffix(max_word_count)}{_pilot_suffix()}"
     )
 
 
