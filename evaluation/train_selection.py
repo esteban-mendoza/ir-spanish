@@ -16,9 +16,12 @@ import logging
 import os
 from pathlib import Path
 
+import numpy as np
+
 from utils import data, retrieval
 from utils.observability import Timer
 
+from evaluation.significance import paired_mean_ci
 from rerankers.fuse_sweep import MODELS, load_qrels, load_runs
 
 log = logging.getLogger(__name__)
@@ -74,6 +77,7 @@ def load_sweep(path: Path) -> list[dict]:
                 "strategy": raw["strategy"],
                 "ndcg@10": float(raw["ndcg@10"]),
                 "recall@100": float(raw["recall@100"]),
+                "per_query_path": raw.get("per_query_path", ""),
             }
         )
     rows.sort(key=lambda row: -row["ndcg@10"])
@@ -90,12 +94,32 @@ def load_algorithm_check(path: Path) -> list[dict]:
                 "strategy": raw["strategy"],
                 "ndcg@10": float(raw["ndcg@10"]),
                 "recall@100": float(raw["recall@100"]),
+                "per_query_path": raw.get("per_query_path", ""),
             }
         )
     rows.sort(key=lambda row: -row["ndcg@10"])
     for rank, row in enumerate(rows, 1):
         row["rank"] = rank
     return rows
+
+
+def add_cis(rows: list[dict], per_query_dir: Path) -> None:
+    """Attach paired 95 % CIs (vs. the best configuration) to the top rows."""
+    if not rows:
+        return
+    best_path = rows[0].get("per_query_path") or str(per_query_dir / f"{rows[0]['strategy']}__{rows[0]['combo']}.npy")
+    if not Path(best_path).exists():
+        return
+    best_scores = np.load(best_path)
+    for row in rows[:5]:
+        path = row.get("per_query_path") or str(per_query_dir / f"{row['strategy']}__{row['combo']}.npy")
+        if not Path(path).exists():
+            continue
+        scores = np.load(path)
+        ci = paired_mean_ci(scores, best_scores)
+        row["diff_vs_best"] = float(np.mean(scores) - np.mean(best_scores))
+        row["ci_low"] = float(ci["low"])
+        row["ci_high"] = float(ci["high"])
 
 
 def write_single_models(rows: list[dict], path: Path) -> None:
@@ -167,15 +191,31 @@ def write_markdown(
 
     lines.append("## Mejores fusiones con el algoritmo de referencia")
     lines.append("")
-    lines.append("| # | combinación | algoritmo | nDCG@10 | Recall@100 | Δ vs. la mejor |")
-    lines.append("| ---: | --- | --- | ---: | ---: | ---: |")
+    has_cis = any("ci_low" in row for row in sweep[:10])
+    if has_cis:
+        lines.append("| # | combinación | algoritmo | nDCG@10 | Recall@100 | Δ vs. la mejor | IC 95 % |")
+        lines.append("| ---: | --- | --- | ---: | ---: | ---: | --- |")
+    else:
+        lines.append("| # | combinación | algoritmo | nDCG@10 | Recall@100 | Δ vs. la mejor |")
+        lines.append("| ---: | --- | --- | ---: | ---: | ---: |")
     best = sweep[0]["ndcg@10"] if sweep else None
     for row in sweep[:10]:
         gap = "—" if best is None else f"{row['ndcg@10'] - best:+.4f}"
-        lines.append(
-            f"| {row['rank']} | {row['combo']} | {row['strategy']} | "
-            f"{row['ndcg@10']:.4f} | {row['recall@100']:.4f} | {gap} |"
-        )
+        if has_cis:
+            ci = (
+                f"[{row['ci_low']:.4f}, {row['ci_high']:.4f}]"
+                if "ci_low" in row
+                else "—"
+            )
+            lines.append(
+                f"| {row['rank']} | {row['combo']} | {row['strategy']} | "
+                f"{row['ndcg@10']:.4f} | {row['recall@100']:.4f} | {gap} | {ci} |"
+            )
+        else:
+            lines.append(
+                f"| {row['rank']} | {row['combo']} | {row['strategy']} | "
+                f"{row['ndcg@10']:.4f} | {row['recall@100']:.4f} | {gap} |"
+            )
     lines.append("")
 
     lines.append("## Comprobación de algoritmos sobre el trío")
@@ -253,6 +293,17 @@ def parse_args() -> argparse.Namespace:
         help="Comma-separated model aliases to include (default: all six).",
     )
     parser.add_argument(
+        "--single-models-only",
+        action="store_true",
+        help="Only evaluate the individual models (useful for the test partition).",
+    )
+    parser.add_argument(
+        "--per-query-dir",
+        type=Path,
+        default=None,
+        help="Directory with the per-query .npy files (default: <out-dir>/per_query).",
+    )
+    parser.add_argument(
         "--sweep",
         type=Path,
         default=None,
@@ -290,7 +341,15 @@ def main() -> None:
     with Timer("Evaluating the individual models"):
         single = load_single_models(qrels, models)
 
+    if args.single_models_only:
+        out_dir.mkdir(parents=True, exist_ok=True)
+        write_single_models(single, out_dir / "single_models.csv")
+        log.info("Single models: %s", out_dir / "single_models.csv")
+        return
+
+    per_query_dir = args.per_query_dir or (out_dir / "per_query")
     sweep = load_sweep(sweep_path)
+    add_cis(sweep, per_query_dir)
     algorithms = load_algorithm_check(algorithm_path)
 
     trio = next((row for row in sweep if row["combo"] == TRIO_COMBO), None)

@@ -31,8 +31,14 @@ TOP_K = 100
 
 CACHE_DIR = Path.home() / ".cache" / "messirve_embeddings"
 
-MODEL_CACHE_BASE = (
-    CACHE_DIR / MODEL_SLUG / f"{data.COUNTRY}_v{data.DATASET_VERSION}_{cache._filter_suffix(data.MAX_WORD_COUNT)}"
+MODEL_CACHE_BASE = cache.cache_base(
+    CACHE_DIR,
+    MODEL_SLUG,
+    data.COUNTRY,
+    data.DATASET_VERSION,
+    512,
+    512,
+    data.MAX_WORD_COUNT,
 )
 INDEX_DIR = MODEL_CACHE_BASE / "lucene_index"
 RUN_PATH = cache.run_cache_path(MODEL_CACHE_BASE)

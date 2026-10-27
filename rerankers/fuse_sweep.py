@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import numpy as np
 import itertools
 import logging
 import time
@@ -26,6 +27,8 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from ranx import fuse
+
+from evaluation.compare import per_query_scores
 
 # utils.__init__ sets up logging and NUMA/threading env-vars
 from utils import cache, data, retrieval
@@ -78,6 +81,7 @@ CSV_FIELDS = [
     "precision@50",
     "elapsed_s",
     "run_path",
+    "per_query_path",
 ]
 
 
@@ -192,6 +196,12 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=REPO_ROOT / "results" / "fuse_sweep",
         help="Directory for the CSV and markdown report.",
+    )
+    parser.add_argument(
+        "--per-query-dir",
+        type=Path,
+        default=None,
+        help="If set, save the per-query nDCG@10 of each configuration as .npy.",
     )
     parser.add_argument(
         "--runs-dir",
@@ -342,6 +352,15 @@ def main() -> None:
                         fused_run.save(str(run_path))
                         written_path = str(run_path)
 
+                    per_query_path = ""
+                    if args.per_query_dir is not None:
+                        args.per_query_dir.mkdir(parents=True, exist_ok=True)
+                        scores = per_query_scores(qrels, fused_run, "ndcg@10")
+                        per_query_path = str(
+                            args.per_query_dir / f"{strategy_key}__{combo}.npy"
+                        )
+                        np.save(per_query_path, scores)
+
                     writer.writerow(
                         {
                             "combo": combo,
@@ -355,6 +374,7 @@ def main() -> None:
                             "precision@50": f"{results['precision@50']:.6f}",
                             "elapsed_s": f"{elapsed:.1f}",
                             "run_path": written_path,
+                            "per_query_path": per_query_path,
                         }
                     )
                     csv_file.flush()
