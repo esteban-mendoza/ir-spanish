@@ -79,15 +79,18 @@ JINA_Q_LEN = 32768
 JINA_D_LEN = 32768
 
 BGE_MODEL = "BAAI/bge-reranker-v2-m3"
-BGE_MAX_LENGTH = 512
-BGE_BATCH_SIZE = 256
+# Native maximum of the concatenated query--document input.  The batch size
+# shrinks because attention memory grows with batch * length**2.
+BGE_MAX_LENGTH = int(os.environ.get("BGE_MAX_LENGTH", "8192"))
+BGE_BATCH_SIZE = int(os.environ.get("BGE_BATCH_SIZE", "4"))
 JINA_V3_MODEL = "jinaai/jina-reranker-v3"
 JINA_V3_MAX_QUERY = 1024
 JINA_V3_MAX_DOC = 8192
 COLBERT_MODEL = "jinaai/jina-colbert-v2"
 COLBERT_MAX_QUERY = 32
-COLBERT_MAX_DOC = 300
-COLBERT_DOC_BATCH = 32
+# Native maximum per document (8192-token input context).
+COLBERT_MAX_DOC = int(os.environ.get("COLBERT_MAX_DOC_LENGTH", "8192"))
+COLBERT_DOC_BATCH = int(os.environ.get("COLBERT_DOC_BATCH", "4"))
 
 PRODUCTION_RUNS = {
     "fusion": CACHE_DIR / "fusions_stage_b" / "combmnz__e5-large+bge-m3+jina-v5-small.lz4",

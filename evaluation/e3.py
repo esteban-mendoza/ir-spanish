@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import logging
+import os
 from pathlib import Path
 
 import numpy as np
@@ -28,23 +29,42 @@ log = logging.getLogger(__name__)
 CACHE_DIR = Path.home() / ".cache" / "messirve_embeddings"
 OUT_DIR = Path(__file__).resolve().parents[1] / "results" / "evaluation"
 
-BEST_FUSION = CACHE_DIR / "fusions_stage_b" / "combmnz__e5-large+bge-m3+jina-v5-small.lz4"
+
+def _run_override(env_name: str, default: Path) -> Path:
+    """Use an alternative run through an environment variable, else the default."""
+    value = os.environ.get(env_name)
+    return Path(value).expanduser() if value else default
+
+
+BEST_FUSION = _run_override(
+    "B1_FUSION_RUN",
+    CACHE_DIR / "fusions_stage_b" / "combmnz__e5-large+bge-m3+jina-v5-small.lz4",
+)
 RERANKERS = {
-    "bge-reranker-v2-m3": CACHE_DIR
-    / "BAAI__bge-reranker-v2-m3"
-    / "over__jinaai__jina-embeddings-v5-text-small-retrieval"
-    / "full_v1.2_q512_d512_nofilter"
-    / "retrieval_run.lz4",
-    "jina-reranker-v3": CACHE_DIR
-    / "jinaai__jina-reranker-v3"
-    / "over__jinaai__jina-embeddings-v5-text-small-retrieval"
-    / "full_v1.2_q1024_d8192_nofilter"
-    / "retrieval_run.lz4",
-    "jina-colbert-v2": CACHE_DIR
-    / "jinaai__jina-colbert-v2"
-    / "over__jinaai__jina-embeddings-v5-text-small-retrieval"
-    / "full_v1.2_q32_d300_nofilter"
-    / "retrieval_run.lz4",
+    "bge-reranker-v2-m3": _run_override(
+        "BGE_RERANKER_RUN",
+        CACHE_DIR
+        / "BAAI__bge-reranker-v2-m3"
+        / "over__jinaai__jina-embeddings-v5-text-small-retrieval"
+        / "full_v1.2_q512_d512_nofilter"
+        / "retrieval_run.lz4",
+    ),
+    "jina-reranker-v3": _run_override(
+        "JINA_V3_RERANKER_RUN",
+        CACHE_DIR
+        / "jinaai__jina-reranker-v3"
+        / "over__jinaai__jina-embeddings-v5-text-small-retrieval"
+        / "full_v1.2_q1024_d8192_nofilter"
+        / "retrieval_run.lz4",
+    ),
+    "jina-colbert-v2": _run_override(
+        "COLBERT_RERANKER_RUN",
+        CACHE_DIR
+        / "jinaai__jina-colbert-v2"
+        / "over__jinaai__jina-embeddings-v5-text-small-retrieval"
+        / "full_v1.2_q32_d300_nofilter"
+        / "retrieval_run.lz4",
+    ),
 }
 
 METRIC = "ndcg@10"

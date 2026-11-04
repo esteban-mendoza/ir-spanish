@@ -33,6 +33,7 @@ import torch
 import torch.multiprocessing as mp
 
 # utils.__init__ sets up logging and NUMA/threading env-vars
+from rerankers import context
 from utils import cache, data, retrieval
 from utils.observability import Timer, log_gpu_memory, log_ram_usage
 
@@ -50,9 +51,11 @@ FIRST_STAGE_D_LEN = 32768  # max_doc_length used by the first-stage embedder
 # Configuration — reranker
 # ---------------------------------------------------------------------------
 RERANKER_MODEL = "jinaai/jina-colbert-v2"
-MAX_QUERY_LENGTH = 32       # ColBERT default (queries padded with [MASK] tokens)
-MAX_DOC_LENGTH = 300        # ColBERT default per paper evaluation setup
-DOC_BATCH_SIZE = 32         # documents per encode() batch
+# ColBERT's query budget: queries are padded to this length with mask tokens.
+# The longest MessIRve query has 22 words, so 32 tokens do not truncate it.
+MAX_QUERY_LENGTH = context.COLBERT_MAX_QUERY_LENGTH
+# Native maximum per document (8192-token input context).
+MAX_DOC_LENGTH = context.COLBERT_MAX_DOC_LENGTH
 
 # ---------------------------------------------------------------------------
 # Configuration — infrastructure
@@ -86,7 +89,7 @@ def reranker_cache_base() -> Path:
         CACHE_DIR
         / reranker_slug
         / f"over__{first_stage_slug}"
-        / f"{data.COUNTRY}_v{data.DATASET_VERSION}_q{MAX_QUERY_LENGTH}_d{MAX_DOC_LENGTH}_{filter_suffix}"
+        / f"{data.COUNTRY}_v{data.DATASET_VERSION}_q{MAX_QUERY_LENGTH}_d{MAX_DOC_LENGTH}_{filter_suffix}{context.RUN_TAG}"
     )
 
 
@@ -145,6 +148,49 @@ def _cleanup_checkpoints(reranker_base: Path) -> None:
     if checkpoint_dir.exists():
         shutil.rmtree(checkpoint_dir)
         log.info("Cleaned up checkpoint directory")
+
+
+# ---------------------------------------------------------------------------
+# Length-aware encoding
+# ---------------------------------------------------------------------------
+def _encode_documents(model, doc_texts: list[str]):
+    """Encode documents in length-sorted batches that fit the VRAM budget.
+
+    At 8,192 tokens the old fixed batch of 32 documents would need tens of GiB
+    of attention scores.  We keep short documents in large batches and long
+    ones in small batches, then restore the original order.
+    """
+    lengths = [
+        min(MAX_DOC_LENGTH, context.estimate_tokens(text))
+        for text in doc_texts
+    ]
+    embeddings: list = [None] * len(doc_texts)
+    for batch in context.length_aware_batches(lengths):
+        batch_texts = [doc_texts[index] for index in batch]
+        batch_embeddings = model.encode(
+            batch_texts,
+            is_query=False,
+            batch_size=len(batch_texts),
+            show_progress_bar=False,
+        )
+        for index, embedding in zip(batch, batch_embeddings):
+            embeddings[index] = embedding
+    return embeddings
+
+
+def _apply_limit(query_items: list[tuple[str, str, list[str]]]):
+    """Optionally keep only the first N queries for a smoke test.
+
+    A limited run must carry ``RERANKER_RUN_TAG`` so that it never writes to
+    the production cache path and is later mistaken for a complete run.
+    """
+    limit = int(os.environ.get("RERANKER_LIMIT", "0"))
+    if limit <= 0:
+        return query_items
+    if not context.RUN_TAG:
+        raise SystemExit("RERANKER_LIMIT requires RERANKER_RUN_TAG for a separate cache path")
+    log.warning("Limiting reranking to %d queries (smoke test)", limit)
+    return query_items[:limit]
 
 
 # ---------------------------------------------------------------------------
@@ -264,12 +310,7 @@ def _worker(
                 batch_size=1,
                 show_progress_bar=False,
             )
-            doc_embs = model.encode(
-                doc_texts,
-                is_query=False,
-                batch_size=DOC_BATCH_SIZE,
-                show_progress_bar=False,
-            )
+            doc_embs = _encode_documents(model, doc_texts)
 
             # Compute MaxSim scores: S(Q,D) = Σ_i max_j cos(Q_i, D_j)
             scores = colbert_scores_pairwise(
@@ -330,6 +371,7 @@ def rerank(
         "Prepared %d queries, %d total docs across %d GPU(s)",
         len(query_items), total_docs, len(GPU_DEVICES),
     )
+    query_items = _apply_limit(query_items)
 
     # Split queries across GPUs (round-robin)
     shards: list[list[tuple[str, str, list[str]]]] = [[] for _ in GPU_DEVICES]

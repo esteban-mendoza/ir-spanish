@@ -34,6 +34,7 @@ import torch
 import torch.multiprocessing as mp
 
 # utils.__init__ sets up logging and NUMA/threading env-vars
+from rerankers import context
 from utils import cache, data, retrieval
 from utils.observability import Timer, log_gpu_memory, log_ram_usage
 
@@ -51,8 +52,13 @@ FIRST_STAGE_D_LEN = 32768  # max_doc_length used by the first-stage embedder
 # Configuration — reranker
 # ---------------------------------------------------------------------------
 RERANKER_MODEL = "jinaai/jina-reranker-v3"
-MAX_QUERY_LENGTH = 1024     # reranker query truncation
-MAX_DOC_LENGTH = 8192       # model's effective sequence length (paper Table 5)
+# jina-reranker-v3 has a shared 131,072-token context and a maximum document
+# length of 8,192 tokens (paper, Table 5).  The document cap is therefore
+# already native; the 1,024-token query cap exceeds the longest MessIRve query
+# (22 words), so it does not truncate either.  The 100 candidates are packed
+# into the shared window by the model's own rerank() batching.
+MAX_QUERY_LENGTH = context.JINA_V3_MAX_QUERY_LENGTH
+MAX_DOC_LENGTH = context.JINA_V3_MAX_DOC_LENGTH
 
 # ---------------------------------------------------------------------------
 # Configuration — infrastructure
@@ -86,7 +92,7 @@ def reranker_cache_base() -> Path:
         CACHE_DIR
         / reranker_slug
         / f"over__{first_stage_slug}"
-        / f"{data.COUNTRY}_v{data.DATASET_VERSION}_q{MAX_QUERY_LENGTH}_d{MAX_DOC_LENGTH}_{filter_suffix}"
+        / f"{data.COUNTRY}_v{data.DATASET_VERSION}_q{MAX_QUERY_LENGTH}_d{MAX_DOC_LENGTH}_{filter_suffix}{context.RUN_TAG}"
     )
 
 
@@ -150,6 +156,21 @@ def _cleanup_checkpoints(reranker_base: Path) -> None:
 # ---------------------------------------------------------------------------
 # Worker — runs in a child process, one per GPU
 # ---------------------------------------------------------------------------
+def _apply_limit(query_items: list[tuple[str, str, list[str]]]):
+    """Optionally keep only the first N queries for a smoke test.
+
+    A limited run must carry ``RERANKER_RUN_TAG`` so that it never writes to
+    the production cache path and is later mistaken for a complete run.
+    """
+    limit = int(os.environ.get("RERANKER_LIMIT", "0"))
+    if limit <= 0:
+        return query_items
+    if not context.RUN_TAG:
+        raise SystemExit("RERANKER_LIMIT requires RERANKER_RUN_TAG for a separate cache path")
+    log.warning("Limiting reranking to %d queries (smoke test)", limit)
+    return query_items[:limit]
+
+
 def _worker(
     device: str,
     query_items: list[tuple[str, str, list[str]]],
@@ -271,6 +292,7 @@ def rerank(
         "Prepared %d queries, %d total docs across %d GPU(s)",
         len(query_items), total_docs, len(GPU_DEVICES),
     )
+    query_items = _apply_limit(query_items)
 
     # Split queries across GPUs (round-robin)
     shards: list[list[tuple[str, str, list[str]]]] = [[] for _ in GPU_DEVICES]

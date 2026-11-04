@@ -23,6 +23,11 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-11-03 — Contexto máximo en los reordenadores (código preparado)
+- **Cambios:** `rerankers/context.py` nuevo; `bge_reranker_v2_m3.py` pasa a 8192 tokens combinados, `jina_colbert_v2.py` a 8192 por documento y ambos usan lotes por presupuesto cuadrático; `jina_reranker_v3.py` queda igual pero documenta que ya usa el máximo por documento; `evaluation/e3.py` acepta rutas por variables de entorno; `evaluation/efficiency.py` parametriza longitudes y lotes; nuevos `scripts/run_maxctx_rerankers.sh`, `scripts/evaluate_maxctx_e3.sh` y `scripts/check_reranker_lengths.py`; `notes/plan-contexto-maximo.md` y `notes/incidencia-gpu-2026-11-03.md`.
+- **Decisiones:** el máximo efectivo de `jina-reranker-v3` es 8192 por documento dentro de su ventana compartida de 131k; la consulta de ColBERT se mantiene en 32 porque es su presupuesto de expansión, no un límite de contexto. Los lotes se dimensionan por costo cuadrático para no exceder 24 GiB.
+- **Estado / pendientes:** no se ejecutó nada porque el servidor arrancó con el kernel 6.8.0-138 sin módulo NVIDIA; falta la corrida, la evaluación, el banco de eficiencia y la actualización de la tesis.
+
 ## 2026-10-27 — Selección completa sobre el subconjunto piloto
 - **Cambios:** seis modelos en el piloto (BM25 con JDK 21 y SPLADE corregido), 57 subconjuntos, seis algoritmos sobre el trío, `results/train_pilot/` con `selection.md`, `stability.md`, `sweep_all/` y `algorithm_check_six/`, y `results/test_selection/` con las métricas de prueba.
 - **Decisiones:** el subconjunto de 10 000 artículos es el **entorno de selección**; la partición de prueba se usa para evaluar y para el análisis descriptivo de estabilidad; no se usa la partición de entrenamiento completa. Regla: top-3 individual + CombMNZ; coinciden con los sistemas reportados.

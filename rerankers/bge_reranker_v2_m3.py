@@ -32,6 +32,7 @@ import torch
 import torch.multiprocessing as mp
 
 # utils.__init__ sets up logging and NUMA/threading env-vars
+from rerankers import context
 from utils import cache, data, retrieval
 from utils.observability import Timer, log_gpu_memory, log_ram_usage
 
@@ -49,8 +50,10 @@ FIRST_STAGE_D_LEN = 32768  # max_doc_length used by the first-stage embedder
 # Configuration — reranker
 # ---------------------------------------------------------------------------
 RERANKER_MODEL = "BAAI/bge-reranker-v2-m3"
-MAX_LENGTH = 512        # model's max sequence length (query + doc combined)
-BATCH_SIZE = 256        # pairs per predict() call
+# Native maximum of the concatenated query--document sequence.  The model
+# config declares max_position_embeddings = 8194; the earlier 512-token cap
+# truncated long paragraphs.
+MAX_LENGTH = context.BGE_MAX_LENGTH
 
 # ---------------------------------------------------------------------------
 # Configuration — infrastructure
@@ -84,7 +87,7 @@ def reranker_cache_base() -> Path:
         CACHE_DIR
         / reranker_slug
         / f"over__{first_stage_slug}"
-        / f"{data.COUNTRY}_v{data.DATASET_VERSION}_q{MAX_LENGTH}_d{MAX_LENGTH}_{filter_suffix}"
+        / f"{data.COUNTRY}_v{data.DATASET_VERSION}_q{MAX_LENGTH}_d{MAX_LENGTH}_{filter_suffix}{context.RUN_TAG}"
     )
 
 
@@ -146,6 +149,50 @@ def _cleanup_checkpoints(reranker_base: Path) -> None:
 
 
 # ---------------------------------------------------------------------------
+# Length-aware scoring
+# ---------------------------------------------------------------------------
+def _predict_scores(model, pairs: list[tuple[str, str]]) -> list[float]:
+    """Score pairs in length-sorted batches that fit the VRAM budget.
+
+    ``CrossEncoder.predict`` already sorts a batch by length, but its
+    ``batch_size`` is fixed.  With a 8,192-token maximum a batch of 256 pairs
+    would need tens of GiB of attention scores, so we build the batches here
+    and keep the quadratic token cost under ``context.QUADRATIC_TOKEN_BUDGET``.
+    """
+    lengths = context.pair_lengths(
+        (query for query, _ in pairs),
+        (document for _, document in pairs),
+        MAX_LENGTH,
+    )
+    scores = [0.0] * len(pairs)
+    for batch in context.length_aware_batches(lengths):
+        batch_pairs = [pairs[index] for index in batch]
+        batch_scores = model.predict(
+            batch_pairs,
+            batch_size=len(batch_pairs),
+            show_progress_bar=False,
+        )
+        for index, score in zip(batch, batch_scores):
+            scores[index] = float(score)
+    return scores
+
+
+def _apply_limit(query_items: list[tuple[str, str, list[str]]]):
+    """Optionally keep only the first N queries for a smoke test.
+
+    A limited run must carry ``RERANKER_RUN_TAG`` so that it never writes to
+    the production cache path and is later mistaken for a complete run.
+    """
+    limit = int(os.environ.get("RERANKER_LIMIT", "0"))
+    if limit <= 0:
+        return query_items
+    if not context.RUN_TAG:
+        raise SystemExit("RERANKER_LIMIT requires RERANKER_RUN_TAG for a separate cache path")
+    log.warning("Limiting reranking to %d queries (smoke test)", limit)
+    return query_items[:limit]
+
+
+# ---------------------------------------------------------------------------
 # Worker — runs in a child process, one per GPU
 # ---------------------------------------------------------------------------
 def _worker(
@@ -198,7 +245,7 @@ def _worker(
         for idx, (query_id, query_text, doc_ids) in enumerate(pending, 1):
             pairs = [(query_text, doc_lookup.get(did, "")) for did in doc_ids]
 
-            scores = model.predict(pairs, batch_size=BATCH_SIZE, show_progress_bar=False)
+            scores = _predict_scores(model, pairs)
 
             results[query_id] = {
                 did: float(score) for did, score in zip(doc_ids, scores)
@@ -253,6 +300,7 @@ def rerank(
         "Prepared %d queries, %d total pairs across %d GPU(s)",
         len(query_items), total_pairs, len(GPU_DEVICES),
     )
+    query_items = _apply_limit(query_items)
 
     # Split queries across GPUs (round-robin)
     shards: list[list[tuple[str, str, list[str]]]] = [[] for _ in GPU_DEVICES]
