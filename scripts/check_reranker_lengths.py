@@ -71,7 +71,7 @@ def load_candidates() -> dict[str, list[str]]:
 
 def load_documents(doc_ids: set[str]) -> dict[str, str]:
     log.info("Loading corpus and selecting %d candidate documents", len(doc_ids))
-    dataset = datasets.load_dataset(data.CORPUS_NAME, split="train")
+    dataset = datasets.load_dataset(data.CORPUS_NAME, split="corpus")
     all_ids = dataset["str_docid"]
     index = {doc_id: position for position, doc_id in enumerate(all_ids) if doc_id in doc_ids}
     missing = doc_ids - set(index)
