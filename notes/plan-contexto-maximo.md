@@ -95,7 +95,9 @@ la sesión.
    `evaluation/efficiency.py` ya toma `BGE_MAX_LENGTH`, `BGE_BATCH_SIZE`,
    `COLBERT_MAX_DOC_LENGTH` y `COLBERT_DOC_BATCH` del entorno. Hay que decidir si se
    mantiene el lote 32 para el *throughput* o se reduce a 8, porque a 8 192 tokens el
-   lote 32 no cabe.
+   lote 32 no cabe. Para reproducir el banco anterior, usa
+   `BGE_MAX_LENGTH=512 BGE_BATCH_SIZE=256 COLBERT_MAX_DOC_LENGTH=300
+   COLBERT_DOC_BATCH=32`.
 
 3. Medir la truncación antes/después:
 
