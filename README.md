@@ -61,6 +61,13 @@ We evaluate on [**MessIRve**](https://huggingface.co/datasets/spanish-ir/messirv
 | [bge-reranker-v2-m3](https://huggingface.co/BAAI/bge-reranker-v2-m3) | BAAI, 2024    |
 | [jina-reranker-v3](https://huggingface.co/jinaai/jina-reranker-v3)   | Jina AI, 2025 |
 
+The rerankers use their native maximum context: 8,192 tokens combined for
+`bge-reranker-v2-m3`, 8,192 per document for `jina-reranker-v3` (inside its
+shared 131k-token window) and 8,192 per document for `jina-colbert-v2`. The
+32-token ColBERT query budget is a query-expansion setting, not a context
+limit. See `notes/plan-contexto-maximo.md` for the rerun plan and the measured
+truncation of the previous caps.
+
 ## Rank Fusion Algorithms
 
 | Algorithm                        | Type                               | Reference              |
