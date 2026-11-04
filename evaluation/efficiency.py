@@ -43,6 +43,7 @@ os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 
 from ranx import Run, fuse
 
+from rerankers import context
 from utils import cache, data, retrieval
 
 log = logging.getLogger(__name__)
@@ -80,17 +81,18 @@ JINA_D_LEN = 32768
 
 BGE_MODEL = "BAAI/bge-reranker-v2-m3"
 # Native maximum of the concatenated query--document input.  The batch size
-# shrinks because attention memory grows with batch * length**2.
-BGE_MAX_LENGTH = int(os.environ.get("BGE_MAX_LENGTH", "8192"))
-BGE_BATCH_SIZE = int(os.environ.get("BGE_BATCH_SIZE", "4"))
+# is capped by the same quadratic budget as the production reranker; the
+# environment overrides preserve the old fixed-batch benchmark.
+BGE_MAX_LENGTH = int(os.environ.get("BGE_MAX_LENGTH", str(context.BGE_MAX_LENGTH)))
+BGE_BATCH_SIZE = int(os.environ.get("BGE_BATCH_SIZE", str(context.MAX_BATCH)))
 JINA_V3_MODEL = "jinaai/jina-reranker-v3"
 JINA_V3_MAX_QUERY = 1024
 JINA_V3_MAX_DOC = 8192
 COLBERT_MODEL = "jinaai/jina-colbert-v2"
 COLBERT_MAX_QUERY = 32
 # Native maximum per document (8192-token input context).
-COLBERT_MAX_DOC = int(os.environ.get("COLBERT_MAX_DOC_LENGTH", "8192"))
-COLBERT_DOC_BATCH = int(os.environ.get("COLBERT_DOC_BATCH", "4"))
+COLBERT_MAX_DOC = int(os.environ.get("COLBERT_MAX_DOC_LENGTH", str(context.COLBERT_MAX_DOC_LENGTH)))
+COLBERT_DOC_BATCH = int(os.environ.get("COLBERT_DOC_BATCH", str(context.MAX_BATCH)))
 
 PRODUCTION_RUNS = {
     "fusion": CACHE_DIR / "fusions_stage_b" / "combmnz__e5-large+bge-m3+jina-v5-small.lz4",
@@ -327,6 +329,45 @@ class FusionSystem:
         self.batch_runs.clear()
 
 
+def _bge_scores(model, pairs: list[tuple[str, str]]) -> list[float]:
+    """Score bge pairs with the production length-aware batching."""
+    lengths = [
+        min(BGE_MAX_LENGTH, context.estimate_tokens(query) + context.estimate_tokens(document))
+        for query, document in pairs
+    ]
+    scores = [0.0] * len(pairs)
+    for batch in context.length_aware_batches(lengths, max_batch=BGE_BATCH_SIZE):
+        batch_pairs = [pairs[index] for index in batch]
+        output = model.predict(
+            batch_pairs,
+            batch_size=len(batch_pairs),
+            show_progress_bar=False,
+        )
+        for index, score in zip(batch, output):
+            scores[index] = float(score)
+    return scores
+
+
+def _colbert_doc_embeddings(model, documents: list[str]):
+    """Encode ColBERT documents with the production length-aware batching."""
+    lengths = [
+        min(COLBERT_MAX_DOC, context.estimate_tokens(document))
+        for document in documents
+    ]
+    embeddings: list = [None] * len(documents)
+    for batch in context.length_aware_batches(lengths, max_batch=COLBERT_DOC_BATCH):
+        batch_documents = [documents[index] for index in batch]
+        output = model.encode(
+            batch_documents,
+            is_query=False,
+            batch_size=len(batch_documents),
+            show_progress_bar=False,
+        )
+        for index, embedding in zip(batch, output):
+            embeddings[index] = embedding
+    return embeddings
+
+
 class BgeSystem:
     name = "bge"
 
@@ -374,7 +415,7 @@ class BgeSystem:
         pairs, spans = self._pairs([query_id])
         _sync(self.device)
         started = time.perf_counter_ns()
-        scores = self.model.predict(pairs, batch_size=BGE_BATCH_SIZE, show_progress_bar=False)
+        scores = _bge_scores(self.model, pairs)
         _sync(self.device)
         order = self._orders(scores, spans)[query_id]
         elapsed_ms = (time.perf_counter_ns() - started) / 1e6
@@ -384,7 +425,7 @@ class BgeSystem:
         pairs, spans = self._pairs(query_ids)
         _sync(self.device)
         started = time.perf_counter_ns()
-        scores = self.model.predict(pairs, batch_size=BGE_BATCH_SIZE, show_progress_bar=False)
+        scores = _bge_scores(self.model, pairs)
         _sync(self.device)
         orders = self._orders(scores, spans)
         elapsed_ms = (time.perf_counter_ns() - started) / 1e6
@@ -497,9 +538,7 @@ class ColbertSystem:
         query_emb = self.model.encode(
             [self.query_map[query_id]], is_query=True, batch_size=1, show_progress_bar=False
         )
-        doc_embs = self.model.encode(
-            docs, is_query=False, batch_size=COLBERT_DOC_BATCH, show_progress_bar=False
-        )
+        doc_embs = _colbert_doc_embeddings(self.model, docs)
         scores = colbert_scores_pairwise([query_emb[0]] * len(doc_embs), doc_embs)
         _sync(self.device)
         order = sorted(
