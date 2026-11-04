@@ -48,6 +48,18 @@ Detalle: `results/train_pilot/README.md`, `selection.md`, `stability.md`, `sweep
 | bge-reranker-v2-m3 | jina-embeddings-v5-text-small-retrieval |  0.5770 |     0.9039 | 0.5124 | 0.5159 | 0.0802 | 0.0183 |
 | jina-colbert-v2    | jina-embeddings-v5-text-small-retrieval |  0.5019 |     0.9039 | 0.4358 | 0.4423 | 0.0731 | 0.0180 |
 
+### Truncación de las entradas de los reordenadores (2026-11-03)
+
+Medición en CPU sobre 500 consultas de prueba y sus 48 638 documentos candidatos únicos (50 000 pares); detalle en `results/reranker_context/truncation.md`.
+
+| Entrada | Mediana | P95 | P99 | Máximo | Sobre el tope anterior | Sobre 8 192 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| `bge-reranker-v2-m3` combinada | 109 | 268 | 397 | 1 376 | 0.29 % sobre 512 | 0.00 % |
+| `jina-colbert-v2` documento | 99 | 258 | 386 | 1 363 | 2.80 % sobre 300 | 0.00 % |
+| `jina-reranker-v3` documento | 112 | 292 | 436 | 1 576 | — | 0.00 % |
+
+Las consultas tienen 25--28 tokens como máximo, así que los topes de 32 (ColBERT) y 1 024 (`jina-reranker-v3`) no truncan. El contexto máximo solo cambia la cola larga de `bge` y ColBERT; `jina-reranker-v3` ya cubría todos los documentos con 8 192.
+
 ## Fusiones (max_seq_length)
 
 | model                         | strategy  | params   | ndcg@10 | recall@100 | mrr@10 | map    | precision@10 | precision@50 |

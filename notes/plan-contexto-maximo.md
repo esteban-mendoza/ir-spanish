@@ -25,6 +25,23 @@ atención con 16 cabezas en `float32`). Los documentos cortos conservan lotes gr
 solo los largos usan lotes de 2 a 4. El estimador usa 1.4 tokens por palabra para no
 quedarse corto.
 
+## Truncación medida
+
+Medimos 500 consultas de prueba y sus 50 000 pares candidatos con los
+tokenizadores de los tres modelos (`results/reranker_context/truncation.md`):
+
+| Entrada | Mediana | P95 | P99 | Máximo | Sobre el tope anterior | Sobre 8 192 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| `bge` combinada (consulta + documento) | 109 | 268 | 397 | 1 376 | 0.29 % sobre 512 | 0.00 % |
+| ColBERT, documento | 99 | 258 | 386 | 1 363 | 2.80 % sobre 300 | 0.00 % |
+| `jina-reranker-v3`, documento | 112 | 292 | 436 | 1 576 | — | 0.00 % |
+
+Las consultas tienen como máximo 25--28 tokens, así que los topes de 32
+(ColBERT) y 1 024 (`jina-reranker-v3`) no truncan ninguna. La conclusión es que
+el cambio afecta a la cola larga: 0.29 % de los pares en `bge` y 2.80 % de los
+documentos en ColBERT. `jina-reranker-v3` no trunca nada con 8 192, lo que
+confirma que no hace falta reejecutarlo.
+
 ## Corrida
 
 En el servidor, con la copia sincronizada:
