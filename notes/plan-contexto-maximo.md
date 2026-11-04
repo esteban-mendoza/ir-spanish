@@ -76,9 +76,11 @@ corrida parcial en la ruta de producción.
 Las corridas anteriores, con los topes cortos, tardaron 60.2 h (`bge`, 512), 25.3 h
 (`jina-reranker-v3`, 1 024/8 192) y 23.0 h (`ColBERT`, 32/300) en dos A5000. El
 aumento no es proporcional al tope: la mediana de los documentos es de 68 palabras y
-el P99 de 245, así que solo la cola larga cambia. Aun así, `bge` y `ColBERT` pueden
-tardar varios días; hay que planear la corrida como un trabajo de fondo y no bloquear
-la sesión.
+el P99 de 245, así que solo la cola larga cambia. La medición de truncación confirma
+que la cola es pequeña (0.29 % de los pares en `bge` y 2.80 % de los documentos en
+ColBERT); el aumento de costo debería ser moderado. El riesgo principal es de memoria,
+no de tiempo: por eso el batching por presupuesto cuadrático. Aun así, hay que planear
+la corrida como un trabajo de fondo de uno o dos días y no bloquear la sesión.
 
 ## Después de la corrida
 
