@@ -1,0 +1,46 @@
+23:48:18 | INFO | Loading faiss with AVX512 support.
+23:48:18 | INFO | Successfully loaded faiss with AVX512 support.
+23:49:50 | INFO | Loading corpus and selecting 48638 candidate documents
+23:49:51 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+23:49:51 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+23:49:51 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+23:49:51 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+23:49:51 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+23:49:51 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+23:49:51 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+23:49:51 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+23:49:52 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+23:49:52 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+23:52:03 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+23:52:04 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-reranker-v3 "HTTP/1.1 200 OK"
+23:52:06 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+23:52:11 | INFO | Tokenized 50/500 sampled queries
+23:52:16 | INFO | Tokenized 100/500 sampled queries
+23:52:21 | INFO | Tokenized 150/500 sampled queries
+23:52:25 | INFO | Tokenized 200/500 sampled queries
+23:52:30 | INFO | Tokenized 250/500 sampled queries
+23:52:35 | INFO | Tokenized 300/500 sampled queries
+23:52:40 | INFO | Tokenized 350/500 sampled queries
+23:52:45 | INFO | Tokenized 400/500 sampled queries
+23:52:49 | INFO | Tokenized 450/500 sampled queries
+23:52:54 | INFO | Tokenized 500/500 sampled queries
+23:52:54 | INFO | Wrote /home/jmendoza/ir-spanish/results/reranker_context/truncation.json and /home/jmendoza/ir-spanish/results/reranker_context/truncation.md
+# Truncation of reranker inputs
+
+- Sampled queries: 500
+- Candidate documents: 48638
+- Tokenized documents: 50000
+
+| Input | n | median | p95 | p99 | max | above 512 | above 300 | above 8192 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| bge combined (query + document) | 50000 | 109.0 | 268 | 397 | 1376 | 0.29% | 0.00% | 0.00% |
+| ColBERT document | 50000 | 99.0 | 258 | 386 | 1363 | 0.00% | 2.80% | 0.00% |
+| jina-reranker-v3 document | 50000 | 112.0 | 292 | 436 | 1576 | 0.00% | 0.00% | 0.00% |
+
+## Query lengths
+
+| Tokenizer | median | p95 | max | above 32 | above 1024 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| bge-reranker-v2-m3 | 10.0 | 14 | 25 | 0.00% | 0.00% |
+| jina-reranker-v3 | 8.0 | 14 | 28 | 0.00% | 0.00% |
+| jina-colbert-v2 | 10.0 | 14 | 25 | 0.00% | 0.00% |

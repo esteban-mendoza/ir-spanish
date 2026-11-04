@@ -1,0 +1,77 @@
+{
+  "sampled_queries": 500,
+  "candidate_documents": 48638,
+  "tokenized_documents": 50000,
+  "query_lengths": {
+    "bge-reranker-v2-m3": {
+      "n": 500,
+      "min": 5,
+      "median": 10.0,
+      "p95": 14,
+      "p99": 16,
+      "max": 25,
+      "above_32": 0,
+      "above_32_pct": 0.0,
+      "above_1024": 0,
+      "above_1024_pct": 0.0
+    },
+    "jina-reranker-v3": {
+      "n": 500,
+      "min": 3,
+      "median": 8.0,
+      "p95": 14,
+      "p99": 17,
+      "max": 28,
+      "above_32": 0,
+      "above_32_pct": 0.0,
+      "above_1024": 0,
+      "above_1024_pct": 0.0
+    },
+    "jina-colbert-v2": {
+      "n": 500,
+      "min": 5,
+      "median": 10.0,
+      "p95": 14,
+      "p99": 16,
+      "max": 25,
+      "above_32": 0,
+      "above_32_pct": 0.0,
+      "above_1024": 0,
+      "above_1024_pct": 0.0
+    }
+  },
+  "bge_combined": {
+    "n": 50000,
+    "min": 16,
+    "median": 109.0,
+    "p95": 268,
+    "p99": 397,
+    "max": 1376,
+    "above_512": 146,
+    "above_512_pct": 0.292,
+    "above_8192": 0,
+    "above_8192_pct": 0.0
+  },
+  "colbert_document": {
+    "n": 50000,
+    "min": 9,
+    "median": 99.0,
+    "p95": 258,
+    "p99": 386,
+    "max": 1363,
+    "above_300": 1399,
+    "above_300_pct": 2.798,
+    "above_8192": 0,
+    "above_8192_pct": 0.0
+  },
+  "jina_v3_document": {
+    "n": 50000,
+    "min": 8,
+    "median": 112.0,
+    "p95": 292,
+    "p99": 436,
+    "max": 1576,
+    "above_8192": 0,
+    "above_8192_pct": 0.0
+  }
+}
