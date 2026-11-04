@@ -72,13 +72,18 @@ def load_candidates() -> dict[str, list[str]]:
 def load_documents(doc_ids: set[str]) -> dict[str, str]:
     log.info("Loading corpus and selecting %d candidate documents", len(doc_ids))
     dataset = datasets.load_dataset(data.CORPUS_NAME, split="corpus")
-    all_ids = dataset["str_docid"]
+    all_ids = [str(doc_id) for doc_id in dataset["docid"]]
     index = {doc_id: position for position, doc_id in enumerate(all_ids) if doc_id in doc_ids}
     missing = doc_ids - set(index)
     if missing:
         log.warning("%d candidate documents are missing from the corpus", len(missing))
     rows = dataset.select(list(index.values()))
-    return dict(zip(rows["str_docid"], rows["full_text"]))
+    texts: dict[str, str] = {}
+    for doc_id, title, body in zip(rows["docid"], rows["title"], rows["text"]):
+        title = title or ""
+        body = body or ""
+        texts[str(doc_id)] = f"{title}. {body}".strip() if title else body
+    return texts
 
 
 def percentile(values: list[int], q: float) -> int:
