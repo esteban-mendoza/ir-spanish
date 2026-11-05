@@ -46,12 +46,12 @@ RUN_TAG = os.environ.get("RERANKER_RUN_TAG", "")
 def estimate_tokens(text: str) -> int:
     """Conservative token estimate for a Spanish text.
 
-    The fast tokenizers of the three models use roughly 1.2--1.3 tokens per
-    word.  We use 1.4 plus a fixed overhead so that the batch planner never
-    underestimates the padded length.  The model tokenizer still applies the
-    exact truncation; this estimate only decides the batch size.
+    The fast tokenizers usually use 1.2--1.3 tokens per word, but tables,
+    numbers and URLs can double that ratio.  We use 3.0 plus a fixed overhead:
+    the estimate only decides the batch size, and an underestimate in a
+    8192-token document was enough to exhaust the 24 GiB of an A5000.
     """
-    return int(len(text.split()) * 1.4) + 16
+    return int(len(text.split()) * 3.0) + 16
 
 
 def length_aware_batches(
