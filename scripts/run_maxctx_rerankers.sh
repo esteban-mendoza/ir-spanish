@@ -27,7 +27,7 @@ export PYTORCH_CUDA_ALLOC_CONF="${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:T
 # quadratic budget at 2**27 so a query with several 8192-token documents does
 # not exhaust the 24 GiB of an A5000.
 export RERANKER_QUERY_BATCH="${RERANKER_QUERY_BATCH:-4}"
-export RERANKER_QUADRATIC_TOKEN_BUDGET="${RERANKER_QUADRATIC_TOKEN_BUDGET:-134217728}"
+export RERANKER_QUADRATIC_TOKEN_BUDGET="${RERANKER_QUADRATIC_TOKEN_BUDGET:-67108864}"
 
 log() {
 	printf '%s | %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$*"
