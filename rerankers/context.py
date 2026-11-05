@@ -29,10 +29,12 @@ JINA_V3_MAX_DOC_LENGTH = int(os.environ.get("JINA_V3_MAX_DOC_LENGTH", "8192"))
 COLBERT_MAX_QUERY_LENGTH = int(os.environ.get("COLBERT_MAX_QUERY_LENGTH", "32"))
 COLBERT_MAX_DOC_LENGTH = int(os.environ.get("COLBERT_MAX_DOC_LENGTH", "8192"))
 
-# ``batch * length**2`` budget.  2**28 is about 8.6 GiB of attention scores for
-# 16 heads in float32; the model and activations fit in the remaining VRAM.
+# ``batch * length**2`` budget.  2**27 keeps the longest 8192-token batch at
+# two sequences (about 4.3 GiB of attention scores for 16 heads in float32).
+# We used 2**28 first; with four queries grouped per call it caused an OOM on
+# an A5000 when a query contained several long documents.
 QUADRATIC_TOKEN_BUDGET = int(
-    os.environ.get("RERANKER_QUADRATIC_TOKEN_BUDGET", str(2**28))
+    os.environ.get("RERANKER_QUADRATIC_TOKEN_BUDGET", str(2**27))
 )
 MAX_BATCH = int(os.environ.get("RERANKER_MAX_BATCH", "256"))
 
