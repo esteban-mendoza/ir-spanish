@@ -54,6 +54,10 @@ RERANKER_MODEL = "BAAI/bge-reranker-v2-m3"
 # config declares max_position_embeddings = 8194; the earlier 512-token cap
 # truncated long paragraphs.
 MAX_LENGTH = context.BGE_MAX_LENGTH
+# Number of queries whose pairs share one predict() call.  A single query
+# contributes only 100 pairs, so grouping a few queries fills the 256-pair
+# batches and uses more of the GPU's compute.
+QUERY_BATCH = max(1, int(os.environ.get("RERANKER_QUERY_BATCH", "1")))
 
 # ---------------------------------------------------------------------------
 # Configuration — infrastructure
@@ -239,27 +243,46 @@ def _worker(
 
     total = len(pending)
     scored_pairs = 0
+    processed = 0
+    next_checkpoint = CHECKPOINT_EVERY
     t0 = time.perf_counter()
 
     with torch.no_grad():
-        for idx, (query_id, query_text, doc_ids) in enumerate(pending, 1):
-            pairs = [(query_text, doc_lookup.get(did, "")) for did in doc_ids]
+        for start in range(0, total, QUERY_BATCH):
+            chunk = pending[start : start + QUERY_BATCH]
+            pairs: list[tuple[str, str]] = []
+            spans: list[tuple[str, list[str], int]] = []
+
+            for query_id, query_text, doc_ids in chunk:
+                begin = len(pairs)
+                pairs.extend(
+                    (query_text, doc_lookup.get(doc_id, "")) for doc_id in doc_ids
+                )
+                spans.append((query_id, doc_ids, begin))
 
             scores = _predict_scores(model, pairs)
 
-            results[query_id] = {
-                did: float(score) for did, score in zip(doc_ids, scores)
-            }
-            scored_pairs += len(doc_ids)
+            for query_id, doc_ids, begin in spans:
+                results[query_id] = {
+                    doc_id: float(score)
+                    for doc_id, score in zip(
+                        doc_ids, scores[begin : begin + len(doc_ids)]
+                    )
+                }
 
-            if idx % CHECKPOINT_EVERY == 0:
+            processed += len(chunk)
+            scored_pairs += len(pairs)
+
+            if processed >= next_checkpoint:
                 torch.cuda.empty_cache()
                 _save_checkpoint(checkpoint_path, results)
+                while next_checkpoint <= processed:
+                    next_checkpoint += CHECKPOINT_EVERY
                 elapsed = time.perf_counter() - t0
                 rate = scored_pairs / elapsed if elapsed > 0 else 0
                 log.info(
                     "[%s] %d/%d queries | %d pairs scored | %.0f pairs/s | %.1fs",
-                    device, idx, total, scored_pairs, rate, elapsed,
+                    device, processed, total, scored_pairs, rate, elapsed,
                 )
 
     # Final checkpoint
