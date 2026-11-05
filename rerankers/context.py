@@ -88,6 +88,35 @@ def length_aware_batches(
         yield batch
 
 
+def adaptive_quadratic_budget(
+    device=None,
+    *,
+    minimum: int = 2**26,
+    maximum: int | None = None,
+) -> int:
+    """Pick the batch budget from the VRAM that is free right now.
+
+    Each attention score costs 16 heads * 4 bytes, so ``budget / 64`` is a
+    rough byte estimate.  We reserve 4 GiB for the model, activations and
+    fragmentation and use only half of the rest; this lets the run grow its
+    batches when another user leaves the GPU and shrink them when it returns.
+    """
+    import torch
+
+    if maximum is None:
+        maximum = int(os.environ.get("RERANKER_MAX_QUADRATIC_BUDGET", str(2**27)))
+    if not torch.cuda.is_available():
+        return min(maximum, QUADRATIC_TOKEN_BUDGET)
+    try:
+        free_bytes, _ = torch.cuda.mem_get_info(device)
+    except (RuntimeError, TypeError, ValueError):
+        return min(maximum, QUADRATIC_TOKEN_BUDGET)
+    reserve = int(float(os.environ.get("RERANKER_VRAM_RESERVE_GB", "4")) * 2**30)
+    usable = max(0, free_bytes - reserve)
+    budget = int(usable * 0.5 / 64)
+    return max(minimum, min(maximum, budget))
+
+
 def pair_lengths(
     queries: Iterable[str],
     documents: Iterable[str],

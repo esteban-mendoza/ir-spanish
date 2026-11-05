@@ -183,8 +183,15 @@ def _predict_scores(model, pairs: list[tuple[str, str]]) -> list[float]:
             add_special_tokens=True,
         )
         lengths = [len(input_ids) for input_ids in encoded["input_ids"]]
+    try:
+        device = next(model.model.parameters()).device
+    except (AttributeError, StopIteration):
+        device = None
+    quadratic_budget = context.adaptive_quadratic_budget(device)
     scores = [0.0] * len(pairs)
-    for batch in context.length_aware_batches(lengths):
+    for batch in context.length_aware_batches(
+        lengths, quadratic_budget=quadratic_budget
+    ):
         batch_pairs = [pairs[index] for index in batch]
         batch_scores = model.predict(
             batch_pairs,
