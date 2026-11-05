@@ -162,12 +162,27 @@ def _predict_scores(model, pairs: list[tuple[str, str]]) -> list[float]:
     ``batch_size`` is fixed.  With a 8,192-token maximum a batch of 256 pairs
     would need tens of GiB of attention scores, so we build the batches here
     and keep the quadratic token cost under ``context.QUADRATIC_TOKEN_BUDGET``.
+
+    The batch sizes use the tokenizer's exact truncated length.  A word-based
+    estimate underestimated documents with tables or URLs, and the resulting
+    batch of four 8192-token pairs exhausted the VRAM of an A5000.
     """
-    lengths = context.pair_lengths(
-        (query for query, _ in pairs),
-        (document for _, document in pairs),
-        MAX_LENGTH,
-    )
+    tokenizer = getattr(model, "tokenizer", None)
+    if tokenizer is None:
+        lengths = context.pair_lengths(
+            (query for query, _ in pairs),
+            (document for _, document in pairs),
+            MAX_LENGTH,
+        )
+    else:
+        encoded = tokenizer(
+            [query for query, _ in pairs],
+            [document for _, document in pairs],
+            truncation=True,
+            max_length=MAX_LENGTH,
+            add_special_tokens=True,
+        )
+        lengths = [len(input_ids) for input_ids in encoded["input_ids"]]
     scores = [0.0] * len(pairs)
     for batch in context.length_aware_batches(lengths):
         batch_pairs = [pairs[index] for index in batch]
