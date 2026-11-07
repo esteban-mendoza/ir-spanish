@@ -8,9 +8,9 @@ construido con esos vectores, para la ruta de un modelo (`jina-v5-small`) y la
 de tres (`e5-large` + `bge-m3` + `jina-v5-small`).
 
 La muestra es estratificada por deciles de longitud y se usa la configuración
-de producción de cada modelo (máximo nativo, lote de documentos y prompts).
-Las horas a corpus completo son una extrapolación lineal; la búsqueda en los
-índices no se vuelve a medir.
+de producción de cada modelo (bandas de longitud, lote de documentos y
+prompts), con el máximo nativo como tope. Las horas a corpus completo son una
+extrapolación lineal; la búsqueda en los índices no se vuelve a medir.
 
 Uso:
     python -m evaluation.encoding_cost --mode sample
@@ -625,6 +625,7 @@ def aggregate(out_dir: Path) -> None:
             "Codificación de documentos medida en una sola GPU; el corpus completo se extrapola linealmente.",
             "El costo en línea (consultas) y el costo fuera de línea (documentos e índices) se reportan por separado.",
             "El espacio no incluye IDs, textos ni pesos de modelos; son comunes a las dos rutas.",
+            "La longitud de secuencia se ajusta por bandas como en producción; el tope es el máximo nativo.",
         ],
     }
     (out_dir / "summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
