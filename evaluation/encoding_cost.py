@@ -38,6 +38,7 @@ from sentence_transformers import SentenceTransformer
 
 from evaluation.first_stage import MODELS as QUERY_MODELS
 from utils import data
+from utils.encoding import TOKENS_PER_WORD, _adaptive_batch_size, _snap_to_band
 from utils.observability import log_ram_usage
 
 log = logging.getLogger(__name__)
@@ -323,12 +324,20 @@ def _measure_documents(
     out_dir: Path,
     key: str,
 ) -> dict:
+    # La producción ordena por longitud y ajusta la longitud de secuencia y el
+    # lote por bandas (utils/encoding.py). Replicamos esa decisión para medir
+    # el costo real de construir el índice, no el de un lote fijo pesimista.
+    rows = sorted(rows, key=lambda row: row["word_count"])
     texts = [row["text"] for row in rows]
-    token_lengths = _token_lengths(model, texts, spec["max_length"], extra=1 if key == "jina" else 0)
+    max_words = max(row["word_count"] for row in rows)
+    token_estimate = int(max_words * TOKENS_PER_WORD)
+    seq_length = _snap_to_band(token_estimate, spec["max_length"])
+    batch_size = _adaptive_batch_size(seq_length, spec["doc_batch"])
+    model.max_seq_length = seq_length
+    token_lengths = _token_lengths(model, texts, seq_length, extra=1 if key == "jina" else 0)
     corpus_tokens = [effective for _raw, effective in token_lengths]
-    truncated = sum(1 for raw, _effective in token_lengths if raw > spec["max_length"])
+    truncated = sum(1 for raw, _effective in token_lengths if raw > seq_length)
 
-    batch_size = spec["doc_batch"]
     warmup = min(N_WARMUP_DOCS, len(texts))
     log.info("[%s] Calentando %d documentos ...", key, warmup)
     _encode_batches(model, texts[:warmup], batch_size, spec, is_query=False, device=device)
@@ -377,6 +386,9 @@ def _measure_documents(
         "label": LABELS[key],
         "name": spec["name"],
         "max_length": int(spec["max_length"]),
+        "seq_length": int(seq_length),
+        "max_words": int(max_words),
+        "token_estimate": int(token_estimate),
         "batch_size": int(batch_size),
         "n_docs": len(texts),
         "tokens": int(sum(corpus_tokens)),
@@ -442,6 +454,7 @@ def _measure_queries(model, spec: dict, device: str, out_dir: Path, key: str) ->
         prefix = spec["prefix"]
         return [prefix + row["query"] for row in rows]
 
+    model.max_seq_length = spec["max_length"]
     _encode_batches(model, texts(warmup), 8, spec, is_query=True, device=device)
 
     kwargs = _encode_kwargs(spec, True)
@@ -540,6 +553,7 @@ def aggregate(out_dir: Path) -> None:
                 "model": key,
                 "label": model["label"],
                 "max_length": model["max_length"],
+                "seq_length": model["seq_length"],
                 "batch_size": model["batch_size"],
                 "docs_per_s": model["median_docs_per_s"],
                 "docs_per_s_ci_low": model.get("docs_per_s_ci_low", model["median_docs_per_s"]),
@@ -622,6 +636,7 @@ def aggregate(out_dir: Path) -> None:
                 "model",
                 "label",
                 "max_length",
+                "seq_length",
                 "batch_size",
                 "docs_per_s",
                 "docs_per_s_ci_low",
@@ -643,12 +658,12 @@ def aggregate(out_dir: Path) -> None:
         "",
         f"Muestra: {meta['n_docs']} documentos, {meta['n_strata']} deciles de longitud, semilla {meta['seed']}.",
         "",
-        "| Modelo | Máx. tokens | Lote | docs/s | IC 95 % | ms/doc | Horas a 14 M | VRAM (MiB) | Bytes/vector | Un índice (GiB) |",
-        "| --- | ---: | ---: | ---: | --- | ---: | ---: | ---: | ---: | ---: |",
+        "| Modelo | Tope nativo | Seq. usada | Lote | docs/s | IC 95 % | ms/doc | Horas a 14 M | VRAM (MiB) | Bytes/vector | Un índice (GiB) |",
+        "| --- | ---: | ---: | ---: | ---: | --- | ---: | ---: | ---: | ---: | ---: |",
     ]
     for row in rows:
         lines.append(
-            "| {label} | {max_length} | {batch_size} | {docs_per_s:.1f} | [{docs_per_s_ci_low:.1f}, {docs_per_s_ci_high:.1f}] | {ms_per_doc:.2f} | {full_hours:.2f} | {peak_vram_mib:.0f} | {bytes_per_vector:.0f} | {one_index_gib:.2f} |".format(**row)
+            "| {label} | {max_length} | {seq_length} | {batch_size} | {docs_per_s:.1f} | [{docs_per_s_ci_low:.1f}, {docs_per_s_ci_high:.1f}] | {ms_per_doc:.2f} | {full_hours:.2f} | {peak_vram_mib:.0f} | {bytes_per_vector:.0f} | {one_index_gib:.2f} |".format(**row)
         )
     lines += [
         "",
