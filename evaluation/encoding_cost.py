@@ -249,12 +249,14 @@ def read_sample(out_dir: Path) -> tuple[dict, list[dict]]:
 # ---------------------------------------------------------------------------
 # Medición
 # ---------------------------------------------------------------------------
-def _token_lengths(model, texts: list[str], max_length: int, extra: int = 0) -> list[int]:
+def _token_lengths(model, texts: list[str], max_length: int, extra: int = 0) -> list[tuple[int, int]]:
+    """Longitud sin truncar y longitud efectiva (tras el tope del modelo)."""
     tokenizer = model.tokenizer
-    lengths = []
+    lengths: list[tuple[int, int]] = []
     for text in texts:
         ids = tokenizer(text, add_special_tokens=True, truncation=False)["input_ids"]
-        lengths.append(len(ids) + extra)
+        raw = len(ids) + extra
+        lengths.append((raw, min(max_length, raw)))
     return lengths
 
 
@@ -322,8 +324,9 @@ def _measure_documents(
     key: str,
 ) -> dict:
     texts = [row["text"] for row in rows]
-    corpus_tokens = _token_lengths(model, texts, spec["max_length"], extra=1 if key == "jina" else 0)
-    truncated = sum(1 for value in corpus_tokens if value > spec["max_length"])
+    token_lengths = _token_lengths(model, texts, spec["max_length"], extra=1 if key == "jina" else 0)
+    corpus_tokens = [effective for _raw, effective in token_lengths]
+    truncated = sum(1 for raw, _effective in token_lengths if raw > spec["max_length"])
 
     batch_size = spec["doc_batch"]
     warmup = min(N_WARMUP_DOCS, len(texts))
