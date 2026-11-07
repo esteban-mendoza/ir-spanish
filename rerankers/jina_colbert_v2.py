@@ -153,6 +153,26 @@ def _cleanup_checkpoints(reranker_base: Path) -> None:
 # ---------------------------------------------------------------------------
 # Length-aware encoding
 # ---------------------------------------------------------------------------
+def _document_length(model, text: str) -> int:
+    """Exact token length of a document, including the document marker.
+
+    The word-based estimate underestimates texts with long unbroken strings
+    (URLs, tables, code), which made a batch of ten 8,192-token documents
+    request 42 GiB of attention scores and killed the GPU 1 worker.  Tokenizing
+    once more per document costs little next to the encoder forward pass.
+    """
+    try:
+        ids = model.tokenizer(
+            text,
+            add_special_tokens=True,
+            truncation=True,
+            max_length=MAX_DOC_LENGTH,
+        )["input_ids"]
+        return min(MAX_DOC_LENGTH, len(ids) + 1)  # + [DocumentMarker]
+    except Exception:
+        return min(MAX_DOC_LENGTH, context.estimate_tokens(text))
+
+
 def _encode_documents(model, doc_texts: list[str]):
     """Encode documents in length-sorted batches that fit the VRAM budget.
 
@@ -160,10 +180,7 @@ def _encode_documents(model, doc_texts: list[str]):
     of attention scores.  We keep short documents in large batches and long
     ones in small batches, then restore the original order.
     """
-    lengths = [
-        min(MAX_DOC_LENGTH, context.estimate_tokens(text))
-        for text in doc_texts
-    ]
+    lengths = [_document_length(model, text) for text in doc_texts]
     embeddings: list = [None] * len(doc_texts)
     for batch in context.length_aware_batches(lengths):
         batch_texts = [doc_texts[index] for index in batch]

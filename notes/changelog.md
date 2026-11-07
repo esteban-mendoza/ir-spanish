@@ -23,6 +23,11 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-11-07 — Longitudes exactas de documento en ColBERT
+- **Cambios:** `rerankers/jina_colbert_v2.py` mide cada documento con su tokenizador (tope 8192, más la marca de documento) antes de agrupar lotes, en vez de estimar por palabras.
+- **Decisiones:** la estimación por palabras subestimaba textos con cadenas largas sin espacios (URLs, tablas, código); un lote de documentos así pidió 42 GiB de atención y mató al worker de la GPU 1. Medir con el tokenizador acota el costo cuadrático real del lote; el costo extra de tokenizar dos veces es menor que el de repetir la corrida.
+- **Estado / pendientes:** la corrida de ColBERT se reanuda desde los checkpoints (11 600 y 11 400 consultas); falta confirmar que termina sin OOM y completar la evaluación de `e3`, el banco de eficiencia y la tesis.
+
 ## 2026-11-03 — Contexto máximo en los reordenadores (código preparado)
 - **Cambios:** `rerankers/context.py` nuevo; `bge_reranker_v2_m3.py` pasa a 8192 tokens combinados, `jina_colbert_v2.py` a 8192 por documento y ambos usan lotes por presupuesto cuadrático; `jina_reranker_v3.py` queda igual pero documenta que ya usa el máximo por documento; `evaluation/e3.py` acepta rutas por variables de entorno; `evaluation/efficiency.py` parametriza longitudes y usa el batching de producción; nuevos `scripts/run_maxctx_rerankers.sh`, `scripts/evaluate_maxctx_e3.sh` y `scripts/check_reranker_lengths.py`; `notes/plan-contexto-maximo.md`, `notes/incidencia-gpu-2026-11-03.md` y `results/reranker_context/`.
 - **Decisiones:** el máximo efectivo de `jina-reranker-v3` es 8192 por documento dentro de su ventana compartida de 131k; la consulta de ColBERT se mantiene en 32 porque es su presupuesto de expansión, no un límite de contexto. Los lotes se dimensionan por costo cuadrático para no exceder 24 GiB. La medición en CPU de 500 consultas muestra que solo 0.29 % de los pares de `bge` superan 512 tokens y 2.80 % de los documentos de ColBERT superan 300; `jina-reranker-v3` no trunca con 8192.
