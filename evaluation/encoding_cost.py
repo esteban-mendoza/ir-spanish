@@ -333,6 +333,10 @@ def _measure_documents(
     token_estimate = int(max_words * TOKENS_PER_WORD)
     seq_length = _snap_to_band(token_estimate, spec["max_length"])
     batch_size = _adaptive_batch_size(seq_length, spec["doc_batch"])
+    log.info(
+        "[%s] max_words=%d → seq=%d, lote=%d (tope nativo %d)",
+        key, max_words, seq_length, batch_size, spec["max_length"],
+    )
     model.max_seq_length = seq_length
     token_lengths = _token_lengths(model, texts, seq_length, extra=1 if key == "jina" else 0)
     corpus_tokens = [effective for _raw, effective in token_lengths]
@@ -659,12 +663,12 @@ def aggregate(out_dir: Path) -> None:
         "",
         f"Muestra: {meta['n_docs']} documentos, {meta['n_strata']} deciles de longitud, semilla {meta['seed']}.",
         "",
-        "| Modelo | Tope nativo | Seq. usada | Lote | docs/s | IC 95 % | ms/doc | Horas a 14 M | VRAM (MiB) | Bytes/vector | Un índice (GiB) |",
-        "| --- | ---: | ---: | ---: | ---: | --- | ---: | ---: | ---: | ---: | ---: |",
+        "| Modelo | Tope nativo | Seq. usada | Lote | docs/s | IC 95 % | tok/s | ms/doc | Horas a 14 M | Trunc. % | VRAM (MiB) | Bytes/vector | Un índice (GiB) |",
+        "| --- | ---: | ---: | ---: | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
     ]
     for row in rows:
         lines.append(
-            "| {label} | {max_length} | {seq_length} | {batch_size} | {docs_per_s:.1f} | [{docs_per_s_ci_low:.1f}, {docs_per_s_ci_high:.1f}] | {ms_per_doc:.2f} | {full_hours:.2f} | {peak_vram_mib:.0f} | {bytes_per_vector:.0f} | {one_index_gib:.2f} |".format(**row)
+            "| {label} | {max_length} | {seq_length} | {batch_size} | {docs_per_s:.1f} | [{docs_per_s_ci_low:.1f}, {docs_per_s_ci_high:.1f}] | {tokens_per_s:.0f} | {ms_per_doc:.2f} | {full_hours:.2f} | {truncated_fraction:.2%} | {peak_vram_mib:.0f} | {bytes_per_vector:.0f} | {one_index_gib:.2f} |".format(**row)
         )
     lines += [
         "",
