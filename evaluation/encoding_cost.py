@@ -224,7 +224,7 @@ def build_sample(out_dir: Path, n_docs: int, seed: int) -> None:
         },
         "decile_edges": [float(value) for value in edges],
         "id_sha256": id_hash,
-        "text_cache": str(cache_path),
+        "text_cache": cache_path.name,
     }
     out_dir.mkdir(parents=True, exist_ok=True)
     _sample_path(out_dir).write_text(json.dumps(meta, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -239,6 +239,8 @@ def read_sample(out_dir: Path) -> tuple[dict, list[dict]]:
         raise SystemExit(f"Falta {meta_path}; corre --mode sample")
     meta = json.loads(meta_path.read_text(encoding="utf-8"))
     cache = Path(meta["text_cache"])
+    if not cache.is_absolute():
+        cache = SAMPLE_CACHE_DIR / cache
     if not cache.exists():
         raise SystemExit(f"Falta la caché de textos {cache}; corre --mode sample")
     rows = [json.loads(line) for line in cache.read_text(encoding="utf-8").splitlines()]
@@ -557,7 +559,7 @@ def aggregate(out_dir: Path) -> None:
                 "model": key,
                 "label": model["label"],
                 "max_length": model["max_length"],
-                "seq_length": model["seq_length"],
+                "seq_length": model.get("seq_length", model["max_length"]),
                 "batch_size": model["batch_size"],
                 "docs_per_s": model["median_docs_per_s"],
                 "docs_per_s_ci_low": model.get("docs_per_s_ci_low", model["median_docs_per_s"]),
