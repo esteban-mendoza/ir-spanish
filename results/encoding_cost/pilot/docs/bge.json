@@ -1,0 +1,54 @@
+{
+  "model": "bge",
+  "label": "bge-m3",
+  "name": "BAAI/bge-m3",
+  "max_length": 8192,
+  "seq_length": 512,
+  "max_words": 322,
+  "token_estimate": 483,
+  "batch_size": 128,
+  "n_docs": 1000,
+  "tokens": 90153,
+  "truncated_docs": 0,
+  "truncated_fraction": 0.0,
+  "reps": [
+    {
+      "rep": 1,
+      "seconds": 1.790826507,
+      "docs": 1000,
+      "tokens": 90153,
+      "docs_per_s": 558.4013839929163,
+      "tokens_per_s": 50341.559971113384,
+      "ms_per_doc": 1.790826507
+    }
+  ],
+  "median_seconds": 1.790826507,
+  "median_docs_per_s": 558.4013839929163,
+  "docs_per_s_ci_low": 351.7094319305516,
+  "docs_per_s_ci_high": 950.9556995662189,
+  "median_tokens_per_s": 50341.559971113384,
+  "median_ms_per_doc": 1.790826507,
+  "peak_vram_allocated_mib": 2152.9970703125,
+  "peak_vram_reserved_mib": 3556.0,
+  "peak_rss_mib": 4173.71484375,
+  "index": {
+    "model": "bge",
+    "n_docs": 1000,
+    "dim": 1024,
+    "raw_bytes": 4096000,
+    "bytes_per_vector": 4096.0,
+    "file_bytes": 4096045,
+    "overhead_bytes": 45,
+    "overhead_per_vector": 0.045
+  },
+  "query": {
+    "model": "bge",
+    "label": "bge-m3",
+    "max_length": 8192,
+    "n": 500,
+    "median_ms": 13.376172,
+    "p95_ms": 13.803023,
+    "batch_1_qps": 73.41112648937829,
+    "batch_32_qps": 2037.7901416302052
+  }
+}

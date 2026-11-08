@@ -1,0 +1,54 @@
+{
+  "model": "jina",
+  "label": "jina-v5-small",
+  "name": "jinaai/jina-embeddings-v5-text-small-retrieval",
+  "max_length": 32768,
+  "seq_length": 512,
+  "max_words": 322,
+  "token_estimate": 483,
+  "batch_size": 128,
+  "n_docs": 1000,
+  "tokens": 103702,
+  "truncated_docs": 1,
+  "truncated_fraction": 0.001,
+  "reps": [
+    {
+      "rep": 1,
+      "seconds": 4.956255248000001,
+      "docs": 1000,
+      "tokens": 103702,
+      "docs_per_s": 201.76523402492847,
+      "tokens_per_s": 20923.458298853133,
+      "ms_per_doc": 4.956255248000001
+    }
+  ],
+  "median_seconds": 4.956255248000001,
+  "median_docs_per_s": 201.76523402492847,
+  "docs_per_s_ci_low": 128.10158612458255,
+  "docs_per_s_ci_high": 343.1508959762322,
+  "median_tokens_per_s": 20923.458298853133,
+  "median_ms_per_doc": 4.956255248000001,
+  "peak_vram_allocated_mib": 8348.0810546875,
+  "peak_vram_reserved_mib": 12198.0,
+  "peak_rss_mib": 2308.078125,
+  "index": {
+    "model": "jina",
+    "n_docs": 1000,
+    "dim": 1024,
+    "raw_bytes": 4096000,
+    "bytes_per_vector": 4096.0,
+    "file_bytes": 4096045,
+    "overhead_bytes": 45,
+    "overhead_per_vector": 0.045
+  },
+  "query": {
+    "model": "jina",
+    "label": "jina-v5-small",
+    "max_length": 32768,
+    "n": 500,
+    "median_ms": 30.425986,
+    "p95_ms": 30.792528,
+    "batch_1_qps": 32.65805925013454,
+    "batch_32_qps": 707.2362240645549
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "model": "e5",
+  "label": "e5-large-instruct",
+  "name": "intfloat/multilingual-e5-large-instruct",
+  "max_length": 512,
+  "seq_length": 512,
+  "max_words": 322,
+  "token_estimate": 483,
+  "batch_size": 128,
+  "n_docs": 1000,
+  "tokens": 90153,
+  "truncated_docs": 0,
+  "truncated_fraction": 0.0,
+  "reps": [
+    {
+      "rep": 1,
+      "seconds": 1.78748138,
+      "docs": 1000,
+      "tokens": 90153,
+      "docs_per_s": 559.446387072295,
+      "tokens_per_s": 50435.77013372861,
+      "ms_per_doc": 1.78748138
+    }
+  ],
+  "median_seconds": 1.78748138,
+  "median_docs_per_s": 559.446387072295,
+  "docs_per_s_ci_low": 349.346763436089,
+  "docs_per_s_ci_high": 963.6062527183567,
+  "median_tokens_per_s": 50435.77013372861,
+  "median_ms_per_doc": 1.78748138,
+  "peak_vram_allocated_mib": 2138.5908203125,
+  "peak_vram_reserved_mib": 3538.0,
+  "peak_rss_mib": 2459.3359375,
+  "index": {
+    "model": "e5",
+    "n_docs": 1000,
+    "dim": 1024,
+    "raw_bytes": 4096000,
+    "bytes_per_vector": 4096.0,
+    "file_bytes": 4096045,
+    "overhead_bytes": 45,
+    "overhead_per_vector": 0.045
+  },
+  "query": {
+    "model": "e5",
+    "label": "e5-large-instruct",
+    "max_length": 512,
+    "n": 500,
+    "median_ms": 14.588218000000001,
+    "p95_ms": 14.858061,
+    "batch_1_qps": 67.72533353985514,
+    "batch_32_qps": 1616.3196301808962
+  }
+}

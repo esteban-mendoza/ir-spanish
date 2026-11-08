@@ -1,0 +1,10 @@
+{
+  "model": "jina",
+  "label": "jina-v5-small",
+  "max_length": 32768,
+  "n": 500,
+  "median_ms": 30.425986,
+  "p95_ms": 30.792528,
+  "batch_1_qps": 32.65805925013454,
+  "batch_32_qps": 707.2362240645549
+}

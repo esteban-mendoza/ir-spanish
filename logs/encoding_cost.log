@@ -1,0 +1,354 @@
+== 2026-11-08T05:00:28-06:00 /home/jmendoza/miniconda3/envs/proyecto/bin/python -m evaluation.encoding_cost --mode sample --n 1000 --out-dir results/encoding_cost/pilot
+05:00:33 | INFO | Cargando corpus para muestrear 1000 documentos ...
+05:00:33 | INFO | ⏱  START: Loading eswiki corpus
+05:00:34 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+05:00:34 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+05:00:34 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+05:00:34 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+05:00:34 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+05:00:34 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+05:00:34 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+05:00:35 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+05:00:35 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+05:00:35 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+05:00:35 | INFO | ⏱  DONE:  Loading eswiki corpus (1.7s)
+05:00:35 | INFO | Original corpus: 14047759 documents
+05:00:35 | INFO | ⏱  START: Formatting and counting words (16 workers)
+Setting TOKENIZERS_PARALLELISM=false for forked processes.
+05:00:35 | WARNING | Setting TOKENIZERS_PARALLELISM=false for forked processes.
+05:00:36 | INFO | ⏱  DONE:  Formatting and counting words (16 workers) (1.0s)
+05:00:36 | INFO | Word-count filter disabled — using all 14047759 documents
+05:07:06 | INFO | Muestra guardada: 1000 documentos; hash b1a045e52c52
+05:07:06 | INFO | RAM (peak RSS): 7.5 GB
+== 2026-11-08T05:07:07-06:00 /home/jmendoza/miniconda3/envs/proyecto/bin/python -m evaluation.encoding_cost --mode encode --model e5 --reps 1 --out-dir results/encoding_cost/pilot
+05:07:13 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+05:07:13 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/modules.json "HTTP/1.1 200 OK"
+05:07:13 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+05:07:13 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/config_sentence_transformers.json "HTTP/1.1 200 OK"
+05:07:13 | INFO | Loading SentenceTransformer model from intfloat/multilingual-e5-large-instruct.
+05:07:13 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+05:07:13 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/config_sentence_transformers.json "HTTP/1.1 200 OK"
+05:07:13 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+05:07:13 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/README.md "HTTP/1.1 200 OK"
+05:07:14 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+05:07:14 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/modules.json "HTTP/1.1 200 OK"
+05:07:14 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/sentence_bert_config.json "HTTP/1.1 404 Not Found"
+05:07:14 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/sentence_roberta_config.json "HTTP/1.1 404 Not Found"
+05:07:14 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/sentence_distilbert_config.json "HTTP/1.1 404 Not Found"
+05:07:14 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/sentence_camembert_config.json "HTTP/1.1 404 Not Found"
+05:07:14 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/sentence_albert_config.json "HTTP/1.1 404 Not Found"
+05:07:14 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/sentence_xlm-roberta_config.json "HTTP/1.1 307 Temporary Redirect"
+05:07:14 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/sentence_xlm-roberta_config.json "HTTP/1.1 200 OK"
+05:07:14 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+05:07:14 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+05:07:14 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/config.json "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights:  23%|██▎       | 90/391 [00:00<00:00, 893.42it/s]Loading weights:  54%|█████▍    | 213/391 [00:00<00:00, 1090.52it/s]Loading weights: 100%|██████████| 391/391 [00:00<00:00, 1300.32it/s]
+05:07:15 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+05:07:15 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+05:07:15 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+05:07:15 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+05:07:15 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+05:07:15 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/tokenizer_config.json "HTTP/1.1 200 OK"
+05:07:16 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+05:07:16 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/config.json "HTTP/1.1 200 OK"
+05:07:16 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+05:07:16 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/config.json "HTTP/1.1 200 OK"
+05:07:16 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+05:07:16 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/tokenizer_config.json "HTTP/1.1 200 OK"
+05:07:16 | INFO | HTTP Request: GET https://huggingface.co/api/models/intfloat/multilingual-e5-large-instruct/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+05:07:16 | INFO | HTTP Request: GET https://huggingface.co/api/models/intfloat/multilingual-e5-large-instruct/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+05:07:18 | INFO | HTTP Request: GET https://huggingface.co/api/models/intfloat/multilingual-e5-large-instruct "HTTP/1.1 200 OK"
+05:07:18 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+05:07:18 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+05:07:18 | INFO | HTTP Request: GET https://huggingface.co/api/models/intfloat/multilingual-e5-large-instruct "HTTP/1.1 200 OK"
+05:07:21 | INFO | [e5] max_words=322 → seq=512, lote=128 (tope nativo 512)
+05:07:21 | INFO | [e5] Calentando 1000 documentos ...
+05:07:23 | INFO | [e5] Repetición 1/1: 1000 documentos
+05:07:25 | INFO | Loading faiss with AVX512 support.
+05:07:25 | INFO | Successfully loaded faiss with AVX512 support.
+05:07:25 | INFO | [e5] Índice de muestra: 3.91 MiB; sobrecarga 0.0 KiB
+05:07:33 | INFO | [e5] Consultas: mediana 14.59 ms, P95 14.86 ms, b32 1616.3 qps
+== 2026-11-08T05:07:35-06:00 /home/jmendoza/miniconda3/envs/proyecto/bin/python -m evaluation.encoding_cost --mode encode --model bge --reps 1 --out-dir results/encoding_cost/pilot
+05:07:40 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+05:07:41 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/modules.json "HTTP/1.1 200 OK"
+05:07:41 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+05:07:41 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config_sentence_transformers.json "HTTP/1.1 200 OK"
+05:07:41 | INFO | Loading SentenceTransformer model from BAAI/bge-m3.
+05:07:41 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+05:07:41 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config_sentence_transformers.json "HTTP/1.1 200 OK"
+05:07:41 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+05:07:41 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/README.md "HTTP/1.1 200 OK"
+05:07:41 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+05:07:41 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/modules.json "HTTP/1.1 200 OK"
+05:07:41 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
+05:07:41 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/sentence_bert_config.json "HTTP/1.1 200 OK"
+05:07:41 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+05:07:41 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+05:07:42 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config.json "HTTP/1.1 200 OK"
+05:07:42 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/model.safetensors "HTTP/1.1 404 Not Found"
+05:07:42 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3 "HTTP/1.1 200 OK"
+05:07:42 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/commits/main "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]05:07:42 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/discussions?p=0 "HTTP/1.1 200 OK"
+05:07:42 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/commits/refs%2Fpr%2F130 "HTTP/1.1 200 OK"
+05:07:42 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/refs%2Fpr%2F130/model.safetensors.index.json "HTTP/1.1 404 Not Found"
+05:07:42 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/refs%2Fpr%2F130/model.safetensors "HTTP/1.1 302 Found"
+Loading weights:   1%|▏         | 5/391 [00:00<01:02,  6.14it/s]Loading weights: 100%|██████████| 391/391 [00:00<00:00, 459.59it/s]
+05:07:43 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+05:07:43 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+05:07:43 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+05:07:43 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+05:07:43 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+05:07:43 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/tokenizer_config.json "HTTP/1.1 200 OK"
+05:07:43 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+05:07:43 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config.json "HTTP/1.1 200 OK"
+05:07:44 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+05:07:44 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config.json "HTTP/1.1 200 OK"
+05:07:44 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+05:07:44 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/tokenizer_config.json "HTTP/1.1 200 OK"
+05:07:44 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+05:07:44 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+05:07:46 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3 "HTTP/1.1 200 OK"
+05:07:46 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+05:07:46 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+05:07:47 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3 "HTTP/1.1 200 OK"
+05:07:48 | INFO | [bge] max_words=322 → seq=512, lote=128 (tope nativo 8192)
+05:07:48 | INFO | [bge] Calentando 1000 documentos ...
+05:07:50 | INFO | [bge] Repetición 1/1: 1000 documentos
+05:07:52 | INFO | Loading faiss with AVX512 support.
+05:07:52 | INFO | Successfully loaded faiss with AVX512 support.
+05:07:52 | INFO | [bge] Índice de muestra: 3.91 MiB; sobrecarga 0.0 KiB
+05:07:59 | INFO | [bge] Consultas: mediana 13.38 ms, P95 13.80 ms, b32 2037.8 qps
+== 2026-11-08T05:08:01-06:00 /home/jmendoza/miniconda3/envs/proyecto/bin/python -m evaluation.encoding_cost --mode encode --model jina --reps 1 --out-dir results/encoding_cost/pilot
+05:08:07 | WARNING | The `tokenizer_kwargs` argument was renamed and is now deprecated. Please use `processor_kwargs` instead.
+05:08:07 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+05:08:07 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/modules.json "HTTP/1.1 200 OK"
+05:08:07 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+05:08:08 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/config_sentence_transformers.json "HTTP/1.1 200 OK"
+05:08:08 | INFO | Loading SentenceTransformer model from jinaai/jina-embeddings-v5-text-small-retrieval.
+05:08:08 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+05:08:08 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/config_sentence_transformers.json "HTTP/1.1 200 OK"
+05:08:08 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+05:08:08 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/README.md "HTTP/1.1 200 OK"
+05:08:08 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+05:08:08 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/modules.json "HTTP/1.1 200 OK"
+05:08:08 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_bert_config.json "HTTP/1.1 404 Not Found"
+05:08:08 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_roberta_config.json "HTTP/1.1 404 Not Found"
+05:08:08 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_distilbert_config.json "HTTP/1.1 404 Not Found"
+05:08:08 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_camembert_config.json "HTTP/1.1 404 Not Found"
+05:08:08 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_albert_config.json "HTTP/1.1 404 Not Found"
+05:08:08 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_xlm-roberta_config.json "HTTP/1.1 404 Not Found"
+05:08:09 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_xlnet_config.json "HTTP/1.1 404 Not Found"
+05:08:09 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+05:08:09 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+05:08:09 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/config.json "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:  33%|███▎      | 102/310 [00:00<00:00, 1006.58it/s]Loading weights:  65%|██████▌   | 203/310 [00:00<00:00, 870.18it/s] Loading weights: 100%|██████████| 310/310 [00:00<00:00, 1066.31it/s]
+05:08:09 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+05:08:09 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+05:08:10 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+05:08:10 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+05:08:10 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+05:08:10 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/tokenizer_config.json "HTTP/1.1 200 OK"
+05:08:10 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+05:08:10 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/config.json "HTTP/1.1 200 OK"
+05:08:10 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+05:08:10 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/config.json "HTTP/1.1 200 OK"
+05:08:10 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+05:08:10 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/tokenizer_config.json "HTTP/1.1 200 OK"
+05:08:10 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-embeddings-v5-text-small-retrieval/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+05:08:10 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-embeddings-v5-text-small-retrieval/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+05:08:11 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-embeddings-v5-text-small-retrieval "HTTP/1.1 200 OK"
+05:08:12 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+05:08:12 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+05:08:12 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-embeddings-v5-text-small-retrieval "HTTP/1.1 200 OK"
+05:08:14 | INFO | Loaded 2 prompts with these keys: ['query', 'document']
+05:08:14 | INFO | [jina] max_words=322 → seq=512, lote=128 (tope nativo 32768)
+Token indices sequence length is longer than the specified maximum sequence length for this model (524 > 512). Running this sequence through the model will result in indexing errors
+05:08:14 | INFO | [jina] Calentando 1000 documentos ...
+05:08:20 | INFO | [jina] Repetición 1/1: 1000 documentos
+05:08:25 | INFO | Loading faiss with AVX512 support.
+05:08:25 | INFO | Successfully loaded faiss with AVX512 support.
+05:08:25 | INFO | [jina] Índice de muestra: 3.91 MiB; sobrecarga 0.0 KiB
+05:08:41 | INFO | [jina] Consultas: mediana 30.43 ms, P95 30.79 ms, b32 707.2 qps
+== 2026-11-08T05:08:43-06:00 /home/jmendoza/miniconda3/envs/proyecto/bin/python -m evaluation.encoding_cost --mode aggregate --out-dir results/encoding_cost/pilot
+05:08:48 | INFO | Resumen escrito en results/encoding_cost/pilot
+== 2026-11-08T05:08:49-06:00 /home/jmendoza/miniconda3/envs/proyecto/bin/python -m evaluation.encoding_cost --mode sample --n 20000 --out-dir results/encoding_cost
+05:08:55 | INFO | Cargando corpus para muestrear 20000 documentos ...
+05:08:55 | INFO | ⏱  START: Loading eswiki corpus
+05:08:55 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+05:08:56 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+05:08:56 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+05:08:56 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+05:08:56 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+05:08:56 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+05:08:56 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+05:08:57 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+05:08:57 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+05:08:57 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+05:08:57 | INFO | ⏱  DONE:  Loading eswiki corpus (1.9s)
+05:08:57 | INFO | Original corpus: 14047759 documents
+05:08:57 | INFO | ⏱  START: Formatting and counting words (16 workers)
+Setting TOKENIZERS_PARALLELISM=false for forked processes.
+05:08:57 | WARNING | Setting TOKENIZERS_PARALLELISM=false for forked processes.
+05:08:58 | INFO | ⏱  DONE:  Formatting and counting words (16 workers) (0.7s)
+05:08:58 | INFO | Word-count filter disabled — using all 14047759 documents
+05:55:46 | INFO | Muestra guardada: 20000 documentos; hash e17d03e9acdc
+05:55:46 | INFO | RAM (peak RSS): 7.5 GB
+== 2026-11-08T05:55:47-06:00 /home/jmendoza/miniconda3/envs/proyecto/bin/python -m evaluation.encoding_cost --mode encode --model e5 --reps 3 --out-dir results/encoding_cost
+05:55:53 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+05:55:53 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/modules.json "HTTP/1.1 200 OK"
+05:55:54 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+05:55:54 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/config_sentence_transformers.json "HTTP/1.1 200 OK"
+05:55:54 | INFO | Loading SentenceTransformer model from intfloat/multilingual-e5-large-instruct.
+05:55:54 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+05:55:54 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/config_sentence_transformers.json "HTTP/1.1 200 OK"
+05:55:54 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+05:55:54 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/README.md "HTTP/1.1 200 OK"
+05:55:54 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+05:55:54 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/modules.json "HTTP/1.1 200 OK"
+05:55:54 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/sentence_bert_config.json "HTTP/1.1 404 Not Found"
+05:55:54 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/sentence_roberta_config.json "HTTP/1.1 404 Not Found"
+05:55:54 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/sentence_distilbert_config.json "HTTP/1.1 404 Not Found"
+05:55:54 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/sentence_camembert_config.json "HTTP/1.1 404 Not Found"
+05:55:54 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/sentence_albert_config.json "HTTP/1.1 404 Not Found"
+05:55:54 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/sentence_xlm-roberta_config.json "HTTP/1.1 307 Temporary Redirect"
+05:55:54 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/sentence_xlm-roberta_config.json "HTTP/1.1 200 OK"
+05:55:55 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+05:55:55 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+05:55:55 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/config.json "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights: 100%|██████████| 391/391 [00:00<00:00, 4088.67it/s]
+05:55:55 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+05:55:55 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+05:55:55 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+05:55:55 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+05:55:55 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+05:55:55 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/tokenizer_config.json "HTTP/1.1 200 OK"
+05:55:55 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+05:55:55 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/config.json "HTTP/1.1 200 OK"
+05:55:56 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+05:55:56 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/config.json "HTTP/1.1 200 OK"
+05:55:56 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+05:55:56 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/tokenizer_config.json "HTTP/1.1 200 OK"
+05:55:56 | INFO | HTTP Request: GET https://huggingface.co/api/models/intfloat/multilingual-e5-large-instruct/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+05:55:56 | INFO | HTTP Request: GET https://huggingface.co/api/models/intfloat/multilingual-e5-large-instruct/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+05:55:58 | INFO | HTTP Request: GET https://huggingface.co/api/models/intfloat/multilingual-e5-large-instruct "HTTP/1.1 200 OK"
+05:55:58 | INFO | HTTP Request: HEAD https://huggingface.co/intfloat/multilingual-e5-large-instruct/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+05:55:58 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/intfloat/multilingual-e5-large-instruct/274baa43b0e13e37fafa6428dbc7938e62e5c439/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+05:55:58 | INFO | HTTP Request: GET https://huggingface.co/api/models/intfloat/multilingual-e5-large-instruct "HTTP/1.1 200 OK"
+05:55:59 | INFO | [e5] max_words=696 → seq=512, lote=128 (tope nativo 512)
+Token indices sequence length is longer than the specified maximum sequence length for this model (758 > 512). Running this sequence through the model will result in indexing errors
+05:56:04 | INFO | [e5] Calentando 1000 documentos ...
+05:56:05 | INFO | [e5] Repetición 1/3: 20000 documentos
+05:56:37 | INFO | [e5] Repetición 2/3: 20000 documentos
+05:57:10 | INFO | [e5] Repetición 3/3: 20000 documentos
+05:57:43 | INFO | Loading faiss with AVX512 support.
+05:57:43 | INFO | Successfully loaded faiss with AVX512 support.
+05:57:44 | INFO | [e5] Índice de muestra: 78.13 MiB; sobrecarga 0.0 KiB
+05:57:52 | INFO | [e5] Consultas: mediana 14.80 ms, P95 15.10 ms, b32 1598.8 qps
+== 2026-11-08T05:57:53-06:00 /home/jmendoza/miniconda3/envs/proyecto/bin/python -m evaluation.encoding_cost --mode encode --model bge --reps 3 --out-dir results/encoding_cost
+05:57:59 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+05:57:59 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/modules.json "HTTP/1.1 200 OK"
+05:58:00 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+05:58:00 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config_sentence_transformers.json "HTTP/1.1 200 OK"
+05:58:00 | INFO | Loading SentenceTransformer model from BAAI/bge-m3.
+05:58:00 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+05:58:00 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config_sentence_transformers.json "HTTP/1.1 200 OK"
+05:58:00 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+05:58:00 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/README.md "HTTP/1.1 200 OK"
+05:58:00 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+05:58:00 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/modules.json "HTTP/1.1 200 OK"
+05:58:00 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
+05:58:00 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/sentence_bert_config.json "HTTP/1.1 200 OK"
+05:58:00 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+05:58:00 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+05:58:00 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config.json "HTTP/1.1 200 OK"
+05:58:00 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/model.safetensors "HTTP/1.1 404 Not Found"
+05:58:00 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3 "HTTP/1.1 200 OK"
+05:58:01 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/commits/main "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]05:58:01 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/discussions?p=0 "HTTP/1.1 200 OK"
+Loading weights:  85%|████████▍ | 331/391 [00:00<00:00, 3303.41it/s]Loading weights: 100%|██████████| 391/391 [00:00<00:00, 3223.97it/s]
+05:58:01 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/commits/refs%2Fpr%2F130 "HTTP/1.1 200 OK"
+05:58:01 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/refs%2Fpr%2F130/model.safetensors.index.json "HTTP/1.1 404 Not Found"
+05:58:01 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+05:58:01 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/refs%2Fpr%2F130/model.safetensors "HTTP/1.1 302 Found"
+05:58:01 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+05:58:01 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+05:58:01 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+05:58:01 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+05:58:01 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/tokenizer_config.json "HTTP/1.1 200 OK"
+05:58:01 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+05:58:01 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config.json "HTTP/1.1 200 OK"
+05:58:02 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+05:58:02 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/config.json "HTTP/1.1 200 OK"
+05:58:02 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+05:58:02 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/tokenizer_config.json "HTTP/1.1 200 OK"
+05:58:02 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+05:58:02 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+05:58:04 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3 "HTTP/1.1 200 OK"
+05:58:04 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-m3/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+05:58:04 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-m3/5617a9f61b028005a4858fdac845db406aefb181/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+05:58:05 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-m3 "HTTP/1.1 200 OK"
+05:58:06 | INFO | [bge] max_words=696 → seq=2048, lote=32 (tope nativo 8192)
+Token indices sequence length is longer than the specified maximum sequence length for this model (2244 > 2048). Running this sequence through the model will result in indexing errors
+05:58:11 | INFO | [bge] Calentando 1000 documentos ...
+05:58:12 | INFO | [bge] Repetición 1/3: 20000 documentos
+05:58:47 | INFO | [bge] Repetición 2/3: 20000 documentos
+05:59:23 | INFO | [bge] Repetición 3/3: 20000 documentos
+05:59:59 | INFO | Loading faiss with AVX512 support.
+05:59:59 | INFO | Successfully loaded faiss with AVX512 support.
+05:59:59 | INFO | [bge] Índice de muestra: 78.13 MiB; sobrecarga 0.0 KiB
+06:00:06 | INFO | [bge] Consultas: mediana 13.19 ms, P95 13.48 ms, b32 2098.9 qps
+== 2026-11-08T06:00:08-06:00 /home/jmendoza/miniconda3/envs/proyecto/bin/python -m evaluation.encoding_cost --mode encode --model jina --reps 3 --out-dir results/encoding_cost
+06:00:14 | WARNING | The `tokenizer_kwargs` argument was renamed and is now deprecated. Please use `processor_kwargs` instead.
+06:00:14 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+06:00:14 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/modules.json "HTTP/1.1 200 OK"
+06:00:14 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+06:00:15 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/config_sentence_transformers.json "HTTP/1.1 200 OK"
+06:00:15 | INFO | Loading SentenceTransformer model from jinaai/jina-embeddings-v5-text-small-retrieval.
+06:00:15 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+06:00:15 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/config_sentence_transformers.json "HTTP/1.1 200 OK"
+06:00:15 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+06:00:15 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/README.md "HTTP/1.1 200 OK"
+06:00:15 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+06:00:15 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/modules.json "HTTP/1.1 200 OK"
+06:00:15 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_bert_config.json "HTTP/1.1 404 Not Found"
+06:00:15 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_roberta_config.json "HTTP/1.1 404 Not Found"
+06:00:15 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_distilbert_config.json "HTTP/1.1 404 Not Found"
+06:00:15 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_camembert_config.json "HTTP/1.1 404 Not Found"
+06:00:15 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_albert_config.json "HTTP/1.1 404 Not Found"
+06:00:15 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_xlm-roberta_config.json "HTTP/1.1 404 Not Found"
+06:00:15 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/sentence_xlnet_config.json "HTTP/1.1 404 Not Found"
+06:00:16 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+06:00:16 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+06:00:16 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/config.json "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 4943.35it/s]
+06:00:16 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+06:00:16 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+06:00:16 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+06:00:16 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+06:00:16 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+06:00:16 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/tokenizer_config.json "HTTP/1.1 200 OK"
+06:00:16 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+06:00:16 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/config.json "HTTP/1.1 200 OK"
+06:00:16 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+06:00:16 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/config.json "HTTP/1.1 200 OK"
+06:00:17 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+06:00:17 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/tokenizer_config.json "HTTP/1.1 200 OK"
+06:00:17 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-embeddings-v5-text-small-retrieval/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+06:00:17 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-embeddings-v5-text-small-retrieval/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+06:00:18 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-embeddings-v5-text-small-retrieval "HTTP/1.1 200 OK"
+06:00:18 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-embeddings-v5-text-small-retrieval/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+06:00:18 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-embeddings-v5-text-small-retrieval/6856e76bb72982e58de0620458a4e8b3614da340/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+06:00:18 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-embeddings-v5-text-small-retrieval "HTTP/1.1 200 OK"
+06:00:19 | INFO | Loaded 2 prompts with these keys: ['query', 'document']
+06:00:19 | INFO | [jina] max_words=696 → seq=2048, lote=32 (tope nativo 32768)
+06:00:23 | INFO | [jina] Calentando 1000 documentos ...
+06:00:25 | INFO | [jina] Repetición 1/3: 20000 documentos
+06:01:59 | INFO | [jina] Repetición 2/3: 20000 documentos
+06:03:32 | INFO | [jina] Repetición 3/3: 20000 documentos
+06:05:06 | INFO | Loading faiss with AVX512 support.
+06:05:06 | INFO | Successfully loaded faiss with AVX512 support.
+06:05:06 | INFO | [jina] Índice de muestra: 78.13 MiB; sobrecarga 0.0 KiB
+06:05:22 | INFO | [jina] Consultas: mediana 30.31 ms, P95 30.61 ms, b32 915.8 qps
+== 2026-11-08T06:05:24-06:00 /home/jmendoza/miniconda3/envs/proyecto/bin/python -m evaluation.encoding_cost --mode aggregate --out-dir results/encoding_cost
+06:05:30 | INFO | Resumen escrito en results/encoding_cost
+Listo: results/encoding_cost/summary.md

@@ -1,0 +1,72 @@
+{
+  "model": "bge",
+  "label": "bge-m3",
+  "name": "BAAI/bge-m3",
+  "max_length": 8192,
+  "seq_length": 2048,
+  "max_words": 696,
+  "token_estimate": 1044,
+  "batch_size": 32,
+  "n_docs": 20000,
+  "tokens": 1824620,
+  "truncated_docs": 1,
+  "truncated_fraction": 5e-05,
+  "reps": [
+    {
+      "rep": 1,
+      "seconds": 35.379754179,
+      "docs": 20000,
+      "tokens": 1824620,
+      "docs_per_s": 565.2950526115072,
+      "tokens_per_s": 51572.43294480042,
+      "ms_per_doc": 1.7689877089500001
+    },
+    {
+      "rep": 2,
+      "seconds": 35.692501496999995,
+      "docs": 20000,
+      "tokens": 1824620,
+      "docs_per_s": 560.3417850015647,
+      "tokens_per_s": 51120.54138747776,
+      "ms_per_doc": 1.7846250748499999
+    },
+    {
+      "rep": 3,
+      "seconds": 35.686540029999996,
+      "docs": 20000,
+      "tokens": 1824620,
+      "docs_per_s": 560.4353905754646,
+      "tokens_per_s": 51129.08111759021,
+      "ms_per_doc": 1.7843270015
+    }
+  ],
+  "median_seconds": 35.686540029999996,
+  "median_docs_per_s": 560.4353905754646,
+  "docs_per_s_ci_low": 514.3084785951123,
+  "docs_per_s_ci_high": 601.9158108815282,
+  "median_tokens_per_s": 51129.08111759021,
+  "median_ms_per_doc": 1.7843270015,
+  "peak_vram_allocated_mib": 2629.1572265625,
+  "peak_vram_reserved_mib": 4980.0,
+  "peak_rss_mib": 4194.9921875,
+  "index": {
+    "model": "bge",
+    "n_docs": 20000,
+    "dim": 1024,
+    "raw_bytes": 81920000,
+    "bytes_per_vector": 4096.0,
+    "file_bytes": 81920045,
+    "overhead_bytes": 45,
+    "overhead_per_vector": 0.00225
+  },
+  "query": {
+    "model": "bge",
+    "label": "bge-m3",
+    "max_length": 8192,
+    "n": 500,
+    "median_ms": 13.192949500000001,
+    "p95_ms": 13.483461,
+    "batch_1_qps": 74.91747958742238,
+    "batch_32_qps": 2098.8527049854147
+  }
+}

@@ -1,0 +1,151 @@
+{
+  "sample": {
+    "n_docs": 1000,
+    "n_requested": 1000,
+    "seed": 42,
+    "corpus_docs": 14047759,
+    "n_strata": 10,
+    "per_stratum_requested": 100,
+    "stratum_counts": {
+      "0": 100,
+      "1": 100,
+      "2": 100,
+      "3": 100,
+      "4": 100,
+      "5": 100,
+      "6": 100,
+      "7": 100,
+      "8": 100,
+      "9": 100
+    },
+    "decile_edges": [
+      5.0,
+      13.0,
+      21.0,
+      29.0,
+      37.0,
+      47.0,
+      57.0,
+      71.0,
+      89.0,
+      121.0,
+      9757.0
+    ],
+    "id_sha256": "b1a045e52c524ce81ce236d9ba4231ca525058a89ba022fa2c5f22647a17c5de",
+    "text_cache": "encoding_sample_1000_42.jsonl"
+  },
+  "models": [
+    {
+      "model": "e5",
+      "label": "e5-large-instruct",
+      "max_length": 512,
+      "seq_length": 512,
+      "batch_size": 128,
+      "docs_per_s": 559.446387072295,
+      "docs_per_s_ci_low": 349.346763436089,
+      "docs_per_s_ci_high": 963.6062527183567,
+      "tokens_per_s": 50435.77013372861,
+      "ms_per_doc": 1.78748138,
+      "full_hours": 6.975029900896506,
+      "truncated_fraction": 0.0,
+      "peak_vram_mib": 2138.5908203125,
+      "bytes_per_vector": 4096.0,
+      "one_index_gib": 53.587947845458984
+    },
+    {
+      "model": "bge",
+      "label": "bge-m3",
+      "max_length": 8192,
+      "seq_length": 512,
+      "batch_size": 128,
+      "docs_per_s": 558.4013839929163,
+      "docs_per_s_ci_low": 351.7094319305516,
+      "docs_per_s_ci_high": 950.9556995662189,
+      "tokens_per_s": 50341.559971113384,
+      "ms_per_doc": 1.790826507,
+      "full_hours": 6.988083105874392,
+      "truncated_fraction": 0.0,
+      "peak_vram_mib": 2152.9970703125,
+      "bytes_per_vector": 4096.0,
+      "one_index_gib": 53.587947845458984
+    },
+    {
+      "model": "jina",
+      "label": "jina-v5-small",
+      "max_length": 32768,
+      "seq_length": 512,
+      "batch_size": 128,
+      "docs_per_s": 201.76523402492847,
+      "docs_per_s_ci_low": 128.10158612458255,
+      "docs_per_s_ci_high": 343.1508959762322,
+      "tokens_per_s": 20923.458298853133,
+      "ms_per_doc": 4.956255248000001,
+      "full_hours": 19.340077573997007,
+      "truncated_fraction": 0.001,
+      "peak_vram_mib": 8348.0810546875,
+      "bytes_per_vector": 4096.0,
+      "one_index_gib": 53.587947845458984
+    }
+  ],
+  "route_one": {
+    "label": "1 modelo: jina-v5-small",
+    "full_hours": 19.340077573997007,
+    "one_index_gib": 53.587947845458984,
+    "query_median_ms": 30.425986,
+    "query_p95_ms": 30.792528,
+    "query_batch32_ms": 1.413954724
+  },
+  "route_three": {
+    "label": "3 modelos: e5-large + bge-m3 + jina-v5-small",
+    "full_hours": 33.303190580767904,
+    "three_index_gib": 160.76384353637695,
+    "query_median_ms": 58.390376,
+    "query_p95_ms": 59.453612,
+    "query_batch32_ms": 2.5233719000000003
+  },
+  "delta": {
+    "extra_hours": 13.963113006770897,
+    "extra_index_gib": 107.17589569091797,
+    "extra_query_median_ms": 27.96439,
+    "extra_query_batch32_ms": 1.1094171760000002
+  },
+  "query": {
+    "e5": {
+      "model": "e5",
+      "label": "e5-large-instruct",
+      "max_length": 512,
+      "n": 500,
+      "median_ms": 14.588218000000001,
+      "p95_ms": 14.858061,
+      "batch_1_qps": 67.72533353985514,
+      "batch_32_qps": 1616.3196301808962
+    },
+    "bge": {
+      "model": "bge",
+      "label": "bge-m3",
+      "max_length": 8192,
+      "n": 500,
+      "median_ms": 13.376172,
+      "p95_ms": 13.803023,
+      "batch_1_qps": 73.41112648937829,
+      "batch_32_qps": 2037.7901416302052
+    },
+    "jina": {
+      "model": "jina",
+      "label": "jina-v5-small",
+      "max_length": 32768,
+      "n": 500,
+      "median_ms": 30.425986,
+      "p95_ms": 30.792528,
+      "batch_1_qps": 32.65805925013454,
+      "batch_32_qps": 707.2362240645549,
+      "batch_32_ms_per_query": 1.413954724
+    }
+  },
+  "notes": [
+    "Codificación de documentos medida en una sola GPU; el corpus completo se extrapola linealmente.",
+    "El costo en línea (consultas) y el costo fuera de línea (documentos e índices) se reportan por separado.",
+    "El espacio no incluye IDs, textos ni pesos de modelos; son comunes a las dos rutas.",
+    "La longitud de secuencia se ajusta por bandas como en producción; el tope es el máximo nativo."
+  ]
+}

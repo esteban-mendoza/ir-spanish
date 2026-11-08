@@ -1,0 +1,10 @@
+{
+  "model": "e5",
+  "label": "e5-large-instruct",
+  "max_length": 512,
+  "n": 500,
+  "median_ms": 14.800834,
+  "p95_ms": 15.099075,
+  "batch_1_qps": 67.27573593464399,
+  "batch_32_qps": 1598.7507540667807
+}

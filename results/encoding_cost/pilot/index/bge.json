@@ -1,0 +1,10 @@
+{
+  "model": "bge",
+  "n_docs": 1000,
+  "dim": 1024,
+  "raw_bytes": 4096000,
+  "bytes_per_vector": 4096.0,
+  "file_bytes": 4096045,
+  "overhead_bytes": 45,
+  "overhead_per_vector": 0.045
+}
