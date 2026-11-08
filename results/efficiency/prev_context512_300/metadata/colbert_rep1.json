@@ -1,0 +1,20 @@
+{
+  "system": "colbert",
+  "label": "jina-colbert-v2",
+  "rep": 1,
+  "n": 500,
+  "device": "cuda:0",
+  "load_seconds": 7.365482047200203,
+  "median_ms": 411.358705,
+  "p95_ms": 478.538618,
+  "peak_rss_mib": 8326.55078125,
+  "peak_vram_allocated_mib": 1384.60791015625,
+  "peak_vram_reserved_mib": 1732.0,
+  "batch_qps": 2.4448979840127403,
+  "batch_docs_per_s": 244.48979840127402,
+  "batch_size": 32,
+  "batch_1_qps": 2.449172669575083,
+  "batch_1_docs_per_s": 244.91726695750828,
+  "batch_32_qps": 2.4448979840127403,
+  "batch_32_docs_per_s": 244.48979840127402
+}

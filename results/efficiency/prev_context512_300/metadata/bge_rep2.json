@@ -1,0 +1,20 @@
+{
+  "system": "bge",
+  "label": "bge-reranker-v2-m3",
+  "rep": 2,
+  "n": 500,
+  "device": "cuda:0",
+  "load_seconds": 4.379984050989151,
+  "median_ms": 2249.291204,
+  "p95_ms": 2938.008579,
+  "peak_rss_mib": 9428.44140625,
+  "peak_vram_allocated_mib": 4400.84912109375,
+  "peak_vram_reserved_mib": 5832.0,
+  "batch_qps": 1.0220774925015395,
+  "batch_docs_per_s": 102.20774925015394,
+  "batch_size": 32,
+  "batch_1_qps": 0.4471822361998321,
+  "batch_1_docs_per_s": 44.71822361998321,
+  "batch_32_qps": 1.0220774925015395,
+  "batch_32_docs_per_s": 102.20774925015394
+}
