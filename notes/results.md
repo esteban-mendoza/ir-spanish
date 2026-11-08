@@ -45,8 +45,8 @@ Detalle: `results/train_pilot/README.md`, `selection.md`, `stability.md`, `sweep
 | Model              |                                    from | nDCG@10 | Recall@100 | MRR@10 |    MAP |   P@10 |   P@50 |
 | ------------------ | --------------------------------------: | ------: | ---------: | -----: | -----: | -----: | -----: |
 | jina-reranker-v3   | jina-embeddings-v5-text-small-retrieval |  0.5792 |     0.9039 | 0.5167 | 0.5201 | 0.0798 | 0.0182 |
-| bge-reranker-v2-m3 | jina-embeddings-v5-text-small-retrieval |  0.5770 |     0.9039 | 0.5124 | 0.5159 | 0.0802 | 0.0183 |
-| jina-colbert-v2    | jina-embeddings-v5-text-small-retrieval |  0.5019 |     0.9039 | 0.4358 | 0.4423 | 0.0731 | 0.0180 |
+| bge-reranker-v2-m3 | jina-embeddings-v5-text-small-retrieval |  0.5771 |     0.9039 | 0.5125 | 0.5159 | 0.0802 | 0.0183 |
+| jina-colbert-v2    | jina-embeddings-v5-text-small-retrieval |  0.5020 |     0.9039 | 0.4359 | 0.4423 | 0.0732 | 0.0180 |
 
 ### Truncación de las entradas de los reordenadores (2026-11-03)
 
@@ -226,7 +226,7 @@ Banco controlado de 500 consultas de prueba, tres repeticiones y orden intercala
 | `jina-reranker-v3` | 793.453 | 1 329.855 | 416.966 | [401.792, 428.151] | 565.580 | 0.0035 | 0.0256 | 3 153 | 8 403 |
 | `jina-colbert-v2` | 410.756 | 477.672 | 215.855 | [213.504, 218.308] | 203.477 | 0.0072 | 0.0524 | 1 385 | 8 343 |
 
-En la **segunda etapa**, la fusión es **dos o tres órdenes de magnitud más barata** que los rerankers. La mediana de latencia pasa de 1.9 ms a 0.41–2.25 s; los cross-encoders son 1 182 y 417 veces más lentos, y el más barato de los tres, `jina-colbert-v2`, 216 veces. Con lote 32 la brecha se reduce a 19–46 veces, pero no desaparece. La ganancia de nDCG@10 de los cross-encoders (+0.025 a +0.028) se paga con ese costo; `jina-colbert-v2` es más barato pero también menos efectivo (0.5019, por debajo de la fusión).
+En la **segunda etapa**, la fusión es **dos o tres órdenes de magnitud más barata** que los rerankers. La mediana de latencia pasa de 1.9 ms a 0.41–2.25 s; los cross-encoders son 1 182 y 417 veces más lentos, y el más barato de los tres, `jina-colbert-v2`, 216 veces. Con lote 32 la brecha se reduce a 19–46 veces, pero no desaparece. La ganancia de nDCG@10 de los cross-encoders (+0.025 a +0.028) se paga con ese costo; `jina-colbert-v2` es más barato pero también menos efectivo (0.5020, por debajo de la fusión).
 
 **Alcance del costo.** Estas razones son de la **segunda etapa**: suponen las listas de candidatos ya calculadas. La fusión necesita tres recuperadores de primera etapa (`e5-large`, `bge-m3` y `jina-v5-small`) y los rerankers solo uno (`jina-v5-small`). La codificación de los tres se midió aparte (sección siguiente): **57.53 ms/consulta con lote 1** y **2.41 ms/consulta con lote 32**; de ellos, **27.96 ms** y **1.28 ms** corresponden a los dos recuperadores extra de la fusión. Es una cota inferior: no incluye la búsqueda en los índices ni el costo de mantener tres índices. Sumando la codificación total, la fusión queda en **~59.4 ms** (lote 1) o **~23.8 ms** (lote 32), frente a 410–2 248 ms de los rerankers. La ventaja relativa baja de 1 182× a **~38×** frente a `bge-reranker-v2-m3`, **~14×** frente a `jina-reranker-v3` y **~7×** frente a `jina-colbert-v2` (lote 1); con lote 32, a ~41×, ~35× y ~17×. La ventaja se reduce, pero no desaparece.
 
