@@ -250,6 +250,24 @@ Es una **cota inferior** de la primera etapa: no incluye la búsqueda en los ín
 
 Archivos: `results/first_stage/summary.csv`, `summary.json`, `summary.md`, `e5.json`, `bge.json`, `jina.json`, `e5_batch1.csv`, `bge_batch1.csv`, `jina_batch1.csv`; log en `logs/first_stage.log`.
 
+## E3: codificación de documentos e índices
+
+Medimos la codificación de **20 000 documentos** en una muestra estratificada por deciles de longitud (2 000 por decil), con la configuración de producción de cada modelo: bandas de longitud, lote y prompts, en una GPU, tras 1 000 documentos de calentamiento y con tres repeticiones. La secuencia usada fue 512 para `e5-large` y 2 048 para `bge-m3` y `jina-v5-small`; el máximo de la muestra es 696 palabras y el del corpus, 9 757, así que los últimos segmentos usarían bandas más largas y estas horas son una cota inferior.
+
+| Modelo | Secuencia | Lote | docs/s | IC 95 % | Horas a 14 M | VRAM pico (MiB) |
+| --- | ---: | ---: | ---: | --- | ---: | ---: |
+| `e5-large` | 512 | 128 | 615.0 | [554.8, 684.4] | 6.35 | 2 519 |
+| `bge-m3` | 2 048 | 32 | 560.4 | [514.3, 601.9] | 6.96 | 2 629 |
+| `jina-v5-small` | 2 048 | 32 | 213.8 | [197.4, 229.4] | 18.25 | 9 957 |
+
+La ruta de un modelo (`jina-v5-small`) tarda **18.25 h** y su índice ocupa **53.59 GiB**; la de tres modelos tarda **31.56 h** y ocupa **160.76 GiB**. El costo adicional de `e5-large` + `bge-m3` es **13.31 h** y **107.18 GiB**. El espacio medido coincide con el cálculo: 4 096 bytes por vector (1 024 dimensiones en float32) y una sobrecarga de 45 bytes en un índice de 20 000 vectores.
+
+La codificación de consultas de esta misma sesión dio 14.80 ms (`e5-large`), 13.19 ms (`bge-m3`) y 30.31 ms (`jina-v5-small`) en lote 1; la ruta de un modelo queda en 30.31 ms y la de tres en 58.30 ms. En lote 32 son 1.09 y 2.19 ms por consulta. Son valores compatibles con la medición anterior de `results/first_stage/`; la diferencia es de 1–3 %.
+
+La codificación de documentos es un costo **fuera de línea**: no se suma al costo por consulta. La medición se hizo en una GPU; la producción usó dos, pero no medimos el escalamiento a dos GPU.
+
+Archivos: `results/encoding_cost/summary.{json,csv,md}`, `sample.json`, `docs/`, `query/`, `index/` y `raw/`; logs en `logs/encoding_cost.log` y `logs/encoding_cost_auto.log`.
+
 ## Índices y almacenamiento
 
 Los 8 351 MiB de RSS de la fusión son los tres *runs* cargados, no los índices. El corpus tiene 14 047 759 documentos y los tres modelos densos producen vectores de 1 024 dimensiones; con `faiss.IndexFlatIP`:

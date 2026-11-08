@@ -26,7 +26,7 @@ Protocolo obligatorio para todo agente:
 ## 2026-11-07 — Costo de codificar documentos e índices
 - **Cambios:** `evaluation/encoding_cost.py` mide la codificación de una muestra estratificada de 20 000 documentos con `e5-large`, `bge-m3` y `jina-v5-small`, el tamaño de un índice plano construido con esos vectores y la codificación de las 500 consultas; `scripts/run_encoding_cost.sh` orquesta piloto y corrida completa.
 - **Decisiones:** la muestra se estratifica por deciles de longitud y se codifica con los lotes y prompts de producción en una sola GPU; el costo de documentos e índices es fuera de línea y se reporta separado del costo por consulta. Las horas a 14 M son extrapolación lineal; no se vuelve a medir la búsqueda.
-- **Estado / pendientes:** el código está listo y la corrida queda pendiente de que termine ColBERT; faltan resultados, tabla en §5.4.2 y actualización de las notas.
+- **Estado / pendientes:** la medición se ejecutó el 2026-11-08 y los resultados están en `results/encoding_cost/`; la ruta de un modelo tarda menos y ocupa un tercio del espacio que la de tres. Falta rehacer el banco de eficiencia de la segunda etapa con el contexto máximo y actualizar la tesis, que ya tiene la tabla de codificación.
 
 ## 2026-11-07 — Longitudes exactas de documento en ColBERT
 - **Cambios:** `rerankers/jina_colbert_v2.py` mide cada documento con su tokenizador (tope 8192, más la marca de documento) antes de agrupar lotes, en vez de estimar por palabras.
