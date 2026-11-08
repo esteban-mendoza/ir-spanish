@@ -1,0 +1,13 @@
+09:19:20 | INFO | Loading faiss with AVX512 support.
+09:19:20 | INFO | Successfully loaded faiss with AVX512 support.
+09:19:23 | INFO | ⏱  START: Loading cached pruned qrels
+09:19:23 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+09:19:28 | INFO | Loading B1-CombMNZ from /home/jmendoza/.cache/messirve_embeddings/fusions_stage_b/combmnz__e5-large+bge-m3+jina-v5-small.lz4
+09:20:17 | INFO | Loading bge-reranker-v2-m3 from /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-reranker-v2-m3/over__jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q8192_d8192_nofilter/retrieval_run.lz4
+09:20:40 | INFO | Loading jina-reranker-v3 from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-reranker-v3/over__jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q1024_d8192_nofilter/retrieval_run.lz4
+09:21:03 | INFO | Loading jina-colbert-v2 from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-colbert-v2/over__jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32_d8192_nofilter/retrieval_run.lz4
+09:33:43 | INFO | B1-CombMNZ vs bge-reranker-v2-m3: Δ=+0.0192 [0.0183, 0.0202] p=0 p_Holm=0
+09:33:43 | INFO | B1-CombMNZ vs jina-reranker-v3: Δ=+0.0192 [0.0183, 0.0202] p=0 p_Holm=0
+09:33:43 | INFO | B1-CombMNZ vs jina-colbert-v2: Δ=+0.0192 [0.0183, 0.0202] p=0 p_Holm=0
+09:33:43 | INFO | CSV: /home/jmendoza/ir-spanish/results/evaluation/e3_maxctx_recall.csv
+09:33:43 | INFO | Markdown: /home/jmendoza/ir-spanish/results/evaluation/e3_maxctx_recall.md
