@@ -99,7 +99,7 @@ PRODUCTION_RUNS = {
     "bge": CACHE_DIR
     / "BAAI__bge-reranker-v2-m3"
     / "over__jinaai__jina-embeddings-v5-text-small-retrieval"
-    / "full_v1.2_q512_d512_nofilter"
+    / "full_v1.2_q8192_d8192_nofilter"
     / "retrieval_run.lz4",
     "jina-v3": CACHE_DIR
     / "jinaai__jina-reranker-v3"
@@ -109,7 +109,7 @@ PRODUCTION_RUNS = {
     "colbert": CACHE_DIR
     / "jinaai__jina-colbert-v2"
     / "over__jinaai__jina-embeddings-v5-text-small-retrieval"
-    / "full_v1.2_q32_d300_nofilter"
+    / "full_v1.2_q32_d8192_nofilter"
     / "retrieval_run.lz4",
 }
 
@@ -329,12 +329,24 @@ class FusionSystem:
         self.batch_runs.clear()
 
 
+def _bge_length(model, query: str, document: str) -> int:
+    """Longitud exacta del par consulta--documento, truncada al tope del modelo."""
+    try:
+        ids = model.tokenizer(
+            query,
+            document,
+            add_special_tokens=True,
+            truncation=True,
+            max_length=BGE_MAX_LENGTH,
+        )["input_ids"]
+        return min(BGE_MAX_LENGTH, len(ids))
+    except Exception:
+        return min(BGE_MAX_LENGTH, context.estimate_tokens(query) + context.estimate_tokens(document))
+
+
 def _bge_scores(model, pairs: list[tuple[str, str]]) -> list[float]:
     """Score bge pairs with the production length-aware batching."""
-    lengths = [
-        min(BGE_MAX_LENGTH, context.estimate_tokens(query) + context.estimate_tokens(document))
-        for query, document in pairs
-    ]
+    lengths = [_bge_length(model, query, document) for query, document in pairs]
     scores = [0.0] * len(pairs)
     for batch in context.length_aware_batches(lengths, max_batch=BGE_BATCH_SIZE):
         batch_pairs = [pairs[index] for index in batch]
@@ -348,12 +360,23 @@ def _bge_scores(model, pairs: list[tuple[str, str]]) -> list[float]:
     return scores
 
 
+def _colbert_length(model, document: str) -> int:
+    """Longitud exacta del documento, truncada al tope y con la marca de documento."""
+    try:
+        ids = model.tokenizer(
+            document,
+            add_special_tokens=True,
+            truncation=True,
+            max_length=COLBERT_MAX_DOC,
+        )["input_ids"]
+        return min(COLBERT_MAX_DOC, len(ids) + 1)
+    except Exception:
+        return min(COLBERT_MAX_DOC, context.estimate_tokens(document))
+
+
 def _colbert_doc_embeddings(model, documents: list[str]):
     """Encode ColBERT documents with the production length-aware batching."""
-    lengths = [
-        min(COLBERT_MAX_DOC, context.estimate_tokens(document))
-        for document in documents
-    ]
+    lengths = [_colbert_length(model, document) for document in documents]
     embeddings: list = [None] * len(documents)
     for batch in context.length_aware_batches(lengths, max_batch=COLBERT_DOC_BATCH):
         batch_documents = [documents[index] for index in batch]
