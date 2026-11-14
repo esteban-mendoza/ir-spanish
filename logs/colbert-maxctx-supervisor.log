@@ -1,0 +1,1391 @@
+21:32:00 | INFO | Loading faiss with AVX512 support.
+21:32:00 | INFO | Successfully loaded faiss with AVX512 support.
+21:32:01 | INFO | ⏱  START: Loading cached pruned qrels
+21:32:01 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.3s)
+21:32:06 | INFO | Loading first-stage run from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+21:33:40 | INFO | Prepared 170055 queries, 17005500 total docs across 2 GPU(s)
+21:33:40 | INFO | ⏱  START: Reranking 170055 queries on 2 GPU(s)
+21:33:46 | INFO | Loading faiss with AVX512 support.
+21:33:46 | INFO | Successfully loaded faiss with AVX512 support.
+21:33:47 | INFO | Started worker on cuda:0 (85028 queries)
+21:33:53 | INFO | [cuda:0] Building doc lookup ...
+21:33:53 | INFO | ⏱  START: Loading eswiki corpus
+21:33:53 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+21:33:53 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+21:33:53 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+21:33:53 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+21:33:53 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+21:33:54 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+21:33:54 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+21:33:54 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+21:33:54 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+21:33:54 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+21:33:54 | INFO | ⏱  DONE:  Loading eswiki corpus (1.7s)
+21:33:54 | INFO | Original corpus: 14047759 documents
+21:33:54 | INFO | ⏱  START: Formatting and counting words (16 workers)
+Setting TOKENIZERS_PARALLELISM=false for forked processes.
+21:33:54 | WARNING | Setting TOKENIZERS_PARALLELISM=false for forked processes.
+21:33:55 | INFO | Loading faiss with AVX512 support.
+21:33:55 | INFO | Successfully loaded faiss with AVX512 support.
+21:33:56 | INFO | ⏱  DONE:  Formatting and counting words (16 workers) (2.1s)
+21:33:57 | INFO | Word-count filter disabled — using all 14047759 documents
+21:33:57 | INFO | Started worker on cuda:1 (85027 queries)
+21:34:04 | INFO | [cuda:1] Building doc lookup ...
+21:34:04 | INFO | ⏱  START: Loading eswiki corpus
+21:34:04 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+21:34:04 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+21:34:04 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+21:34:04 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+21:34:04 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+21:34:04 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+21:34:05 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+21:34:05 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+21:34:05 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+21:34:05 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+21:34:05 | INFO | ⏱  DONE:  Loading eswiki corpus (1.6s)
+21:34:05 | INFO | Original corpus: 14047759 documents
+21:34:05 | INFO | ⏱  START: Formatting and counting words (16 workers)
+Setting TOKENIZERS_PARALLELISM=false for forked processes.
+21:34:05 | WARNING | Setting TOKENIZERS_PARALLELISM=false for forked processes.
+21:34:06 | INFO | ⏱  DONE:  Formatting and counting words (16 workers) (1.0s)
+21:34:06 | INFO | Word-count filter disabled — using all 14047759 documents
+21:43:15 | INFO | Doc lookup built: 14047759 documents
+21:43:15 | INFO | [cuda:0] Loading jinaai/jina-colbert-v2 ...
+21:43:15 | WARNING | The `tokenizer_kwargs` argument was renamed and is now deprecated. Please use `processor_kwargs` instead.
+21:43:15 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+21:43:15 | INFO | No modules.json found for jinaai/jina-colbert-v2, initializing a new ColBERT model.
+21:43:15 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+21:43:15 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+21:43:15 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+21:43:16 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+21:43:16 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+21:43:16 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+21:43:16 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+`torch_dtype` is deprecated! Use `dtype` instead!
+21:43:16 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/modeling_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+21:43:16 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/modeling_xlm_roberta.py "HTTP/1.1 200 OK"
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:16 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+21:43:16 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+21:43:16 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+21:43:16 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+21:43:17 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+21:43:17 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+21:43:17 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+21:43:17 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/tokenizer_config.json "HTTP/1.1 200 OK"
+21:43:17 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+21:43:17 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+21:43:25 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/294 [00:00<?, ?it/s]Loading weights: 100%|██████████| 294/294 [00:00<00:00, 23289.81it/s]
+[1mXLMRobertaModel LOAD REPORT[0m from: jinaai/jina-colbert-v2
+Key           | Status     |  | 
+--------------+------------+--+-
+linear.weight | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+21:43:25 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+21:43:25 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+21:43:25 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+21:43:25 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+21:43:25 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+21:43:25 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/tokenizer_config.json "HTTP/1.1 200 OK"
+21:43:25 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+21:43:25 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+21:43:25 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+21:43:25 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+21:43:25 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+21:43:25 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+21:43:26 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+21:43:26 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+21:43:26 | INFO | Doc lookup built: 14047759 documents
+21:43:26 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+21:43:26 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+21:43:26 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+21:43:26 | INFO | [cuda:1] Loading jinaai/jina-colbert-v2 ...
+21:43:26 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+21:43:26 | WARNING | The `tokenizer_kwargs` argument was renamed and is now deprecated. Please use `processor_kwargs` instead.
+21:43:26 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+21:43:26 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/tokenizer_config.json "HTTP/1.1 200 OK"
+21:43:26 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+21:43:26 | INFO | No modules.json found for jinaai/jina-colbert-v2, initializing a new ColBERT model.
+21:43:26 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+21:43:26 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+21:43:26 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+21:43:26 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+21:43:26 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+21:43:26 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+21:43:26 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+21:43:26 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+21:43:26 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+`torch_dtype` is deprecated! Use `dtype` instead!
+21:43:26 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/modeling_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+21:43:27 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/modeling_xlm_roberta.py "HTTP/1.1 200 OK"
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+21:43:27 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+21:43:27 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+21:43:27 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+21:43:27 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+21:43:27 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+21:43:27 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+21:43:27 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+21:43:27 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/tokenizer_config.json "HTTP/1.1 200 OK"
+21:43:27 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+21:43:28 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+21:43:31 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+21:43:31 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+21:43:32 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/model.safetensors "HTTP/1.1 302 Found"
+21:43:33 | WARNING | The tokenizer does not support resizing the token embeddings, the prefixes token have not been added to vocabulary.
+21:43:33 | INFO | [cuda:0] Model loaded.
+21:43:34 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/294 [00:00<?, ?it/s]Loading weights: 100%|██████████| 294/294 [00:00<00:00, 23087.48it/s]
+[1mXLMRobertaModel LOAD REPORT[0m from: jinaai/jina-colbert-v2
+Key           | Status     |  | 
+--------------+------------+--+-
+linear.weight | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+21:43:34 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+21:43:34 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+21:43:34 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+21:43:34 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+21:43:34 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+21:43:35 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/tokenizer_config.json "HTTP/1.1 200 OK"
+21:43:35 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+21:43:35 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+21:43:35 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+21:43:35 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+21:43:35 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+21:43:35 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+21:43:35 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+21:43:35 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+21:43:35 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+21:43:35 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+21:43:35 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+21:43:35 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+21:43:35 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+21:43:35 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/tokenizer_config.json "HTTP/1.1 200 OK"
+21:43:35 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+21:43:35 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+21:43:41 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+21:43:41 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+21:43:42 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/model.safetensors "HTTP/1.1 302 Found"
+21:43:43 | WARNING | The tokenizer does not support resizing the token embeddings, the prefixes token have not been added to vocabulary.
+21:43:43 | INFO | [cuda:1] Model loaded.
+21:45:05 | WARNING | The `tokenize` method is deprecated, please use `preprocess` instead.
+21:45:14 | WARNING | The `tokenize` method is deprecated, please use `preprocess` instead.
+21:46:33 | INFO | [cuda:0] 200/85028 queries | 20000 docs scored | 228 docs/s | 87.8s
+21:46:43 | INFO | [cuda:1] 200/85027 queries | 20000 docs scored | 225 docs/s | 88.8s
+21:48:16 | INFO | [cuda:0] 400/85028 queries | 40000 docs scored | 210 docs/s | 190.7s
+21:48:23 | INFO | [cuda:1] 400/85027 queries | 40000 docs scored | 212 docs/s | 188.6s
+21:50:02 | INFO | [cuda:0] 600/85028 queries | 60000 docs scored | 202 docs/s | 296.7s
+21:50:09 | INFO | [cuda:1] 600/85027 queries | 60000 docs scored | 203 docs/s | 295.0s
+21:51:50 | INFO | [cuda:0] 800/85028 queries | 80000 docs scored | 197 docs/s | 405.1s
+21:51:56 | INFO | [cuda:1] 800/85027 queries | 80000 docs scored | 199 docs/s | 402.3s
+21:53:43 | INFO | [cuda:0] 1000/85028 queries | 100000 docs scored | 193 docs/s | 517.2s
+21:53:49 | INFO | [cuda:1] 1000/85027 queries | 100000 docs scored | 194 docs/s | 515.0s
+21:55:35 | INFO | [cuda:0] 1200/85028 queries | 120000 docs scored | 191 docs/s | 629.8s
+21:55:43 | INFO | [cuda:1] 1200/85027 queries | 120000 docs scored | 191 docs/s | 628.3s
+21:57:32 | INFO | [cuda:0] 1400/85028 queries | 140000 docs scored | 187 docs/s | 747.0s
+21:57:36 | INFO | [cuda:1] 1400/85027 queries | 140000 docs scored | 189 docs/s | 742.1s
+21:59:32 | INFO | [cuda:0] 1600/85028 queries | 160000 docs scored | 185 docs/s | 866.7s
+21:59:33 | INFO | [cuda:1] 1600/85027 queries | 160000 docs scored | 186 docs/s | 859.2s
+22:01:29 | INFO | [cuda:0] 1800/85028 queries | 180000 docs scored | 183 docs/s | 983.6s
+22:01:29 | INFO | [cuda:1] 1800/85027 queries | 180000 docs scored | 185 docs/s | 974.8s
+22:03:26 | INFO | [cuda:1] 2000/85027 queries | 200000 docs scored | 183 docs/s | 1092.2s
+22:03:27 | INFO | [cuda:0] 2000/85028 queries | 200000 docs scored | 182 docs/s | 1101.2s
+22:05:26 | INFO | [cuda:0] 2200/85028 queries | 220000 docs scored | 180 docs/s | 1220.2s
+22:05:27 | INFO | [cuda:1] 2200/85027 queries | 220000 docs scored | 181 docs/s | 1212.4s
+22:07:24 | INFO | [cuda:1] 2400/85027 queries | 240000 docs scored | 180 docs/s | 1330.0s
+22:07:24 | INFO | [cuda:0] 2400/85028 queries | 240000 docs scored | 179 docs/s | 1338.9s
+22:09:25 | INFO | [cuda:1] 2600/85027 queries | 260000 docs scored | 179 docs/s | 1450.4s
+22:09:26 | INFO | [cuda:0] 2600/85028 queries | 260000 docs scored | 178 docs/s | 1460.5s
+22:11:26 | INFO | [cuda:1] 2800/85027 queries | 280000 docs scored | 178 docs/s | 1572.1s
+22:11:28 | INFO | [cuda:0] 2800/85028 queries | 280000 docs scored | 177 docs/s | 1582.4s
+22:13:28 | INFO | [cuda:1] 3000/85027 queries | 300000 docs scored | 177 docs/s | 1694.2s
+22:13:30 | INFO | [cuda:0] 3000/85028 queries | 300000 docs scored | 176 docs/s | 1704.5s
+22:15:33 | INFO | [cuda:1] 3200/85027 queries | 320000 docs scored | 176 docs/s | 1818.6s
+22:15:34 | INFO | [cuda:0] 3200/85028 queries | 320000 docs scored | 175 docs/s | 1828.3s
+22:17:39 | INFO | [cuda:1] 3400/85027 queries | 340000 docs scored | 175 docs/s | 1944.5s
+22:17:41 | INFO | [cuda:0] 3400/85028 queries | 340000 docs scored | 174 docs/s | 1955.4s
+22:19:43 | INFO | [cuda:1] 3600/85027 queries | 360000 docs scored | 174 docs/s | 2068.8s
+22:19:47 | INFO | [cuda:0] 3600/85028 queries | 360000 docs scored | 173 docs/s | 2081.4s
+22:21:48 | INFO | [cuda:1] 3800/85027 queries | 380000 docs scored | 173 docs/s | 2194.0s
+22:21:53 | INFO | [cuda:0] 3800/85028 queries | 380000 docs scored | 172 docs/s | 2207.9s
+22:23:53 | INFO | [cuda:1] 4000/85027 queries | 400000 docs scored | 173 docs/s | 2318.3s
+22:24:00 | INFO | [cuda:0] 4000/85028 queries | 400000 docs scored | 171 docs/s | 2334.2s
+22:26:01 | INFO | [cuda:1] 4200/85027 queries | 420000 docs scored | 172 docs/s | 2446.5s
+22:26:10 | INFO | [cuda:0] 4200/85028 queries | 420000 docs scored | 170 docs/s | 2464.4s
+22:28:07 | INFO | [cuda:1] 4400/85027 queries | 440000 docs scored | 171 docs/s | 2572.4s
+22:28:18 | INFO | [cuda:0] 4400/85028 queries | 440000 docs scored | 170 docs/s | 2592.4s
+22:30:16 | INFO | [cuda:1] 4600/85027 queries | 460000 docs scored | 170 docs/s | 2701.8s
+22:30:27 | INFO | [cuda:0] 4600/85028 queries | 460000 docs scored | 169 docs/s | 2722.0s
+22:32:25 | INFO | [cuda:1] 4800/85027 queries | 480000 docs scored | 170 docs/s | 2831.1s
+22:32:37 | INFO | [cuda:0] 4800/85028 queries | 480000 docs scored | 168 docs/s | 2851.7s
+22:34:34 | INFO | [cuda:1] 5000/85027 queries | 500000 docs scored | 169 docs/s | 2959.9s
+22:34:48 | INFO | [cuda:0] 5000/85028 queries | 500000 docs scored | 168 docs/s | 2983.0s
+22:36:46 | INFO | [cuda:1] 5200/85027 queries | 520000 docs scored | 168 docs/s | 3092.1s
+22:36:59 | INFO | [cuda:0] 5200/85028 queries | 520000 docs scored | 167 docs/s | 3113.8s
+22:38:56 | INFO | [cuda:1] 5400/85027 queries | 540000 docs scored | 168 docs/s | 3222.2s
+22:39:11 | INFO | [cuda:0] 5400/85028 queries | 540000 docs scored | 166 docs/s | 3245.3s
+22:41:09 | INFO | [cuda:1] 5600/85027 queries | 560000 docs scored | 167 docs/s | 3354.5s
+22:41:22 | INFO | [cuda:0] 5600/85028 queries | 560000 docs scored | 166 docs/s | 3377.1s
+22:43:20 | INFO | [cuda:1] 5800/85027 queries | 580000 docs scored | 166 docs/s | 3485.4s
+22:43:34 | INFO | [cuda:0] 5800/85028 queries | 580000 docs scored | 165 docs/s | 3508.9s
+22:45:33 | INFO | [cuda:1] 6000/85027 queries | 600000 docs scored | 166 docs/s | 3618.5s
+22:45:51 | INFO | [cuda:0] 6000/85028 queries | 600000 docs scored | 165 docs/s | 3646.0s
+22:47:44 | INFO | [cuda:1] 6200/85027 queries | 620000 docs scored | 165 docs/s | 3750.0s
+22:48:05 | INFO | [cuda:0] 6200/85028 queries | 620000 docs scored | 164 docs/s | 3779.8s
+22:49:57 | INFO | [cuda:1] 6400/85027 queries | 640000 docs scored | 165 docs/s | 3883.1s
+22:50:20 | INFO | [cuda:0] 6400/85028 queries | 640000 docs scored | 163 docs/s | 3914.5s
+22:52:12 | INFO | [cuda:1] 6600/85027 queries | 660000 docs scored | 164 docs/s | 4017.9s
+22:52:35 | INFO | [cuda:0] 6600/85028 queries | 660000 docs scored | 163 docs/s | 4049.2s
+22:54:27 | INFO | [cuda:1] 6800/85027 queries | 680000 docs scored | 164 docs/s | 4152.7s
+22:54:48 | INFO | [cuda:0] 6800/85028 queries | 680000 docs scored | 163 docs/s | 4182.8s
+22:56:43 | INFO | [cuda:1] 7000/85027 queries | 700000 docs scored | 163 docs/s | 4288.6s
+22:57:06 | INFO | [cuda:0] 7000/85028 queries | 700000 docs scored | 162 docs/s | 4320.9s
+22:59:03 | INFO | [cuda:1] 7200/85027 queries | 720000 docs scored | 163 docs/s | 4429.1s
+22:59:31 | INFO | [cuda:0] 7200/85028 queries | 720000 docs scored | 161 docs/s | 4465.3s
+23:01:22 | INFO | [cuda:1] 7400/85027 queries | 740000 docs scored | 162 docs/s | 4567.6s
+23:01:49 | INFO | [cuda:0] 7400/85028 queries | 740000 docs scored | 161 docs/s | 4603.9s
+23:03:41 | INFO | [cuda:1] 7600/85027 queries | 760000 docs scored | 161 docs/s | 4706.6s
+23:04:10 | INFO | [cuda:0] 7600/85028 queries | 760000 docs scored | 160 docs/s | 4744.2s
+23:05:59 | INFO | [cuda:1] 7800/85027 queries | 780000 docs scored | 161 docs/s | 4845.1s
+23:06:31 | INFO | [cuda:0] 7800/85028 queries | 780000 docs scored | 160 docs/s | 4885.7s
+23:08:20 | INFO | [cuda:1] 8000/85027 queries | 800000 docs scored | 160 docs/s | 4985.9s
+23:08:51 | INFO | [cuda:0] 8000/85028 queries | 800000 docs scored | 159 docs/s | 5026.0s
+23:10:37 | INFO | [cuda:1] 8200/85027 queries | 820000 docs scored | 160 docs/s | 5123.1s
+23:11:13 | INFO | [cuda:0] 8200/85028 queries | 820000 docs scored | 159 docs/s | 5167.2s
+23:12:56 | INFO | [cuda:1] 8400/85027 queries | 840000 docs scored | 160 docs/s | 5262.0s
+23:13:35 | INFO | [cuda:0] 8400/85028 queries | 840000 docs scored | 158 docs/s | 5309.1s
+23:15:18 | INFO | [cuda:1] 8600/85027 queries | 860000 docs scored | 159 docs/s | 5403.5s
+23:15:54 | INFO | [cuda:0] 8600/85028 queries | 860000 docs scored | 158 docs/s | 5449.0s
+23:17:37 | INFO | [cuda:1] 8800/85027 queries | 880000 docs scored | 159 docs/s | 5542.7s
+23:18:19 | INFO | [cuda:0] 8800/85028 queries | 880000 docs scored | 157 docs/s | 5593.7s
+23:20:02 | INFO | [cuda:1] 9000/85027 queries | 900000 docs scored | 158 docs/s | 5687.3s
+23:20:43 | INFO | [cuda:0] 9000/85028 queries | 900000 docs scored | 157 docs/s | 5737.3s
+23:22:33 | INFO | [cuda:1] 9200/85027 queries | 920000 docs scored | 158 docs/s | 5838.7s
+23:23:21 | INFO | [cuda:0] 9200/85028 queries | 920000 docs scored | 156 docs/s | 5895.1s
+23:24:56 | INFO | [cuda:1] 9400/85027 queries | 940000 docs scored | 157 docs/s | 5981.5s
+23:25:43 | INFO | [cuda:0] 9400/85028 queries | 940000 docs scored | 156 docs/s | 6037.9s
+23:27:18 | INFO | [cuda:1] 9600/85027 queries | 960000 docs scored | 157 docs/s | 6123.8s
+23:28:06 | INFO | [cuda:0] 9600/85028 queries | 960000 docs scored | 155 docs/s | 6180.9s
+23:29:40 | INFO | [cuda:1] 9800/85027 queries | 980000 docs scored | 156 docs/s | 6265.7s
+23:30:30 | INFO | [cuda:0] 9800/85028 queries | 980000 docs scored | 155 docs/s | 6324.4s
+23:32:03 | INFO | [cuda:1] 10000/85027 queries | 1000000 docs scored | 156 docs/s | 6408.5s
+23:32:53 | INFO | [cuda:0] 10000/85028 queries | 1000000 docs scored | 155 docs/s | 6467.9s
+23:34:28 | INFO | [cuda:1] 10200/85027 queries | 1020000 docs scored | 156 docs/s | 6553.4s
+23:35:20 | INFO | [cuda:0] 10200/85028 queries | 1020000 docs scored | 154 docs/s | 6614.8s
+23:36:51 | INFO | [cuda:1] 10400/85027 queries | 1040000 docs scored | 155 docs/s | 6696.8s
+23:37:43 | INFO | [cuda:0] 10400/85028 queries | 1040000 docs scored | 154 docs/s | 6757.5s
+23:39:14 | INFO | [cuda:1] 10600/85027 queries | 1060000 docs scored | 155 docs/s | 6840.1s
+23:40:07 | INFO | [cuda:0] 10600/85028 queries | 1060000 docs scored | 154 docs/s | 6901.8s
+23:41:43 | INFO | [cuda:1] 10800/85027 queries | 1080000 docs scored | 155 docs/s | 6988.4s
+23:42:31 | INFO | [cuda:0] 10800/85028 queries | 1080000 docs scored | 153 docs/s | 7045.9s
+23:44:08 | INFO | [cuda:1] 11000/85027 queries | 1100000 docs scored | 154 docs/s | 7134.1s
+23:44:57 | INFO | [cuda:0] 11000/85028 queries | 1100000 docs scored | 153 docs/s | 7191.5s
+23:46:36 | INFO | [cuda:1] 11200/85027 queries | 1120000 docs scored | 154 docs/s | 7282.0s
+23:47:25 | INFO | [cuda:0] 11200/85028 queries | 1120000 docs scored | 153 docs/s | 7339.7s
+23:49:06 | INFO | [cuda:1] 11400/85027 queries | 1140000 docs scored | 153 docs/s | 7431.5s
+Process Process-2:
+Traceback (most recent call last):
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/jmendoza/ir-spanish/rerankers/jina_colbert_v2.py", line 313, in _worker
+    doc_embs = _encode_documents(model, doc_texts)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/ir-spanish/rerankers/jina_colbert_v2.py", line 170, in _encode_documents
+    batch_embeddings = model.encode(
+                       ^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/pylate/models/colbert.py", line 688, in encode
+    out_features = self.forward(input=features)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/sentence_transformers/base/model.py", line 486, in forward
+    input = module(input, **module_kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/sentence_transformers/base/modules/transformer.py", line 1046, in forward
+    model_output = model_method(**filtered_kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/.cache/huggingface/modules/transformers_modules/jinaai/xlm_hyphen_roberta_hyphen_flash_hyphen_implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/modeling_xlm_roberta.py", line 735, in forward
+    sequence_output = self.encoder(
+                      ^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/.cache/huggingface/modules/transformers_modules/jinaai/xlm_hyphen_roberta_hyphen_flash_hyphen_implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/modeling_xlm_roberta.py", line 230, in forward
+    hidden_states = layer(hidden_states, mixer_kwargs=mixer_kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/.cache/huggingface/modules/transformers_modules/jinaai/xlm_hyphen_roberta_hyphen_flash_hyphen_implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/block.py", line 201, in forward
+    mixer_out = self.mixer(
+                ^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/.cache/huggingface/modules/transformers_modules/jinaai/xlm_hyphen_roberta_hyphen_flash_hyphen_implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/mha.py", line 740, in forward
+    context = self.inner_attn(qkv, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/.cache/huggingface/modules/transformers_modules/jinaai/xlm_hyphen_roberta_hyphen_flash_hyphen_implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/mha.py", line 264, in forward
+    scores = torch.einsum("bthd,bshd->bhts", q, k * softmax_scale)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/functional.py", line 373, in einsum
+    return _VF.einsum(equation, operands)  # type: ignore[attr-defined]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 42.00 GiB. GPU 1 has a total capacity of 23.54 GiB of which 17.14 GiB is free. Including non-PyTorch memory, this process has 6.36 GiB memory in use. Of the allocated memory 6.08 GiB is allocated by PyTorch, and 33.14 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+23:49:54 | INFO | [cuda:0] 11400/85028 queries | 1140000 docs scored | 152 docs/s | 7488.4s
+23:51:57 | INFO | [cuda:0] 11600/85028 queries | 1160000 docs scored | 152 docs/s | 7611.5s
+23:54:00 | INFO | [cuda:0] 11800/85028 queries | 1180000 docs scored | 153 docs/s | 7734.6s
+23:56:03 | INFO | [cuda:0] 12000/85028 queries | 1200000 docs scored | 153 docs/s | 7857.9s
+23:58:06 | INFO | [cuda:0] 12200/85028 queries | 1220000 docs scored | 153 docs/s | 7980.4s
+00:00:09 | INFO | [cuda:0] 12400/85028 queries | 1240000 docs scored | 153 docs/s | 8103.1s
+00:02:13 | INFO | [cuda:0] 12600/85028 queries | 1260000 docs scored | 153 docs/s | 8227.2s
+00:04:14 | INFO | [cuda:0] 12800/85028 queries | 1280000 docs scored | 153 docs/s | 8348.6s
+00:06:17 | INFO | [cuda:0] 13000/85028 queries | 1300000 docs scored | 153 docs/s | 8471.2s
+00:08:21 | INFO | [cuda:0] 13200/85028 queries | 1320000 docs scored | 154 docs/s | 8595.8s
+00:10:25 | INFO | [cuda:0] 13400/85028 queries | 1340000 docs scored | 154 docs/s | 8720.1s
+00:12:30 | INFO | [cuda:0] 13600/85028 queries | 1360000 docs scored | 154 docs/s | 8844.5s
+00:14:34 | INFO | [cuda:0] 13800/85028 queries | 1380000 docs scored | 154 docs/s | 8968.2s
+00:16:39 | INFO | [cuda:0] 14000/85028 queries | 1400000 docs scored | 154 docs/s | 9093.3s
+00:18:43 | INFO | [cuda:0] 14200/85028 queries | 1420000 docs scored | 154 docs/s | 9217.7s
+00:20:48 | INFO | [cuda:0] 14400/85028 queries | 1440000 docs scored | 154 docs/s | 9342.2s
+00:22:53 | INFO | [cuda:0] 14600/85028 queries | 1460000 docs scored | 154 docs/s | 9467.2s
+00:24:59 | INFO | [cuda:0] 14800/85028 queries | 1480000 docs scored | 154 docs/s | 9593.3s
+00:27:03 | INFO | [cuda:0] 15000/85028 queries | 1500000 docs scored | 154 docs/s | 9717.6s
+/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+00:29:19 | INFO | Loading faiss with AVX512 support.
+00:29:19 | INFO | Successfully loaded faiss with AVX512 support.
+00:29:19 | INFO | ⏱  START: Loading cached pruned qrels
+00:29:20 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+00:29:25 | INFO | Loading first-stage run from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+00:30:54 | INFO | Prepared 170055 queries, 17005500 total docs across 2 GPU(s)
+00:30:54 | INFO | ⏱  START: Reranking 170055 queries on 2 GPU(s)
+00:31:00 | INFO | Loading faiss with AVX512 support.
+00:31:00 | INFO | Successfully loaded faiss with AVX512 support.
+00:31:01 | INFO | Started worker on cuda:0 (85028 queries)
+00:31:05 | INFO | [cuda:0] Building doc lookup ...
+00:31:05 | INFO | ⏱  START: Loading eswiki corpus
+00:31:05 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+00:31:05 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+00:31:06 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+00:31:06 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+00:31:06 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+00:31:06 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+00:31:06 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+00:31:06 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+00:31:06 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+00:31:07 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+00:31:07 | INFO | ⏱  DONE:  Loading eswiki corpus (1.7s)
+00:31:07 | INFO | Original corpus: 14047759 documents
+00:31:07 | INFO | ⏱  START: Formatting and counting words (16 workers)
+Setting TOKENIZERS_PARALLELISM=false for forked processes.
+00:31:07 | WARNING | Setting TOKENIZERS_PARALLELISM=false for forked processes.
+00:31:08 | INFO | ⏱  DONE:  Formatting and counting words (16 workers) (1.2s)
+00:31:08 | INFO | Word-count filter disabled — using all 14047759 documents
+00:31:09 | INFO | Loading faiss with AVX512 support.
+00:31:09 | INFO | Successfully loaded faiss with AVX512 support.
+00:31:11 | INFO | Started worker on cuda:1 (85027 queries)
+00:31:18 | INFO | [cuda:1] Building doc lookup ...
+00:31:18 | INFO | ⏱  START: Loading eswiki corpus
+00:31:18 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+00:31:18 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+00:31:18 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+00:31:18 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+00:31:18 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+00:31:18 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+00:31:19 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+00:31:19 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+00:31:19 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+00:31:19 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+00:31:19 | INFO | ⏱  DONE:  Loading eswiki corpus (1.5s)
+00:31:19 | INFO | Original corpus: 14047759 documents
+00:31:19 | INFO | ⏱  START: Formatting and counting words (16 workers)
+Setting TOKENIZERS_PARALLELISM=false for forked processes.
+00:31:19 | WARNING | Setting TOKENIZERS_PARALLELISM=false for forked processes.
+00:31:20 | INFO | ⏱  DONE:  Formatting and counting words (16 workers) (1.0s)
+00:31:20 | INFO | Word-count filter disabled — using all 14047759 documents
+00:40:38 | INFO | Doc lookup built: 14047759 documents
+00:40:38 | INFO | [cuda:0] Loading jinaai/jina-colbert-v2 ...
+00:40:39 | WARNING | The `tokenizer_kwargs` argument was renamed and is now deprecated. Please use `processor_kwargs` instead.
+00:40:39 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+00:40:39 | INFO | No modules.json found for jinaai/jina-colbert-v2, initializing a new ColBERT model.
+00:40:39 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+00:40:39 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:40:39 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+00:40:39 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+00:40:39 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+00:40:39 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:40:39 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+`torch_dtype` is deprecated! Use `dtype` instead!
+00:40:39 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/modeling_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+00:40:39 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/modeling_xlm_roberta.py "HTTP/1.1 200 OK"
+00:40:39 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:39 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:39 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:39 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:39 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:39 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:39 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:39 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:39 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:39 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:39 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:39 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:39 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:39 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:39 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:39 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:39 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:39 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:39 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:39 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:39 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:39 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:39 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:39 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:40 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:40 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:40:40 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+00:40:40 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+00:40:40 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+00:40:40 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:40:40 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+00:40:40 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+00:40:40 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/tokenizer_config.json "HTTP/1.1 200 OK"
+00:40:40 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+00:40:40 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+00:40:48 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/294 [00:00<?, ?it/s]Loading weights: 100%|██████████| 294/294 [00:00<00:00, 23094.83it/s]
+[1mXLMRobertaModel LOAD REPORT[0m from: jinaai/jina-colbert-v2
+Key           | Status     |  | 
+--------------+------------+--+-
+linear.weight | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+00:40:48 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+00:40:48 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+00:40:48 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+00:40:48 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+00:40:48 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+00:40:48 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/tokenizer_config.json "HTTP/1.1 200 OK"
+00:40:48 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:40:48 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+00:40:48 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+00:40:48 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+00:40:49 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:40:49 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+00:40:49 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:40:49 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+00:40:49 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+00:40:49 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+00:40:49 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:40:49 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+00:40:49 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+00:40:49 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/tokenizer_config.json "HTTP/1.1 200 OK"
+00:40:49 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+00:40:49 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+00:40:53 | INFO | Doc lookup built: 14047759 documents
+00:40:53 | INFO | [cuda:1] Loading jinaai/jina-colbert-v2 ...
+00:40:53 | WARNING | The `tokenizer_kwargs` argument was renamed and is now deprecated. Please use `processor_kwargs` instead.
+00:40:53 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+00:40:53 | INFO | No modules.json found for jinaai/jina-colbert-v2, initializing a new ColBERT model.
+00:40:53 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+00:40:53 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:40:53 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+00:40:53 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+00:40:53 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+00:40:53 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:40:54 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+`torch_dtype` is deprecated! Use `dtype` instead!
+00:40:54 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/modeling_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+00:40:54 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/modeling_xlm_roberta.py "HTTP/1.1 200 OK"
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | WARNING | flash_attn is not installed. Using PyTorch native attention implementation.
+00:40:54 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:40:54 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+00:40:54 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+00:40:54 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+00:40:54 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:40:54 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+00:40:54 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+00:40:54 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/tokenizer_config.json "HTTP/1.1 200 OK"
+00:40:54 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+00:40:54 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+00:40:54 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+00:40:55 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+00:40:56 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/model.safetensors "HTTP/1.1 302 Found"
+00:40:56 | WARNING | The tokenizer does not support resizing the token embeddings, the prefixes token have not been added to vocabulary.
+00:40:56 | INFO | [cuda:0] Model loaded.
+00:40:58 | INFO | [cuda:0] Resuming: 15000 queries already scored
+00:41:02 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/294 [00:00<?, ?it/s]Loading weights: 100%|██████████| 294/294 [00:00<00:00, 22767.77it/s]
+[1mXLMRobertaModel LOAD REPORT[0m from: jinaai/jina-colbert-v2
+Key           | Status     |  | 
+--------------+------------+--+-
+linear.weight | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+00:41:02 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+00:41:02 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+00:41:03 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+00:41:03 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+00:41:03 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+00:41:03 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/tokenizer_config.json "HTTP/1.1 200 OK"
+00:41:03 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:41:03 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+00:41:03 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+00:41:03 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+00:41:03 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:41:03 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+00:41:03 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:41:03 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+00:41:03 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/xlm-roberta-flash-implementation/resolve/main/configuration_xlm_roberta.py "HTTP/1.1 307 Temporary Redirect"
+00:41:03 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/xlm-roberta-flash-implementation/bd55a5ec8e6c0fb1d6c26efb4b6a4a74ce8a88d3/configuration_xlm_roberta.py "HTTP/1.1 200 OK"
+00:41:03 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:41:03 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/config.json "HTTP/1.1 200 OK"
+00:41:03 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+00:41:04 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/jinaai/jina-colbert-v2/a9dc5cd7293d4c71dbbba04829923ba4d0e4f6ea/tokenizer_config.json "HTTP/1.1 200 OK"
+00:41:04 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+00:41:04 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+00:41:10 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+00:41:10 | INFO | HTTP Request: GET https://huggingface.co/api/models/jinaai/jina-colbert-v2 "HTTP/1.1 200 OK"
+00:41:11 | INFO | HTTP Request: HEAD https://huggingface.co/jinaai/jina-colbert-v2/resolve/main/model.safetensors "HTTP/1.1 302 Found"
+00:41:11 | WARNING | The tokenizer does not support resizing the token embeddings, the prefixes token have not been added to vocabulary.
+00:41:11 | INFO | [cuda:1] Model loaded.
+00:41:13 | INFO | [cuda:1] Resuming: 11400 queries already scored
+00:42:17 | WARNING | The `tokenize` method is deprecated, please use `preprocess` instead.
+00:42:39 | WARNING | The `tokenize` method is deprecated, please use `preprocess` instead.
+00:45:00 | INFO | [cuda:0] 200/70028 queries | 20000 docs scored | 123 docs/s | 163.0s
+00:45:18 | INFO | [cuda:1] 200/73627 queries | 20000 docs scored | 126 docs/s | 158.6s
+00:47:47 | INFO | [cuda:0] 400/70028 queries | 40000 docs scored | 121 docs/s | 330.1s
+00:47:59 | INFO | [cuda:1] 400/73627 queries | 40000 docs scored | 125 docs/s | 319.6s
+00:50:38 | INFO | [cuda:0] 600/70028 queries | 60000 docs scored | 120 docs/s | 500.8s
+00:50:40 | INFO | [cuda:1] 600/73627 queries | 60000 docs scored | 125 docs/s | 480.9s
+00:53:21 | INFO | [cuda:1] 800/73627 queries | 80000 docs scored | 125 docs/s | 641.4s
+00:53:26 | INFO | [cuda:0] 800/70028 queries | 80000 docs scored | 120 docs/s | 668.8s
+00:56:06 | INFO | [cuda:1] 1000/73627 queries | 100000 docs scored | 124 docs/s | 806.4s
+00:56:21 | INFO | [cuda:0] 1000/70028 queries | 100000 docs scored | 119 docs/s | 843.6s
+00:58:51 | INFO | [cuda:1] 1200/73627 queries | 120000 docs scored | 124 docs/s | 971.1s
+00:59:12 | INFO | [cuda:0] 1200/70028 queries | 120000 docs scored | 118 docs/s | 1014.9s
+01:01:31 | INFO | [cuda:1] 1400/73627 queries | 140000 docs scored | 124 docs/s | 1131.7s
+01:02:04 | INFO | [cuda:0] 1400/70028 queries | 140000 docs scored | 118 docs/s | 1187.2s
+01:04:12 | INFO | [cuda:1] 1600/73627 queries | 160000 docs scored | 124 docs/s | 1292.5s
+01:04:58 | INFO | [cuda:0] 1600/70028 queries | 160000 docs scored | 118 docs/s | 1360.8s
+01:06:54 | INFO | [cuda:1] 1800/73627 queries | 180000 docs scored | 124 docs/s | 1454.7s
+01:07:48 | INFO | [cuda:0] 1800/70028 queries | 180000 docs scored | 118 docs/s | 1530.9s
+01:09:37 | INFO | [cuda:1] 2000/73627 queries | 200000 docs scored | 124 docs/s | 1617.2s
+01:10:40 | INFO | [cuda:0] 2000/70028 queries | 200000 docs scored | 117 docs/s | 1703.1s
+01:12:20 | INFO | [cuda:1] 2200/73627 queries | 220000 docs scored | 124 docs/s | 1780.4s
+01:13:31 | INFO | [cuda:0] 2200/70028 queries | 220000 docs scored | 117 docs/s | 1874.5s
+01:15:05 | INFO | [cuda:1] 2400/73627 queries | 240000 docs scored | 123 docs/s | 1945.1s
+01:16:32 | INFO | [cuda:0] 2400/70028 queries | 240000 docs scored | 117 docs/s | 2055.5s
+01:17:52 | INFO | [cuda:1] 2600/73627 queries | 260000 docs scored | 123 docs/s | 2112.2s
+01:19:23 | INFO | [cuda:0] 2600/70028 queries | 260000 docs scored | 117 docs/s | 2226.1s
+01:20:36 | INFO | [cuda:1] 2800/73627 queries | 280000 docs scored | 123 docs/s | 2276.7s
+01:22:20 | INFO | [cuda:0] 2800/70028 queries | 280000 docs scored | 117 docs/s | 2402.6s
+01:23:35 | INFO | [cuda:1] 3000/73627 queries | 300000 docs scored | 122 docs/s | 2455.6s
+01:25:32 | INFO | [cuda:0] 3000/70028 queries | 300000 docs scored | 116 docs/s | 2595.1s
+01:26:35 | INFO | [cuda:1] 3200/73627 queries | 320000 docs scored | 121 docs/s | 2635.6s
+01:28:41 | INFO | [cuda:0] 3200/70028 queries | 320000 docs scored | 115 docs/s | 2783.7s
+01:29:44 | INFO | [cuda:1] 3400/73627 queries | 340000 docs scored | 120 docs/s | 2824.7s
+01:31:48 | INFO | [cuda:0] 3400/70028 queries | 340000 docs scored | 114 docs/s | 2971.2s
+01:32:43 | INFO | [cuda:1] 3600/73627 queries | 360000 docs scored | 120 docs/s | 3003.7s
+01:34:50 | INFO | [cuda:0] 3600/70028 queries | 360000 docs scored | 114 docs/s | 3153.1s
+01:35:55 | INFO | [cuda:1] 3800/73627 queries | 380000 docs scored | 119 docs/s | 3195.8s
+01:37:54 | INFO | [cuda:0] 3800/70028 queries | 380000 docs scored | 114 docs/s | 3336.9s
+01:39:07 | INFO | [cuda:1] 4000/73627 queries | 400000 docs scored | 118 docs/s | 3387.7s
+01:40:54 | INFO | [cuda:0] 4000/70028 queries | 400000 docs scored | 114 docs/s | 3516.5s
+01:42:20 | INFO | [cuda:1] 4200/73627 queries | 420000 docs scored | 117 docs/s | 3580.8s
+01:43:52 | INFO | [cuda:0] 4200/70028 queries | 420000 docs scored | 114 docs/s | 3694.6s
+01:45:34 | INFO | [cuda:1] 4400/73627 queries | 440000 docs scored | 117 docs/s | 3774.8s
+01:46:53 | INFO | [cuda:0] 4400/70028 queries | 440000 docs scored | 114 docs/s | 3876.3s
+01:48:53 | INFO | [cuda:1] 4600/73627 queries | 460000 docs scored | 116 docs/s | 3973.7s
+01:49:51 | INFO | [cuda:0] 4600/70028 queries | 460000 docs scored | 113 docs/s | 4054.4s
+01:52:11 | INFO | [cuda:1] 4800/73627 queries | 480000 docs scored | 115 docs/s | 4172.0s
+01:52:57 | INFO | [cuda:0] 4800/70028 queries | 480000 docs scored | 113 docs/s | 4240.0s
+01:55:33 | INFO | [cuda:1] 5000/73627 queries | 500000 docs scored | 114 docs/s | 4373.6s
+01:55:58 | INFO | [cuda:0] 5000/70028 queries | 500000 docs scored | 113 docs/s | 4421.5s
+01:58:50 | INFO | [cuda:1] 5200/73627 queries | 520000 docs scored | 114 docs/s | 4570.8s
+01:58:58 | INFO | [cuda:0] 5200/70028 queries | 520000 docs scored | 113 docs/s | 4601.5s
+02:02:00 | INFO | [cuda:0] 5400/70028 queries | 540000 docs scored | 113 docs/s | 4783.0s
+02:02:06 | INFO | [cuda:1] 5400/73627 queries | 540000 docs scored | 113 docs/s | 4766.4s
+02:05:06 | INFO | [cuda:0] 5600/70028 queries | 560000 docs scored | 113 docs/s | 4968.7s
+02:05:28 | INFO | [cuda:1] 5600/73627 queries | 560000 docs scored | 113 docs/s | 4968.4s
+02:08:08 | INFO | [cuda:0] 5800/70028 queries | 580000 docs scored | 113 docs/s | 5150.6s
+02:08:53 | INFO | [cuda:1] 5800/73627 queries | 580000 docs scored | 112 docs/s | 5173.7s
+02:11:13 | INFO | [cuda:0] 6000/70028 queries | 600000 docs scored | 112 docs/s | 5336.4s
+02:12:14 | INFO | [cuda:1] 6000/73627 queries | 600000 docs scored | 112 docs/s | 5374.9s
+02:14:20 | INFO | [cuda:0] 6200/70028 queries | 620000 docs scored | 112 docs/s | 5522.9s
+02:15:30 | INFO | [cuda:1] 6200/73627 queries | 620000 docs scored | 111 docs/s | 5570.7s
+02:17:22 | INFO | [cuda:0] 6400/70028 queries | 640000 docs scored | 112 docs/s | 5705.3s
+02:18:44 | INFO | [cuda:1] 6400/73627 queries | 640000 docs scored | 111 docs/s | 5764.9s
+02:20:26 | INFO | [cuda:0] 6600/70028 queries | 660000 docs scored | 112 docs/s | 5888.8s
+02:22:01 | INFO | [cuda:1] 6600/73627 queries | 660000 docs scored | 111 docs/s | 5962.0s
+02:23:25 | INFO | [cuda:0] 6800/70028 queries | 680000 docs scored | 112 docs/s | 6068.1s
+02:25:16 | INFO | [cuda:1] 6800/73627 queries | 680000 docs scored | 110 docs/s | 6156.8s
+02:26:29 | INFO | [cuda:0] 7000/70028 queries | 700000 docs scored | 112 docs/s | 6252.2s
+02:28:35 | INFO | [cuda:1] 7000/73627 queries | 700000 docs scored | 110 docs/s | 6355.9s
+02:29:34 | INFO | [cuda:0] 7200/70028 queries | 720000 docs scored | 112 docs/s | 6436.6s
+02:31:58 | INFO | [cuda:1] 7200/73627 queries | 720000 docs scored | 110 docs/s | 6558.6s
+02:32:35 | INFO | [cuda:0] 7400/70028 queries | 740000 docs scored | 112 docs/s | 6617.9s
+02:35:15 | INFO | [cuda:1] 7400/73627 queries | 740000 docs scored | 110 docs/s | 6755.7s
+02:35:36 | INFO | [cuda:0] 7600/70028 queries | 760000 docs scored | 112 docs/s | 6799.1s
+02:38:39 | INFO | [cuda:1] 7600/73627 queries | 760000 docs scored | 109 docs/s | 6959.2s
+02:38:44 | INFO | [cuda:0] 7800/70028 queries | 780000 docs scored | 112 docs/s | 6987.4s
+02:41:49 | INFO | [cuda:0] 8000/70028 queries | 800000 docs scored | 112 docs/s | 7172.4s
+02:41:57 | INFO | [cuda:1] 7800/73627 queries | 780000 docs scored | 109 docs/s | 7157.3s
+02:44:56 | INFO | [cuda:0] 8200/70028 queries | 820000 docs scored | 111 docs/s | 7359.3s
+02:45:15 | INFO | [cuda:1] 8000/73627 queries | 800000 docs scored | 109 docs/s | 7355.7s
+02:48:05 | INFO | [cuda:0] 8400/70028 queries | 840000 docs scored | 111 docs/s | 7548.0s
+02:48:36 | INFO | [cuda:1] 8200/73627 queries | 820000 docs scored | 109 docs/s | 7556.0s
+02:51:20 | INFO | [cuda:0] 8600/70028 queries | 860000 docs scored | 111 docs/s | 7742.6s
+02:51:59 | INFO | [cuda:1] 8400/73627 queries | 840000 docs scored | 108 docs/s | 7759.6s
+02:54:28 | INFO | [cuda:0] 8800/70028 queries | 880000 docs scored | 111 docs/s | 7931.1s
+02:55:23 | INFO | [cuda:1] 8600/73627 queries | 860000 docs scored | 108 docs/s | 7963.1s
+02:57:37 | INFO | [cuda:0] 9000/70028 queries | 900000 docs scored | 111 docs/s | 8120.5s
+02:58:45 | INFO | [cuda:1] 8800/73627 queries | 880000 docs scored | 108 docs/s | 8165.9s
+03:00:45 | INFO | [cuda:0] 9200/70028 queries | 920000 docs scored | 111 docs/s | 8308.3s
+03:02:06 | INFO | [cuda:1] 9000/73627 queries | 900000 docs scored | 108 docs/s | 8366.7s
+03:03:55 | INFO | [cuda:0] 9400/70028 queries | 940000 docs scored | 111 docs/s | 8497.6s
+03:05:35 | INFO | [cuda:1] 9200/73627 queries | 920000 docs scored | 107 docs/s | 8575.5s
+03:07:12 | INFO | [cuda:0] 9600/70028 queries | 960000 docs scored | 110 docs/s | 8694.6s
+03:09:00 | INFO | [cuda:1] 9400/73627 queries | 940000 docs scored | 107 docs/s | 8780.2s
+03:10:22 | INFO | [cuda:0] 9800/70028 queries | 980000 docs scored | 110 docs/s | 8885.5s
+03:12:29 | INFO | [cuda:1] 9600/73627 queries | 960000 docs scored | 107 docs/s | 8990.0s
+03:13:34 | INFO | [cuda:0] 10000/70028 queries | 1000000 docs scored | 110 docs/s | 9076.6s
+03:16:02 | INFO | [cuda:1] 9800/73627 queries | 980000 docs scored | 106 docs/s | 9202.3s
+03:16:47 | INFO | [cuda:0] 10200/70028 queries | 1020000 docs scored | 110 docs/s | 9270.0s
+03:19:29 | INFO | [cuda:1] 10000/73627 queries | 1000000 docs scored | 106 docs/s | 9409.4s
+03:19:57 | INFO | [cuda:0] 10400/70028 queries | 1040000 docs scored | 110 docs/s | 9460.2s
+03:22:55 | INFO | [cuda:1] 10200/73627 queries | 1020000 docs scored | 106 docs/s | 9615.5s
+03:23:12 | INFO | [cuda:0] 10600/70028 queries | 1060000 docs scored | 110 docs/s | 9655.3s
+03:26:23 | INFO | [cuda:1] 10400/73627 queries | 1040000 docs scored | 106 docs/s | 9823.7s
+03:26:27 | INFO | [cuda:0] 10800/70028 queries | 1080000 docs scored | 110 docs/s | 9850.0s
+03:29:38 | INFO | [cuda:0] 11000/70028 queries | 1100000 docs scored | 110 docs/s | 10041.3s
+03:29:46 | INFO | [cuda:1] 10600/73627 queries | 1060000 docs scored | 106 docs/s | 10026.8s
+03:32:52 | INFO | [cuda:0] 11200/70028 queries | 1120000 docs scored | 109 docs/s | 10235.5s
+03:33:13 | INFO | [cuda:1] 10800/73627 queries | 1080000 docs scored | 106 docs/s | 10233.7s
+03:36:11 | INFO | [cuda:0] 11400/70028 queries | 1140000 docs scored | 109 docs/s | 10433.9s
+03:36:42 | INFO | [cuda:1] 11000/73627 queries | 1100000 docs scored | 105 docs/s | 10442.4s
+03:39:27 | INFO | [cuda:0] 11600/70028 queries | 1160000 docs scored | 109 docs/s | 10629.9s
+03:40:11 | INFO | [cuda:1] 11200/73627 queries | 1120000 docs scored | 105 docs/s | 10651.3s
+03:42:38 | INFO | [cuda:0] 11800/70028 queries | 1180000 docs scored | 109 docs/s | 10821.3s
+03:43:37 | INFO | [cuda:1] 11400/73627 queries | 1140000 docs scored | 105 docs/s | 10857.1s
+03:45:51 | INFO | [cuda:0] 12000/70028 queries | 1200000 docs scored | 109 docs/s | 11014.1s
+03:47:06 | INFO | [cuda:1] 11600/73627 queries | 1160000 docs scored | 105 docs/s | 11066.5s
+03:49:07 | INFO | [cuda:0] 12200/70028 queries | 1220000 docs scored | 109 docs/s | 11210.0s
+03:50:37 | INFO | [cuda:1] 11800/73627 queries | 1180000 docs scored | 105 docs/s | 11277.5s
+03:52:23 | INFO | [cuda:0] 12400/70028 queries | 1240000 docs scored | 109 docs/s | 11406.2s
+03:54:13 | INFO | [cuda:1] 12000/73627 queries | 1200000 docs scored | 104 docs/s | 11493.7s
+03:55:39 | INFO | [cuda:0] 12600/70028 queries | 1260000 docs scored | 109 docs/s | 11602.5s
+03:57:51 | INFO | [cuda:1] 12200/73627 queries | 1220000 docs scored | 104 docs/s | 11711.5s
+03:58:58 | INFO | [cuda:0] 12800/70028 queries | 1280000 docs scored | 108 docs/s | 11801.0s
+04:01:27 | INFO | [cuda:1] 12400/73627 queries | 1240000 docs scored | 104 docs/s | 11927.8s
+04:02:12 | INFO | [cuda:0] 13000/70028 queries | 1300000 docs scored | 108 docs/s | 11994.6s
+04:04:57 | INFO | [cuda:1] 12600/73627 queries | 1260000 docs scored | 104 docs/s | 12137.1s
+04:05:27 | INFO | [cuda:0] 13200/70028 queries | 1320000 docs scored | 108 docs/s | 12189.9s
+04:08:27 | INFO | [cuda:1] 12800/73627 queries | 1280000 docs scored | 104 docs/s | 12347.5s
+04:08:44 | INFO | [cuda:0] 13400/70028 queries | 1340000 docs scored | 108 docs/s | 12386.7s
+04:11:58 | INFO | [cuda:1] 13000/73627 queries | 1300000 docs scored | 104 docs/s | 12558.2s
+04:11:59 | INFO | [cuda:0] 13600/70028 queries | 1360000 docs scored | 108 docs/s | 12581.8s
+04:15:15 | INFO | [cuda:0] 13800/70028 queries | 1380000 docs scored | 108 docs/s | 12778.1s
+04:15:30 | INFO | [cuda:1] 13200/73627 queries | 1320000 docs scored | 103 docs/s | 12770.4s
+04:18:33 | INFO | [cuda:0] 14000/70028 queries | 1400000 docs scored | 108 docs/s | 12975.7s
+04:19:05 | INFO | [cuda:1] 13400/73627 queries | 1340000 docs scored | 103 docs/s | 12985.7s
+04:21:52 | INFO | [cuda:0] 14200/70028 queries | 1420000 docs scored | 108 docs/s | 13175.4s
+04:22:44 | INFO | [cuda:1] 13600/73627 queries | 1360000 docs scored | 103 docs/s | 13204.4s
+04:25:10 | INFO | [cuda:0] 14400/70028 queries | 1440000 docs scored | 108 docs/s | 13372.8s
+04:26:18 | INFO | [cuda:1] 13800/73627 queries | 1380000 docs scored | 103 docs/s | 13418.1s
+04:28:30 | INFO | [cuda:0] 14600/70028 queries | 1460000 docs scored | 108 docs/s | 13572.6s
+04:29:53 | INFO | [cuda:1] 14000/73627 queries | 1400000 docs scored | 103 docs/s | 13633.7s
+04:31:52 | INFO | [cuda:0] 14800/70028 queries | 1480000 docs scored | 107 docs/s | 13775.2s
+04:33:28 | INFO | [cuda:1] 14200/73627 queries | 1420000 docs scored | 103 docs/s | 13848.8s
+04:35:15 | INFO | [cuda:0] 15000/70028 queries | 1500000 docs scored | 107 docs/s | 13977.8s
+04:37:06 | INFO | [cuda:1] 14400/73627 queries | 1440000 docs scored | 102 docs/s | 14066.9s
+04:38:35 | INFO | [cuda:0] 15200/70028 queries | 1520000 docs scored | 107 docs/s | 14178.5s
+04:40:47 | INFO | [cuda:1] 14600/73627 queries | 1460000 docs scored | 102 docs/s | 14287.4s
+04:42:00 | INFO | [cuda:0] 15400/70028 queries | 1540000 docs scored | 107 docs/s | 14383.5s
+04:44:22 | INFO | [cuda:1] 14800/73627 queries | 1480000 docs scored | 102 docs/s | 14502.5s
+04:45:19 | INFO | [cuda:0] 15600/70028 queries | 1560000 docs scored | 107 docs/s | 14582.0s
+04:47:32 | INFO | [cuda:1] 15000/73627 queries | 1500000 docs scored | 102 docs/s | 14692.8s
+04:48:35 | INFO | [cuda:0] 15800/70028 queries | 1580000 docs scored | 107 docs/s | 14777.6s
+04:50:43 | INFO | [cuda:1] 15200/73627 queries | 1520000 docs scored | 102 docs/s | 14884.0s
+04:51:50 | INFO | [cuda:0] 16000/70028 queries | 1600000 docs scored | 107 docs/s | 14973.0s
+04:53:51 | INFO | [cuda:1] 15400/73627 queries | 1540000 docs scored | 102 docs/s | 15071.2s
+04:55:06 | INFO | [cuda:0] 16200/70028 queries | 1620000 docs scored | 107 docs/s | 15169.2s
+04:56:57 | INFO | [cuda:1] 15600/73627 queries | 1560000 docs scored | 102 docs/s | 15257.4s
+04:58:31 | INFO | [cuda:0] 16400/70028 queries | 1640000 docs scored | 107 docs/s | 15374.2s
+05:00:03 | INFO | [cuda:1] 15800/73627 queries | 1580000 docs scored | 102 docs/s | 15443.9s
+05:02:02 | INFO | [cuda:0] 16600/70028 queries | 1660000 docs scored | 107 docs/s | 15584.6s
+05:03:14 | INFO | [cuda:1] 16000/73627 queries | 1600000 docs scored | 102 docs/s | 15634.1s
+05:05:22 | INFO | [cuda:0] 16800/70028 queries | 1680000 docs scored | 106 docs/s | 15784.8s
+05:06:21 | INFO | [cuda:1] 16200/73627 queries | 1620000 docs scored | 102 docs/s | 15821.3s
+05:08:41 | INFO | [cuda:0] 17000/70028 queries | 1700000 docs scored | 106 docs/s | 15984.5s
+05:09:30 | INFO | [cuda:1] 16400/73627 queries | 1640000 docs scored | 102 docs/s | 16010.9s
+05:12:01 | INFO | [cuda:0] 17200/70028 queries | 1720000 docs scored | 106 docs/s | 16183.7s
+05:12:40 | INFO | [cuda:1] 16600/73627 queries | 1660000 docs scored | 102 docs/s | 16200.6s
+05:15:23 | INFO | [cuda:0] 17400/70028 queries | 1740000 docs scored | 106 docs/s | 16385.7s
+05:15:53 | INFO | [cuda:1] 16800/73627 queries | 1680000 docs scored | 102 docs/s | 16393.2s
+05:18:45 | INFO | [cuda:0] 17600/70028 queries | 1760000 docs scored | 106 docs/s | 16587.6s
+05:19:07 | INFO | [cuda:1] 17000/73627 queries | 1700000 docs scored | 102 docs/s | 16587.6s
+05:22:06 | INFO | [cuda:0] 17800/70028 queries | 1780000 docs scored | 106 docs/s | 16788.8s
+05:22:17 | INFO | [cuda:1] 17200/73627 queries | 1720000 docs scored | 103 docs/s | 16777.7s
+05:25:26 | INFO | [cuda:0] 18000/70028 queries | 1800000 docs scored | 106 docs/s | 16988.7s
+05:25:29 | INFO | [cuda:1] 17400/73627 queries | 1740000 docs scored | 103 docs/s | 16969.2s
+05:28:41 | INFO | [cuda:1] 17600/73627 queries | 1760000 docs scored | 103 docs/s | 17161.7s
+05:28:48 | INFO | [cuda:0] 18200/70028 queries | 1820000 docs scored | 106 docs/s | 17190.6s
+05:31:54 | INFO | [cuda:1] 17800/73627 queries | 1780000 docs scored | 103 docs/s | 17354.6s
+05:32:10 | INFO | [cuda:0] 18400/70028 queries | 1840000 docs scored | 106 docs/s | 17393.5s
+05:35:07 | INFO | [cuda:1] 18000/73627 queries | 1800000 docs scored | 103 docs/s | 17547.6s
+05:35:33 | INFO | [cuda:0] 18600/70028 queries | 1860000 docs scored | 106 docs/s | 17595.8s
+05:38:21 | INFO | [cuda:1] 18200/73627 queries | 1820000 docs scored | 103 docs/s | 17741.4s
+05:38:55 | INFO | [cuda:0] 18800/70028 queries | 1880000 docs scored | 106 docs/s | 17797.9s
+05:41:36 | INFO | [cuda:1] 18400/73627 queries | 1840000 docs scored | 103 docs/s | 17936.4s
+05:42:18 | INFO | [cuda:0] 19000/70028 queries | 1900000 docs scored | 106 docs/s | 18000.6s
+05:44:48 | INFO | [cuda:1] 18600/73627 queries | 1860000 docs scored | 103 docs/s | 18128.2s
+05:45:41 | INFO | [cuda:0] 19200/70028 queries | 1920000 docs scored | 105 docs/s | 18204.3s
+05:48:03 | INFO | [cuda:1] 18800/73627 queries | 1880000 docs scored | 103 docs/s | 18323.5s
+05:49:05 | INFO | [cuda:0] 19400/70028 queries | 1940000 docs scored | 105 docs/s | 18407.7s
+05:51:17 | INFO | [cuda:1] 19000/73627 queries | 1900000 docs scored | 103 docs/s | 18518.0s
+05:52:26 | INFO | [cuda:0] 19600/70028 queries | 1960000 docs scored | 105 docs/s | 18609.5s
+05:54:35 | INFO | [cuda:1] 19200/73627 queries | 1920000 docs scored | 103 docs/s | 18715.4s
+05:55:49 | INFO | [cuda:0] 19800/70028 queries | 1980000 docs scored | 105 docs/s | 18812.3s
+05:57:49 | INFO | [cuda:1] 19400/73627 queries | 1940000 docs scored | 103 docs/s | 18909.6s
+05:59:14 | INFO | [cuda:0] 20000/70028 queries | 2000000 docs scored | 105 docs/s | 19017.0s
+06:01:08 | INFO | [cuda:1] 19600/73627 queries | 1960000 docs scored | 103 docs/s | 19108.5s
+06:02:38 | INFO | [cuda:0] 20200/70028 queries | 2020000 docs scored | 105 docs/s | 19221.3s
+06:04:25 | INFO | [cuda:1] 19800/73627 queries | 1980000 docs scored | 103 docs/s | 19305.7s
+06:06:04 | INFO | [cuda:0] 20400/70028 queries | 2040000 docs scored | 105 docs/s | 19427.5s
+06:07:52 | INFO | [cuda:1] 20000/73627 queries | 2000000 docs scored | 102 docs/s | 19513.0s
+06:09:29 | INFO | [cuda:0] 20600/70028 queries | 2060000 docs scored | 105 docs/s | 19632.2s
+06:11:10 | INFO | [cuda:1] 20200/73627 queries | 2020000 docs scored | 102 docs/s | 19710.5s
+06:12:56 | INFO | [cuda:0] 20800/70028 queries | 2080000 docs scored | 105 docs/s | 19839.1s
+06:14:25 | INFO | [cuda:1] 20400/73627 queries | 2040000 docs scored | 102 docs/s | 19905.2s
+06:16:26 | INFO | [cuda:0] 21000/70028 queries | 2100000 docs scored | 105 docs/s | 20049.5s
+06:17:40 | INFO | [cuda:1] 20600/73627 queries | 2060000 docs scored | 102 docs/s | 20100.6s
+06:19:52 | INFO | [cuda:0] 21200/70028 queries | 2120000 docs scored | 105 docs/s | 20254.6s
+06:20:58 | INFO | [cuda:1] 20800/73627 queries | 2080000 docs scored | 102 docs/s | 20299.0s
+06:23:19 | INFO | [cuda:0] 21400/70028 queries | 2140000 docs scored | 105 docs/s | 20461.6s
+06:24:20 | INFO | [cuda:1] 21000/73627 queries | 2100000 docs scored | 102 docs/s | 20501.0s
+06:26:47 | INFO | [cuda:0] 21600/70028 queries | 2160000 docs scored | 105 docs/s | 20669.7s
+06:27:40 | INFO | [cuda:1] 21200/73627 queries | 2120000 docs scored | 102 docs/s | 20700.4s
+06:30:12 | INFO | [cuda:0] 21800/70028 queries | 2180000 docs scored | 104 docs/s | 20874.9s
+06:30:58 | INFO | [cuda:1] 21400/73627 queries | 2140000 docs scored | 102 docs/s | 20898.4s
+06:33:42 | INFO | [cuda:0] 22000/70028 queries | 2200000 docs scored | 104 docs/s | 21084.7s
+06:34:18 | INFO | [cuda:1] 21600/73627 queries | 2160000 docs scored | 102 docs/s | 21098.5s
+06:37:09 | INFO | [cuda:0] 22200/70028 queries | 2220000 docs scored | 104 docs/s | 21291.9s
+06:37:38 | INFO | [cuda:1] 21800/73627 queries | 2180000 docs scored | 102 docs/s | 21298.3s
+06:40:40 | INFO | [cuda:0] 22400/70028 queries | 2240000 docs scored | 104 docs/s | 21503.0s
+06:41:00 | INFO | [cuda:1] 22000/73627 queries | 2200000 docs scored | 102 docs/s | 21500.9s
+06:44:09 | INFO | [cuda:0] 22600/70028 queries | 2260000 docs scored | 104 docs/s | 21712.4s
+06:44:21 | INFO | [cuda:1] 22200/73627 queries | 2220000 docs scored | 102 docs/s | 21701.9s
+06:47:41 | INFO | [cuda:0] 22800/70028 queries | 2280000 docs scored | 104 docs/s | 21924.1s
+06:47:44 | INFO | [cuda:1] 22400/73627 queries | 2240000 docs scored | 102 docs/s | 21904.4s
+06:51:04 | INFO | [cuda:1] 22600/73627 queries | 2260000 docs scored | 102 docs/s | 22104.5s
+06:51:09 | INFO | [cuda:0] 23000/70028 queries | 2300000 docs scored | 104 docs/s | 22132.4s
+06:54:26 | INFO | [cuda:1] 22800/73627 queries | 2280000 docs scored | 102 docs/s | 22306.8s
+06:54:40 | INFO | [cuda:0] 23200/70028 queries | 2320000 docs scored | 104 docs/s | 22343.4s
+06:57:48 | INFO | [cuda:1] 23000/73627 queries | 2300000 docs scored | 102 docs/s | 22508.5s
+06:58:12 | INFO | [cuda:0] 23400/70028 queries | 2340000 docs scored | 104 docs/s | 22555.5s
+07:01:12 | INFO | [cuda:1] 23200/73627 queries | 2320000 docs scored | 102 docs/s | 22712.7s
+07:01:43 | INFO | [cuda:0] 23600/70028 queries | 2360000 docs scored | 104 docs/s | 22766.1s
+07:04:31 | INFO | [cuda:1] 23400/73627 queries | 2340000 docs scored | 102 docs/s | 22911.6s
+07:05:18 | INFO | [cuda:0] 23800/70028 queries | 2380000 docs scored | 104 docs/s | 22981.1s
+07:07:52 | INFO | [cuda:1] 23600/73627 queries | 2360000 docs scored | 102 docs/s | 23112.4s
+07:08:49 | INFO | [cuda:0] 24000/70028 queries | 2400000 docs scored | 103 docs/s | 23192.5s
+07:11:17 | INFO | [cuda:1] 23800/73627 queries | 2380000 docs scored | 102 docs/s | 23317.3s
+07:12:27 | INFO | [cuda:0] 24200/70028 queries | 2420000 docs scored | 103 docs/s | 23410.4s
+07:14:44 | INFO | [cuda:1] 24000/73627 queries | 2400000 docs scored | 102 docs/s | 23524.8s
+07:16:04 | INFO | [cuda:0] 24400/70028 queries | 2440000 docs scored | 103 docs/s | 23627.2s
+07:18:11 | INFO | [cuda:1] 24200/73627 queries | 2420000 docs scored | 102 docs/s | 23731.4s
+07:19:37 | INFO | [cuda:0] 24600/70028 queries | 2460000 docs scored | 103 docs/s | 23840.1s
+07:21:38 | INFO | [cuda:1] 24400/73627 queries | 2440000 docs scored | 102 docs/s | 23938.6s
+07:23:12 | INFO | [cuda:0] 24800/70028 queries | 2480000 docs scored | 103 docs/s | 24054.9s
+07:25:06 | INFO | [cuda:1] 24600/73627 queries | 2460000 docs scored | 102 docs/s | 24146.8s
+07:26:49 | INFO | [cuda:0] 25000/70028 queries | 2500000 docs scored | 103 docs/s | 24271.6s
+07:28:31 | INFO | [cuda:1] 24800/73627 queries | 2480000 docs scored | 102 docs/s | 24351.5s
+07:30:24 | INFO | [cuda:0] 25200/70028 queries | 2520000 docs scored | 103 docs/s | 24486.6s
+07:32:01 | INFO | [cuda:1] 25000/73627 queries | 2500000 docs scored | 102 docs/s | 24561.3s
+07:34:01 | INFO | [cuda:0] 25400/70028 queries | 2540000 docs scored | 103 docs/s | 24704.0s
+07:35:28 | INFO | [cuda:1] 25200/73627 queries | 2520000 docs scored | 102 docs/s | 24768.2s
+07:37:36 | INFO | [cuda:0] 25600/70028 queries | 2560000 docs scored | 103 docs/s | 24919.5s
+07:38:53 | INFO | [cuda:1] 25400/73627 queries | 2540000 docs scored | 102 docs/s | 24973.3s
+07:41:11 | INFO | [cuda:0] 25800/70028 queries | 2580000 docs scored | 103 docs/s | 25133.9s
+07:42:19 | INFO | [cuda:1] 25600/73627 queries | 2560000 docs scored | 102 docs/s | 25179.7s
+07:44:47 | INFO | [cuda:0] 26000/70028 queries | 2600000 docs scored | 103 docs/s | 25350.3s
+07:45:47 | INFO | [cuda:1] 25800/73627 queries | 2580000 docs scored | 102 docs/s | 25387.1s
+07:48:22 | INFO | [cuda:0] 26200/70028 queries | 2620000 docs scored | 102 docs/s | 25565.2s
+07:49:17 | INFO | [cuda:1] 26000/73627 queries | 2600000 docs scored | 102 docs/s | 25597.4s
+07:51:54 | INFO | [cuda:0] 26400/70028 queries | 2640000 docs scored | 102 docs/s | 25777.0s
+07:52:50 | INFO | [cuda:1] 26200/73627 queries | 2620000 docs scored | 102 docs/s | 25810.3s
+07:55:28 | INFO | [cuda:0] 26600/70028 queries | 2660000 docs scored | 102 docs/s | 25991.0s
+07:56:21 | INFO | [cuda:1] 26400/73627 queries | 2640000 docs scored | 101 docs/s | 26021.9s
+07:59:05 | INFO | [cuda:0] 26800/70028 queries | 2680000 docs scored | 102 docs/s | 26207.6s
+07:59:49 | INFO | [cuda:1] 26600/73627 queries | 2660000 docs scored | 101 docs/s | 26229.7s
+08:02:41 | INFO | [cuda:0] 27000/70028 queries | 2700000 docs scored | 102 docs/s | 26423.9s
+08:03:22 | INFO | [cuda:1] 26800/73627 queries | 2680000 docs scored | 101 docs/s | 26442.4s
+08:06:21 | INFO | [cuda:0] 27200/70028 queries | 2720000 docs scored | 102 docs/s | 26644.3s
+08:06:54 | INFO | [cuda:1] 27000/73627 queries | 2700000 docs scored | 101 docs/s | 26654.2s
+08:09:58 | INFO | [cuda:0] 27400/70028 queries | 2740000 docs scored | 102 docs/s | 26860.7s
+08:10:26 | INFO | [cuda:1] 27200/73627 queries | 2720000 docs scored | 101 docs/s | 26866.0s
+08:13:33 | INFO | [cuda:0] 27600/70028 queries | 2760000 docs scored | 102 docs/s | 27076.2s
+08:13:57 | INFO | [cuda:1] 27400/73627 queries | 2740000 docs scored | 101 docs/s | 27077.2s
+08:17:12 | INFO | [cuda:0] 27800/70028 queries | 2780000 docs scored | 102 docs/s | 27294.6s
+08:17:31 | INFO | [cuda:1] 27600/73627 queries | 2760000 docs scored | 101 docs/s | 27291.9s
+08:20:53 | INFO | [cuda:0] 28000/70028 queries | 2800000 docs scored | 102 docs/s | 27515.8s
+08:21:04 | INFO | [cuda:1] 27800/73627 queries | 2780000 docs scored | 101 docs/s | 27504.1s
+08:24:35 | INFO | [cuda:1] 28000/73627 queries | 2800000 docs scored | 101 docs/s | 27716.0s
+08:24:39 | INFO | [cuda:0] 28200/70028 queries | 2820000 docs scored | 102 docs/s | 27741.8s
+08:28:08 | INFO | [cuda:1] 28200/73627 queries | 2820000 docs scored | 101 docs/s | 27928.2s
+08:28:20 | INFO | [cuda:0] 28400/70028 queries | 2840000 docs scored | 102 docs/s | 27962.8s
+08:31:39 | INFO | [cuda:1] 28400/73627 queries | 2840000 docs scored | 101 docs/s | 28139.1s
+08:32:03 | INFO | [cuda:0] 28600/70028 queries | 2860000 docs scored | 101 docs/s | 28186.2s
+08:35:11 | INFO | [cuda:1] 28600/73627 queries | 2860000 docs scored | 101 docs/s | 28352.0s
+08:35:47 | INFO | [cuda:0] 28800/70028 queries | 2880000 docs scored | 101 docs/s | 28410.0s
+08:39:28 | INFO | [cuda:1] 28800/73627 queries | 2880000 docs scored | 101 docs/s | 28608.3s
+08:39:42 | INFO | [cuda:0] 29000/70028 queries | 2900000 docs scored | 101 docs/s | 28645.2s
+08:43:40 | INFO | [cuda:0] 29200/70028 queries | 2920000 docs scored | 101 docs/s | 28882.6s
+08:44:11 | INFO | [cuda:1] 29000/73627 queries | 2900000 docs scored | 100 docs/s | 28891.8s
+08:47:33 | INFO | [cuda:0] 29400/70028 queries | 2940000 docs scored | 101 docs/s | 29115.8s
+08:48:47 | INFO | [cuda:1] 29200/73627 queries | 2920000 docs scored | 100 docs/s | 29168.0s
+08:51:30 | INFO | [cuda:0] 29600/70028 queries | 2960000 docs scored | 101 docs/s | 29353.4s
+08:53:27 | INFO | [cuda:1] 29400/73627 queries | 2940000 docs scored | 100 docs/s | 29447.1s
+08:55:24 | INFO | [cuda:0] 29800/70028 queries | 2980000 docs scored | 101 docs/s | 29587.2s
+08:58:06 | INFO | [cuda:1] 29600/73627 queries | 2960000 docs scored | 100 docs/s | 29726.9s
+08:59:18 | INFO | [cuda:0] 30000/70028 queries | 3000000 docs scored | 101 docs/s | 29820.6s
+09:02:47 | INFO | [cuda:1] 29800/73627 queries | 2980000 docs scored | 99 docs/s | 30007.8s
+09:03:17 | INFO | [cuda:0] 30200/70028 queries | 3020000 docs scored | 100 docs/s | 30060.1s
+09:07:20 | INFO | [cuda:0] 30400/70028 queries | 3040000 docs scored | 100 docs/s | 30302.7s
+09:07:30 | INFO | [cuda:1] 30000/73627 queries | 3000000 docs scored | 99 docs/s | 30290.8s
+09:11:19 | INFO | [cuda:0] 30600/70028 queries | 3060000 docs scored | 100 docs/s | 30542.2s
+09:12:11 | INFO | [cuda:1] 30200/73627 queries | 3020000 docs scored | 99 docs/s | 30571.5s
+09:15:10 | INFO | [cuda:0] 30800/70028 queries | 3080000 docs scored | 100 docs/s | 30773.4s
+09:16:56 | INFO | [cuda:1] 30400/73627 queries | 3040000 docs scored | 99 docs/s | 30856.3s
+09:19:14 | INFO | [cuda:0] 31000/70028 queries | 3100000 docs scored | 100 docs/s | 31017.3s
+09:21:49 | INFO | [cuda:1] 30600/73627 queries | 3060000 docs scored | 98 docs/s | 31149.8s
+09:23:18 | INFO | [cuda:0] 31200/70028 queries | 3120000 docs scored | 100 docs/s | 31261.3s
+09:26:33 | INFO | [cuda:1] 30800/73627 queries | 3080000 docs scored | 98 docs/s | 31433.4s
+09:27:17 | INFO | [cuda:0] 31400/70028 queries | 3140000 docs scored | 100 docs/s | 31499.7s
+09:31:13 | INFO | [cuda:1] 31000/73627 queries | 3100000 docs scored | 98 docs/s | 31713.7s
+09:31:15 | INFO | [cuda:0] 31600/70028 queries | 3160000 docs scored | 100 docs/s | 31737.6s
+09:35:15 | INFO | [cuda:0] 31800/70028 queries | 3180000 docs scored | 99 docs/s | 31978.1s
+09:36:01 | INFO | [cuda:1] 31200/73627 queries | 3120000 docs scored | 97 docs/s | 32001.9s
+09:39:29 | INFO | [cuda:0] 32000/70028 queries | 3200000 docs scored | 99 docs/s | 32232.0s
+09:41:09 | INFO | [cuda:1] 31400/73627 queries | 3140000 docs scored | 97 docs/s | 32309.7s
+09:43:42 | INFO | [cuda:0] 32200/70028 queries | 3220000 docs scored | 99 docs/s | 32485.5s
+09:45:57 | INFO | [cuda:1] 31600/73627 queries | 3160000 docs scored | 97 docs/s | 32597.9s
+09:47:50 | INFO | [cuda:0] 32400/70028 queries | 3240000 docs scored | 99 docs/s | 32733.4s
+09:50:47 | INFO | [cuda:1] 31800/73627 queries | 3180000 docs scored | 97 docs/s | 32888.0s
+09:51:55 | INFO | [cuda:0] 32600/70028 queries | 3260000 docs scored | 99 docs/s | 32978.2s
+09:55:33 | INFO | [cuda:1] 32000/73627 queries | 3200000 docs scored | 96 docs/s | 33173.8s
+09:55:53 | INFO | [cuda:0] 32800/70028 queries | 3280000 docs scored | 99 docs/s | 33215.7s
+09:59:57 | INFO | [cuda:0] 33000/70028 queries | 3300000 docs scored | 99 docs/s | 33460.3s
+10:00:24 | INFO | [cuda:1] 32200/73627 queries | 3220000 docs scored | 96 docs/s | 33464.6s
+10:03:57 | INFO | [cuda:0] 33200/70028 queries | 3320000 docs scored | 99 docs/s | 33700.5s
+10:05:12 | INFO | [cuda:1] 32400/73627 queries | 3240000 docs scored | 96 docs/s | 33752.2s
+10:07:58 | INFO | [cuda:0] 33400/70028 queries | 3340000 docs scored | 98 docs/s | 33940.6s
+10:09:54 | INFO | [cuda:1] 32600/73627 queries | 3260000 docs scored | 96 docs/s | 34034.8s
+10:12:03 | INFO | [cuda:0] 33600/70028 queries | 3360000 docs scored | 98 docs/s | 34186.3s
+10:14:39 | INFO | [cuda:1] 32800/73627 queries | 3280000 docs scored | 96 docs/s | 34319.2s
+10:16:04 | INFO | [cuda:0] 33800/70028 queries | 3380000 docs scored | 98 docs/s | 34427.0s
+10:19:30 | INFO | [cuda:1] 33000/73627 queries | 3300000 docs scored | 95 docs/s | 34610.1s
+10:20:08 | INFO | [cuda:0] 34000/70028 queries | 3400000 docs scored | 98 docs/s | 34671.0s
+10:24:17 | INFO | [cuda:1] 33200/73627 queries | 3320000 docs scored | 95 docs/s | 34897.3s
+10:24:17 | INFO | [cuda:0] 34200/70028 queries | 3420000 docs scored | 98 docs/s | 34920.0s
+10:28:29 | INFO | [cuda:0] 34400/70028 queries | 3440000 docs scored | 98 docs/s | 35172.4s
+10:29:13 | INFO | [cuda:1] 33400/73627 queries | 3340000 docs scored | 95 docs/s | 35193.2s
+10:32:34 | INFO | [cuda:0] 34600/70028 queries | 3460000 docs scored | 98 docs/s | 35416.9s
+10:34:00 | INFO | [cuda:1] 33600/73627 queries | 3360000 docs scored | 95 docs/s | 35480.5s
+10:36:43 | INFO | [cuda:0] 34800/70028 queries | 3480000 docs scored | 98 docs/s | 35665.7s
+10:38:52 | INFO | [cuda:1] 33800/73627 queries | 3380000 docs scored | 94 docs/s | 35772.3s
+10:40:55 | INFO | [cuda:0] 35000/70028 queries | 3500000 docs scored | 97 docs/s | 35918.3s
+10:43:42 | INFO | [cuda:1] 34000/73627 queries | 3400000 docs scored | 94 docs/s | 36063.0s
+10:45:06 | INFO | [cuda:0] 35200/70028 queries | 3520000 docs scored | 97 docs/s | 36168.7s
+10:48:45 | INFO | [cuda:1] 34200/73627 queries | 3420000 docs scored | 94 docs/s | 36365.1s
+10:49:29 | INFO | [cuda:0] 35400/70028 queries | 3540000 docs scored | 97 docs/s | 36432.4s
+10:53:42 | INFO | [cuda:1] 34400/73627 queries | 3440000 docs scored | 94 docs/s | 36662.7s
+10:53:49 | INFO | [cuda:0] 35600/70028 queries | 3560000 docs scored | 97 docs/s | 36692.1s
+10:58:07 | INFO | [cuda:0] 35800/70028 queries | 3580000 docs scored | 97 docs/s | 36949.6s
+10:58:50 | INFO | [cuda:1] 34600/73627 queries | 3460000 docs scored | 94 docs/s | 36970.9s
+11:02:20 | INFO | [cuda:0] 36000/70028 queries | 3600000 docs scored | 97 docs/s | 37203.3s
+11:03:51 | INFO | [cuda:1] 34800/73627 queries | 3480000 docs scored | 93 docs/s | 37271.1s
+11:06:29 | INFO | [cuda:0] 36200/70028 queries | 3620000 docs scored | 97 docs/s | 37452.2s
+11:08:48 | INFO | [cuda:1] 35000/73627 queries | 3500000 docs scored | 93 docs/s | 37569.0s
+11:10:37 | INFO | [cuda:0] 36400/70028 queries | 3640000 docs scored | 97 docs/s | 37699.7s
+11:13:45 | INFO | [cuda:1] 35200/73627 queries | 3520000 docs scored | 93 docs/s | 37865.5s
+11:14:54 | INFO | [cuda:0] 36600/70028 queries | 3660000 docs scored | 96 docs/s | 37957.3s
+11:19:00 | INFO | [cuda:1] 35400/73627 queries | 3540000 docs scored | 93 docs/s | 38180.8s
+11:19:20 | INFO | [cuda:0] 36800/70028 queries | 3680000 docs scored | 96 docs/s | 38222.8s
+11:23:35 | INFO | [cuda:0] 37000/70028 queries | 3700000 docs scored | 96 docs/s | 38478.0s
+11:24:00 | INFO | [cuda:1] 35600/73627 queries | 3560000 docs scored | 93 docs/s | 38481.0s
+11:27:47 | INFO | [cuda:0] 37200/70028 queries | 3720000 docs scored | 96 docs/s | 38730.5s
+11:28:59 | INFO | [cuda:1] 35800/73627 queries | 3580000 docs scored | 92 docs/s | 38779.6s
+11:32:18 | INFO | [cuda:0] 37400/70028 queries | 3740000 docs scored | 96 docs/s | 39001.3s
+11:34:09 | INFO | [cuda:1] 36000/73627 queries | 3600000 docs scored | 92 docs/s | 39089.9s
+11:36:40 | INFO | [cuda:0] 37600/70028 queries | 3760000 docs scored | 96 docs/s | 39263.2s
+11:39:13 | INFO | [cuda:1] 36200/73627 queries | 3620000 docs scored | 92 docs/s | 39393.8s
+11:41:01 | INFO | [cuda:0] 37800/70028 queries | 3780000 docs scored | 96 docs/s | 39524.3s
+11:44:08 | INFO | [cuda:1] 36400/73627 queries | 3640000 docs scored | 92 docs/s | 39688.1s
+11:45:15 | INFO | [cuda:0] 38000/70028 queries | 3800000 docs scored | 96 docs/s | 39778.1s
+11:49:03 | INFO | [cuda:1] 36600/73627 queries | 3660000 docs scored | 92 docs/s | 39983.3s
+11:49:25 | INFO | [cuda:0] 38200/70028 queries | 3820000 docs scored | 95 docs/s | 40028.2s
+11:53:33 | INFO | [cuda:0] 38400/70028 queries | 3840000 docs scored | 95 docs/s | 40276.5s
+11:53:52 | INFO | [cuda:1] 36800/73627 queries | 3680000 docs scored | 91 docs/s | 40272.1s
+11:57:41 | INFO | [cuda:0] 38600/70028 queries | 3860000 docs scored | 95 docs/s | 40523.8s
+11:58:51 | INFO | [cuda:1] 37000/73627 queries | 3700000 docs scored | 91 docs/s | 40571.3s
+12:01:55 | INFO | [cuda:0] 38800/70028 queries | 3880000 docs scored | 95 docs/s | 40778.5s
+12:03:47 | INFO | [cuda:1] 37200/73627 queries | 3720000 docs scored | 91 docs/s | 40867.2s
+12:06:06 | INFO | [cuda:0] 39000/70028 queries | 3900000 docs scored | 95 docs/s | 41029.2s
+12:08:44 | INFO | [cuda:1] 37400/73627 queries | 3740000 docs scored | 91 docs/s | 41164.6s
+12:10:17 | INFO | [cuda:0] 39200/70028 queries | 3920000 docs scored | 95 docs/s | 41280.0s
+12:13:50 | INFO | [cuda:1] 37600/73627 queries | 3760000 docs scored | 91 docs/s | 41470.3s
+12:14:27 | INFO | [cuda:0] 39400/70028 queries | 3940000 docs scored | 95 docs/s | 41529.6s
+12:18:37 | INFO | [cuda:0] 39600/70028 queries | 3960000 docs scored | 95 docs/s | 41779.9s
+12:18:52 | INFO | [cuda:1] 37800/73627 queries | 3780000 docs scored | 90 docs/s | 41772.7s
+12:22:51 | INFO | [cuda:0] 39800/70028 queries | 3980000 docs scored | 95 docs/s | 42034.0s
+12:23:58 | INFO | [cuda:1] 38000/73627 queries | 3800000 docs scored | 90 docs/s | 42078.5s
+12:27:09 | INFO | [cuda:0] 40000/70028 queries | 4000000 docs scored | 95 docs/s | 42291.7s
+12:29:08 | INFO | [cuda:1] 38200/73627 queries | 3820000 docs scored | 90 docs/s | 42388.2s
+12:31:32 | INFO | [cuda:0] 40200/70028 queries | 4020000 docs scored | 94 docs/s | 42555.3s
+12:34:23 | INFO | [cuda:1] 38400/73627 queries | 3840000 docs scored | 90 docs/s | 42703.6s
+12:35:56 | INFO | [cuda:0] 40400/70028 queries | 4040000 docs scored | 94 docs/s | 42819.3s
+12:39:39 | INFO | [cuda:1] 38600/73627 queries | 3860000 docs scored | 90 docs/s | 43019.6s
+12:40:18 | INFO | [cuda:0] 40600/70028 queries | 4060000 docs scored | 94 docs/s | 43080.9s
+12:44:38 | INFO | [cuda:0] 40800/70028 queries | 4080000 docs scored | 94 docs/s | 43341.5s
+12:44:49 | INFO | [cuda:1] 38800/73627 queries | 3880000 docs scored | 90 docs/s | 43329.9s
+12:48:55 | INFO | [cuda:0] 41000/70028 queries | 4100000 docs scored | 94 docs/s | 43598.2s
+12:50:00 | INFO | [cuda:1] 39000/73627 queries | 3900000 docs scored | 89 docs/s | 43640.5s
+12:53:19 | INFO | [cuda:0] 41200/70028 queries | 4120000 docs scored | 94 docs/s | 43862.4s
+12:55:21 | INFO | [cuda:1] 39200/73627 queries | 3920000 docs scored | 89 docs/s | 43961.8s
+12:57:58 | INFO | [cuda:0] 41400/70028 queries | 4140000 docs scored | 94 docs/s | 44141.3s
+13:00:38 | INFO | [cuda:1] 39400/73627 queries | 3940000 docs scored | 89 docs/s | 44278.1s
+13:02:13 | INFO | [cuda:0] 41600/70028 queries | 4160000 docs scored | 94 docs/s | 44395.7s
+13:05:37 | INFO | [cuda:1] 39600/73627 queries | 3960000 docs scored | 89 docs/s | 44577.8s
+13:06:27 | INFO | [cuda:0] 41800/70028 queries | 4180000 docs scored | 94 docs/s | 44649.8s
+13:10:49 | INFO | [cuda:0] 42000/70028 queries | 4200000 docs scored | 94 docs/s | 44911.7s
+13:10:49 | INFO | [cuda:1] 39800/73627 queries | 3980000 docs scored | 89 docs/s | 44889.8s
+13:15:17 | INFO | [cuda:0] 42200/70028 queries | 4220000 docs scored | 93 docs/s | 45179.8s
+13:15:59 | INFO | [cuda:1] 40000/73627 queries | 4000000 docs scored | 88 docs/s | 45199.3s
+13:19:48 | INFO | [cuda:0] 42400/70028 queries | 4240000 docs scored | 93 docs/s | 45450.9s
+13:21:18 | INFO | [cuda:1] 40200/73627 queries | 4020000 docs scored | 88 docs/s | 45518.2s
+13:24:32 | INFO | [cuda:0] 42600/70028 queries | 4260000 docs scored | 93 docs/s | 45734.6s
+13:26:39 | INFO | [cuda:1] 40400/73627 queries | 4040000 docs scored | 88 docs/s | 45839.6s
+13:28:57 | INFO | [cuda:0] 42800/70028 queries | 4280000 docs scored | 93 docs/s | 45999.6s
+13:31:51 | INFO | [cuda:1] 40600/73627 queries | 4060000 docs scored | 88 docs/s | 46152.0s
+13:33:21 | INFO | [cuda:0] 43000/70028 queries | 4300000 docs scored | 93 docs/s | 46263.8s
+13:37:03 | INFO | [cuda:1] 40800/73627 queries | 4080000 docs scored | 88 docs/s | 46463.1s
+13:37:42 | INFO | [cuda:0] 43200/70028 queries | 4320000 docs scored | 93 docs/s | 46524.7s
+13:42:06 | INFO | [cuda:0] 43400/70028 queries | 4340000 docs scored | 93 docs/s | 46789.0s
+13:42:18 | INFO | [cuda:1] 41000/73627 queries | 4100000 docs scored | 88 docs/s | 46778.9s
+13:46:39 | INFO | [cuda:0] 43600/70028 queries | 4360000 docs scored | 93 docs/s | 47061.7s
+13:47:41 | INFO | [cuda:1] 41200/73627 queries | 4120000 docs scored | 87 docs/s | 47101.3s
+13:51:07 | INFO | [cuda:0] 43800/70028 queries | 4380000 docs scored | 93 docs/s | 47330.3s
+13:52:54 | INFO | [cuda:1] 41400/73627 queries | 4140000 docs scored | 87 docs/s | 47414.8s
+13:55:37 | INFO | [cuda:0] 44000/70028 queries | 4400000 docs scored | 92 docs/s | 47600.5s
+13:58:11 | INFO | [cuda:1] 41600/73627 queries | 4160000 docs scored | 87 docs/s | 47731.7s
+14:00:06 | INFO | [cuda:0] 44200/70028 queries | 4420000 docs scored | 92 docs/s | 47868.5s
+14:03:23 | INFO | [cuda:1] 41800/73627 queries | 4180000 docs scored | 87 docs/s | 48043.6s
+14:04:36 | INFO | [cuda:0] 44400/70028 queries | 4440000 docs scored | 92 docs/s | 48138.7s
+14:08:40 | INFO | [cuda:1] 42000/73627 queries | 4200000 docs scored | 87 docs/s | 48360.8s
+14:09:06 | INFO | [cuda:0] 44600/70028 queries | 4460000 docs scored | 92 docs/s | 48409.4s
+14:13:45 | INFO | [cuda:0] 44800/70028 queries | 4480000 docs scored | 92 docs/s | 48688.5s
+14:14:06 | INFO | [cuda:1] 42200/73627 queries | 4220000 docs scored | 87 docs/s | 48686.2s
+14:18:17 | INFO | [cuda:0] 45000/70028 queries | 4500000 docs scored | 92 docs/s | 48959.6s
+14:19:25 | INFO | [cuda:1] 42400/73627 queries | 4240000 docs scored | 87 docs/s | 49006.0s
+14:23:00 | INFO | [cuda:0] 45200/70028 queries | 4520000 docs scored | 92 docs/s | 49242.6s
+14:24:39 | INFO | [cuda:1] 42600/73627 queries | 4260000 docs scored | 86 docs/s | 49319.5s
+14:27:34 | INFO | [cuda:0] 45400/70028 queries | 4540000 docs scored | 92 docs/s | 49517.3s
+14:30:00 | INFO | [cuda:1] 42800/73627 queries | 4280000 docs scored | 86 docs/s | 49640.5s
+14:32:21 | INFO | [cuda:0] 45600/70028 queries | 4560000 docs scored | 92 docs/s | 49804.1s
+14:35:21 | INFO | [cuda:1] 43000/73627 queries | 4300000 docs scored | 86 docs/s | 49961.9s
+14:37:06 | INFO | [cuda:0] 45800/70028 queries | 4580000 docs scored | 91 docs/s | 50089.5s
+14:40:53 | INFO | [cuda:1] 43200/73627 queries | 4320000 docs scored | 86 docs/s | 50293.5s
+14:41:40 | INFO | [cuda:0] 46000/70028 queries | 4600000 docs scored | 91 docs/s | 50362.5s
+14:46:27 | INFO | [cuda:0] 46200/70028 queries | 4620000 docs scored | 91 docs/s | 50650.3s
+14:46:30 | INFO | [cuda:1] 43400/73627 queries | 4340000 docs scored | 86 docs/s | 50630.3s
+14:51:17 | INFO | [cuda:0] 46400/70028 queries | 4640000 docs scored | 91 docs/s | 50940.2s
+14:52:07 | INFO | [cuda:1] 43600/73627 queries | 4360000 docs scored | 86 docs/s | 50967.6s
+14:55:59 | INFO | [cuda:0] 46600/70028 queries | 4660000 docs scored | 91 docs/s | 51222.5s
+14:57:33 | INFO | [cuda:1] 43800/73627 queries | 4380000 docs scored | 85 docs/s | 51293.5s
+15:00:38 | INFO | [cuda:0] 46800/70028 queries | 4680000 docs scored | 91 docs/s | 51501.4s
+15:02:59 | INFO | [cuda:1] 44000/73627 queries | 4400000 docs scored | 85 docs/s | 51619.8s
+15:05:25 | INFO | [cuda:0] 47000/70028 queries | 4700000 docs scored | 91 docs/s | 51788.0s
+15:08:38 | INFO | [cuda:1] 44200/73627 queries | 4420000 docs scored | 85 docs/s | 51958.2s
+15:10:10 | INFO | [cuda:0] 47200/70028 queries | 4720000 docs scored | 91 docs/s | 52073.3s
+15:14:00 | INFO | [cuda:1] 44400/73627 queries | 4440000 docs scored | 85 docs/s | 52281.0s
+15:14:49 | INFO | [cuda:0] 47400/70028 queries | 4740000 docs scored | 91 docs/s | 52352.1s
+15:19:26 | INFO | [cuda:1] 44600/73627 queries | 4460000 docs scored | 85 docs/s | 52606.1s
+15:19:38 | INFO | [cuda:0] 47600/70028 queries | 4760000 docs scored | 90 docs/s | 52640.7s
+15:24:20 | INFO | [cuda:0] 47800/70028 queries | 4780000 docs scored | 90 docs/s | 52922.6s
+15:24:55 | INFO | [cuda:1] 44800/73627 queries | 4480000 docs scored | 85 docs/s | 52935.7s
+15:28:58 | INFO | [cuda:0] 48000/70028 queries | 4800000 docs scored | 90 docs/s | 53201.4s
+15:29:48 | INFO | [cuda:1] 45000/73627 queries | 4500000 docs scored | 85 docs/s | 53228.7s
+15:33:36 | INFO | [cuda:0] 48200/70028 queries | 4820000 docs scored | 90 docs/s | 53479.3s
+15:34:40 | INFO | [cuda:1] 45200/73627 queries | 4520000 docs scored | 84 docs/s | 53520.5s
+15:38:12 | INFO | [cuda:0] 48400/70028 queries | 4840000 docs scored | 90 docs/s | 53755.4s
+15:39:24 | INFO | [cuda:1] 45400/73627 queries | 4540000 docs scored | 84 docs/s | 53804.6s
+15:42:50 | INFO | [cuda:0] 48600/70028 queries | 4860000 docs scored | 90 docs/s | 54033.0s
+15:44:13 | INFO | [cuda:1] 45600/73627 queries | 4560000 docs scored | 84 docs/s | 54093.4s
+15:47:31 | INFO | [cuda:0] 48800/70028 queries | 4880000 docs scored | 90 docs/s | 54313.8s
+15:49:12 | INFO | [cuda:1] 45800/73627 queries | 4580000 docs scored | 84 docs/s | 54393.0s
+15:52:11 | INFO | [cuda:0] 49000/70028 queries | 4900000 docs scored | 90 docs/s | 54594.3s
+15:54:13 | INFO | [cuda:1] 46000/73627 queries | 4600000 docs scored | 84 docs/s | 54693.2s
+15:56:55 | INFO | [cuda:0] 49200/70028 queries | 4920000 docs scored | 90 docs/s | 54878.1s
+15:59:08 | INFO | [cuda:1] 46200/73627 queries | 4620000 docs scored | 84 docs/s | 54988.6s
+16:01:29 | INFO | [cuda:0] 49400/70028 queries | 4940000 docs scored | 90 docs/s | 55152.3s
+16:03:57 | INFO | [cuda:1] 46400/73627 queries | 4640000 docs scored | 84 docs/s | 55277.1s
+16:06:14 | INFO | [cuda:0] 49600/70028 queries | 4960000 docs scored | 89 docs/s | 55437.3s
+16:08:51 | INFO | [cuda:1] 46600/73627 queries | 4660000 docs scored | 84 docs/s | 55571.7s
+16:11:03 | INFO | [cuda:0] 49800/70028 queries | 4980000 docs scored | 89 docs/s | 55726.3s
+16:13:39 | INFO | [cuda:1] 46800/73627 queries | 4680000 docs scored | 84 docs/s | 55859.3s
+16:15:45 | INFO | [cuda:0] 50000/70028 queries | 5000000 docs scored | 89 docs/s | 56008.0s
+16:18:32 | INFO | [cuda:1] 47000/73627 queries | 4700000 docs scored | 84 docs/s | 56153.0s
+16:20:23 | INFO | [cuda:0] 50200/70028 queries | 5020000 docs scored | 89 docs/s | 56285.8s
+16:23:30 | INFO | [cuda:1] 47200/73627 queries | 4720000 docs scored | 84 docs/s | 56450.3s
+16:25:06 | INFO | [cuda:0] 50400/70028 queries | 5040000 docs scored | 89 docs/s | 56569.0s
+16:28:34 | INFO | [cuda:1] 47400/73627 queries | 4740000 docs scored | 84 docs/s | 56754.8s
+16:29:50 | INFO | [cuda:0] 50600/70028 queries | 5060000 docs scored | 89 docs/s | 56853.4s
+16:33:35 | INFO | [cuda:1] 47600/73627 queries | 4760000 docs scored | 83 docs/s | 57055.9s
+16:34:34 | INFO | [cuda:0] 50800/70028 queries | 5080000 docs scored | 89 docs/s | 57137.1s
+16:38:28 | INFO | [cuda:1] 47800/73627 queries | 4780000 docs scored | 83 docs/s | 57348.6s
+16:39:27 | INFO | [cuda:0] 51000/70028 queries | 5100000 docs scored | 89 docs/s | 57430.3s
+16:43:23 | INFO | [cuda:1] 48000/73627 queries | 4800000 docs scored | 83 docs/s | 57643.5s
+16:44:18 | INFO | [cuda:0] 51200/70028 queries | 5120000 docs scored | 89 docs/s | 57721.5s
+16:48:22 | INFO | [cuda:1] 48200/73627 queries | 4820000 docs scored | 83 docs/s | 57942.2s
+16:49:07 | INFO | [cuda:0] 51400/70028 queries | 5140000 docs scored | 89 docs/s | 58010.0s
+16:53:19 | INFO | [cuda:1] 48400/73627 queries | 4840000 docs scored | 83 docs/s | 58240.0s
+16:53:51 | INFO | [cuda:0] 51600/70028 queries | 5160000 docs scored | 89 docs/s | 58294.2s
+16:58:23 | INFO | [cuda:1] 48600/73627 queries | 4860000 docs scored | 83 docs/s | 58544.0s
+16:58:36 | INFO | [cuda:0] 51800/70028 queries | 5180000 docs scored | 88 docs/s | 58578.8s
+17:03:28 | INFO | [cuda:0] 52000/70028 queries | 5200000 docs scored | 88 docs/s | 58870.9s
+17:03:29 | INFO | [cuda:1] 48800/73627 queries | 4880000 docs scored | 83 docs/s | 58849.5s
+17:08:11 | INFO | [cuda:0] 52200/70028 queries | 5220000 docs scored | 88 docs/s | 59154.1s
+17:08:34 | INFO | [cuda:1] 49000/73627 queries | 4900000 docs scored | 83 docs/s | 59154.6s
+17:12:56 | INFO | [cuda:0] 52400/70028 queries | 5240000 docs scored | 88 docs/s | 59438.6s
+17:13:34 | INFO | [cuda:1] 49200/73627 queries | 4920000 docs scored | 83 docs/s | 59454.1s
+17:17:50 | INFO | [cuda:0] 52600/70028 queries | 5260000 docs scored | 88 docs/s | 59732.6s
+17:18:32 | INFO | [cuda:1] 49400/73627 queries | 4940000 docs scored | 83 docs/s | 59752.3s
+17:22:41 | INFO | [cuda:0] 52800/70028 queries | 5280000 docs scored | 88 docs/s | 60024.3s
+17:23:28 | INFO | [cuda:1] 49600/73627 queries | 4960000 docs scored | 83 docs/s | 60048.2s
+17:27:31 | INFO | [cuda:0] 53000/70028 queries | 5300000 docs scored | 88 docs/s | 60314.3s
+17:28:32 | INFO | [cuda:1] 49800/73627 queries | 4980000 docs scored | 83 docs/s | 60352.6s
+17:32:27 | INFO | [cuda:0] 53200/70028 queries | 5320000 docs scored | 88 docs/s | 60609.9s
+17:33:45 | INFO | [cuda:1] 50000/73627 queries | 5000000 docs scored | 82 docs/s | 60665.6s
+17:37:22 | INFO | [cuda:0] 53400/70028 queries | 5340000 docs scored | 88 docs/s | 60905.2s
+17:39:02 | INFO | [cuda:1] 50200/73627 queries | 5020000 docs scored | 82 docs/s | 60982.6s
+17:42:20 | INFO | [cuda:0] 53600/70028 queries | 5360000 docs scored | 88 docs/s | 61202.8s
+17:44:14 | INFO | [cuda:1] 50400/73627 queries | 5040000 docs scored | 82 docs/s | 61294.4s
+17:47:17 | INFO | [cuda:0] 53800/70028 queries | 5380000 docs scored | 87 docs/s | 61499.7s
+17:49:30 | INFO | [cuda:1] 50600/73627 queries | 5060000 docs scored | 82 docs/s | 61610.1s
+17:52:15 | INFO | [cuda:0] 54000/70028 queries | 5400000 docs scored | 87 docs/s | 61798.4s
+17:54:46 | INFO | [cuda:1] 50800/73627 queries | 5080000 docs scored | 82 docs/s | 61926.9s
+17:57:16 | INFO | [cuda:0] 54200/70028 queries | 5420000 docs scored | 87 docs/s | 62098.7s
+17:59:59 | INFO | [cuda:1] 51000/73627 queries | 5100000 docs scored | 82 docs/s | 62239.9s
+18:02:20 | INFO | [cuda:0] 54400/70028 queries | 5440000 docs scored | 87 docs/s | 62402.6s
+18:05:17 | INFO | [cuda:1] 51200/73627 queries | 5120000 docs scored | 82 docs/s | 62557.1s
+18:07:20 | INFO | [cuda:0] 54600/70028 queries | 5460000 docs scored | 87 docs/s | 62702.9s
+18:10:34 | INFO | [cuda:1] 51400/73627 queries | 5140000 docs scored | 82 docs/s | 62874.2s
+18:12:23 | INFO | [cuda:0] 54800/70028 queries | 5480000 docs scored | 87 docs/s | 63006.4s
+18:15:07 | INFO | [cuda:1] 51600/73627 queries | 5160000 docs scored | 82 docs/s | 63147.2s
+18:17:17 | INFO | [cuda:0] 55000/70028 queries | 5500000 docs scored | 87 docs/s | 63300.0s
+18:19:40 | INFO | [cuda:1] 51800/73627 queries | 5180000 docs scored | 82 docs/s | 63421.0s
+18:22:09 | INFO | [cuda:0] 55200/70028 queries | 5520000 docs scored | 87 docs/s | 63592.2s
+18:24:12 | INFO | [cuda:1] 52000/73627 queries | 5200000 docs scored | 82 docs/s | 63692.4s
+18:27:09 | INFO | [cuda:0] 55400/70028 queries | 5540000 docs scored | 87 docs/s | 63891.9s
+18:28:45 | INFO | [cuda:1] 52200/73627 queries | 5220000 docs scored | 82 docs/s | 63965.9s
+18:32:16 | INFO | [cuda:0] 55600/70028 queries | 5560000 docs scored | 87 docs/s | 64199.4s
+18:33:22 | INFO | [cuda:1] 52400/73627 queries | 5240000 docs scored | 82 docs/s | 64242.9s
+18:37:25 | INFO | [cuda:0] 55800/70028 queries | 5580000 docs scored | 87 docs/s | 64507.9s
+18:37:54 | INFO | [cuda:1] 52600/73627 queries | 5260000 docs scored | 82 docs/s | 64514.5s
+18:42:28 | INFO | [cuda:0] 56000/70028 queries | 5600000 docs scored | 86 docs/s | 64811.3s
+18:42:29 | INFO | [cuda:1] 52800/73627 queries | 5280000 docs scored | 81 docs/s | 64790.0s
+18:47:02 | INFO | [cuda:1] 53000/73627 queries | 5300000 docs scored | 81 docs/s | 65062.5s
+18:47:33 | INFO | [cuda:0] 56200/70028 queries | 5620000 docs scored | 86 docs/s | 65116.5s
+18:51:41 | INFO | [cuda:1] 53200/73627 queries | 5320000 docs scored | 81 docs/s | 65341.7s
+18:52:45 | INFO | [cuda:0] 56400/70028 queries | 5640000 docs scored | 86 docs/s | 65427.7s
+18:56:21 | INFO | [cuda:1] 53400/73627 queries | 5340000 docs scored | 81 docs/s | 65621.9s
+18:57:50 | INFO | [cuda:0] 56600/70028 queries | 5660000 docs scored | 86 docs/s | 65733.4s
+19:01:02 | INFO | [cuda:1] 53600/73627 queries | 5360000 docs scored | 81 docs/s | 65902.3s
+19:02:58 | INFO | [cuda:0] 56800/70028 queries | 5680000 docs scored | 86 docs/s | 66041.2s
+19:05:33 | INFO | [cuda:1] 53800/73627 queries | 5380000 docs scored | 81 docs/s | 66173.5s
+19:08:06 | INFO | [cuda:0] 57000/70028 queries | 5700000 docs scored | 86 docs/s | 66349.1s
+19:10:07 | INFO | [cuda:1] 54000/73627 queries | 5400000 docs scored | 81 docs/s | 66447.7s
+19:13:14 | INFO | [cuda:0] 57200/70028 queries | 5720000 docs scored | 86 docs/s | 66656.8s
+19:14:46 | INFO | [cuda:1] 54200/73627 queries | 5420000 docs scored | 81 docs/s | 66726.3s
+19:18:25 | INFO | [cuda:0] 57400/70028 queries | 5740000 docs scored | 86 docs/s | 66968.2s
+19:19:23 | INFO | [cuda:1] 54400/73627 queries | 5440000 docs scored | 81 docs/s | 67003.2s
+19:23:35 | INFO | [cuda:0] 57600/70028 queries | 5760000 docs scored | 86 docs/s | 67278.5s
+19:24:19 | INFO | [cuda:1] 54600/73627 queries | 5460000 docs scored | 81 docs/s | 67299.4s
+19:28:55 | INFO | [cuda:0] 57800/70028 queries | 5780000 docs scored | 86 docs/s | 67598.3s
+19:29:01 | INFO | [cuda:1] 54800/73627 queries | 5480000 docs scored | 81 docs/s | 67581.5s
+19:33:40 | INFO | [cuda:1] 55000/73627 queries | 5500000 docs scored | 81 docs/s | 67860.9s
+19:34:10 | INFO | [cuda:0] 58000/70028 queries | 5800000 docs scored | 85 docs/s | 67912.5s
+19:38:23 | INFO | [cuda:1] 55200/73627 queries | 5520000 docs scored | 81 docs/s | 68143.5s
+19:39:27 | INFO | [cuda:0] 58200/70028 queries | 5820000 docs scored | 85 docs/s | 68230.1s
+19:43:05 | INFO | [cuda:1] 55400/73627 queries | 5540000 docs scored | 81 docs/s | 68426.0s
+19:44:40 | INFO | [cuda:0] 58400/70028 queries | 5840000 docs scored | 85 docs/s | 68543.1s
+19:47:52 | INFO | [cuda:1] 55600/73627 queries | 5560000 docs scored | 81 docs/s | 68712.1s
+19:49:58 | INFO | [cuda:0] 58600/70028 queries | 5860000 docs scored | 85 docs/s | 68861.1s
+19:52:39 | INFO | [cuda:1] 55800/73627 queries | 5580000 docs scored | 81 docs/s | 68999.0s
+19:55:13 | INFO | [cuda:0] 58800/70028 queries | 5880000 docs scored | 85 docs/s | 69175.9s
+19:57:21 | INFO | [cuda:1] 56000/73627 queries | 5600000 docs scored | 81 docs/s | 69281.4s
+20:00:26 | INFO | [cuda:0] 59000/70028 queries | 5900000 docs scored | 85 docs/s | 69489.4s
+20:02:08 | INFO | [cuda:1] 56200/73627 queries | 5620000 docs scored | 81 docs/s | 69568.5s
+20:05:53 | INFO | [cuda:0] 59200/70028 queries | 5920000 docs scored | 85 docs/s | 69816.4s
+20:06:56 | INFO | [cuda:1] 56400/73627 queries | 5640000 docs scored | 81 docs/s | 69856.6s
+20:11:12 | INFO | [cuda:0] 59400/70028 queries | 5940000 docs scored | 85 docs/s | 70135.2s
+20:11:41 | INFO | [cuda:1] 56600/73627 queries | 5660000 docs scored | 81 docs/s | 70141.5s
+20:16:31 | INFO | [cuda:1] 56800/73627 queries | 5680000 docs scored | 81 docs/s | 70431.1s
+20:16:38 | INFO | [cuda:0] 59600/70028 queries | 5960000 docs scored | 85 docs/s | 70461.3s
+20:21:20 | INFO | [cuda:1] 57000/73627 queries | 5700000 docs scored | 81 docs/s | 70720.5s
+20:22:09 | INFO | [cuda:0] 59800/70028 queries | 5980000 docs scored | 84 docs/s | 70791.7s
+20:26:14 | INFO | [cuda:1] 57200/73627 queries | 5720000 docs scored | 81 docs/s | 71014.5s
+20:27:38 | INFO | [cuda:0] 60000/70028 queries | 6000000 docs scored | 84 docs/s | 71121.5s
+20:31:10 | INFO | [cuda:1] 57400/73627 queries | 5740000 docs scored | 80 docs/s | 71310.9s
+20:33:10 | INFO | [cuda:0] 60200/70028 queries | 6020000 docs scored | 84 docs/s | 71452.9s
+20:35:58 | INFO | [cuda:1] 57600/73627 queries | 5760000 docs scored | 80 docs/s | 71598.5s
+20:38:41 | INFO | [cuda:0] 60400/70028 queries | 6040000 docs scored | 84 docs/s | 71784.2s
+20:40:49 | INFO | [cuda:1] 57800/73627 queries | 5780000 docs scored | 80 docs/s | 71889.9s
+20:44:10 | INFO | [cuda:0] 60600/70028 queries | 6060000 docs scored | 84 docs/s | 72112.6s
+20:45:47 | INFO | [cuda:1] 58000/73627 queries | 5800000 docs scored | 80 docs/s | 72187.4s
+20:49:44 | INFO | [cuda:0] 60800/70028 queries | 6080000 docs scored | 84 docs/s | 72447.2s
+20:50:41 | INFO | [cuda:1] 58200/73627 queries | 5820000 docs scored | 80 docs/s | 72481.4s
+20:55:20 | INFO | [cuda:0] 61000/70028 queries | 6100000 docs scored | 84 docs/s | 72782.6s
+20:55:34 | INFO | [cuda:1] 58400/73627 queries | 5840000 docs scored | 80 docs/s | 72774.3s
+21:00:24 | INFO | [cuda:1] 58600/73627 queries | 5860000 docs scored | 80 docs/s | 73064.1s
+21:00:56 | INFO | [cuda:0] 61200/70028 queries | 6120000 docs scored | 84 docs/s | 73119.2s
+21:05:16 | INFO | [cuda:1] 58800/73627 queries | 5880000 docs scored | 80 docs/s | 73356.3s
+21:06:40 | INFO | [cuda:0] 61400/70028 queries | 6140000 docs scored | 84 docs/s | 73463.2s
+21:10:19 | INFO | [cuda:1] 59000/73627 queries | 5900000 docs scored | 80 docs/s | 73659.5s
+21:12:22 | INFO | [cuda:0] 61600/70028 queries | 6160000 docs scored | 83 docs/s | 73805.1s
+21:15:24 | INFO | [cuda:1] 59200/73627 queries | 5920000 docs scored | 80 docs/s | 73964.7s
+21:18:05 | INFO | [cuda:0] 61800/70028 queries | 6180000 docs scored | 83 docs/s | 74147.6s
+21:20:28 | INFO | [cuda:1] 59400/73627 queries | 5940000 docs scored | 80 docs/s | 74268.1s
+21:23:43 | INFO | [cuda:0] 62000/70028 queries | 6200000 docs scored | 83 docs/s | 74486.1s
+21:25:32 | INFO | [cuda:1] 59600/73627 queries | 5960000 docs scored | 80 docs/s | 74573.0s
+21:29:26 | INFO | [cuda:0] 62200/70028 queries | 6220000 docs scored | 83 docs/s | 74829.2s
+21:30:32 | INFO | [cuda:1] 59800/73627 queries | 5980000 docs scored | 80 docs/s | 74872.9s
+21:35:12 | INFO | [cuda:0] 62400/70028 queries | 6240000 docs scored | 83 docs/s | 75175.2s
+21:35:49 | INFO | [cuda:1] 60000/73627 queries | 6000000 docs scored | 80 docs/s | 75189.1s
+21:40:56 | INFO | [cuda:1] 60200/73627 queries | 6020000 docs scored | 80 docs/s | 75496.4s
+21:41:00 | INFO | [cuda:0] 62600/70028 queries | 6260000 docs scored | 83 docs/s | 75522.9s
+21:46:03 | INFO | [cuda:1] 60400/73627 queries | 6040000 docs scored | 80 docs/s | 75803.9s
+21:46:49 | INFO | [cuda:0] 62800/70028 queries | 6280000 docs scored | 83 docs/s | 75872.4s
+21:51:16 | INFO | [cuda:1] 60600/73627 queries | 6060000 docs scored | 80 docs/s | 76116.0s
+21:52:42 | INFO | [cuda:0] 63000/70028 queries | 6300000 docs scored | 83 docs/s | 76224.7s
+21:56:24 | INFO | [cuda:1] 60800/73627 queries | 6080000 docs scored | 80 docs/s | 76424.1s
+21:58:37 | INFO | [cuda:0] 63200/70028 queries | 6320000 docs scored | 83 docs/s | 76580.2s
+22:01:36 | INFO | [cuda:1] 61000/73627 queries | 6100000 docs scored | 79 docs/s | 76736.3s
+22:04:35 | INFO | [cuda:0] 63400/70028 queries | 6340000 docs scored | 82 docs/s | 76938.5s
+22:06:42 | INFO | [cuda:1] 61200/73627 queries | 6120000 docs scored | 79 docs/s | 77042.5s
+22:10:41 | INFO | [cuda:0] 63600/70028 queries | 6360000 docs scored | 82 docs/s | 77304.1s
+22:12:00 | INFO | [cuda:1] 61400/73627 queries | 6140000 docs scored | 79 docs/s | 77360.0s
+22:16:43 | INFO | [cuda:0] 63800/70028 queries | 6380000 docs scored | 82 docs/s | 77665.7s
+22:17:15 | INFO | [cuda:1] 61600/73627 queries | 6160000 docs scored | 79 docs/s | 77675.5s
+22:22:29 | INFO | [cuda:1] 61800/73627 queries | 6180000 docs scored | 79 docs/s | 77989.5s
+22:22:54 | INFO | [cuda:0] 64000/70028 queries | 6400000 docs scored | 82 docs/s | 78036.6s
+22:27:45 | INFO | [cuda:1] 62000/73627 queries | 6200000 docs scored | 79 docs/s | 78305.6s
+22:28:51 | INFO | [cuda:0] 64200/70028 queries | 6420000 docs scored | 82 docs/s | 78394.0s
+22:33:09 | INFO | [cuda:1] 62200/73627 queries | 6220000 docs scored | 79 docs/s | 78629.8s
+22:34:58 | INFO | [cuda:0] 64400/70028 queries | 6440000 docs scored | 82 docs/s | 78761.1s
+22:38:26 | INFO | [cuda:1] 62400/73627 queries | 6240000 docs scored | 79 docs/s | 78946.3s
+22:41:06 | INFO | [cuda:0] 64600/70028 queries | 6460000 docs scored | 82 docs/s | 79128.7s
+22:43:36 | INFO | [cuda:1] 62600/73627 queries | 6260000 docs scored | 79 docs/s | 79257.0s
+22:47:18 | INFO | [cuda:0] 64800/70028 queries | 6480000 docs scored | 82 docs/s | 79501.4s
+22:48:59 | INFO | [cuda:1] 62800/73627 queries | 6280000 docs scored | 79 docs/s | 79579.0s
+22:53:42 | INFO | [cuda:0] 65000/70028 queries | 6500000 docs scored | 81 docs/s | 79885.4s
+22:54:20 | INFO | [cuda:1] 63000/73627 queries | 6300000 docs scored | 79 docs/s | 79900.4s
+22:59:47 | INFO | [cuda:1] 63200/73627 queries | 6320000 docs scored | 79 docs/s | 80227.8s
+23:00:08 | INFO | [cuda:0] 65200/70028 queries | 6520000 docs scored | 81 docs/s | 80270.9s
+23:05:22 | INFO | [cuda:1] 63400/73627 queries | 6340000 docs scored | 79 docs/s | 80562.7s
+23:06:32 | INFO | [cuda:0] 65400/70028 queries | 6540000 docs scored | 81 docs/s | 80655.5s
+23:10:49 | INFO | [cuda:1] 63600/73627 queries | 6360000 docs scored | 79 docs/s | 80889.1s
+23:13:04 | INFO | [cuda:0] 65600/70028 queries | 6560000 docs scored | 81 docs/s | 81046.9s
+23:16:18 | INFO | [cuda:1] 63800/73627 queries | 6380000 docs scored | 79 docs/s | 81218.6s
+23:19:26 | INFO | [cuda:0] 65800/70028 queries | 6580000 docs scored | 81 docs/s | 81429.4s
+23:21:55 | INFO | [cuda:1] 64000/73627 queries | 6400000 docs scored | 78 docs/s | 81555.2s
+23:26:00 | INFO | [cuda:0] 66000/70028 queries | 6600000 docs scored | 81 docs/s | 81822.9s
+23:27:24 | INFO | [cuda:1] 64200/73627 queries | 6420000 docs scored | 78 docs/s | 81884.3s
+23:32:37 | INFO | [cuda:0] 66200/70028 queries | 6620000 docs scored | 81 docs/s | 82219.6s
+23:33:01 | INFO | [cuda:1] 64400/73627 queries | 6440000 docs scored | 78 docs/s | 82221.2s
+23:38:37 | INFO | [cuda:1] 64600/73627 queries | 6460000 docs scored | 78 docs/s | 82557.1s
+23:39:25 | INFO | [cuda:0] 66400/70028 queries | 6640000 docs scored | 80 docs/s | 82627.9s
+23:44:10 | INFO | [cuda:1] 64800/73627 queries | 6480000 docs scored | 78 docs/s | 82890.7s
+23:46:11 | INFO | [cuda:0] 66600/70028 queries | 6660000 docs scored | 80 docs/s | 83033.7s
+23:49:57 | INFO | [cuda:1] 65000/73627 queries | 6500000 docs scored | 78 docs/s | 83237.2s
+23:53:04 | INFO | [cuda:0] 66800/70028 queries | 6680000 docs scored | 80 docs/s | 83446.8s
+23:55:34 | INFO | [cuda:1] 65200/73627 queries | 6520000 docs scored | 78 docs/s | 83574.7s
+00:00:06 | INFO | [cuda:0] 67000/70028 queries | 6700000 docs scored | 80 docs/s | 83869.3s
+00:01:17 | INFO | [cuda:1] 65400/73627 queries | 6540000 docs scored | 78 docs/s | 83917.1s
+00:06:47 | INFO | [cuda:1] 65600/73627 queries | 6560000 docs scored | 78 docs/s | 84247.8s
+00:07:06 | INFO | [cuda:0] 67200/70028 queries | 6720000 docs scored | 80 docs/s | 84288.6s
+00:12:32 | INFO | [cuda:1] 65800/73627 queries | 6580000 docs scored | 78 docs/s | 84592.8s
+00:14:12 | INFO | [cuda:0] 67400/70028 queries | 6740000 docs scored | 80 docs/s | 84715.1s
+00:18:16 | INFO | [cuda:1] 66000/73627 queries | 6600000 docs scored | 78 docs/s | 84936.3s
+00:21:17 | INFO | [cuda:0] 67600/70028 queries | 6760000 docs scored | 79 docs/s | 85139.8s
+00:24:06 | INFO | [cuda:1] 66200/73627 queries | 6620000 docs scored | 78 docs/s | 85286.5s
+00:28:25 | INFO | [cuda:0] 67800/70028 queries | 6780000 docs scored | 79 docs/s | 85568.4s
+00:29:56 | INFO | [cuda:1] 66400/73627 queries | 6640000 docs scored | 78 docs/s | 85636.7s
+00:35:29 | INFO | [cuda:0] 68000/70028 queries | 6800000 docs scored | 79 docs/s | 85992.2s
+00:35:49 | INFO | [cuda:1] 66600/73627 queries | 6660000 docs scored | 77 docs/s | 85989.3s
+00:41:46 | INFO | [cuda:1] 66800/73627 queries | 6680000 docs scored | 77 docs/s | 86346.4s
+00:42:38 | INFO | [cuda:0] 68200/70028 queries | 6820000 docs scored | 79 docs/s | 86420.7s
+00:47:40 | INFO | [cuda:1] 67000/73627 queries | 6700000 docs scored | 77 docs/s | 86700.6s
+00:49:27 | INFO | [cuda:0] 68400/70028 queries | 6840000 docs scored | 79 docs/s | 86829.6s
+00:53:48 | INFO | [cuda:1] 67200/73627 queries | 6720000 docs scored | 77 docs/s | 87068.4s
+00:55:58 | INFO | [cuda:0] 68600/70028 queries | 6860000 docs scored | 79 docs/s | 87220.7s
+00:59:48 | INFO | [cuda:1] 67400/73627 queries | 6740000 docs scored | 77 docs/s | 87428.8s
+01:02:18 | INFO | [cuda:0] 68800/70028 queries | 6880000 docs scored | 79 docs/s | 87600.6s
+01:05:59 | INFO | [cuda:1] 67600/73627 queries | 6760000 docs scored | 77 docs/s | 87799.1s
+01:08:00 | INFO | [cuda:0] 69000/70028 queries | 6900000 docs scored | 78 docs/s | 87942.8s
+01:12:04 | INFO | [cuda:1] 67800/73627 queries | 6780000 docs scored | 77 docs/s | 88164.8s
+01:13:36 | INFO | [cuda:0] 69200/70028 queries | 6920000 docs scored | 78 docs/s | 88278.6s
+01:18:20 | INFO | [cuda:1] 68000/73627 queries | 6800000 docs scored | 77 docs/s | 88540.8s
+01:19:24 | INFO | [cuda:0] 69400/70028 queries | 6940000 docs scored | 78 docs/s | 88627.1s
+01:24:24 | INFO | [cuda:1] 68200/73627 queries | 6820000 docs scored | 77 docs/s | 88904.8s
+01:25:08 | INFO | [cuda:0] 69600/70028 queries | 6960000 docs scored | 78 docs/s | 88970.9s
+01:31:19 | INFO | [cuda:1] 68400/73627 queries | 6840000 docs scored | 77 docs/s | 89320.0s
+01:31:47 | INFO | [cuda:0] 69800/70028 queries | 6980000 docs scored | 78 docs/s | 89370.3s
+01:38:04 | INFO | [cuda:1] 68600/73627 queries | 6860000 docs scored | 76 docs/s | 89724.6s
+01:38:24 | INFO | [cuda:0] 70000/70028 queries | 7000000 docs scored | 78 docs/s | 89766.6s
+01:39:37 | INFO | [cuda:0] Done: 70028 queries, 7002800 docs in 89840.2s (78 docs/s)
+01:43:50 | INFO | [cuda:1] 68800/73627 queries | 6880000 docs scored | 76 docs/s | 90071.0s
+01:49:32 | INFO | [cuda:1] 69000/73627 queries | 6900000 docs scored | 76 docs/s | 90412.2s
+01:55:13 | INFO | [cuda:1] 69200/73627 queries | 6920000 docs scored | 76 docs/s | 90753.5s
+02:00:58 | INFO | [cuda:1] 69400/73627 queries | 6940000 docs scored | 76 docs/s | 91099.0s
+02:07:11 | INFO | [cuda:1] 69600/73627 queries | 6960000 docs scored | 76 docs/s | 91471.5s
+02:13:03 | INFO | [cuda:1] 69800/73627 queries | 6980000 docs scored | 76 docs/s | 91824.0s
+02:18:47 | INFO | [cuda:1] 70000/73627 queries | 7000000 docs scored | 76 docs/s | 92167.4s
+02:24:27 | INFO | [cuda:1] 70200/73627 queries | 7020000 docs scored | 76 docs/s | 92507.4s
+02:30:22 | INFO | [cuda:1] 70400/73627 queries | 7040000 docs scored | 76 docs/s | 92862.6s
+02:36:18 | INFO | [cuda:1] 70600/73627 queries | 7060000 docs scored | 76 docs/s | 93218.7s
+02:42:17 | INFO | [cuda:1] 70800/73627 queries | 7080000 docs scored | 76 docs/s | 93577.2s
+02:48:24 | INFO | [cuda:1] 71000/73627 queries | 7100000 docs scored | 76 docs/s | 93944.1s
+02:54:23 | INFO | [cuda:1] 71200/73627 queries | 7120000 docs scored | 76 docs/s | 94303.6s
+03:00:22 | INFO | [cuda:1] 71400/73627 queries | 7140000 docs scored | 75 docs/s | 94662.2s
+03:06:27 | INFO | [cuda:1] 71600/73627 queries | 7160000 docs scored | 75 docs/s | 95028.0s
+03:12:45 | INFO | [cuda:1] 71800/73627 queries | 7180000 docs scored | 75 docs/s | 95406.0s
+03:18:42 | INFO | [cuda:1] 72000/73627 queries | 7200000 docs scored | 75 docs/s | 95762.7s
+03:24:03 | INFO | [cuda:1] 72200/73627 queries | 7220000 docs scored | 75 docs/s | 96083.4s
+03:29:18 | INFO | [cuda:1] 72400/73627 queries | 7240000 docs scored | 75 docs/s | 96399.0s
+03:33:59 | INFO | [cuda:1] 72600/73627 queries | 7260000 docs scored | 75 docs/s | 96679.8s
+03:38:40 | INFO | [cuda:1] 72800/73627 queries | 7280000 docs scored | 75 docs/s | 96960.1s
+03:43:13 | INFO | [cuda:1] 73000/73627 queries | 7300000 docs scored | 75 docs/s | 97233.4s
+03:47:41 | INFO | [cuda:1] 73200/73627 queries | 7320000 docs scored | 75 docs/s | 97501.2s
+03:52:17 | INFO | [cuda:1] 73400/73627 queries | 7340000 docs scored | 75 docs/s | 97778.0s
+03:57:30 | INFO | [cuda:1] 73600/73627 queries | 7360000 docs scored | 75 docs/s | 98090.5s
+03:58:25 | INFO | [cuda:1] Done: 73627 queries, 7362700 docs in 98145.4s (75 docs/s)
+03:58:34 | INFO | ⏱  DONE:  Reranking 170055 queries on 2 GPU(s) (98859.8s)
+03:58:46 | INFO | Reranking complete: 170055 queries merged
+04:01:06 | INFO | Saved reranked run to /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-colbert-v2/over__jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32_d8192_nofilter/retrieval_run.lz4
+04:01:06 | INFO | Cleaned up checkpoint directory
+04:01:22 | INFO | 
+04:01:22 | INFO | ╔══════════════════════════════════════════════════╗
+04:01:22 | INFO | ║  RESULTS — jina-colbert-v2                       ║
+04:01:22 | INFO | ╠══════════════════════════════════════════════════╣
+04:01:22 | INFO | ║  ndcg@10          0.5020                         ║
+04:01:22 | INFO | ║  recall@100       0.9039                         ║
+04:01:22 | INFO | ║  mrr@10           0.4359                         ║
+04:01:22 | INFO | ║  map              0.4423                         ║
+04:01:22 | INFO | ║  precision@10     0.0732                         ║
+04:01:22 | INFO | ║  precision@50     0.0180                         ║
+04:01:22 | INFO | ╚══════════════════════════════════════════════════╝

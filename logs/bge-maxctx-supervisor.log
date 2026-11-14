@@ -1,0 +1,1599 @@
+00:36:47 | INFO | Loading faiss with AVX512 support.
+00:36:47 | INFO | Successfully loaded faiss with AVX512 support.
+00:36:47 | INFO | ⏱  START: Loading cached pruned qrels
+00:36:48 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.3s)
+00:36:53 | INFO | Loading first-stage run from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+00:38:22 | INFO | Prepared 170055 queries, 17005500 total pairs across 2 GPU(s)
+00:38:22 | INFO | ⏱  START: Reranking 170055 queries on 2 GPU(s)
+00:38:28 | INFO | Loading faiss with AVX512 support.
+00:38:28 | INFO | Successfully loaded faiss with AVX512 support.
+00:38:29 | INFO | Started worker on cuda:0 (85028 queries)
+00:38:33 | INFO | [cuda:0] Building doc lookup ...
+00:38:33 | INFO | ⏱  START: Loading eswiki corpus
+00:38:33 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+00:38:33 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+00:38:33 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+00:38:33 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+00:38:34 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+00:38:34 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+00:38:34 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+00:38:34 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+00:38:34 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+00:38:34 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+00:38:35 | INFO | ⏱  DONE:  Loading eswiki corpus (1.8s)
+00:38:35 | INFO | Original corpus: 14047759 documents
+00:38:35 | INFO | ⏱  START: Formatting and counting words (16 workers)
+Setting TOKENIZERS_PARALLELISM=false for forked processes.
+00:38:35 | WARNING | Setting TOKENIZERS_PARALLELISM=false for forked processes.
+00:38:36 | INFO | ⏱  DONE:  Formatting and counting words (16 workers) (1.0s)
+00:38:36 | INFO | Word-count filter disabled — using all 14047759 documents
+00:38:37 | INFO | Loading faiss with AVX512 support.
+00:38:37 | INFO | Successfully loaded faiss with AVX512 support.
+00:38:38 | INFO | Started worker on cuda:1 (85027 queries)
+00:38:45 | INFO | [cuda:1] Building doc lookup ...
+00:38:45 | INFO | ⏱  START: Loading eswiki corpus
+00:38:45 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+00:38:45 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+00:38:45 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+00:38:46 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+00:38:46 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+00:38:46 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+00:38:46 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+00:38:46 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+00:38:46 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+00:38:47 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+00:38:47 | INFO | ⏱  DONE:  Loading eswiki corpus (1.8s)
+00:38:47 | INFO | Original corpus: 14047759 documents
+00:38:47 | INFO | ⏱  START: Formatting and counting words (16 workers)
+Setting TOKENIZERS_PARALLELISM=false for forked processes.
+00:38:47 | WARNING | Setting TOKENIZERS_PARALLELISM=false for forked processes.
+00:38:48 | INFO | ⏱  DONE:  Formatting and counting words (16 workers) (1.0s)
+00:38:48 | INFO | Word-count filter disabled — using all 14047759 documents
+00:47:44 | INFO | Doc lookup built: 14047759 documents
+00:47:44 | INFO | [cuda:0] Loading BAAI/bge-reranker-v2-m3 ...
+00:47:45 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+00:47:45 | INFO | No modules.json found for BAAI/bge-reranker-v2-m3, initializing a new CrossEncoder model.
+00:47:45 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+00:47:45 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:47:45 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+00:47:45 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+00:47:45 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:47:45 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/393 [00:00<?, ?it/s]Loading weights: 100%|██████████| 393/393 [00:00<00:00, 19196.01it/s]
+00:47:45 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+00:47:46 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+00:47:46 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+00:47:46 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+00:47:46 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+00:47:46 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+00:47:46 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:47:46 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+00:47:46 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:47:46 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+00:47:46 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+00:47:46 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+00:47:47 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+00:47:47 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+00:47:54 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+00:47:56 | INFO | [cuda:0] Model loaded.
+00:47:58 | INFO | [cuda:0] Resuming: 12000 queries already scored
+00:48:24 | INFO | Doc lookup built: 14047759 documents
+00:48:24 | INFO | [cuda:1] Loading BAAI/bge-reranker-v2-m3 ...
+00:48:24 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+00:48:24 | INFO | No modules.json found for BAAI/bge-reranker-v2-m3, initializing a new CrossEncoder model.
+00:48:24 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+00:48:24 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:48:24 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+00:48:24 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+00:48:25 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:48:25 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/393 [00:00<?, ?it/s]Loading weights: 100%|██████████| 393/393 [00:00<00:00, 20353.41it/s]
+00:48:25 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+00:48:25 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+00:48:25 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+00:48:25 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+00:48:25 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+00:48:25 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+00:48:26 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:48:26 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+00:48:26 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+00:48:26 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+00:48:26 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+00:48:26 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+00:48:26 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+00:48:26 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+00:48:34 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+00:48:36 | INFO | [cuda:1] Model loaded.
+00:48:37 | INFO | [cuda:1] Resuming: 11400 queries already scored
+Process Process-2:
+Traceback (most recent call last):
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/jmendoza/ir-spanish/rerankers/bge_reranker_v2_m3.py", line 263, in _worker
+    scores = _predict_scores(model, pairs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/ir-spanish/rerankers/bge_reranker_v2_m3.py", line 174, in _predict_scores
+    batch_scores = model.predict(
+                   ^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 120, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/sentence_transformers/util/decorators.py", line 41, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/sentence_transformers/util/decorators.py", line 185, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/sentence_transformers/cross_encoder/model.py", line 679, in predict
+    out_features = self.forward(features, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/sentence_transformers/base/model.py", line 486, in forward
+    input = module(input, **module_kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/sentence_transformers/base/modules/transformer.py", line 1046, in forward
+    model_output = model_method(**filtered_kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/utils/generic.py", line 876, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/models/xlm_roberta/modeling_xlm_roberta.py", line 958, in forward
+    outputs = self.roberta(
+              ^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/utils/generic.py", line 952, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/utils/output_capturing.py", line 248, in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/models/xlm_roberta/modeling_xlm_roberta.py", line 641, in forward
+    encoder_outputs = self.encoder(
+                      ^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/models/xlm_roberta/modeling_xlm_roberta.py", line 535, in forward
+    hidden_states = layer_module(
+                    ^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/modeling_layers.py", line 93, in __call__
+    return super().__call__(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/models/xlm_roberta/modeling_xlm_roberta.py", line 434, in forward
+    self_attention_output, _ = self.attention(
+                               ^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/models/xlm_roberta/modeling_xlm_roberta.py", line 365, in forward
+    attention_output, attn_weights = self.self(
+                                     ^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/models/xlm_roberta/modeling_xlm_roberta.py", line 243, in forward
+    attn_output, attn_weights = attention_interface(
+                                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/integrations/sdpa_attention.py", line 92, in sdpa_attention_forward
+    attn_output = torch.nn.functional.scaled_dot_product_attention(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 7.61 GiB. GPU 1 has a total capacity of 23.54 GiB of which 2.37 GiB is free. Including non-PyTorch memory, this process has 20.21 GiB memory in use. Process 199968 has 462.00 MiB memory in use. Process 199969 has 466.00 MiB memory in use. Of the allocated memory 19.90 GiB is allocated by PyTorch, and 70.90 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[W1105 00:52:16.210817222 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
+00:53:42 | INFO | [cuda:0] 200/73028 queries | 20000 pairs scored | 79 pairs/s | 251.8s
+00:57:40 | INFO | [cuda:0] 400/73028 queries | 40000 pairs scored | 82 pairs/s | 489.8s
+01:01:45 | INFO | [cuda:0] 600/73028 queries | 60000 pairs scored | 82 pairs/s | 734.3s
+01:05:52 | INFO | [cuda:0] 800/73028 queries | 80000 pairs scored | 81 pairs/s | 981.7s
+/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+01:07:13 | INFO | Loading faiss with AVX512 support.
+01:07:13 | INFO | Successfully loaded faiss with AVX512 support.
+01:07:13 | INFO | ⏱  START: Loading cached pruned qrels
+01:07:13 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.4s)
+01:07:20 | INFO | Loading first-stage run from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+01:09:25 | INFO | Prepared 170055 queries, 17005500 total pairs across 2 GPU(s)
+01:09:25 | INFO | ⏱  START: Reranking 170055 queries on 2 GPU(s)
+01:09:33 | INFO | Loading faiss with AVX512 support.
+01:09:33 | INFO | Successfully loaded faiss with AVX512 support.
+01:09:35 | INFO | Started worker on cuda:0 (85028 queries)
+01:09:43 | INFO | [cuda:0] Building doc lookup ...
+01:09:43 | INFO | ⏱  START: Loading eswiki corpus
+01:09:43 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+01:09:43 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+01:09:43 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+01:09:44 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+01:09:44 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+01:09:44 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+01:09:44 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+01:09:44 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+01:09:45 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+01:09:45 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+01:09:45 | INFO | ⏱  DONE:  Loading eswiki corpus (2.2s)
+01:09:45 | INFO | Original corpus: 14047759 documents
+01:09:45 | INFO | ⏱  START: Formatting and counting words (16 workers)
+Setting TOKENIZERS_PARALLELISM=false for forked processes.
+01:09:45 | WARNING | Setting TOKENIZERS_PARALLELISM=false for forked processes.
+01:09:47 | INFO | ⏱  DONE:  Formatting and counting words (16 workers) (1.4s)
+01:09:47 | INFO | Word-count filter disabled — using all 14047759 documents
+01:09:47 | INFO | Loading faiss with AVX512 support.
+01:09:47 | INFO | Successfully loaded faiss with AVX512 support.
+01:09:49 | INFO | Started worker on cuda:1 (85027 queries)
+01:09:59 | INFO | [cuda:1] Building doc lookup ...
+01:09:59 | INFO | ⏱  START: Loading eswiki corpus
+01:09:59 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+01:09:59 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+01:09:59 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+01:09:59 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+01:10:00 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+01:10:00 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+01:10:00 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+01:10:00 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+01:10:00 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+01:10:00 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+01:10:01 | INFO | ⏱  DONE:  Loading eswiki corpus (1.9s)
+01:10:01 | INFO | Original corpus: 14047759 documents
+01:10:01 | INFO | ⏱  START: Formatting and counting words (16 workers)
+Setting TOKENIZERS_PARALLELISM=false for forked processes.
+01:10:01 | WARNING | Setting TOKENIZERS_PARALLELISM=false for forked processes.
+01:10:02 | INFO | ⏱  DONE:  Formatting and counting words (16 workers) (1.3s)
+01:10:02 | INFO | Word-count filter disabled — using all 14047759 documents
+01:22:12 | INFO | Doc lookup built: 14047759 documents
+01:22:13 | INFO | [cuda:0] Loading BAAI/bge-reranker-v2-m3 ...
+01:22:13 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+01:22:13 | INFO | No modules.json found for BAAI/bge-reranker-v2-m3, initializing a new CrossEncoder model.
+01:22:13 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+01:22:13 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+01:22:13 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+01:22:13 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+01:22:13 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+01:22:13 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/393 [00:00<?, ?it/s]Loading weights: 100%|██████████| 393/393 [00:00<00:00, 15170.04it/s]
+01:22:14 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+01:22:14 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+01:22:14 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+01:22:14 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+01:22:14 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+01:22:14 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+01:22:14 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+01:22:15 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+01:22:15 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+01:22:15 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+01:22:15 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+01:22:15 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+01:22:15 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+01:22:15 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+01:22:27 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+01:22:30 | INFO | [cuda:0] Model loaded.
+01:22:34 | INFO | [cuda:0] Resuming: 12800 queries already scored
+01:22:36 | INFO | Doc lookup built: 14047759 documents
+01:22:36 | INFO | [cuda:1] Loading BAAI/bge-reranker-v2-m3 ...
+01:22:37 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+01:22:37 | INFO | No modules.json found for BAAI/bge-reranker-v2-m3, initializing a new CrossEncoder model.
+01:22:37 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+01:22:37 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+01:22:37 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+01:22:37 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+01:22:37 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+01:22:37 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/393 [00:00<?, ?it/s]Loading weights: 100%|██████████| 393/393 [00:00<00:00, 15197.45it/s]
+01:22:38 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+01:22:38 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+01:22:38 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+01:22:38 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+01:22:38 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+01:22:38 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+01:22:38 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+01:22:38 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+01:22:39 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+01:22:39 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+01:22:39 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+01:22:39 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+01:22:39 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+01:22:39 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+01:22:52 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+01:22:55 | INFO | [cuda:1] Model loaded.
+01:22:58 | INFO | [cuda:1] Resuming: 11400 queries already scored
+Process Process-2:
+Traceback (most recent call last):
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/jmendoza/ir-spanish/rerankers/bge_reranker_v2_m3.py", line 263, in _worker
+    scores = _predict_scores(model, pairs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/ir-spanish/rerankers/bge_reranker_v2_m3.py", line 174, in _predict_scores
+    batch_scores = model.predict(
+                   ^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 120, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/sentence_transformers/util/decorators.py", line 41, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/sentence_transformers/util/decorators.py", line 185, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/sentence_transformers/cross_encoder/model.py", line 679, in predict
+    out_features = self.forward(features, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/sentence_transformers/base/model.py", line 486, in forward
+    input = module(input, **module_kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/sentence_transformers/base/modules/transformer.py", line 1046, in forward
+    model_output = model_method(**filtered_kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/utils/generic.py", line 876, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/models/xlm_roberta/modeling_xlm_roberta.py", line 958, in forward
+    outputs = self.roberta(
+              ^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/utils/generic.py", line 952, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/utils/output_capturing.py", line 248, in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/models/xlm_roberta/modeling_xlm_roberta.py", line 641, in forward
+    encoder_outputs = self.encoder(
+                      ^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/models/xlm_roberta/modeling_xlm_roberta.py", line 535, in forward
+    hidden_states = layer_module(
+                    ^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/modeling_layers.py", line 93, in __call__
+    return super().__call__(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/models/xlm_roberta/modeling_xlm_roberta.py", line 434, in forward
+    self_attention_output, _ = self.attention(
+                               ^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/models/xlm_roberta/modeling_xlm_roberta.py", line 365, in forward
+    attention_output, attn_weights = self.self(
+                                     ^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/models/xlm_roberta/modeling_xlm_roberta.py", line 243, in forward
+    attn_output, attn_weights = attention_interface(
+                                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/integrations/sdpa_attention.py", line 92, in sdpa_attention_forward
+    attn_output = torch.nn.functional.scaled_dot_product_attention(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 7.61 GiB. GPU 1 has a total capacity of 23.54 GiB of which 559.06 MiB is free. Process 205412 has 462.00 MiB memory in use. Process 205423 has 462.00 MiB memory in use. Process 205460 has 462.00 MiB memory in use. Process 205491 has 462.00 MiB memory in use. Process 205543 has 462.00 MiB memory in use. Process 205568 has 462.00 MiB memory in use. Including non-PyTorch memory, this process has 20.21 GiB memory in use. Of the allocated memory 19.90 GiB is allocated by PyTorch, and 70.90 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[W1105 01:28:17.091797439 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
+01:28:52 | INFO | [cuda:0] 200/72228 queries | 20000 pairs scored | 77 pairs/s | 261.4s
+01:33:02 | INFO | [cuda:0] 400/72228 queries | 40000 pairs scored | 78 pairs/s | 511.2s
+01:37:20 | INFO | [cuda:0] 600/72228 queries | 60000 pairs scored | 78 pairs/s | 769.5s
+01:41:34 | INFO | [cuda:0] 800/72228 queries | 80000 pairs scored | 78 pairs/s | 1023.8s
+01:45:50 | INFO | [cuda:0] 1000/72228 queries | 100000 pairs scored | 78 pairs/s | 1279.0s
+01:50:00 | INFO | [cuda:0] 1200/72228 queries | 120000 pairs scored | 78 pairs/s | 1529.4s
+01:54:18 | INFO | [cuda:0] 1400/72228 queries | 140000 pairs scored | 78 pairs/s | 1787.7s
+01:58:34 | INFO | [cuda:0] 1600/72228 queries | 160000 pairs scored | 78 pairs/s | 2043.2s
+02:02:44 | INFO | [cuda:0] 1800/72228 queries | 180000 pairs scored | 78 pairs/s | 2293.5s
+/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+02:06:49 | INFO | Loading faiss with AVX512 support.
+02:06:49 | INFO | Successfully loaded faiss with AVX512 support.
+02:06:49 | INFO | ⏱  START: Loading cached pruned qrels
+02:06:50 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.4s)
+02:06:56 | INFO | Loading first-stage run from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+02:09:07 | INFO | Prepared 170055 queries, 17005500 total pairs across 2 GPU(s)
+02:09:07 | INFO | ⏱  START: Reranking 170055 queries on 2 GPU(s)
+02:09:15 | INFO | Loading faiss with AVX512 support.
+02:09:16 | INFO | Successfully loaded faiss with AVX512 support.
+02:09:16 | INFO | Started worker on cuda:0 (85028 queries)
+02:09:23 | INFO | [cuda:0] Building doc lookup ...
+02:09:23 | INFO | ⏱  START: Loading eswiki corpus
+02:09:23 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+02:09:23 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+02:09:23 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+02:09:23 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+02:09:24 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+02:09:24 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+02:09:24 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+02:09:24 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+02:09:24 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+02:09:24 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+02:09:25 | INFO | ⏱  DONE:  Loading eswiki corpus (2.2s)
+02:09:25 | INFO | Original corpus: 14047759 documents
+02:09:25 | INFO | ⏱  START: Formatting and counting words (16 workers)
+Setting TOKENIZERS_PARALLELISM=false for forked processes.
+02:09:25 | WARNING | Setting TOKENIZERS_PARALLELISM=false for forked processes.
+02:09:26 | INFO | ⏱  DONE:  Formatting and counting words (16 workers) (1.5s)
+02:09:26 | INFO | Word-count filter disabled — using all 14047759 documents
+02:09:29 | INFO | Loading faiss with AVX512 support.
+02:09:29 | INFO | Successfully loaded faiss with AVX512 support.
+02:09:31 | INFO | Started worker on cuda:1 (85027 queries)
+02:09:42 | INFO | [cuda:1] Building doc lookup ...
+02:09:42 | INFO | ⏱  START: Loading eswiki corpus
+02:09:42 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+02:09:42 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+02:09:42 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+02:09:43 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+02:09:43 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+02:09:43 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+02:09:43 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+02:09:43 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+02:09:43 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+02:09:43 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+02:09:44 | INFO | ⏱  DONE:  Loading eswiki corpus (2.0s)
+02:09:44 | INFO | Original corpus: 14047759 documents
+02:09:44 | INFO | ⏱  START: Formatting and counting words (16 workers)
+Setting TOKENIZERS_PARALLELISM=false for forked processes.
+02:09:44 | WARNING | Setting TOKENIZERS_PARALLELISM=false for forked processes.
+02:09:46 | INFO | ⏱  DONE:  Formatting and counting words (16 workers) (1.8s)
+02:09:46 | INFO | Word-count filter disabled — using all 14047759 documents
+02:21:56 | INFO | Doc lookup built: 14047759 documents
+02:21:56 | INFO | [cuda:0] Loading BAAI/bge-reranker-v2-m3 ...
+02:21:56 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+02:21:56 | INFO | No modules.json found for BAAI/bge-reranker-v2-m3, initializing a new CrossEncoder model.
+02:21:57 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+02:21:57 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:21:57 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+02:21:57 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+02:21:57 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:21:57 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/393 [00:00<?, ?it/s]Loading weights: 100%|██████████| 393/393 [00:00<00:00, 14168.00it/s]
+02:21:58 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+02:21:58 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+02:21:58 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+02:21:58 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+02:21:58 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+02:21:58 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+02:21:58 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:21:58 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+02:21:58 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:21:58 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+02:21:58 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+02:21:58 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+02:21:59 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+02:21:59 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+02:22:12 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+02:22:14 | INFO | [cuda:0] Model loaded.
+02:22:19 | INFO | [cuda:0] Resuming: 14600 queries already scored
+02:22:36 | INFO | Doc lookup built: 14047759 documents
+02:22:36 | INFO | [cuda:1] Loading BAAI/bge-reranker-v2-m3 ...
+02:22:36 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+02:22:36 | INFO | No modules.json found for BAAI/bge-reranker-v2-m3, initializing a new CrossEncoder model.
+02:22:36 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+02:22:37 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:22:37 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+02:22:37 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+02:22:37 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:22:37 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/393 [00:00<?, ?it/s]Loading weights: 100%|██████████| 393/393 [00:00<00:00, 16300.08it/s]
+02:22:37 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+02:22:37 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+02:22:38 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+02:22:38 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+02:22:38 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+02:22:38 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+02:22:38 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:22:38 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+02:22:38 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+02:22:38 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+02:22:38 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+02:22:38 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+02:22:38 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+02:22:39 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+02:22:50 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+02:22:53 | INFO | [cuda:1] Model loaded.
+02:22:56 | INFO | [cuda:1] Resuming: 11400 queries already scored
+Process Process-2:
+Traceback (most recent call last):
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/jmendoza/ir-spanish/rerankers/bge_reranker_v2_m3.py", line 263, in _worker
+    scores = _predict_scores(model, pairs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/ir-spanish/rerankers/bge_reranker_v2_m3.py", line 174, in _predict_scores
+    batch_scores = model.predict(
+                   ^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 120, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/sentence_transformers/util/decorators.py", line 41, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/sentence_transformers/util/decorators.py", line 185, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/sentence_transformers/cross_encoder/model.py", line 679, in predict
+    out_features = self.forward(features, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/sentence_transformers/base/model.py", line 486, in forward
+    input = module(input, **module_kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/sentence_transformers/base/modules/transformer.py", line 1046, in forward
+    model_output = model_method(**filtered_kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/utils/generic.py", line 876, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/models/xlm_roberta/modeling_xlm_roberta.py", line 958, in forward
+    outputs = self.roberta(
+              ^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/utils/generic.py", line 952, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/utils/output_capturing.py", line 248, in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/models/xlm_roberta/modeling_xlm_roberta.py", line 641, in forward
+    encoder_outputs = self.encoder(
+                      ^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/models/xlm_roberta/modeling_xlm_roberta.py", line 535, in forward
+    hidden_states = layer_module(
+                    ^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/modeling_layers.py", line 93, in __call__
+    return super().__call__(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/models/xlm_roberta/modeling_xlm_roberta.py", line 434, in forward
+    self_attention_output, _ = self.attention(
+                               ^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/models/xlm_roberta/modeling_xlm_roberta.py", line 365, in forward
+    attention_output, attn_weights = self.self(
+                                     ^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/models/xlm_roberta/modeling_xlm_roberta.py", line 243, in forward
+    attn_output, attn_weights = attention_interface(
+                                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/site-packages/transformers/integrations/sdpa_attention.py", line 92, in sdpa_attention_forward
+    attn_output = torch.nn.functional.scaled_dot_product_attention(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 7.61 GiB. GPU 1 has a total capacity of 23.54 GiB of which 559.06 MiB is free. Process 205412 has 462.00 MiB memory in use. Process 205423 has 462.00 MiB memory in use. Process 205460 has 462.00 MiB memory in use. Process 205491 has 462.00 MiB memory in use. Process 205543 has 462.00 MiB memory in use. Process 205568 has 462.00 MiB memory in use. Including non-PyTorch memory, this process has 20.21 GiB memory in use. Of the allocated memory 19.90 GiB is allocated by PyTorch, and 70.90 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[W1105 02:28:18.992132150 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
+02:29:08 | INFO | [cuda:0] 200/70428 queries | 20000 pairs scored | 68 pairs/s | 295.3s
+02:33:25 | INFO | [cuda:0] 400/70428 queries | 40000 pairs scored | 73 pairs/s | 551.5s
+02:37:50 | INFO | [cuda:0] 600/70428 queries | 60000 pairs scored | 73 pairs/s | 817.1s
+02:42:18 | INFO | [cuda:0] 800/70428 queries | 80000 pairs scored | 74 pairs/s | 1084.5s
+02:46:55 | INFO | [cuda:0] 1000/70428 queries | 100000 pairs scored | 73 pairs/s | 1362.3s
+02:51:20 | INFO | [cuda:0] 1200/70428 queries | 120000 pairs scored | 74 pairs/s | 1627.3s
+02:55:53 | INFO | [cuda:0] 1400/70428 queries | 140000 pairs scored | 74 pairs/s | 1899.7s
+03:00:24 | INFO | [cuda:0] 1600/70428 queries | 160000 pairs scored | 74 pairs/s | 2170.8s
+03:04:56 | INFO | [cuda:0] 1800/70428 queries | 180000 pairs scored | 74 pairs/s | 2442.6s
+/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+03:07:07 | INFO | Loading faiss with AVX512 support.
+03:07:07 | INFO | Successfully loaded faiss with AVX512 support.
+03:07:08 | INFO | ⏱  START: Loading cached pruned qrels
+03:07:08 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.4s)
+03:07:15 | INFO | Loading first-stage run from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+03:09:26 | INFO | Prepared 170055 queries, 17005500 total pairs across 2 GPU(s)
+03:09:26 | INFO | ⏱  START: Reranking 170055 queries on 2 GPU(s)
+03:09:35 | INFO | Loading faiss with AVX512 support.
+03:09:35 | INFO | Successfully loaded faiss with AVX512 support.
+03:09:36 | INFO | Started worker on cuda:0 (85028 queries)
+03:09:43 | INFO | [cuda:0] Building doc lookup ...
+03:09:43 | INFO | ⏱  START: Loading eswiki corpus
+03:09:43 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+03:09:43 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+03:09:44 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+03:09:44 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+03:09:44 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+03:09:44 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+03:09:44 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+03:09:45 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+03:09:45 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+03:09:45 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+03:09:45 | INFO | ⏱  DONE:  Loading eswiki corpus (2.3s)
+03:09:45 | INFO | Original corpus: 14047759 documents
+03:09:45 | INFO | ⏱  START: Formatting and counting words (16 workers)
+Setting TOKENIZERS_PARALLELISM=false for forked processes.
+03:09:45 | WARNING | Setting TOKENIZERS_PARALLELISM=false for forked processes.
+03:09:47 | INFO | ⏱  DONE:  Formatting and counting words (16 workers) (1.5s)
+03:09:47 | INFO | Word-count filter disabled — using all 14047759 documents
+03:09:50 | INFO | Loading faiss with AVX512 support.
+03:09:50 | INFO | Successfully loaded faiss with AVX512 support.
+03:09:52 | INFO | Started worker on cuda:1 (85027 queries)
+03:10:03 | INFO | [cuda:1] Building doc lookup ...
+03:10:03 | INFO | ⏱  START: Loading eswiki corpus
+03:10:03 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+03:10:03 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+03:10:03 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+03:10:03 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+03:10:03 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+03:10:03 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+03:10:04 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+03:10:04 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+03:10:04 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+03:10:04 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+03:10:05 | INFO | ⏱  DONE:  Loading eswiki corpus (2.4s)
+03:10:05 | INFO | Original corpus: 14047759 documents
+03:10:05 | INFO | ⏱  START: Formatting and counting words (16 workers)
+Setting TOKENIZERS_PARALLELISM=false for forked processes.
+03:10:05 | WARNING | Setting TOKENIZERS_PARALLELISM=false for forked processes.
+03:10:07 | INFO | ⏱  DONE:  Formatting and counting words (16 workers) (1.7s)
+03:10:07 | INFO | Word-count filter disabled — using all 14047759 documents
+03:22:43 | INFO | Doc lookup built: 14047759 documents
+03:22:43 | INFO | [cuda:0] Loading BAAI/bge-reranker-v2-m3 ...
+03:22:44 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+03:22:44 | INFO | No modules.json found for BAAI/bge-reranker-v2-m3, initializing a new CrossEncoder model.
+03:22:44 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+03:22:44 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+03:22:44 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+03:22:44 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+03:22:44 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+03:22:44 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/393 [00:00<?, ?it/s]Loading weights: 100%|██████████| 393/393 [00:00<00:00, 15539.00it/s]
+03:22:45 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+03:22:45 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+03:22:45 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+03:22:45 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+03:22:45 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+03:22:45 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+03:22:45 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+03:22:45 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+03:22:45 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+03:22:46 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+03:22:46 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+03:22:46 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+03:22:46 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+03:22:46 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+03:22:46 | INFO | Doc lookup built: 14047759 documents
+03:22:46 | INFO | [cuda:1] Loading BAAI/bge-reranker-v2-m3 ...
+03:22:47 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+03:22:47 | INFO | No modules.json found for BAAI/bge-reranker-v2-m3, initializing a new CrossEncoder model.
+03:22:47 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+03:22:47 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+03:22:47 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+03:22:47 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+03:22:47 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+03:22:47 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/393 [00:00<?, ?it/s]Loading weights: 100%|██████████| 393/393 [00:00<00:00, 14282.41it/s]
+03:22:48 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+03:22:48 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+03:22:48 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+03:22:48 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+03:22:48 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+03:22:48 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+03:22:48 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+03:22:48 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+03:22:48 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+03:22:49 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+03:22:49 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+03:22:49 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+03:22:49 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+03:22:49 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+03:22:57 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+03:23:00 | INFO | [cuda:0] Model loaded.
+03:23:02 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+03:23:04 | INFO | [cuda:0] Resuming: 16400 queries already scored
+03:23:05 | INFO | [cuda:1] Model loaded.
+03:23:08 | INFO | [cuda:1] Resuming: 11400 queries already scored
+03:30:18 | INFO | [cuda:0] 200/68628 queries | 20000 pairs scored | 65 pairs/s | 308.2s
+03:34:27 | INFO | [cuda:1] 200/73627 queries | 20000 pairs scored | 36 pairs/s | 552.5s
+03:35:29 | INFO | [cuda:0] 400/68628 queries | 40000 pairs scored | 65 pairs/s | 619.4s
+03:40:39 | INFO | [cuda:0] 600/68628 queries | 60000 pairs scored | 65 pairs/s | 929.8s
+03:43:34 | INFO | [cuda:1] 400/73627 queries | 40000 pairs scored | 36 pairs/s | 1099.2s
+03:45:54 | INFO | [cuda:0] 800/68628 queries | 80000 pairs scored | 64 pairs/s | 1244.8s
+03:51:16 | INFO | [cuda:0] 1000/68628 queries | 100000 pairs scored | 64 pairs/s | 1566.5s
+03:52:46 | INFO | [cuda:1] 600/73627 queries | 60000 pairs scored | 36 pairs/s | 1651.1s
+03:56:19 | INFO | [cuda:0] 1200/68628 queries | 120000 pairs scored | 64 pairs/s | 1870.0s
+04:01:20 | INFO | [cuda:0] 1400/68628 queries | 140000 pairs scored | 65 pairs/s | 2170.0s
+04:01:49 | INFO | [cuda:1] 800/73627 queries | 80000 pairs scored | 36 pairs/s | 2194.0s
+04:06:18 | INFO | [cuda:0] 1600/68628 queries | 160000 pairs scored | 65 pairs/s | 2468.8s
+04:10:56 | INFO | [cuda:1] 1000/73627 queries | 100000 pairs scored | 36 pairs/s | 2741.4s
+04:11:27 | INFO | [cuda:0] 1800/68628 queries | 180000 pairs scored | 65 pairs/s | 2777.8s
+04:16:36 | INFO | [cuda:0] 2000/68628 queries | 200000 pairs scored | 65 pairs/s | 3086.5s
+04:20:15 | INFO | [cuda:1] 1200/73627 queries | 120000 pairs scored | 36 pairs/s | 3300.1s
+04:21:50 | INFO | [cuda:0] 2200/68628 queries | 220000 pairs scored | 65 pairs/s | 3400.8s
+04:27:08 | INFO | [cuda:0] 2400/68628 queries | 240000 pairs scored | 65 pairs/s | 3718.1s
+04:29:29 | INFO | [cuda:1] 1400/73627 queries | 140000 pairs scored | 36 pairs/s | 3854.4s
+04:32:20 | INFO | [cuda:0] 2600/68628 queries | 260000 pairs scored | 65 pairs/s | 4030.0s
+04:37:34 | INFO | [cuda:0] 2800/68628 queries | 280000 pairs scored | 64 pairs/s | 4344.0s
+04:38:25 | INFO | [cuda:1] 1600/73627 queries | 160000 pairs scored | 36 pairs/s | 4390.4s
+04:42:43 | INFO | [cuda:0] 3000/68628 queries | 300000 pairs scored | 64 pairs/s | 4653.9s
+04:47:23 | INFO | [cuda:1] 1800/73627 queries | 180000 pairs scored | 37 pairs/s | 4928.1s
+04:48:00 | INFO | [cuda:0] 3200/68628 queries | 320000 pairs scored | 64 pairs/s | 4970.1s
+04:53:18 | INFO | [cuda:0] 3400/68628 queries | 340000 pairs scored | 64 pairs/s | 5288.6s
+04:56:14 | INFO | [cuda:1] 2000/73627 queries | 200000 pairs scored | 37 pairs/s | 5459.0s
+04:58:25 | INFO | [cuda:0] 3600/68628 queries | 360000 pairs scored | 64 pairs/s | 5596.0s
+05:03:29 | INFO | [cuda:0] 3800/68628 queries | 380000 pairs scored | 64 pairs/s | 5899.9s
+05:05:21 | INFO | [cuda:1] 2200/73627 queries | 220000 pairs scored | 37 pairs/s | 6005.6s
+05:08:34 | INFO | [cuda:0] 4000/68628 queries | 400000 pairs scored | 64 pairs/s | 6204.6s
+05:13:44 | INFO | [cuda:0] 4200/68628 queries | 420000 pairs scored | 64 pairs/s | 6514.5s
+05:14:24 | INFO | [cuda:1] 2400/73627 queries | 240000 pairs scored | 37 pairs/s | 6549.5s
+05:18:53 | INFO | [cuda:0] 4400/68628 queries | 440000 pairs scored | 64 pairs/s | 6823.0s
+05:23:32 | INFO | [cuda:1] 2600/73627 queries | 260000 pairs scored | 37 pairs/s | 7096.6s
+05:24:02 | INFO | [cuda:0] 4600/68628 queries | 460000 pairs scored | 64 pairs/s | 7132.9s
+05:29:18 | INFO | [cuda:0] 4800/68628 queries | 480000 pairs scored | 64 pairs/s | 7448.7s
+05:32:38 | INFO | [cuda:1] 2800/73627 queries | 280000 pairs scored | 37 pairs/s | 7643.0s
+05:34:34 | INFO | [cuda:0] 5000/68628 queries | 500000 pairs scored | 64 pairs/s | 7764.0s
+05:39:44 | INFO | [cuda:0] 5200/68628 queries | 520000 pairs scored | 64 pairs/s | 8074.5s
+05:42:03 | INFO | [cuda:1] 3000/73627 queries | 300000 pairs scored | 37 pairs/s | 8208.3s
+05:44:49 | INFO | [cuda:0] 5400/68628 queries | 540000 pairs scored | 64 pairs/s | 8379.5s
+05:49:57 | INFO | [cuda:0] 5600/68628 queries | 560000 pairs scored | 64 pairs/s | 8687.2s
+05:50:52 | INFO | [cuda:1] 3200/73627 queries | 320000 pairs scored | 37 pairs/s | 8737.4s
+05:55:09 | INFO | [cuda:0] 5800/68628 queries | 580000 pairs scored | 64 pairs/s | 8999.6s
+05:59:53 | INFO | [cuda:1] 3400/73627 queries | 340000 pairs scored | 37 pairs/s | 9278.4s
+06:00:18 | INFO | [cuda:0] 6000/68628 queries | 600000 pairs scored | 64 pairs/s | 9308.6s
+06:05:26 | INFO | [cuda:0] 6200/68628 queries | 620000 pairs scored | 64 pairs/s | 9616.4s
+06:08:52 | INFO | [cuda:1] 3600/73627 queries | 360000 pairs scored | 37 pairs/s | 9816.8s
+06:10:43 | INFO | [cuda:0] 6400/68628 queries | 640000 pairs scored | 64 pairs/s | 9933.3s
+06:15:56 | INFO | [cuda:0] 6600/68628 queries | 660000 pairs scored | 64 pairs/s | 10246.1s
+06:17:57 | INFO | [cuda:1] 3800/73627 queries | 380000 pairs scored | 37 pairs/s | 10362.3s
+06:21:14 | INFO | [cuda:0] 6800/68628 queries | 680000 pairs scored | 64 pairs/s | 10564.5s
+06:26:23 | INFO | [cuda:0] 7000/68628 queries | 700000 pairs scored | 64 pairs/s | 10873.8s
+06:27:06 | INFO | [cuda:1] 4000/73627 queries | 400000 pairs scored | 37 pairs/s | 10911.5s
+06:31:47 | INFO | [cuda:0] 7200/68628 queries | 720000 pairs scored | 64 pairs/s | 11197.4s
+06:36:17 | INFO | [cuda:1] 4200/73627 queries | 420000 pairs scored | 37 pairs/s | 11462.1s
+06:37:00 | INFO | [cuda:0] 7400/68628 queries | 740000 pairs scored | 64 pairs/s | 11510.7s
+06:42:15 | INFO | [cuda:0] 7600/68628 queries | 760000 pairs scored | 64 pairs/s | 11825.9s
+06:45:32 | INFO | [cuda:1] 4400/73627 queries | 440000 pairs scored | 37 pairs/s | 12017.6s
+06:47:33 | INFO | [cuda:0] 7800/68628 queries | 780000 pairs scored | 64 pairs/s | 12143.0s
+06:52:41 | INFO | [cuda:0] 8000/68628 queries | 800000 pairs scored | 64 pairs/s | 12451.2s
+06:54:56 | INFO | [cuda:1] 4600/73627 queries | 460000 pairs scored | 37 pairs/s | 12581.3s
+06:58:01 | INFO | [cuda:0] 8200/68628 queries | 820000 pairs scored | 64 pairs/s | 12771.0s
+07:03:22 | INFO | [cuda:0] 8400/68628 queries | 840000 pairs scored | 64 pairs/s | 13092.3s
+07:04:21 | INFO | [cuda:1] 4800/73627 queries | 480000 pairs scored | 37 pairs/s | 13145.9s
+07:08:41 | INFO | [cuda:0] 8600/68628 queries | 860000 pairs scored | 64 pairs/s | 13411.3s
+07:13:46 | INFO | [cuda:1] 5000/73627 queries | 500000 pairs scored | 36 pairs/s | 13711.4s
+07:13:56 | INFO | [cuda:0] 8800/68628 queries | 880000 pairs scored | 64 pairs/s | 13726.9s
+07:19:09 | INFO | [cuda:0] 9000/68628 queries | 900000 pairs scored | 64 pairs/s | 14040.0s
+07:22:57 | INFO | [cuda:1] 5200/73627 queries | 520000 pairs scored | 36 pairs/s | 14262.2s
+07:24:28 | INFO | [cuda:0] 9200/68628 queries | 920000 pairs scored | 64 pairs/s | 14358.3s
+07:29:31 | INFO | [cuda:0] 9400/68628 queries | 940000 pairs scored | 64 pairs/s | 14661.9s
+07:32:07 | INFO | [cuda:1] 5400/73627 queries | 540000 pairs scored | 36 pairs/s | 14812.2s
+07:34:45 | INFO | [cuda:0] 9600/68628 queries | 960000 pairs scored | 64 pairs/s | 14975.4s
+07:40:05 | INFO | [cuda:0] 9800/68628 queries | 980000 pairs scored | 64 pairs/s | 15295.6s
+07:41:35 | INFO | [cuda:1] 5600/73627 queries | 560000 pairs scored | 36 pairs/s | 15380.6s
+07:45:28 | INFO | [cuda:0] 10000/68628 queries | 1000000 pairs scored | 64 pairs/s | 15618.9s
+07:50:46 | INFO | [cuda:0] 10200/68628 queries | 1020000 pairs scored | 64 pairs/s | 15936.7s
+07:51:04 | INFO | [cuda:1] 5800/73627 queries | 580000 pairs scored | 36 pairs/s | 15949.4s
+07:55:53 | INFO | [cuda:0] 10400/68628 queries | 1040000 pairs scored | 64 pairs/s | 16243.6s
+08:00:27 | INFO | [cuda:1] 6000/73627 queries | 600000 pairs scored | 36 pairs/s | 16511.7s
+08:01:08 | INFO | [cuda:0] 10600/68628 queries | 1060000 pairs scored | 64 pairs/s | 16558.2s
+08:06:29 | INFO | [cuda:0] 10800/68628 queries | 1080000 pairs scored | 64 pairs/s | 16879.6s
+08:09:38 | INFO | [cuda:1] 6200/73627 queries | 620000 pairs scored | 36 pairs/s | 17062.9s
+08:11:53 | INFO | [cuda:0] 11000/68628 queries | 1100000 pairs scored | 64 pairs/s | 17203.1s
+08:17:15 | INFO | [cuda:0] 11200/68628 queries | 1120000 pairs scored | 64 pairs/s | 17525.6s
+08:18:53 | INFO | [cuda:1] 6400/73627 queries | 640000 pairs scored | 36 pairs/s | 17618.5s
+08:22:36 | INFO | [cuda:0] 11400/68628 queries | 1140000 pairs scored | 64 pairs/s | 17846.8s
+08:27:37 | INFO | [cuda:1] 6600/73627 queries | 660000 pairs scored | 36 pairs/s | 18142.5s
+08:27:52 | INFO | [cuda:0] 11600/68628 queries | 1160000 pairs scored | 64 pairs/s | 18162.4s
+08:33:16 | INFO | [cuda:0] 11800/68628 queries | 1180000 pairs scored | 64 pairs/s | 18486.7s
+08:36:46 | INFO | [cuda:1] 6800/73627 queries | 680000 pairs scored | 36 pairs/s | 18691.0s
+08:38:36 | INFO | [cuda:0] 12000/68628 queries | 1200000 pairs scored | 64 pairs/s | 18806.8s
+08:43:58 | INFO | [cuda:0] 12200/68628 queries | 1220000 pairs scored | 64 pairs/s | 19128.5s
+08:45:59 | INFO | [cuda:1] 7000/73627 queries | 700000 pairs scored | 36 pairs/s | 19244.1s
+08:49:24 | INFO | [cuda:0] 12400/68628 queries | 1240000 pairs scored | 64 pairs/s | 19454.3s
+08:54:47 | INFO | [cuda:0] 12600/68628 queries | 1260000 pairs scored | 64 pairs/s | 19777.3s
+08:55:08 | INFO | [cuda:1] 7200/73627 queries | 720000 pairs scored | 36 pairs/s | 19793.5s
+09:00:19 | INFO | [cuda:0] 12800/68628 queries | 1280000 pairs scored | 64 pairs/s | 20109.8s
+09:04:23 | INFO | [cuda:1] 7400/73627 queries | 740000 pairs scored | 36 pairs/s | 20348.5s
+09:05:42 | INFO | [cuda:0] 13000/68628 queries | 1300000 pairs scored | 64 pairs/s | 20432.2s
+09:11:04 | INFO | [cuda:0] 13200/68628 queries | 1320000 pairs scored | 64 pairs/s | 20754.5s
+09:13:43 | INFO | [cuda:1] 7600/73627 queries | 760000 pairs scored | 36 pairs/s | 20907.9s
+09:16:39 | INFO | [cuda:0] 13400/68628 queries | 1340000 pairs scored | 64 pairs/s | 21089.5s
+09:22:12 | INFO | [cuda:0] 13600/68628 queries | 1360000 pairs scored | 63 pairs/s | 21422.8s
+09:22:58 | INFO | [cuda:1] 7800/73627 queries | 780000 pairs scored | 36 pairs/s | 21463.5s
+09:27:39 | INFO | [cuda:0] 13800/68628 queries | 1380000 pairs scored | 63 pairs/s | 21749.1s
+09:32:11 | INFO | [cuda:1] 8000/73627 queries | 800000 pairs scored | 36 pairs/s | 22015.8s
+09:33:10 | INFO | [cuda:0] 14000/68628 queries | 1400000 pairs scored | 63 pairs/s | 22080.4s
+09:38:46 | INFO | [cuda:0] 14200/68628 queries | 1420000 pairs scored | 63 pairs/s | 22416.5s
+09:41:08 | INFO | [cuda:1] 8200/73627 queries | 820000 pairs scored | 36 pairs/s | 22553.0s
+09:44:07 | INFO | [cuda:0] 14400/68628 queries | 1440000 pairs scored | 63 pairs/s | 22737.7s
+09:49:35 | INFO | [cuda:0] 14600/68628 queries | 1460000 pairs scored | 63 pairs/s | 23065.8s
+09:50:33 | INFO | [cuda:1] 8400/73627 queries | 840000 pairs scored | 36 pairs/s | 23118.4s
+09:55:03 | INFO | [cuda:0] 14800/68628 queries | 1480000 pairs scored | 63 pairs/s | 23393.9s
+09:59:56 | INFO | [cuda:1] 8600/73627 queries | 860000 pairs scored | 36 pairs/s | 23681.3s
+10:00:47 | INFO | [cuda:0] 15000/68628 queries | 1500000 pairs scored | 63 pairs/s | 23737.3s
+10:06:29 | INFO | [cuda:0] 15200/68628 queries | 1520000 pairs scored | 63 pairs/s | 24079.4s
+10:09:24 | INFO | [cuda:1] 8800/73627 queries | 880000 pairs scored | 36 pairs/s | 24249.4s
+10:12:02 | INFO | [cuda:0] 15400/68628 queries | 1540000 pairs scored | 63 pairs/s | 24412.0s
+10:17:40 | INFO | [cuda:0] 15600/68628 queries | 1560000 pairs scored | 63 pairs/s | 24750.2s
+10:18:56 | INFO | [cuda:1] 9000/73627 queries | 900000 pairs scored | 36 pairs/s | 24820.9s
+10:23:21 | INFO | [cuda:0] 15800/68628 queries | 1580000 pairs scored | 63 pairs/s | 25091.5s
+10:28:32 | INFO | [cuda:1] 9200/73627 queries | 920000 pairs scored | 36 pairs/s | 25397.1s
+10:29:01 | INFO | [cuda:0] 16000/68628 queries | 1600000 pairs scored | 63 pairs/s | 25431.7s
+10:34:42 | INFO | [cuda:0] 16200/68628 queries | 1620000 pairs scored | 63 pairs/s | 25772.1s
+10:37:57 | INFO | [cuda:1] 9400/73627 queries | 940000 pairs scored | 36 pairs/s | 25962.3s
+10:40:18 | INFO | [cuda:0] 16400/68628 queries | 1640000 pairs scored | 63 pairs/s | 26108.0s
+10:45:57 | INFO | [cuda:0] 16600/68628 queries | 1660000 pairs scored | 63 pairs/s | 26447.3s
+10:47:51 | INFO | [cuda:1] 9600/73627 queries | 960000 pairs scored | 36 pairs/s | 26556.4s
+10:51:37 | INFO | [cuda:0] 16800/68628 queries | 1680000 pairs scored | 63 pairs/s | 26787.8s
+10:57:09 | INFO | [cuda:0] 17000/68628 queries | 1700000 pairs scored | 63 pairs/s | 27119.9s
+10:57:32 | INFO | [cuda:1] 9800/73627 queries | 980000 pairs scored | 36 pairs/s | 27137.0s
+11:02:53 | INFO | [cuda:0] 17200/68628 queries | 1720000 pairs scored | 63 pairs/s | 27463.4s
+11:06:59 | INFO | [cuda:1] 10000/73627 queries | 1000000 pairs scored | 36 pairs/s | 27704.5s
+11:08:30 | INFO | [cuda:0] 17400/68628 queries | 1740000 pairs scored | 63 pairs/s | 27801.0s
+11:14:14 | INFO | [cuda:0] 17600/68628 queries | 1760000 pairs scored | 63 pairs/s | 28145.0s
+11:16:20 | INFO | [cuda:1] 10200/73627 queries | 1020000 pairs scored | 36 pairs/s | 28265.0s
+11:19:55 | INFO | [cuda:0] 17800/68628 queries | 1780000 pairs scored | 62 pairs/s | 28485.8s
+11:25:33 | INFO | [cuda:0] 18000/68628 queries | 1800000 pairs scored | 62 pairs/s | 28823.7s
+11:25:57 | INFO | [cuda:1] 10400/73627 queries | 1040000 pairs scored | 36 pairs/s | 28841.6s
+11:31:10 | INFO | [cuda:0] 18200/68628 queries | 1820000 pairs scored | 62 pairs/s | 29160.5s
+11:35:29 | INFO | [cuda:1] 10600/73627 queries | 1060000 pairs scored | 36 pairs/s | 29414.2s
+11:36:46 | INFO | [cuda:0] 18400/68628 queries | 1840000 pairs scored | 62 pairs/s | 29496.7s
+11:42:24 | INFO | [cuda:0] 18600/68628 queries | 1860000 pairs scored | 62 pairs/s | 29834.5s
+11:45:04 | INFO | [cuda:1] 10800/73627 queries | 1080000 pairs scored | 36 pairs/s | 29988.7s
+11:48:08 | INFO | [cuda:0] 18800/68628 queries | 1880000 pairs scored | 62 pairs/s | 30178.5s
+11:53:46 | INFO | [cuda:0] 19000/68628 queries | 1900000 pairs scored | 62 pairs/s | 30516.4s
+11:54:35 | INFO | [cuda:1] 11000/73627 queries | 1100000 pairs scored | 36 pairs/s | 30560.0s
+11:59:25 | INFO | [cuda:0] 19200/68628 queries | 1920000 pairs scored | 62 pairs/s | 30855.0s
+12:04:04 | INFO | [cuda:1] 11200/73627 queries | 1120000 pairs scored | 36 pairs/s | 31129.3s
+12:05:11 | INFO | [cuda:0] 19400/68628 queries | 1940000 pairs scored | 62 pairs/s | 31201.4s
+12:11:01 | INFO | [cuda:0] 19600/68628 queries | 1960000 pairs scored | 62 pairs/s | 31551.5s
+12:13:47 | INFO | [cuda:1] 11400/73627 queries | 1140000 pairs scored | 36 pairs/s | 31712.5s
+12:16:44 | INFO | [cuda:0] 19800/68628 queries | 1980000 pairs scored | 62 pairs/s | 31894.1s
+12:22:28 | INFO | [cuda:0] 20000/68628 queries | 2000000 pairs scored | 62 pairs/s | 32238.9s
+12:23:27 | INFO | [cuda:1] 11600/73627 queries | 1160000 pairs scored | 36 pairs/s | 32292.6s
+12:28:01 | INFO | [cuda:0] 20200/68628 queries | 2020000 pairs scored | 62 pairs/s | 32571.1s
+12:33:18 | INFO | [cuda:1] 11800/73627 queries | 1180000 pairs scored | 36 pairs/s | 32883.5s
+12:33:44 | INFO | [cuda:0] 20400/68628 queries | 2040000 pairs scored | 62 pairs/s | 32914.9s
+12:39:30 | INFO | [cuda:0] 20600/68628 queries | 2060000 pairs scored | 62 pairs/s | 33260.1s
+12:43:08 | INFO | [cuda:1] 12000/73627 queries | 1200000 pairs scored | 36 pairs/s | 33473.1s
+12:45:13 | INFO | [cuda:0] 20800/68628 queries | 2080000 pairs scored | 62 pairs/s | 33603.2s
+12:50:56 | INFO | [cuda:0] 21000/68628 queries | 2100000 pairs scored | 62 pairs/s | 33946.4s
+12:52:59 | INFO | [cuda:1] 12200/73627 queries | 1220000 pairs scored | 36 pairs/s | 34063.7s
+12:56:49 | INFO | [cuda:0] 21200/68628 queries | 2120000 pairs scored | 62 pairs/s | 34299.2s
+13:02:39 | INFO | [cuda:0] 21400/68628 queries | 2140000 pairs scored | 62 pairs/s | 34649.3s
+13:02:56 | INFO | [cuda:1] 12400/73627 queries | 1240000 pairs scored | 36 pairs/s | 34660.9s
+13:08:27 | INFO | [cuda:0] 21600/68628 queries | 2160000 pairs scored | 62 pairs/s | 34997.1s
+13:12:39 | INFO | [cuda:1] 12600/73627 queries | 1260000 pairs scored | 36 pairs/s | 35243.9s
+13:14:21 | INFO | [cuda:0] 21800/68628 queries | 2180000 pairs scored | 62 pairs/s | 35351.5s
+13:20:07 | INFO | [cuda:0] 22000/68628 queries | 2200000 pairs scored | 62 pairs/s | 35697.8s
+13:22:20 | INFO | [cuda:1] 12800/73627 queries | 1280000 pairs scored | 36 pairs/s | 35824.7s
+13:26:05 | INFO | [cuda:0] 22200/68628 queries | 2220000 pairs scored | 62 pairs/s | 36055.5s
+13:31:59 | INFO | [cuda:0] 22400/68628 queries | 2240000 pairs scored | 62 pairs/s | 36409.9s
+13:32:04 | INFO | [cuda:1] 13000/73627 queries | 1300000 pairs scored | 36 pairs/s | 36409.2s
+13:37:44 | INFO | [cuda:0] 22600/68628 queries | 2260000 pairs scored | 61 pairs/s | 36754.3s
+13:41:57 | INFO | [cuda:1] 13200/73627 queries | 1320000 pairs scored | 36 pairs/s | 37002.1s
+13:43:37 | INFO | [cuda:0] 22800/68628 queries | 2280000 pairs scored | 61 pairs/s | 37107.6s
+13:49:27 | INFO | [cuda:0] 23000/68628 queries | 2300000 pairs scored | 61 pairs/s | 37457.7s
+13:52:01 | INFO | [cuda:1] 13400/73627 queries | 1340000 pairs scored | 36 pairs/s | 37606.4s
+13:55:21 | INFO | [cuda:0] 23200/68628 queries | 2320000 pairs scored | 61 pairs/s | 37811.6s
+14:01:14 | INFO | [cuda:0] 23400/68628 queries | 2340000 pairs scored | 61 pairs/s | 38164.7s
+14:01:44 | INFO | [cuda:1] 13600/73627 queries | 1360000 pairs scored | 36 pairs/s | 38188.7s
+14:06:55 | INFO | [cuda:0] 23600/68628 queries | 2360000 pairs scored | 61 pairs/s | 38505.9s
+14:10:06 | INFO | [cuda:1] 13800/73627 queries | 1380000 pairs scored | 36 pairs/s | 38691.4s
+14:12:34 | INFO | [cuda:0] 23800/68628 queries | 2380000 pairs scored | 61 pairs/s | 38844.7s
+14:16:26 | INFO | [cuda:1] 14000/73627 queries | 1400000 pairs scored | 36 pairs/s | 39070.9s
+14:18:05 | INFO | [cuda:0] 24000/68628 queries | 2400000 pairs scored | 61 pairs/s | 39175.6s
+14:21:12 | INFO | [cuda:1] 14200/73627 queries | 1420000 pairs scored | 36 pairs/s | 39356.9s
+14:23:24 | INFO | [cuda:0] 24200/68628 queries | 2420000 pairs scored | 61 pairs/s | 39494.3s
+14:25:45 | INFO | [cuda:1] 14400/73627 queries | 1440000 pairs scored | 36 pairs/s | 39629.7s
+14:28:36 | INFO | [cuda:0] 24400/68628 queries | 2440000 pairs scored | 61 pairs/s | 39806.8s
+14:30:29 | INFO | [cuda:1] 14600/73627 queries | 1460000 pairs scored | 37 pairs/s | 39913.9s
+14:33:53 | INFO | [cuda:0] 24600/68628 queries | 2460000 pairs scored | 61 pairs/s | 40123.1s
+14:35:23 | INFO | [cuda:1] 14800/73627 queries | 1480000 pairs scored | 37 pairs/s | 40208.5s
+14:39:01 | INFO | [cuda:0] 24800/68628 queries | 2480000 pairs scored | 61 pairs/s | 40431.6s
+14:40:13 | INFO | [cuda:1] 15000/73627 queries | 1500000 pairs scored | 37 pairs/s | 40498.1s
+14:44:15 | INFO | [cuda:0] 25000/68628 queries | 2500000 pairs scored | 61 pairs/s | 40745.9s
+14:44:59 | INFO | [cuda:1] 15200/73627 queries | 1520000 pairs scored | 37 pairs/s | 40784.3s
+/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 2 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+14:45:26 | INFO | Loading faiss with AVX512 support.
+14:45:26 | INFO | Successfully loaded faiss with AVX512 support.
+14:45:26 | INFO | ⏱  START: Loading cached pruned qrels
+14:45:27 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.3s)
+14:45:32 | INFO | Loading first-stage run from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+14:47:02 | INFO | Prepared 170055 queries, 17005500 total pairs across 2 GPU(s)
+14:47:03 | INFO | ⏱  START: Reranking 170055 queries on 2 GPU(s)
+14:47:08 | INFO | Loading faiss with AVX512 support.
+14:47:08 | INFO | Successfully loaded faiss with AVX512 support.
+14:47:09 | INFO | Started worker on cuda:0 (85028 queries)
+14:47:13 | INFO | [cuda:0] Building doc lookup ...
+14:47:13 | INFO | ⏱  START: Loading eswiki corpus
+14:47:14 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+14:47:14 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+14:47:14 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+14:47:14 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+14:47:14 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+14:47:14 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+14:47:14 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+14:47:15 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+14:47:15 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+14:47:15 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+14:47:16 | INFO | ⏱  DONE:  Loading eswiki corpus (2.5s)
+14:47:16 | INFO | Original corpus: 14047759 documents
+14:47:16 | INFO | ⏱  START: Formatting and counting words (16 workers)
+Setting TOKENIZERS_PARALLELISM=false for forked processes.
+14:47:16 | WARNING | Setting TOKENIZERS_PARALLELISM=false for forked processes.
+14:47:18 | INFO | ⏱  DONE:  Formatting and counting words (16 workers) (1.6s)
+14:47:18 | INFO | Word-count filter disabled — using all 14047759 documents
+14:47:18 | INFO | Loading faiss with AVX512 support.
+14:47:18 | INFO | Successfully loaded faiss with AVX512 support.
+14:47:19 | INFO | Started worker on cuda:1 (85027 queries)
+14:47:26 | INFO | [cuda:1] Building doc lookup ...
+14:47:26 | INFO | ⏱  START: Loading eswiki corpus
+14:47:26 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+14:47:27 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+14:47:27 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+14:47:27 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+14:47:27 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+14:47:27 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+14:47:27 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+14:47:27 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+14:47:27 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+14:47:27 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+14:47:28 | INFO | ⏱  DONE:  Loading eswiki corpus (1.4s)
+14:47:28 | INFO | Original corpus: 14047759 documents
+14:47:28 | INFO | ⏱  START: Formatting and counting words (16 workers)
+Setting TOKENIZERS_PARALLELISM=false for forked processes.
+14:47:28 | WARNING | Setting TOKENIZERS_PARALLELISM=false for forked processes.
+14:47:29 | INFO | ⏱  DONE:  Formatting and counting words (16 workers) (1.0s)
+14:47:29 | INFO | Word-count filter disabled — using all 14047759 documents
+14:56:48 | INFO | Doc lookup built: 14047759 documents
+14:56:48 | INFO | [cuda:0] Loading BAAI/bge-reranker-v2-m3 ...
+14:56:48 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+14:56:49 | INFO | No modules.json found for BAAI/bge-reranker-v2-m3, initializing a new CrossEncoder model.
+14:56:49 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+14:56:49 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+14:56:49 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+14:56:49 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+14:56:49 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+14:56:49 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/393 [00:00<?, ?it/s]Loading weights: 100%|██████████| 393/393 [00:00<00:00, 20634.95it/s]
+14:56:49 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+14:56:49 | INFO | Doc lookup built: 14047759 documents
+14:56:49 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+14:56:49 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+14:56:50 | INFO | [cuda:1] Loading BAAI/bge-reranker-v2-m3 ...
+14:56:50 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+14:56:50 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+14:56:50 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+14:56:50 | INFO | No modules.json found for BAAI/bge-reranker-v2-m3, initializing a new CrossEncoder model.
+14:56:50 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+14:56:50 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+14:56:50 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+14:56:50 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+14:56:50 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+14:56:50 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+14:56:50 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+14:56:50 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+14:56:50 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+14:56:50 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+14:56:50 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+14:56:50 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+14:56:50 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+14:56:50 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+14:56:50 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/393 [00:00<?, ?it/s]Loading weights: 100%|██████████| 393/393 [00:00<00:00, 22478.07it/s]
+14:56:50 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+14:56:50 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+14:56:50 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+14:56:51 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+14:56:51 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+14:56:51 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+14:56:51 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+14:56:51 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+14:56:51 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+14:56:51 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+14:56:51 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+14:56:51 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+14:56:51 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+14:56:51 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+14:56:56 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+14:56:58 | INFO | [cuda:0] Model loaded.
+14:56:59 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+14:57:01 | INFO | [cuda:1] Model loaded.
+14:57:05 | INFO | [cuda:1] Resuming: 26600 queries already scored
+14:57:05 | INFO | [cuda:0] Resuming: 41400 queries already scored
+15:02:50 | INFO | [cuda:1] 200/58427 queries | 20000 pairs scored | 73 pairs/s | 275.0s
+15:03:11 | INFO | [cuda:0] 200/43628 queries | 20000 pairs scored | 64 pairs/s | 311.3s
+15:07:29 | INFO | [cuda:1] 400/58427 queries | 40000 pairs scored | 72 pairs/s | 554.3s
+15:08:28 | INFO | [cuda:0] 400/43628 queries | 40000 pairs scored | 64 pairs/s | 627.8s
+15:12:08 | INFO | [cuda:1] 600/58427 queries | 60000 pairs scored | 72 pairs/s | 833.1s
+15:13:43 | INFO | [cuda:0] 600/43628 queries | 60000 pairs scored | 64 pairs/s | 942.8s
+15:16:52 | INFO | [cuda:1] 800/58427 queries | 80000 pairs scored | 72 pairs/s | 1117.0s
+15:19:04 | INFO | [cuda:0] 800/43628 queries | 80000 pairs scored | 63 pairs/s | 1263.7s
+15:21:31 | INFO | [cuda:1] 1000/58427 queries | 100000 pairs scored | 72 pairs/s | 1396.4s
+15:24:19 | INFO | [cuda:0] 1000/43628 queries | 100000 pairs scored | 63 pairs/s | 1579.1s
+15:26:18 | INFO | [cuda:1] 1200/58427 queries | 120000 pairs scored | 71 pairs/s | 1682.6s
+15:29:33 | INFO | [cuda:0] 1200/43628 queries | 120000 pairs scored | 63 pairs/s | 1893.1s
+15:31:04 | INFO | [cuda:1] 1400/58427 queries | 140000 pairs scored | 71 pairs/s | 1969.1s
+15:34:49 | INFO | [cuda:0] 1400/43628 queries | 140000 pairs scored | 63 pairs/s | 2209.3s
+15:35:51 | INFO | [cuda:1] 1600/58427 queries | 160000 pairs scored | 71 pairs/s | 2256.5s
+15:40:07 | INFO | [cuda:0] 1600/43628 queries | 160000 pairs scored | 63 pairs/s | 2526.7s
+15:40:43 | INFO | [cuda:1] 1800/58427 queries | 180000 pairs scored | 71 pairs/s | 2548.5s
+15:45:28 | INFO | [cuda:1] 2000/58427 queries | 200000 pairs scored | 71 pairs/s | 2833.1s
+15:45:33 | INFO | [cuda:0] 1800/43628 queries | 180000 pairs scored | 63 pairs/s | 2853.1s
+15:50:22 | INFO | [cuda:1] 2200/58427 queries | 220000 pairs scored | 70 pairs/s | 3127.3s
+15:50:51 | INFO | [cuda:0] 2000/43628 queries | 200000 pairs scored | 63 pairs/s | 3170.5s
+15:55:08 | INFO | [cuda:1] 2400/58427 queries | 240000 pairs scored | 70 pairs/s | 3412.7s
+15:56:19 | INFO | [cuda:0] 2200/43628 queries | 220000 pairs scored | 63 pairs/s | 3498.5s
+15:59:52 | INFO | [cuda:1] 2600/58427 queries | 260000 pairs scored | 70 pairs/s | 3696.6s
+16:01:42 | INFO | [cuda:0] 2400/43628 queries | 240000 pairs scored | 63 pairs/s | 3821.6s
+16:04:40 | INFO | [cuda:1] 2800/58427 queries | 280000 pairs scored | 70 pairs/s | 3984.6s
+16:07:02 | INFO | [cuda:0] 2600/43628 queries | 260000 pairs scored | 63 pairs/s | 4142.2s
+16:09:23 | INFO | [cuda:1] 3000/58427 queries | 300000 pairs scored | 70 pairs/s | 4268.3s
+16:12:32 | INFO | [cuda:0] 2800/43628 queries | 280000 pairs scored | 63 pairs/s | 4471.7s
+16:14:12 | INFO | [cuda:1] 3200/58427 queries | 320000 pairs scored | 70 pairs/s | 4556.8s
+16:17:54 | INFO | [cuda:0] 3000/43628 queries | 300000 pairs scored | 63 pairs/s | 4793.4s
+16:18:56 | INFO | [cuda:1] 3400/58427 queries | 340000 pairs scored | 70 pairs/s | 4841.3s
+16:23:22 | INFO | [cuda:0] 3200/43628 queries | 320000 pairs scored | 62 pairs/s | 5121.4s
+16:23:45 | INFO | [cuda:1] 3600/58427 queries | 360000 pairs scored | 70 pairs/s | 5130.3s
+16:28:37 | INFO | [cuda:1] 3800/58427 queries | 380000 pairs scored | 70 pairs/s | 5422.1s
+16:28:41 | INFO | [cuda:0] 3400/43628 queries | 340000 pairs scored | 62 pairs/s | 5441.3s
+16:33:30 | INFO | [cuda:1] 4000/58427 queries | 400000 pairs scored | 70 pairs/s | 5714.8s
+16:34:01 | INFO | [cuda:0] 3600/43628 queries | 360000 pairs scored | 62 pairs/s | 5761.0s
+16:38:17 | INFO | [cuda:1] 4200/58427 queries | 420000 pairs scored | 70 pairs/s | 6002.3s
+16:39:29 | INFO | [cuda:0] 3800/43628 queries | 380000 pairs scored | 62 pairs/s | 6088.7s
+16:43:14 | INFO | [cuda:1] 4400/58427 queries | 440000 pairs scored | 70 pairs/s | 6299.2s
+16:45:02 | INFO | [cuda:0] 4000/43628 queries | 400000 pairs scored | 62 pairs/s | 6422.3s
+16:48:11 | INFO | [cuda:1] 4600/58427 queries | 460000 pairs scored | 70 pairs/s | 6595.8s
+16:50:33 | INFO | [cuda:0] 4200/43628 queries | 420000 pairs scored | 62 pairs/s | 6753.1s
+16:53:20 | INFO | [cuda:1] 4800/58427 queries | 480000 pairs scored | 70 pairs/s | 6905.5s
+16:55:54 | INFO | [cuda:0] 4400/43628 queries | 440000 pairs scored | 62 pairs/s | 7074.0s
+16:58:16 | INFO | [cuda:1] 5000/58427 queries | 500000 pairs scored | 69 pairs/s | 7200.5s
+17:01:23 | INFO | [cuda:0] 4600/43628 queries | 460000 pairs scored | 62 pairs/s | 7403.3s
+17:03:07 | INFO | [cuda:1] 5200/58427 queries | 520000 pairs scored | 69 pairs/s | 7492.0s
+17:06:49 | INFO | [cuda:0] 4800/43628 queries | 480000 pairs scored | 62 pairs/s | 7728.6s
+17:07:56 | INFO | [cuda:1] 5400/58427 queries | 540000 pairs scored | 69 pairs/s | 7780.6s
+17:12:20 | INFO | [cuda:0] 5000/43628 queries | 500000 pairs scored | 62 pairs/s | 8060.1s
+17:12:51 | INFO | [cuda:1] 5600/58427 queries | 560000 pairs scored | 69 pairs/s | 8076.4s
+17:17:48 | INFO | [cuda:0] 5200/43628 queries | 520000 pairs scored | 62 pairs/s | 8388.1s
+17:17:54 | INFO | [cuda:1] 5800/58427 queries | 580000 pairs scored | 69 pairs/s | 8378.9s
+17:22:50 | INFO | [cuda:1] 6000/58427 queries | 600000 pairs scored | 69 pairs/s | 8674.8s
+17:23:10 | INFO | [cuda:0] 5400/43628 queries | 540000 pairs scored | 62 pairs/s | 8710.0s
+17:27:46 | INFO | [cuda:1] 6200/58427 queries | 620000 pairs scored | 69 pairs/s | 8971.2s
+17:28:41 | INFO | [cuda:0] 5600/43628 queries | 560000 pairs scored | 62 pairs/s | 9041.0s
+17:32:45 | INFO | [cuda:1] 6400/58427 queries | 640000 pairs scored | 69 pairs/s | 9269.7s
+17:34:12 | INFO | [cuda:0] 5800/43628 queries | 580000 pairs scored | 62 pairs/s | 9372.1s
+17:37:46 | INFO | [cuda:1] 6600/58427 queries | 660000 pairs scored | 69 pairs/s | 9571.3s
+17:39:42 | INFO | [cuda:0] 6000/43628 queries | 600000 pairs scored | 62 pairs/s | 9701.8s
+17:42:46 | INFO | [cuda:1] 6800/58427 queries | 680000 pairs scored | 69 pairs/s | 9870.7s
+17:45:09 | INFO | [cuda:0] 6200/43628 queries | 620000 pairs scored | 62 pairs/s | 10029.0s
+17:47:42 | INFO | [cuda:1] 7000/58427 queries | 700000 pairs scored | 69 pairs/s | 10167.1s
+17:50:39 | INFO | [cuda:0] 6400/43628 queries | 640000 pairs scored | 62 pairs/s | 10358.7s
+17:52:45 | INFO | [cuda:1] 7200/58427 queries | 720000 pairs scored | 69 pairs/s | 10470.2s
+17:56:10 | INFO | [cuda:0] 6600/43628 queries | 660000 pairs scored | 62 pairs/s | 10689.9s
+17:57:40 | INFO | [cuda:1] 7400/58427 queries | 740000 pairs scored | 69 pairs/s | 10764.7s
+18:01:33 | INFO | [cuda:0] 6800/43628 queries | 680000 pairs scored | 62 pairs/s | 11012.5s
+18:02:38 | INFO | [cuda:1] 7600/58427 queries | 760000 pairs scored | 69 pairs/s | 11063.4s
+18:06:58 | INFO | [cuda:0] 7000/43628 queries | 700000 pairs scored | 62 pairs/s | 11337.9s
+18:07:38 | INFO | [cuda:1] 7800/58427 queries | 780000 pairs scored | 69 pairs/s | 11362.7s
+18:12:32 | INFO | [cuda:0] 7200/43628 queries | 720000 pairs scored | 62 pairs/s | 11672.1s
+18:12:40 | INFO | [cuda:1] 8000/58427 queries | 800000 pairs scored | 69 pairs/s | 11665.4s
+18:17:38 | INFO | [cuda:1] 8200/58427 queries | 820000 pairs scored | 69 pairs/s | 11962.6s
+18:18:10 | INFO | [cuda:0] 7400/43628 queries | 740000 pairs scored | 62 pairs/s | 12009.6s
+18:22:36 | INFO | [cuda:1] 8400/58427 queries | 840000 pairs scored | 69 pairs/s | 12261.2s
+18:23:42 | INFO | [cuda:0] 7600/43628 queries | 760000 pairs scored | 62 pairs/s | 12341.6s
+18:27:33 | INFO | [cuda:1] 8600/58427 queries | 860000 pairs scored | 68 pairs/s | 12558.2s
+18:29:18 | INFO | [cuda:0] 7800/43628 queries | 780000 pairs scored | 62 pairs/s | 12678.3s
+18:32:34 | INFO | [cuda:1] 8800/58427 queries | 880000 pairs scored | 68 pairs/s | 12859.1s
+18:34:43 | INFO | [cuda:0] 8000/43628 queries | 800000 pairs scored | 62 pairs/s | 13003.0s
+18:37:36 | INFO | [cuda:1] 9000/58427 queries | 900000 pairs scored | 68 pairs/s | 13160.9s
+18:40:15 | INFO | [cuda:0] 8200/43628 queries | 820000 pairs scored | 61 pairs/s | 13334.9s
+18:42:42 | INFO | [cuda:1] 9200/58427 queries | 920000 pairs scored | 68 pairs/s | 13467.2s
+18:45:58 | INFO | [cuda:0] 8400/43628 queries | 840000 pairs scored | 61 pairs/s | 13677.8s
+18:47:49 | INFO | [cuda:1] 9400/58427 queries | 940000 pairs scored | 68 pairs/s | 13774.3s
+18:51:36 | INFO | [cuda:0] 8600/43628 queries | 860000 pairs scored | 61 pairs/s | 14016.3s
+18:52:50 | INFO | [cuda:1] 9600/58427 queries | 960000 pairs scored | 68 pairs/s | 14075.4s
+18:57:15 | INFO | [cuda:0] 8800/43628 queries | 880000 pairs scored | 61 pairs/s | 14354.9s
+18:57:56 | INFO | [cuda:1] 9800/58427 queries | 980000 pairs scored | 68 pairs/s | 14380.8s
+19:02:54 | INFO | [cuda:1] 10000/58427 queries | 1000000 pairs scored | 68 pairs/s | 14678.6s
+19:03:02 | INFO | [cuda:0] 9000/43628 queries | 900000 pairs scored | 61 pairs/s | 14702.3s
+19:07:53 | INFO | [cuda:1] 10200/58427 queries | 1020000 pairs scored | 68 pairs/s | 14978.1s
+19:08:51 | INFO | [cuda:0] 9200/43628 queries | 920000 pairs scored | 61 pairs/s | 15051.3s
+19:12:54 | INFO | [cuda:1] 10400/58427 queries | 1040000 pairs scored | 68 pairs/s | 15279.3s
+19:14:24 | INFO | [cuda:0] 9400/43628 queries | 940000 pairs scored | 61 pairs/s | 15383.4s
+19:17:55 | INFO | [cuda:1] 10600/58427 queries | 1060000 pairs scored | 68 pairs/s | 15580.0s
+19:19:57 | INFO | [cuda:0] 9600/43628 queries | 960000 pairs scored | 61 pairs/s | 15717.3s
+19:23:03 | INFO | [cuda:1] 10800/58427 queries | 1080000 pairs scored | 68 pairs/s | 15888.3s
+19:25:30 | INFO | [cuda:0] 9800/43628 queries | 980000 pairs scored | 61 pairs/s | 16049.6s
+19:28:20 | INFO | [cuda:1] 11000/58427 queries | 1100000 pairs scored | 68 pairs/s | 16205.2s
+19:31:00 | INFO | [cuda:0] 10000/43628 queries | 1000000 pairs scored | 61 pairs/s | 16380.1s
+19:33:37 | INFO | [cuda:1] 11200/58427 queries | 1120000 pairs scored | 68 pairs/s | 16522.1s
+19:36:36 | INFO | [cuda:0] 10200/43628 queries | 1020000 pairs scored | 61 pairs/s | 16715.5s
+19:38:42 | INFO | [cuda:1] 11400/58427 queries | 1140000 pairs scored | 68 pairs/s | 16827.0s
+19:42:10 | INFO | [cuda:0] 10400/43628 queries | 1040000 pairs scored | 61 pairs/s | 17049.8s
+19:43:54 | INFO | [cuda:1] 11600/58427 queries | 1160000 pairs scored | 68 pairs/s | 17139.1s
+19:47:50 | INFO | [cuda:0] 10600/43628 queries | 1060000 pairs scored | 61 pairs/s | 17389.7s
+19:49:02 | INFO | [cuda:1] 11800/58427 queries | 1180000 pairs scored | 68 pairs/s | 17446.9s
+19:53:34 | INFO | [cuda:0] 10800/43628 queries | 1080000 pairs scored | 61 pairs/s | 17733.4s
+19:54:16 | INFO | [cuda:1] 12000/58427 queries | 1200000 pairs scored | 68 pairs/s | 17761.5s
+19:59:19 | INFO | [cuda:0] 11000/43628 queries | 1100000 pairs scored | 61 pairs/s | 18078.4s
+19:59:26 | INFO | [cuda:1] 12200/58427 queries | 1220000 pairs scored | 68 pairs/s | 18070.9s
+20:04:45 | INFO | [cuda:1] 12400/58427 queries | 1240000 pairs scored | 67 pairs/s | 18389.8s
+20:05:01 | INFO | [cuda:0] 11200/43628 queries | 1120000 pairs scored | 61 pairs/s | 18421.4s
+20:09:52 | INFO | [cuda:1] 12600/58427 queries | 1260000 pairs scored | 67 pairs/s | 18696.6s
+20:10:48 | INFO | [cuda:0] 11400/43628 queries | 1140000 pairs scored | 61 pairs/s | 18768.3s
+20:14:58 | INFO | [cuda:1] 12800/58427 queries | 1280000 pairs scored | 67 pairs/s | 19002.8s
+20:16:35 | INFO | [cuda:0] 11600/43628 queries | 1160000 pairs scored | 61 pairs/s | 19115.3s
+20:20:08 | INFO | [cuda:1] 13000/58427 queries | 1300000 pairs scored | 67 pairs/s | 19313.5s
+20:22:25 | INFO | [cuda:0] 11800/43628 queries | 1180000 pairs scored | 61 pairs/s | 19464.4s
+20:25:16 | INFO | [cuda:1] 13200/58427 queries | 1320000 pairs scored | 67 pairs/s | 19621.1s
+20:28:14 | INFO | [cuda:0] 12000/43628 queries | 1200000 pairs scored | 61 pairs/s | 19814.2s
+20:30:31 | INFO | [cuda:1] 13400/58427 queries | 1340000 pairs scored | 67 pairs/s | 19936.5s
+20:33:59 | INFO | [cuda:0] 12200/43628 queries | 1220000 pairs scored | 61 pairs/s | 20158.4s
+20:35:50 | INFO | [cuda:1] 13600/58427 queries | 1360000 pairs scored | 67 pairs/s | 20254.7s
+20:39:45 | INFO | [cuda:0] 12400/43628 queries | 1240000 pairs scored | 60 pairs/s | 20505.2s
+20:41:04 | INFO | [cuda:1] 13800/58427 queries | 1380000 pairs scored | 67 pairs/s | 20569.0s
+20:45:35 | INFO | [cuda:0] 12600/43628 queries | 1260000 pairs scored | 60 pairs/s | 20854.6s
+20:46:17 | INFO | [cuda:1] 14000/58427 queries | 1400000 pairs scored | 67 pairs/s | 20882.3s
+20:51:23 | INFO | [cuda:0] 12800/43628 queries | 1280000 pairs scored | 60 pairs/s | 21202.4s
+20:51:38 | INFO | [cuda:1] 14200/58427 queries | 1420000 pairs scored | 67 pairs/s | 21202.6s
+20:56:53 | INFO | [cuda:1] 14400/58427 queries | 1440000 pairs scored | 67 pairs/s | 21518.1s
+20:56:55 | INFO | [cuda:0] 13000/43628 queries | 1300000 pairs scored | 60 pairs/s | 21534.9s
+21:02:03 | INFO | [cuda:1] 14600/58427 queries | 1460000 pairs scored | 67 pairs/s | 21828.3s
+21:02:41 | INFO | [cuda:0] 13200/43628 queries | 1320000 pairs scored | 60 pairs/s | 21880.8s
+21:07:18 | INFO | [cuda:1] 14800/58427 queries | 1480000 pairs scored | 67 pairs/s | 22143.4s
+21:08:32 | INFO | [cuda:0] 13400/43628 queries | 1340000 pairs scored | 60 pairs/s | 22231.6s
+21:12:41 | INFO | [cuda:1] 15000/58427 queries | 1500000 pairs scored | 67 pairs/s | 22465.9s
+21:14:18 | INFO | [cuda:0] 13600/43628 queries | 1360000 pairs scored | 60 pairs/s | 22577.5s
+21:17:59 | INFO | [cuda:1] 15200/58427 queries | 1520000 pairs scored | 67 pairs/s | 22784.3s
+21:20:18 | INFO | [cuda:0] 13800/43628 queries | 1380000 pairs scored | 60 pairs/s | 22938.0s
+21:23:17 | INFO | [cuda:1] 15400/58427 queries | 1540000 pairs scored | 67 pairs/s | 23102.3s
+21:26:13 | INFO | [cuda:0] 14000/43628 queries | 1400000 pairs scored | 60 pairs/s | 23292.5s
+21:28:34 | INFO | [cuda:1] 15600/58427 queries | 1560000 pairs scored | 67 pairs/s | 23418.6s
+21:32:09 | INFO | [cuda:0] 14200/43628 queries | 1420000 pairs scored | 60 pairs/s | 23649.3s
+21:33:50 | INFO | [cuda:1] 15800/58427 queries | 1580000 pairs scored | 67 pairs/s | 23735.4s
+21:38:05 | INFO | [cuda:0] 14400/43628 queries | 1440000 pairs scored | 60 pairs/s | 24004.7s
+21:39:04 | INFO | [cuda:1] 16000/58427 queries | 1600000 pairs scored | 67 pairs/s | 24049.0s
+21:43:56 | INFO | [cuda:0] 14600/43628 queries | 1460000 pairs scored | 60 pairs/s | 24355.6s
+21:44:22 | INFO | [cuda:1] 16200/58427 queries | 1620000 pairs scored | 66 pairs/s | 24367.1s
+21:49:40 | INFO | [cuda:1] 16400/58427 queries | 1640000 pairs scored | 66 pairs/s | 24685.0s
+21:49:51 | INFO | [cuda:0] 14800/43628 queries | 1480000 pairs scored | 60 pairs/s | 24710.7s
+21:55:03 | INFO | [cuda:1] 16600/58427 queries | 1660000 pairs scored | 66 pairs/s | 25008.2s
+21:55:46 | INFO | [cuda:0] 15000/43628 queries | 1500000 pairs scored | 60 pairs/s | 25065.8s
+22:00:29 | INFO | [cuda:1] 16800/58427 queries | 1680000 pairs scored | 66 pairs/s | 25333.8s
+22:01:38 | INFO | [cuda:0] 15200/43628 queries | 1520000 pairs scored | 60 pairs/s | 25417.4s
+22:05:57 | INFO | [cuda:1] 17000/58427 queries | 1700000 pairs scored | 66 pairs/s | 25662.4s
+22:07:29 | INFO | [cuda:0] 15400/43628 queries | 1540000 pairs scored | 60 pairs/s | 25769.2s
+22:11:17 | INFO | [cuda:1] 17200/58427 queries | 1720000 pairs scored | 66 pairs/s | 25981.8s
+22:13:27 | INFO | [cuda:0] 15600/43628 queries | 1560000 pairs scored | 60 pairs/s | 26127.2s
+22:16:36 | INFO | [cuda:1] 17400/58427 queries | 1740000 pairs scored | 66 pairs/s | 26301.3s
+22:19:30 | INFO | [cuda:0] 15800/43628 queries | 1580000 pairs scored | 60 pairs/s | 26490.1s
+22:21:58 | INFO | [cuda:1] 17600/58427 queries | 1760000 pairs scored | 66 pairs/s | 26622.5s
+22:25:37 | INFO | [cuda:0] 16000/43628 queries | 1600000 pairs scored | 60 pairs/s | 26856.9s
+22:27:27 | INFO | [cuda:1] 17800/58427 queries | 1780000 pairs scored | 66 pairs/s | 26952.2s
+22:31:37 | INFO | [cuda:0] 16200/43628 queries | 1620000 pairs scored | 60 pairs/s | 27217.1s
+22:32:47 | INFO | [cuda:1] 18000/58427 queries | 1800000 pairs scored | 66 pairs/s | 27272.0s
+22:37:37 | INFO | [cuda:0] 16400/43628 queries | 1640000 pairs scored | 59 pairs/s | 27576.8s
+22:38:05 | INFO | [cuda:1] 18200/58427 queries | 1820000 pairs scored | 66 pairs/s | 27590.2s
+22:43:28 | INFO | [cuda:1] 18400/58427 queries | 1840000 pairs scored | 66 pairs/s | 27913.1s
+22:43:34 | INFO | [cuda:0] 16600/43628 queries | 1660000 pairs scored | 59 pairs/s | 27933.9s
+22:49:03 | INFO | [cuda:1] 18600/58427 queries | 1860000 pairs scored | 66 pairs/s | 28248.0s
+22:49:29 | INFO | [cuda:0] 16800/43628 queries | 1680000 pairs scored | 59 pairs/s | 28289.0s
+22:54:31 | INFO | [cuda:1] 18800/58427 queries | 1880000 pairs scored | 66 pairs/s | 28575.8s
+22:55:23 | INFO | [cuda:0] 17000/43628 queries | 1700000 pairs scored | 59 pairs/s | 28643.1s
+23:00:01 | INFO | [cuda:1] 19000/58427 queries | 1900000 pairs scored | 66 pairs/s | 28906.0s
+23:01:30 | INFO | [cuda:0] 17200/43628 queries | 1720000 pairs scored | 59 pairs/s | 29010.3s
+23:05:29 | INFO | [cuda:1] 19200/58427 queries | 1920000 pairs scored | 66 pairs/s | 29234.5s
+23:07:29 | INFO | [cuda:0] 17400/43628 queries | 1740000 pairs scored | 59 pairs/s | 29369.3s
+23:10:54 | INFO | [cuda:1] 19400/58427 queries | 1940000 pairs scored | 66 pairs/s | 29559.2s
+23:13:38 | INFO | [cuda:0] 17600/43628 queries | 1760000 pairs scored | 59 pairs/s | 29738.2s
+23:16:23 | INFO | [cuda:1] 19600/58427 queries | 1960000 pairs scored | 66 pairs/s | 29887.9s
+23:19:37 | INFO | [cuda:0] 17800/43628 queries | 1780000 pairs scored | 59 pairs/s | 30096.7s
+23:21:51 | INFO | [cuda:1] 19800/58427 queries | 1980000 pairs scored | 66 pairs/s | 30215.6s
+23:25:45 | INFO | [cuda:0] 18000/43628 queries | 1800000 pairs scored | 59 pairs/s | 30465.1s
+23:27:17 | INFO | [cuda:1] 20000/58427 queries | 2000000 pairs scored | 65 pairs/s | 30541.7s
+23:31:46 | INFO | [cuda:0] 18200/43628 queries | 1820000 pairs scored | 59 pairs/s | 30825.6s
+23:32:48 | INFO | [cuda:1] 20200/58427 queries | 2020000 pairs scored | 65 pairs/s | 30873.1s
+23:37:51 | INFO | [cuda:0] 18400/43628 queries | 1840000 pairs scored | 59 pairs/s | 31191.1s
+23:38:18 | INFO | [cuda:1] 20400/58427 queries | 2040000 pairs scored | 65 pairs/s | 31203.0s
+23:43:45 | INFO | [cuda:1] 20600/58427 queries | 2060000 pairs scored | 65 pairs/s | 31529.8s
+23:43:56 | INFO | [cuda:0] 18600/43628 queries | 1860000 pairs scored | 59 pairs/s | 31555.8s
+23:49:15 | INFO | [cuda:1] 20800/58427 queries | 2080000 pairs scored | 65 pairs/s | 31859.8s
+23:50:06 | INFO | [cuda:0] 18800/43628 queries | 1880000 pairs scored | 59 pairs/s | 31925.9s
+23:54:40 | INFO | [cuda:1] 21000/58427 queries | 2100000 pairs scored | 65 pairs/s | 32185.0s
+23:56:10 | INFO | [cuda:0] 19000/43628 queries | 1900000 pairs scored | 59 pairs/s | 32290.4s
+00:00:13 | INFO | [cuda:1] 21200/58427 queries | 2120000 pairs scored | 65 pairs/s | 32518.4s
+00:02:15 | INFO | [cuda:0] 19200/43628 queries | 1920000 pairs scored | 59 pairs/s | 32654.9s
+00:05:47 | INFO | [cuda:1] 21400/58427 queries | 2140000 pairs scored | 65 pairs/s | 32851.6s
+00:08:23 | INFO | [cuda:0] 19400/43628 queries | 1940000 pairs scored | 59 pairs/s | 33023.0s
+00:11:14 | INFO | [cuda:1] 21600/58427 queries | 2160000 pairs scored | 65 pairs/s | 33179.3s
+00:14:30 | INFO | [cuda:0] 19600/43628 queries | 1960000 pairs scored | 59 pairs/s | 33390.0s
+00:16:44 | INFO | [cuda:1] 21800/58427 queries | 2180000 pairs scored | 65 pairs/s | 33509.0s
+00:20:35 | INFO | [cuda:0] 19800/43628 queries | 1980000 pairs scored | 59 pairs/s | 33755.3s
+00:22:16 | INFO | [cuda:1] 22000/58427 queries | 2200000 pairs scored | 65 pairs/s | 33841.3s
+00:26:39 | INFO | [cuda:0] 20000/43628 queries | 2000000 pairs scored | 59 pairs/s | 34118.4s
+00:27:51 | INFO | [cuda:1] 22200/58427 queries | 2220000 pairs scored | 65 pairs/s | 34175.9s
+00:32:50 | INFO | [cuda:0] 20200/43628 queries | 2020000 pairs scored | 59 pairs/s | 34489.7s
+00:33:21 | INFO | [cuda:1] 22400/58427 queries | 2240000 pairs scored | 65 pairs/s | 34505.5s
+00:38:56 | INFO | [cuda:1] 22600/58427 queries | 2260000 pairs scored | 65 pairs/s | 34841.1s
+00:38:59 | INFO | [cuda:0] 20400/43628 queries | 2040000 pairs scored | 59 pairs/s | 34859.1s
+00:44:28 | INFO | [cuda:1] 22800/58427 queries | 2280000 pairs scored | 65 pairs/s | 35173.4s
+00:45:15 | INFO | [cuda:0] 20600/43628 queries | 2060000 pairs scored | 58 pairs/s | 35235.3s
+00:50:03 | INFO | [cuda:1] 23000/58427 queries | 2300000 pairs scored | 65 pairs/s | 35508.2s
+00:51:37 | INFO | [cuda:0] 20800/43628 queries | 2080000 pairs scored | 58 pairs/s | 35617.2s
+00:55:45 | INFO | [cuda:1] 23200/58427 queries | 2320000 pairs scored | 65 pairs/s | 35849.5s
+00:57:47 | INFO | [cuda:0] 21000/43628 queries | 2100000 pairs scored | 58 pairs/s | 35987.2s
+01:01:30 | INFO | [cuda:1] 23400/58427 queries | 2340000 pairs scored | 65 pairs/s | 36195.2s
+01:04:09 | INFO | [cuda:0] 21200/43628 queries | 2120000 pairs scored | 58 pairs/s | 36369.3s
+01:07:18 | INFO | [cuda:1] 23600/58427 queries | 2360000 pairs scored | 65 pairs/s | 36542.5s
+01:10:17 | INFO | [cuda:0] 21400/43628 queries | 2140000 pairs scored | 58 pairs/s | 36736.8s
+01:13:06 | INFO | [cuda:1] 23800/58427 queries | 2380000 pairs scored | 65 pairs/s | 36891.0s
+01:16:31 | INFO | [cuda:0] 21600/43628 queries | 2160000 pairs scored | 58 pairs/s | 37110.4s
+01:18:44 | INFO | [cuda:1] 24000/58427 queries | 2400000 pairs scored | 64 pairs/s | 37229.2s
+01:23:30 | INFO | [cuda:0] 21800/43628 queries | 2180000 pairs scored | 58 pairs/s | 37530.0s
+01:27:01 | INFO | [cuda:1] 24200/58427 queries | 2420000 pairs scored | 64 pairs/s | 37726.0s
+01:33:03 | INFO | [cuda:0] 22000/43628 queries | 2200000 pairs scored | 58 pairs/s | 38102.6s
+01:35:33 | INFO | [cuda:1] 24400/58427 queries | 2440000 pairs scored | 64 pairs/s | 38237.8s
+01:45:06 | INFO | [cuda:0] 22200/43628 queries | 2220000 pairs scored | 57 pairs/s | 38825.8s
+01:47:07 | INFO | [cuda:1] 24600/58427 queries | 2460000 pairs scored | 63 pairs/s | 38932.5s
+01:58:21 | INFO | [cuda:0] 22400/43628 queries | 2240000 pairs scored | 57 pairs/s | 39620.5s
+01:58:45 | INFO | [cuda:1] 24800/58427 queries | 2480000 pairs scored | 63 pairs/s | 39630.1s
+02:05:52 | INFO | [cuda:1] 25000/58427 queries | 2500000 pairs scored | 62 pairs/s | 40056.8s
+02:06:06 | INFO | [cuda:0] 22600/43628 queries | 2260000 pairs scored | 56 pairs/s | 40085.9s
+02:16:10 | INFO | [cuda:1] 25200/58427 queries | 2520000 pairs scored | 62 pairs/s | 40674.8s
+02:17:34 | INFO | [cuda:0] 22800/43628 queries | 2280000 pairs scored | 56 pairs/s | 40773.9s
+02:24:39 | INFO | [cuda:1] 25400/58427 queries | 2540000 pairs scored | 62 pairs/s | 41184.1s
+02:27:15 | INFO | [cuda:0] 23000/43628 queries | 2300000 pairs scored | 56 pairs/s | 41354.6s
+02:38:38 | INFO | [cuda:1] 25600/58427 queries | 2560000 pairs scored | 61 pairs/s | 42022.7s
+02:42:39 | INFO | [cuda:0] 23200/43628 queries | 2320000 pairs scored | 55 pairs/s | 42279.3s
+02:52:54 | INFO | [cuda:1] 25800/58427 queries | 2580000 pairs scored | 60 pairs/s | 42879.2s
+02:58:17 | INFO | [cuda:0] 23400/43628 queries | 2340000 pairs scored | 54 pairs/s | 43216.7s
+03:05:14 | INFO | [cuda:1] 26000/58427 queries | 2600000 pairs scored | 60 pairs/s | 43619.4s
+03:11:10 | INFO | [cuda:0] 23600/43628 queries | 2360000 pairs scored | 54 pairs/s | 43989.6s
+03:19:23 | INFO | [cuda:1] 26200/58427 queries | 2620000 pairs scored | 59 pairs/s | 44468.3s
+03:26:27 | INFO | [cuda:0] 23800/43628 queries | 2380000 pairs scored | 53 pairs/s | 44907.3s
+03:32:14 | INFO | [cuda:1] 26400/58427 queries | 2640000 pairs scored | 58 pairs/s | 45239.0s
+03:39:35 | INFO | [cuda:0] 24000/43628 queries | 2400000 pairs scored | 53 pairs/s | 45694.8s
+03:43:31 | INFO | [cuda:1] 26600/58427 queries | 2660000 pairs scored | 58 pairs/s | 45915.9s
+03:48:05 | INFO | [cuda:0] 24200/43628 queries | 2420000 pairs scored | 52 pairs/s | 46205.1s
+03:50:09 | INFO | [cuda:1] 26800/58427 queries | 2680000 pairs scored | 58 pairs/s | 46314.5s
+03:58:39 | INFO | [cuda:0] 24400/43628 queries | 2440000 pairs scored | 52 pairs/s | 46838.9s
+04:00:43 | INFO | [cuda:1] 27000/58427 queries | 2700000 pairs scored | 58 pairs/s | 46947.5s
+04:05:49 | INFO | [cuda:0] 24600/43628 queries | 2460000 pairs scored | 52 pairs/s | 47268.6s
+04:06:35 | INFO | [cuda:1] 27200/58427 queries | 2720000 pairs scored | 58 pairs/s | 47300.2s
+04:12:18 | INFO | [cuda:0] 24800/43628 queries | 2480000 pairs scored | 52 pairs/s | 47657.5s
+04:12:23 | INFO | [cuda:1] 27400/58427 queries | 2740000 pairs scored | 58 pairs/s | 47647.9s
+04:18:10 | INFO | [cuda:1] 27600/58427 queries | 2760000 pairs scored | 58 pairs/s | 47994.7s
+04:18:50 | INFO | [cuda:0] 25000/43628 queries | 2500000 pairs scored | 52 pairs/s | 48049.7s
+04:23:52 | INFO | [cuda:1] 27800/58427 queries | 2780000 pairs scored | 58 pairs/s | 48336.9s
+04:25:16 | INFO | [cuda:0] 25200/43628 queries | 2520000 pairs scored | 52 pairs/s | 48436.0s
+04:29:47 | INFO | [cuda:1] 28000/58427 queries | 2800000 pairs scored | 58 pairs/s | 48692.4s
+04:31:40 | INFO | [cuda:0] 25400/43628 queries | 2540000 pairs scored | 52 pairs/s | 48820.1s
+04:35:43 | INFO | [cuda:1] 28200/58427 queries | 2820000 pairs scored | 57 pairs/s | 49048.5s
+04:38:13 | INFO | [cuda:0] 25600/43628 queries | 2560000 pairs scored | 52 pairs/s | 49212.5s
+04:41:38 | INFO | [cuda:1] 28400/58427 queries | 2840000 pairs scored | 57 pairs/s | 49403.2s
+04:44:34 | INFO | [cuda:0] 25800/43628 queries | 2580000 pairs scored | 52 pairs/s | 49594.4s
+04:47:40 | INFO | [cuda:1] 28600/58427 queries | 2860000 pairs scored | 57 pairs/s | 49765.2s
+04:51:08 | INFO | [cuda:0] 26000/43628 queries | 2600000 pairs scored | 52 pairs/s | 49987.9s
+04:53:33 | INFO | [cuda:1] 28800/58427 queries | 2880000 pairs scored | 57 pairs/s | 50118.2s
+04:57:41 | INFO | [cuda:0] 26200/43628 queries | 2620000 pairs scored | 52 pairs/s | 50381.3s
+04:59:32 | INFO | [cuda:1] 29000/58427 queries | 2900000 pairs scored | 57 pairs/s | 50476.7s
+05:04:13 | INFO | [cuda:0] 26400/43628 queries | 2640000 pairs scored | 52 pairs/s | 50773.0s
+05:05:25 | INFO | [cuda:1] 29200/58427 queries | 2920000 pairs scored | 57 pairs/s | 50829.7s
+05:10:45 | INFO | [cuda:0] 26600/43628 queries | 2660000 pairs scored | 52 pairs/s | 51165.0s
+05:11:22 | INFO | [cuda:1] 29400/58427 queries | 2940000 pairs scored | 57 pairs/s | 51186.8s
+05:17:19 | INFO | [cuda:1] 29600/58427 queries | 2960000 pairs scored | 57 pairs/s | 51544.0s
+05:17:21 | INFO | [cuda:0] 26800/43628 queries | 2680000 pairs scored | 52 pairs/s | 51561.1s
+05:23:17 | INFO | [cuda:1] 29800/58427 queries | 2980000 pairs scored | 57 pairs/s | 51902.2s
+05:23:54 | INFO | [cuda:0] 27000/43628 queries | 2700000 pairs scored | 52 pairs/s | 51953.7s
+05:29:17 | INFO | [cuda:1] 30000/58427 queries | 3000000 pairs scored | 57 pairs/s | 52261.7s
+05:30:31 | INFO | [cuda:0] 27200/43628 queries | 2720000 pairs scored | 52 pairs/s | 52351.1s
+05:35:06 | INFO | [cuda:1] 30200/58427 queries | 3020000 pairs scored | 57 pairs/s | 52611.4s
+05:37:07 | INFO | [cuda:0] 27400/43628 queries | 2740000 pairs scored | 52 pairs/s | 52747.0s
+05:41:05 | INFO | [cuda:1] 30400/58427 queries | 3040000 pairs scored | 57 pairs/s | 52970.1s
+05:43:40 | INFO | [cuda:0] 27600/43628 queries | 2760000 pairs scored | 52 pairs/s | 53140.1s
+05:47:16 | INFO | [cuda:1] 30600/58427 queries | 3060000 pairs scored | 57 pairs/s | 53340.7s
+05:50:11 | INFO | [cuda:0] 27800/43628 queries | 2780000 pairs scored | 52 pairs/s | 53531.1s
+05:53:22 | INFO | [cuda:1] 30800/58427 queries | 3080000 pairs scored | 57 pairs/s | 53706.6s
+05:56:54 | INFO | [cuda:0] 28000/43628 queries | 2800000 pairs scored | 52 pairs/s | 53933.7s
+05:59:21 | INFO | [cuda:1] 31000/58427 queries | 3100000 pairs scored | 57 pairs/s | 54066.2s
+06:03:36 | INFO | [cuda:0] 28200/43628 queries | 2820000 pairs scored | 52 pairs/s | 54336.1s
+06:05:19 | INFO | [cuda:1] 31200/58427 queries | 3120000 pairs scored | 57 pairs/s | 54424.4s
+06:10:13 | INFO | [cuda:0] 28400/43628 queries | 2840000 pairs scored | 52 pairs/s | 54732.6s
+06:11:23 | INFO | [cuda:1] 31400/58427 queries | 3140000 pairs scored | 57 pairs/s | 54788.0s
+06:16:44 | INFO | [cuda:0] 28600/43628 queries | 2860000 pairs scored | 52 pairs/s | 55124.1s
+06:17:22 | INFO | [cuda:1] 31600/58427 queries | 3160000 pairs scored | 57 pairs/s | 55147.4s
+06:23:16 | INFO | [cuda:0] 28800/43628 queries | 2880000 pairs scored | 52 pairs/s | 55516.1s
+06:23:29 | INFO | [cuda:1] 31800/58427 queries | 3180000 pairs scored | 57 pairs/s | 55514.1s
+06:29:36 | INFO | [cuda:1] 32000/58427 queries | 3200000 pairs scored | 57 pairs/s | 55880.6s
+06:30:02 | INFO | [cuda:0] 29000/43628 queries | 2900000 pairs scored | 52 pairs/s | 55922.4s
+06:35:51 | INFO | [cuda:1] 32200/58427 queries | 3220000 pairs scored | 57 pairs/s | 56255.9s
+06:36:57 | INFO | [cuda:0] 29200/43628 queries | 2920000 pairs scored | 52 pairs/s | 56337.1s
+06:42:03 | INFO | [cuda:1] 32400/58427 queries | 3240000 pairs scored | 57 pairs/s | 56627.7s
+06:43:51 | INFO | [cuda:0] 29400/43628 queries | 2940000 pairs scored | 52 pairs/s | 56750.9s
+06:48:01 | INFO | [cuda:1] 32600/58427 queries | 3260000 pairs scored | 57 pairs/s | 56986.3s
+06:50:42 | INFO | [cuda:0] 29600/43628 queries | 2960000 pairs scored | 52 pairs/s | 57161.5s
+06:54:09 | INFO | [cuda:1] 32800/58427 queries | 3280000 pairs scored | 57 pairs/s | 57353.6s
+06:57:32 | INFO | [cuda:0] 29800/43628 queries | 2980000 pairs scored | 52 pairs/s | 57572.1s
+07:00:16 | INFO | [cuda:1] 33000/58427 queries | 3300000 pairs scored | 57 pairs/s | 57720.9s
+07:04:33 | INFO | [cuda:0] 30000/43628 queries | 3000000 pairs scored | 52 pairs/s | 57992.5s
+07:06:24 | INFO | [cuda:1] 33200/58427 queries | 3320000 pairs scored | 57 pairs/s | 58088.7s
+07:11:25 | INFO | [cuda:0] 30200/43628 queries | 3020000 pairs scored | 52 pairs/s | 58404.9s
+07:12:37 | INFO | [cuda:1] 33400/58427 queries | 3340000 pairs scored | 57 pairs/s | 58462.4s
+07:18:15 | INFO | [cuda:0] 30400/43628 queries | 3040000 pairs scored | 52 pairs/s | 58814.8s
+07:18:46 | INFO | [cuda:1] 33600/58427 queries | 3360000 pairs scored | 57 pairs/s | 58831.1s
+07:24:55 | INFO | [cuda:1] 33800/58427 queries | 3380000 pairs scored | 57 pairs/s | 59199.9s
+07:25:15 | INFO | [cuda:0] 30600/43628 queries | 3060000 pairs scored | 52 pairs/s | 59235.3s
+07:31:02 | INFO | [cuda:1] 34000/58427 queries | 3400000 pairs scored | 57 pairs/s | 59567.3s
+07:32:10 | INFO | [cuda:0] 30800/43628 queries | 3080000 pairs scored | 52 pairs/s | 59650.1s
+07:37:09 | INFO | [cuda:1] 34200/58427 queries | 3420000 pairs scored | 57 pairs/s | 59934.5s
+07:39:04 | INFO | [cuda:0] 31000/43628 queries | 3100000 pairs scored | 52 pairs/s | 60063.9s
+07:43:23 | INFO | [cuda:1] 34400/58427 queries | 3440000 pairs scored | 57 pairs/s | 60308.0s
+07:46:04 | INFO | [cuda:0] 31200/43628 queries | 3120000 pairs scored | 52 pairs/s | 60483.7s
+07:49:30 | INFO | [cuda:1] 34600/58427 queries | 3460000 pairs scored | 57 pairs/s | 60674.6s
+07:53:17 | INFO | [cuda:0] 31400/43628 queries | 3140000 pairs scored | 52 pairs/s | 60916.7s
+07:55:49 | INFO | [cuda:1] 34800/58427 queries | 3480000 pairs scored | 57 pairs/s | 61053.9s
+08:00:18 | INFO | [cuda:0] 31600/43628 queries | 3160000 pairs scored | 52 pairs/s | 61337.6s
+08:02:07 | INFO | [cuda:1] 35000/58427 queries | 3500000 pairs scored | 57 pairs/s | 61432.1s
+08:07:24 | INFO | [cuda:0] 31800/43628 queries | 3180000 pairs scored | 51 pairs/s | 61763.8s
+08:08:25 | INFO | [cuda:1] 35200/58427 queries | 3520000 pairs scored | 57 pairs/s | 61810.5s
+08:14:23 | INFO | [cuda:0] 32000/43628 queries | 3200000 pairs scored | 51 pairs/s | 62182.7s
+08:14:45 | INFO | [cuda:1] 35400/58427 queries | 3540000 pairs scored | 57 pairs/s | 62189.5s
+08:21:06 | INFO | [cuda:1] 35600/58427 queries | 3560000 pairs scored | 57 pairs/s | 62570.9s
+08:21:26 | INFO | [cuda:0] 32200/43628 queries | 3220000 pairs scored | 51 pairs/s | 62606.2s
+08:27:24 | INFO | [cuda:1] 35800/58427 queries | 3580000 pairs scored | 57 pairs/s | 62949.0s
+08:28:21 | INFO | [cuda:0] 32400/43628 queries | 3240000 pairs scored | 51 pairs/s | 63020.7s
+08:33:44 | INFO | [cuda:1] 36000/58427 queries | 3600000 pairs scored | 57 pairs/s | 63329.1s
+08:35:16 | INFO | [cuda:0] 32600/43628 queries | 3260000 pairs scored | 51 pairs/s | 63435.9s
+08:39:59 | INFO | [cuda:1] 36200/58427 queries | 3620000 pairs scored | 57 pairs/s | 63704.0s
+08:42:31 | INFO | [cuda:0] 32800/43628 queries | 3280000 pairs scored | 51 pairs/s | 63870.8s
+08:46:21 | INFO | [cuda:1] 36400/58427 queries | 3640000 pairs scored | 57 pairs/s | 64086.0s
+08:49:40 | INFO | [cuda:0] 33000/43628 queries | 3300000 pairs scored | 51 pairs/s | 64300.0s
+08:52:37 | INFO | [cuda:1] 36600/58427 queries | 3660000 pairs scored | 57 pairs/s | 64462.0s
+08:56:48 | INFO | [cuda:0] 33200/43628 queries | 3320000 pairs scored | 51 pairs/s | 64728.1s
+08:58:57 | INFO | [cuda:1] 36800/58427 queries | 3680000 pairs scored | 57 pairs/s | 64841.8s
+09:04:04 | INFO | [cuda:0] 33400/43628 queries | 3340000 pairs scored | 51 pairs/s | 65163.6s
+09:05:15 | INFO | [cuda:1] 37000/58427 queries | 3700000 pairs scored | 57 pairs/s | 65219.8s
+09:11:14 | INFO | [cuda:0] 33600/43628 queries | 3360000 pairs scored | 51 pairs/s | 65594.0s
+09:11:41 | INFO | [cuda:1] 37200/58427 queries | 3720000 pairs scored | 57 pairs/s | 65605.7s
+09:17:57 | INFO | [cuda:1] 37400/58427 queries | 3740000 pairs scored | 57 pairs/s | 65982.5s
+09:18:35 | INFO | [cuda:0] 33800/43628 queries | 3380000 pairs scored | 51 pairs/s | 66035.0s
+09:24:20 | INFO | [cuda:1] 37600/58427 queries | 3760000 pairs scored | 57 pairs/s | 66364.9s
+09:25:57 | INFO | [cuda:0] 34000/43628 queries | 3400000 pairs scored | 51 pairs/s | 66476.5s
+09:30:41 | INFO | [cuda:1] 37800/58427 queries | 3780000 pairs scored | 57 pairs/s | 66745.6s
+09:33:12 | INFO | [cuda:0] 34200/43628 queries | 3420000 pairs scored | 51 pairs/s | 66911.7s
+09:37:01 | INFO | [cuda:1] 38000/58427 queries | 3800000 pairs scored | 57 pairs/s | 67126.3s
+09:40:27 | INFO | [cuda:0] 34400/43628 queries | 3440000 pairs scored | 51 pairs/s | 67347.0s
+09:43:27 | INFO | [cuda:1] 38200/58427 queries | 3820000 pairs scored | 57 pairs/s | 67511.6s
+09:47:46 | INFO | [cuda:0] 34600/43628 queries | 3460000 pairs scored | 51 pairs/s | 67786.0s
+09:49:52 | INFO | [cuda:1] 38400/58427 queries | 3840000 pairs scored | 57 pairs/s | 67897.2s
+09:54:58 | INFO | [cuda:0] 34800/43628 queries | 3480000 pairs scored | 51 pairs/s | 68218.0s
+09:56:09 | INFO | [cuda:1] 38600/58427 queries | 3860000 pairs scored | 57 pairs/s | 68273.7s
+10:02:30 | INFO | [cuda:1] 38800/58427 queries | 3880000 pairs scored | 57 pairs/s | 68654.6s
+10:02:30 | INFO | [cuda:0] 35000/43628 queries | 3500000 pairs scored | 51 pairs/s | 68669.9s
+10:08:56 | INFO | [cuda:1] 39000/58427 queries | 3900000 pairs scored | 56 pairs/s | 69040.7s
+10:09:58 | INFO | [cuda:0] 35200/43628 queries | 3520000 pairs scored | 51 pairs/s | 69118.0s
+10:15:15 | INFO | [cuda:1] 39200/58427 queries | 3920000 pairs scored | 56 pairs/s | 69419.9s
+10:17:24 | INFO | [cuda:0] 35400/43628 queries | 3540000 pairs scored | 51 pairs/s | 69564.2s
+10:21:56 | INFO | [cuda:1] 39400/58427 queries | 3940000 pairs scored | 56 pairs/s | 69820.8s
+10:24:45 | INFO | [cuda:0] 35600/43628 queries | 3560000 pairs scored | 51 pairs/s | 70004.9s
+10:28:25 | INFO | [cuda:1] 39600/58427 queries | 3960000 pairs scored | 56 pairs/s | 70210.0s
+10:32:17 | INFO | [cuda:0] 35800/43628 queries | 3580000 pairs scored | 51 pairs/s | 70457.3s
+10:34:50 | INFO | [cuda:1] 39800/58427 queries | 3980000 pairs scored | 56 pairs/s | 70595.4s
+10:39:45 | INFO | [cuda:0] 36000/43628 queries | 3600000 pairs scored | 51 pairs/s | 70905.1s
+10:41:18 | INFO | [cuda:1] 40000/58427 queries | 4000000 pairs scored | 56 pairs/s | 70983.0s
+10:47:10 | INFO | [cuda:0] 36200/43628 queries | 3620000 pairs scored | 51 pairs/s | 71350.0s
+10:47:50 | INFO | [cuda:1] 40200/58427 queries | 4020000 pairs scored | 56 pairs/s | 71374.6s
+10:54:29 | INFO | [cuda:1] 40400/58427 queries | 4040000 pairs scored | 56 pairs/s | 71773.8s
+10:54:41 | INFO | [cuda:0] 36400/43628 queries | 3640000 pairs scored | 51 pairs/s | 71801.2s
+11:01:02 | INFO | [cuda:1] 40600/58427 queries | 4060000 pairs scored | 56 pairs/s | 72166.6s
+11:02:19 | INFO | [cuda:0] 36600/43628 queries | 3660000 pairs scored | 51 pairs/s | 72258.7s
+11:07:38 | INFO | [cuda:1] 40800/58427 queries | 4080000 pairs scored | 56 pairs/s | 72562.8s
+11:09:56 | INFO | [cuda:0] 36800/43628 queries | 3680000 pairs scored | 51 pairs/s | 72716.3s
+11:14:12 | INFO | [cuda:1] 41000/58427 queries | 4100000 pairs scored | 56 pairs/s | 72957.0s
+11:17:34 | INFO | [cuda:0] 37000/43628 queries | 3700000 pairs scored | 51 pairs/s | 73173.7s
+11:20:49 | INFO | [cuda:1] 41200/58427 queries | 4120000 pairs scored | 56 pairs/s | 73353.7s
+11:25:17 | INFO | [cuda:0] 37200/43628 queries | 3720000 pairs scored | 51 pairs/s | 73637.0s
+11:27:22 | INFO | [cuda:1] 41400/58427 queries | 4140000 pairs scored | 56 pairs/s | 73747.1s
+11:33:01 | INFO | [cuda:0] 37400/43628 queries | 3740000 pairs scored | 50 pairs/s | 74100.8s
+11:33:59 | INFO | [cuda:1] 41600/58427 queries | 4160000 pairs scored | 56 pairs/s | 74144.4s
+11:40:38 | INFO | [cuda:1] 41800/58427 queries | 4180000 pairs scored | 56 pairs/s | 74542.6s
+11:40:55 | INFO | [cuda:0] 37600/43628 queries | 3760000 pairs scored | 50 pairs/s | 74575.0s
+11:47:14 | INFO | [cuda:1] 42000/58427 queries | 4200000 pairs scored | 56 pairs/s | 74939.4s
+11:48:32 | INFO | [cuda:0] 37800/43628 queries | 3780000 pairs scored | 50 pairs/s | 75032.2s
+11:53:59 | INFO | [cuda:1] 42200/58427 queries | 4220000 pairs scored | 56 pairs/s | 75344.4s
+11:56:28 | INFO | [cuda:0] 38000/43628 queries | 3800000 pairs scored | 50 pairs/s | 75507.8s
+12:00:33 | INFO | [cuda:1] 42400/58427 queries | 4240000 pairs scored | 56 pairs/s | 75738.1s
+12:04:16 | INFO | [cuda:0] 38200/43628 queries | 3820000 pairs scored | 50 pairs/s | 75975.8s
+12:07:04 | INFO | [cuda:1] 42600/58427 queries | 4260000 pairs scored | 56 pairs/s | 76128.8s
+12:12:14 | INFO | [cuda:0] 38400/43628 queries | 3840000 pairs scored | 50 pairs/s | 76453.8s
+12:13:46 | INFO | [cuda:1] 42800/58427 queries | 4280000 pairs scored | 56 pairs/s | 76530.9s
+12:20:18 | INFO | [cuda:0] 38600/43628 queries | 3860000 pairs scored | 50 pairs/s | 76938.1s
+12:20:28 | INFO | [cuda:1] 43000/58427 queries | 4300000 pairs scored | 56 pairs/s | 76933.0s
+12:27:05 | INFO | [cuda:1] 43200/58427 queries | 4320000 pairs scored | 56 pairs/s | 77329.9s
+12:28:37 | INFO | [cuda:0] 38800/43628 queries | 3880000 pairs scored | 50 pairs/s | 77437.2s
+12:33:37 | INFO | [cuda:1] 43400/58427 queries | 4340000 pairs scored | 56 pairs/s | 77721.8s
+12:36:36 | INFO | [cuda:0] 39000/43628 queries | 3900000 pairs scored | 50 pairs/s | 77915.8s
+12:40:15 | INFO | [cuda:1] 43600/58427 queries | 4360000 pairs scored | 56 pairs/s | 78120.2s
+12:44:26 | INFO | [cuda:0] 39200/43628 queries | 3920000 pairs scored | 50 pairs/s | 78386.1s
+12:47:03 | INFO | [cuda:1] 43800/58427 queries | 4380000 pairs scored | 56 pairs/s | 78528.1s
+12:52:24 | INFO | [cuda:0] 39400/43628 queries | 3940000 pairs scored | 50 pairs/s | 78864.4s
+12:53:50 | INFO | [cuda:1] 44000/58427 queries | 4400000 pairs scored | 56 pairs/s | 78934.9s
+13:00:34 | INFO | [cuda:1] 44200/58427 queries | 4420000 pairs scored | 56 pairs/s | 79338.9s
+13:00:36 | INFO | [cuda:0] 39600/43628 queries | 3960000 pairs scored | 50 pairs/s | 79355.6s
+13:07:27 | INFO | [cuda:1] 44400/58427 queries | 4440000 pairs scored | 56 pairs/s | 79752.1s
+13:08:56 | INFO | [cuda:0] 39800/43628 queries | 3980000 pairs scored | 50 pairs/s | 79856.1s
+13:14:17 | INFO | [cuda:1] 44600/58427 queries | 4460000 pairs scored | 56 pairs/s | 80162.2s
+13:17:31 | INFO | [cuda:0] 40000/43628 queries | 4000000 pairs scored | 50 pairs/s | 80370.5s
+13:21:23 | INFO | [cuda:1] 44800/58427 queries | 4480000 pairs scored | 56 pairs/s | 80587.6s
+13:26:03 | INFO | [cuda:0] 40200/43628 queries | 4020000 pairs scored | 50 pairs/s | 80883.0s
+13:28:24 | INFO | [cuda:1] 45000/58427 queries | 4500000 pairs scored | 56 pairs/s | 81009.4s
+13:34:35 | INFO | [cuda:0] 40400/43628 queries | 4040000 pairs scored | 50 pairs/s | 81394.7s
+13:35:17 | INFO | [cuda:1] 45200/58427 queries | 4520000 pairs scored | 56 pairs/s | 81422.4s
+13:42:19 | INFO | [cuda:1] 45400/58427 queries | 4540000 pairs scored | 55 pairs/s | 81843.8s
+13:42:59 | INFO | [cuda:0] 40600/43628 queries | 4060000 pairs scored | 50 pairs/s | 81898.7s
+13:49:20 | INFO | [cuda:1] 45600/58427 queries | 4560000 pairs scored | 55 pairs/s | 82265.1s
+13:51:37 | INFO | [cuda:0] 40800/43628 queries | 4080000 pairs scored | 50 pairs/s | 82416.7s
+13:56:17 | INFO | [cuda:1] 45800/58427 queries | 4580000 pairs scored | 55 pairs/s | 82681.6s
+14:00:18 | INFO | [cuda:0] 41000/43628 queries | 4100000 pairs scored | 49 pairs/s | 82937.7s
+14:03:12 | INFO | [cuda:1] 46000/58427 queries | 4600000 pairs scored | 55 pairs/s | 83096.8s
+14:08:55 | INFO | [cuda:0] 41200/43628 queries | 4120000 pairs scored | 49 pairs/s | 83454.6s
+14:10:24 | INFO | [cuda:1] 46200/58427 queries | 4620000 pairs scored | 55 pairs/s | 83528.9s
+14:17:27 | INFO | [cuda:1] 46400/58427 queries | 4640000 pairs scored | 55 pairs/s | 83952.5s
+14:17:45 | INFO | [cuda:0] 41400/43628 queries | 4140000 pairs scored | 49 pairs/s | 83984.6s
+14:24:29 | INFO | [cuda:1] 46600/58427 queries | 4660000 pairs scored | 55 pairs/s | 84373.5s
+14:26:20 | INFO | [cuda:0] 41600/43628 queries | 4160000 pairs scored | 49 pairs/s | 84500.0s
+14:31:26 | INFO | [cuda:1] 46800/58427 queries | 4680000 pairs scored | 55 pairs/s | 84790.7s
+14:35:03 | INFO | [cuda:0] 41800/43628 queries | 4180000 pairs scored | 49 pairs/s | 85022.9s
+14:38:43 | INFO | [cuda:1] 47000/58427 queries | 4700000 pairs scored | 55 pairs/s | 85227.6s
+14:43:36 | INFO | [cuda:0] 42000/43628 queries | 4200000 pairs scored | 49 pairs/s | 85536.0s
+14:45:35 | INFO | [cuda:1] 47200/58427 queries | 4720000 pairs scored | 55 pairs/s | 85639.9s
+14:51:51 | INFO | [cuda:0] 42200/43628 queries | 4220000 pairs scored | 49 pairs/s | 86030.5s
+14:52:32 | INFO | [cuda:1] 47400/58427 queries | 4740000 pairs scored | 55 pairs/s | 86057.0s
+14:59:41 | INFO | [cuda:1] 47600/58427 queries | 4760000 pairs scored | 55 pairs/s | 86486.2s
+14:59:52 | INFO | [cuda:0] 42400/43628 queries | 4240000 pairs scored | 49 pairs/s | 86512.0s
+15:07:01 | INFO | [cuda:1] 47800/58427 queries | 4780000 pairs scored | 55 pairs/s | 86925.6s
+15:07:55 | INFO | [cuda:0] 42600/43628 queries | 4260000 pairs scored | 49 pairs/s | 86994.9s
+15:14:16 | INFO | [cuda:1] 48000/58427 queries | 4800000 pairs scored | 55 pairs/s | 87361.5s
+15:15:32 | INFO | [cuda:0] 42800/43628 queries | 4280000 pairs scored | 49 pairs/s | 87452.3s
+15:21:37 | INFO | [cuda:1] 48200/58427 queries | 4820000 pairs scored | 55 pairs/s | 87802.5s
+15:23:36 | INFO | [cuda:0] 43000/43628 queries | 4300000 pairs scored | 49 pairs/s | 87936.1s
+15:28:49 | INFO | [cuda:1] 48400/58427 queries | 4840000 pairs scored | 55 pairs/s | 88233.6s
+15:31:47 | INFO | [cuda:0] 43200/43628 queries | 4320000 pairs scored | 49 pairs/s | 88426.6s
+15:36:08 | INFO | [cuda:1] 48600/58427 queries | 4860000 pairs scored | 55 pairs/s | 88672.8s
+15:40:12 | INFO | [cuda:0] 43400/43628 queries | 4340000 pairs scored | 49 pairs/s | 88932.0s
+15:43:38 | INFO | [cuda:1] 48800/58427 queries | 4880000 pairs scored | 55 pairs/s | 89123.5s
+15:48:59 | INFO | [cuda:0] 43600/43628 queries | 4360000 pairs scored | 49 pairs/s | 89459.0s
+15:50:38 | INFO | [cuda:0] Done: 43628 queries, 4362800 pairs in 89557.6s (49 pairs/s)
+[W1106 15:50:50.523385275 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
+15:50:56 | INFO | [cuda:1] 49000/58427 queries | 4900000 pairs scored | 55 pairs/s | 89560.5s
+15:57:29 | INFO | [cuda:1] 49200/58427 queries | 4920000 pairs scored | 55 pairs/s | 89953.9s
+16:03:57 | INFO | [cuda:1] 49400/58427 queries | 4940000 pairs scored | 55 pairs/s | 90342.0s
+16:10:20 | INFO | [cuda:1] 49600/58427 queries | 4960000 pairs scored | 55 pairs/s | 90724.7s
+16:17:05 | INFO | [cuda:1] 49800/58427 queries | 4980000 pairs scored | 55 pairs/s | 91130.0s
+16:23:34 | INFO | [cuda:1] 50000/58427 queries | 5000000 pairs scored | 55 pairs/s | 91519.4s
+16:30:18 | INFO | [cuda:1] 50200/58427 queries | 5020000 pairs scored | 55 pairs/s | 91922.7s
+16:36:41 | INFO | [cuda:1] 50400/58427 queries | 5040000 pairs scored | 55 pairs/s | 92305.9s
+16:43:22 | INFO | [cuda:1] 50600/58427 queries | 5060000 pairs scored | 55 pairs/s | 92707.0s
+16:50:05 | INFO | [cuda:1] 50800/58427 queries | 5080000 pairs scored | 55 pairs/s | 93110.5s
+16:56:49 | INFO | [cuda:1] 51000/58427 queries | 5100000 pairs scored | 55 pairs/s | 93514.3s
+17:03:30 | INFO | [cuda:1] 51200/58427 queries | 5120000 pairs scored | 55 pairs/s | 93915.2s
+17:10:21 | INFO | [cuda:1] 51400/58427 queries | 5140000 pairs scored | 54 pairs/s | 94326.0s
+17:17:09 | INFO | [cuda:1] 51600/58427 queries | 5160000 pairs scored | 54 pairs/s | 94733.9s
+17:23:56 | INFO | [cuda:1] 51800/58427 queries | 5180000 pairs scored | 54 pairs/s | 95141.2s
+17:30:59 | INFO | [cuda:1] 52000/58427 queries | 5200000 pairs scored | 54 pairs/s | 95563.7s
+17:37:56 | INFO | [cuda:1] 52200/58427 queries | 5220000 pairs scored | 54 pairs/s | 95980.6s
+17:45:03 | INFO | [cuda:1] 52400/58427 queries | 5240000 pairs scored | 54 pairs/s | 96408.1s
+17:52:03 | INFO | [cuda:1] 52600/58427 queries | 5260000 pairs scored | 54 pairs/s | 96827.8s
+17:59:17 | INFO | [cuda:1] 52800/58427 queries | 5280000 pairs scored | 54 pairs/s | 97262.1s
+18:06:11 | INFO | [cuda:1] 53000/58427 queries | 5300000 pairs scored | 54 pairs/s | 97675.8s
+18:13:18 | INFO | [cuda:1] 53200/58427 queries | 5320000 pairs scored | 54 pairs/s | 98102.7s
+18:20:31 | INFO | [cuda:1] 53400/58427 queries | 5340000 pairs scored | 54 pairs/s | 98535.5s
+18:28:00 | INFO | [cuda:1] 53600/58427 queries | 5360000 pairs scored | 54 pairs/s | 98984.7s
+18:35:21 | INFO | [cuda:1] 53800/58427 queries | 5380000 pairs scored | 54 pairs/s | 99425.6s
+18:42:29 | INFO | [cuda:1] 54000/58427 queries | 5400000 pairs scored | 54 pairs/s | 99854.2s
+18:49:35 | INFO | [cuda:1] 54200/58427 queries | 5420000 pairs scored | 54 pairs/s | 100280.0s
+18:57:01 | INFO | [cuda:1] 54400/58427 queries | 5440000 pairs scored | 54 pairs/s | 100725.6s
+19:04:31 | INFO | [cuda:1] 54600/58427 queries | 5460000 pairs scored | 54 pairs/s | 101176.0s
+19:12:06 | INFO | [cuda:1] 54800/58427 queries | 5480000 pairs scored | 54 pairs/s | 101631.1s
+19:19:39 | INFO | [cuda:1] 55000/58427 queries | 5500000 pairs scored | 54 pairs/s | 102084.0s
+19:27:17 | INFO | [cuda:1] 55200/58427 queries | 5520000 pairs scored | 54 pairs/s | 102542.2s
+19:34:45 | INFO | [cuda:1] 55400/58427 queries | 5540000 pairs scored | 54 pairs/s | 102990.0s
+19:42:29 | INFO | [cuda:1] 55600/58427 queries | 5560000 pairs scored | 54 pairs/s | 103454.3s
+19:50:16 | INFO | [cuda:1] 55800/58427 queries | 5580000 pairs scored | 54 pairs/s | 103920.6s
+19:57:54 | INFO | [cuda:1] 56000/58427 queries | 5600000 pairs scored | 54 pairs/s | 104379.3s
+20:05:53 | INFO | [cuda:1] 56200/58427 queries | 5620000 pairs scored | 54 pairs/s | 104857.7s
+20:13:39 | INFO | [cuda:1] 56400/58427 queries | 5640000 pairs scored | 54 pairs/s | 105324.1s
+20:21:27 | INFO | [cuda:1] 56600/58427 queries | 5660000 pairs scored | 54 pairs/s | 105792.2s
+20:29:10 | INFO | [cuda:1] 56800/58427 queries | 5680000 pairs scored | 53 pairs/s | 106255.0s
+20:36:03 | INFO | [cuda:1] 57000/58427 queries | 5700000 pairs scored | 53 pairs/s | 106667.6s
+20:43:02 | INFO | [cuda:1] 57200/58427 queries | 5720000 pairs scored | 53 pairs/s | 107087.1s
+20:50:09 | INFO | [cuda:1] 57400/58427 queries | 5740000 pairs scored | 53 pairs/s | 107514.4s
+20:57:01 | INFO | [cuda:1] 57600/58427 queries | 5760000 pairs scored | 53 pairs/s | 107926.3s
+21:04:09 | INFO | [cuda:1] 57800/58427 queries | 5780000 pairs scored | 53 pairs/s | 108354.4s
+21:11:07 | INFO | [cuda:1] 58000/58427 queries | 5800000 pairs scored | 53 pairs/s | 108771.8s
+21:18:46 | INFO | [cuda:1] 58200/58427 queries | 5820000 pairs scored | 53 pairs/s | 109230.6s
+21:26:57 | INFO | [cuda:1] 58400/58427 queries | 5840000 pairs scored | 53 pairs/s | 109721.8s
+21:28:20 | INFO | [cuda:1] Done: 58427 queries, 5842700 pairs in 109805.2s (53 pairs/s)
+[W1106 21:28:26.916158005 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
+21:28:29 | INFO | ⏱  DONE:  Reranking 170055 queries on 2 GPU(s) (110486.6s)
+21:28:42 | INFO | Reranking complete: 170055 queries merged
+21:31:08 | INFO | Saved reranked run to /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-reranker-v2-m3/over__jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q8192_d8192_nofilter/retrieval_run.lz4
+21:31:08 | INFO | Cleaned up checkpoint directory
+21:31:24 | INFO | 
+21:31:24 | INFO | ╔══════════════════════════════════════════════════╗
+21:31:24 | INFO | ║  RESULTS — bge-reranker-v2-m3                    ║
+21:31:24 | INFO | ╠══════════════════════════════════════════════════╣
+21:31:24 | INFO | ║  ndcg@10          0.5771                         ║
+21:31:24 | INFO | ║  recall@100       0.9039                         ║
+21:31:24 | INFO | ║  mrr@10           0.5125                         ║
+21:31:24 | INFO | ║  map              0.5159                         ║
+21:31:24 | INFO | ║  precision@10     0.0802                         ║
+21:31:24 | INFO | ║  precision@50     0.0183                         ║
+21:31:24 | INFO | ╚══════════════════════════════════════════════════╝
+[W1106 21:31:26.520819551 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())

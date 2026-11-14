@@ -1,0 +1,198 @@
+2026-11-04 19:18:03 | Starting bge-reranker-v2-m3 at 8192 tokens
+19:18:06 | INFO | Loading faiss with AVX512 support.
+19:18:06 | INFO | Successfully loaded faiss with AVX512 support.
+19:18:06 | INFO | ⏱  START: Loading cached pruned qrels
+19:18:07 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.2s)
+19:18:12 | INFO | Loading first-stage run from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+19:19:44 | INFO | Prepared 170055 queries, 17005500 total pairs across 2 GPU(s)
+19:19:44 | INFO | ⏱  START: Reranking 170055 queries on 2 GPU(s)
+19:19:50 | INFO | Loading faiss with AVX512 support.
+19:19:50 | INFO | Successfully loaded faiss with AVX512 support.
+19:19:51 | INFO | Started worker on cuda:0 (85028 queries)
+19:19:55 | INFO | [cuda:0] Building doc lookup ...
+19:19:55 | INFO | ⏱  START: Loading eswiki corpus
+19:19:56 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+19:19:56 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+19:19:56 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+19:19:56 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+19:19:56 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+19:19:56 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+19:19:57 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+19:19:57 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+19:19:57 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+19:19:57 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+19:19:57 | INFO | ⏱  DONE:  Loading eswiki corpus (1.7s)
+19:19:57 | INFO | Original corpus: 14047759 documents
+19:19:57 | INFO | ⏱  START: Formatting and counting words (16 workers)
+Setting TOKENIZERS_PARALLELISM=false for forked processes.
+19:19:57 | WARNING | Setting TOKENIZERS_PARALLELISM=false for forked processes.
+19:19:58 | INFO | ⏱  DONE:  Formatting and counting words (16 workers) (1.0s)
+19:19:58 | INFO | Word-count filter disabled — using all 14047759 documents
+19:19:59 | INFO | Loading faiss with AVX512 support.
+19:19:59 | INFO | Successfully loaded faiss with AVX512 support.
+19:20:01 | INFO | Started worker on cuda:1 (85027 queries)
+19:20:08 | INFO | [cuda:1] Building doc lookup ...
+19:20:08 | INFO | ⏱  START: Loading eswiki corpus
+19:20:08 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+19:20:08 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/spanish-ir/eswiki_20240401_corpus/fe9f26a420825289ac86e77eb924443b489f0dbf/README.md "HTTP/1.1 200 OK"
+19:20:08 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+19:20:08 | INFO | HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/spanish-ir/eswiki_20240401_corpus/spanish-ir/eswiki_20240401_corpus.py "HTTP/1.1 404 Not Found"
+19:20:08 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/revision/fe9f26a420825289ac86e77eb924443b489f0dbf "HTTP/1.1 200 OK"
+19:20:09 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/.huggingface.yaml "HTTP/1.1 404 Not Found"
+19:20:09 | INFO | HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=spanish-ir/eswiki_20240401_corpus "HTTP/1.1 200 OK"
+19:20:09 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf/data?recursive=true&expand=false "HTTP/1.1 200 OK"
+19:20:09 | INFO | HTTP Request: GET https://huggingface.co/api/datasets/spanish-ir/eswiki_20240401_corpus/tree/fe9f26a420825289ac86e77eb924443b489f0dbf?recursive=false&expand=false "HTTP/1.1 200 OK"
+19:20:09 | INFO | HTTP Request: HEAD https://huggingface.co/datasets/spanish-ir/eswiki_20240401_corpus/resolve/fe9f26a420825289ac86e77eb924443b489f0dbf/dataset_infos.json "HTTP/1.1 404 Not Found"
+19:20:09 | INFO | ⏱  DONE:  Loading eswiki corpus (1.5s)
+19:20:09 | INFO | Original corpus: 14047759 documents
+19:20:09 | INFO | ⏱  START: Formatting and counting words (16 workers)
+Setting TOKENIZERS_PARALLELISM=false for forked processes.
+19:20:09 | WARNING | Setting TOKENIZERS_PARALLELISM=false for forked processes.
+19:20:10 | INFO | ⏱  DONE:  Formatting and counting words (16 workers) (1.0s)
+19:20:10 | INFO | Word-count filter disabled — using all 14047759 documents
+19:32:36 | INFO | Doc lookup built: 14047759 documents
+19:32:36 | INFO | [cuda:0] Loading BAAI/bge-reranker-v2-m3 ...
+19:32:36 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+19:32:36 | INFO | No modules.json found for BAAI/bge-reranker-v2-m3, initializing a new CrossEncoder model.
+19:32:36 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+19:32:36 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+19:32:36 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+19:32:36 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+19:32:36 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+19:32:36 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/393 [00:00<?, ?it/s]Loading weights: 100%|██████████| 393/393 [00:00<00:00, 20701.30it/s]
+19:32:37 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+19:32:37 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+19:32:37 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+19:32:37 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+19:32:37 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+19:32:37 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+19:32:37 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+19:32:37 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+19:32:37 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+19:32:37 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+19:32:38 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+19:32:38 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+19:32:38 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+19:32:38 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+19:32:45 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+19:32:47 | INFO | [cuda:0] Model loaded.
+19:33:09 | INFO | Doc lookup built: 14047759 documents
+19:33:09 | INFO | [cuda:1] Loading BAAI/bge-reranker-v2-m3 ...
+19:33:09 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+19:33:09 | INFO | No modules.json found for BAAI/bge-reranker-v2-m3, initializing a new CrossEncoder model.
+19:33:09 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+19:33:10 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+19:33:10 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+19:33:10 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+19:33:10 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+19:33:10 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/393 [00:00<?, ?it/s]Loading weights: 100%|██████████| 393/393 [00:00<00:00, 20475.78it/s]
+19:33:10 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+19:33:10 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+19:33:10 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+19:33:10 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+19:33:10 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+19:33:11 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+19:33:11 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+19:33:11 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+19:33:11 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+19:33:11 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/config.json "HTTP/1.1 200 OK"
+19:33:11 | INFO | HTTP Request: HEAD https://huggingface.co/BAAI/bge-reranker-v2-m3/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+19:33:11 | INFO | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/BAAI/bge-reranker-v2-m3/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/tokenizer_config.json "HTTP/1.1 200 OK"
+19:33:11 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+19:33:11 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+19:33:19 | INFO | HTTP Request: GET https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3 "HTTP/1.1 200 OK"
+19:33:20 | INFO | [cuda:1] Model loaded.
+19:37:29 | INFO | [cuda:0] 200/85028 queries | 20000 pairs scored | 105 pairs/s | 190.5s
+19:38:01 | INFO | [cuda:1] 200/85027 queries | 20000 pairs scored | 106 pairs/s | 188.0s
+19:41:16 | INFO | [cuda:0] 400/85028 queries | 40000 pairs scored | 96 pairs/s | 417.0s
+19:41:44 | INFO | [cuda:1] 400/85027 queries | 40000 pairs scored | 97 pairs/s | 411.3s
+19:45:16 | INFO | [cuda:0] 600/85028 queries | 60000 pairs scored | 91 pairs/s | 656.6s
+19:45:43 | INFO | [cuda:1] 600/85027 queries | 60000 pairs scored | 92 pairs/s | 650.3s
+19:49:20 | INFO | [cuda:0] 800/85028 queries | 80000 pairs scored | 89 pairs/s | 901.1s
+19:49:45 | INFO | [cuda:1] 800/85027 queries | 80000 pairs scored | 90 pairs/s | 891.7s
+19:53:33 | INFO | [cuda:0] 1000/85028 queries | 100000 pairs scored | 87 pairs/s | 1154.4s
+19:53:59 | INFO | [cuda:1] 1000/85027 queries | 100000 pairs scored | 87 pairs/s | 1145.6s
+19:57:50 | INFO | [cuda:0] 1200/85028 queries | 120000 pairs scored | 85 pairs/s | 1410.7s
+19:58:15 | INFO | [cuda:1] 1200/85027 queries | 120000 pairs scored | 86 pairs/s | 1401.7s
+20:02:18 | INFO | [cuda:0] 1400/85028 queries | 140000 pairs scored | 83 pairs/s | 1679.4s
+20:02:35 | INFO | [cuda:1] 1400/85027 queries | 140000 pairs scored | 84 pairs/s | 1662.2s
+20:06:55 | INFO | [cuda:0] 1600/85028 queries | 160000 pairs scored | 82 pairs/s | 1956.1s
+20:07:03 | INFO | [cuda:1] 1600/85027 queries | 160000 pairs scored | 83 pairs/s | 1930.2s
+20:11:26 | INFO | [cuda:0] 1800/85028 queries | 180000 pairs scored | 81 pairs/s | 2226.8s
+20:11:27 | INFO | [cuda:1] 1800/85027 queries | 180000 pairs scored | 82 pairs/s | 2194.1s
+20:15:55 | INFO | [cuda:1] 2000/85027 queries | 200000 pairs scored | 81 pairs/s | 2461.6s
+20:15:57 | INFO | [cuda:0] 2000/85028 queries | 200000 pairs scored | 80 pairs/s | 2497.9s
+20:20:28 | INFO | [cuda:1] 2200/85027 queries | 220000 pairs scored | 80 pairs/s | 2735.4s
+20:20:30 | INFO | [cuda:0] 2200/85028 queries | 220000 pairs scored | 79 pairs/s | 2771.5s
+20:24:58 | INFO | [cuda:1] 2400/85027 queries | 240000 pairs scored | 80 pairs/s | 3005.0s
+20:25:05 | INFO | [cuda:0] 2400/85028 queries | 240000 pairs scored | 79 pairs/s | 3045.9s
+20:29:35 | INFO | [cuda:1] 2600/85027 queries | 260000 pairs scored | 79 pairs/s | 3282.0s
+20:29:47 | INFO | [cuda:0] 2600/85028 queries | 260000 pairs scored | 78 pairs/s | 3328.3s
+20:34:14 | INFO | [cuda:1] 2800/85027 queries | 280000 pairs scored | 79 pairs/s | 3560.6s
+20:34:28 | INFO | [cuda:0] 2800/85028 queries | 280000 pairs scored | 78 pairs/s | 3608.9s
+20:38:53 | INFO | [cuda:1] 3000/85027 queries | 300000 pairs scored | 78 pairs/s | 3840.2s
+20:39:08 | INFO | [cuda:0] 3000/85028 queries | 300000 pairs scored | 77 pairs/s | 3888.8s
+20:43:42 | INFO | [cuda:1] 3200/85027 queries | 320000 pairs scored | 78 pairs/s | 4128.4s
+20:43:53 | INFO | [cuda:0] 3200/85028 queries | 320000 pairs scored | 77 pairs/s | 4174.5s
+20:48:29 | INFO | [cuda:1] 3400/85027 queries | 340000 pairs scored | 77 pairs/s | 4416.0s
+20:48:46 | INFO | [cuda:0] 3400/85028 queries | 340000 pairs scored | 76 pairs/s | 4467.2s
+20:53:16 | INFO | [cuda:1] 3600/85027 queries | 360000 pairs scored | 77 pairs/s | 4703.4s
+20:53:38 | INFO | [cuda:0] 3600/85028 queries | 360000 pairs scored | 76 pairs/s | 4758.6s
+20:58:02 | INFO | [cuda:1] 3800/85027 queries | 380000 pairs scored | 76 pairs/s | 4989.0s
+20:58:27 | INFO | [cuda:0] 3800/85028 queries | 380000 pairs scored | 75 pairs/s | 5048.5s
+21:02:49 | INFO | [cuda:1] 4000/85027 queries | 400000 pairs scored | 76 pairs/s | 5276.0s
+21:03:18 | INFO | [cuda:0] 4000/85028 queries | 400000 pairs scored | 75 pairs/s | 5339.1s
+21:07:43 | INFO | [cuda:1] 4200/85027 queries | 420000 pairs scored | 75 pairs/s | 5569.7s
+21:08:18 | INFO | [cuda:0] 4200/85028 queries | 420000 pairs scored | 74 pairs/s | 5639.0s
+21:12:35 | INFO | [cuda:1] 4400/85027 queries | 440000 pairs scored | 75 pairs/s | 5862.4s
+21:13:14 | INFO | [cuda:0] 4400/85028 queries | 440000 pairs scored | 74 pairs/s | 5934.8s
+21:17:34 | INFO | [cuda:1] 4600/85027 queries | 460000 pairs scored | 75 pairs/s | 6161.2s
+21:18:13 | INFO | [cuda:0] 4600/85028 queries | 460000 pairs scored | 74 pairs/s | 6234.0s
+21:22:36 | INFO | [cuda:1] 4800/85027 queries | 480000 pairs scored | 74 pairs/s | 6463.1s
+21:23:14 | INFO | [cuda:0] 4800/85028 queries | 480000 pairs scored | 73 pairs/s | 6535.2s
+21:27:35 | INFO | [cuda:1] 5000/85027 queries | 500000 pairs scored | 74 pairs/s | 6762.3s
+21:28:20 | INFO | [cuda:0] 5000/85028 queries | 500000 pairs scored | 73 pairs/s | 6841.1s
+21:32:38 | INFO | [cuda:1] 5200/85027 queries | 520000 pairs scored | 74 pairs/s | 7064.5s
+21:33:21 | INFO | [cuda:0] 5200/85028 queries | 520000 pairs scored | 73 pairs/s | 7142.4s
+21:37:37 | INFO | [cuda:1] 5400/85027 queries | 540000 pairs scored | 73 pairs/s | 7364.2s
+21:38:26 | INFO | [cuda:0] 5400/85028 queries | 540000 pairs scored | 73 pairs/s | 7447.1s
+21:42:39 | INFO | [cuda:1] 5600/85027 queries | 560000 pairs scored | 73 pairs/s | 7666.3s
+21:43:28 | INFO | [cuda:0] 5600/85028 queries | 560000 pairs scored | 72 pairs/s | 7749.2s
+21:47:42 | INFO | [cuda:1] 5800/85027 queries | 580000 pairs scored | 73 pairs/s | 7969.2s
+21:48:33 | INFO | [cuda:0] 5800/85028 queries | 580000 pairs scored | 72 pairs/s | 8054.6s
+21:52:50 | INFO | [cuda:1] 6000/85027 queries | 600000 pairs scored | 72 pairs/s | 8277.3s
+21:53:47 | INFO | [cuda:0] 6000/85028 queries | 600000 pairs scored | 72 pairs/s | 8368.6s
+21:57:53 | INFO | [cuda:1] 6200/85027 queries | 620000 pairs scored | 72 pairs/s | 8580.0s
+21:58:59 | INFO | [cuda:0] 6200/85028 queries | 620000 pairs scored | 71 pairs/s | 8680.1s
+22:03:03 | INFO | [cuda:1] 6400/85027 queries | 640000 pairs scored | 72 pairs/s | 8889.9s
+22:04:11 | INFO | [cuda:0] 6400/85028 queries | 640000 pairs scored | 71 pairs/s | 8992.3s
+22:08:13 | INFO | [cuda:1] 6600/85027 queries | 660000 pairs scored | 72 pairs/s | 9200.4s
+22:09:22 | INFO | [cuda:0] 6600/85028 queries | 660000 pairs scored | 71 pairs/s | 9302.9s
+22:13:21 | INFO | [cuda:1] 6800/85027 queries | 680000 pairs scored | 72 pairs/s | 9508.0s
+22:14:29 | INFO | [cuda:0] 6800/85028 queries | 680000 pairs scored | 71 pairs/s | 9610.3s
+22:18:36 | INFO | [cuda:1] 7000/85027 queries | 700000 pairs scored | 71 pairs/s | 9822.8s
+22:19:47 | INFO | [cuda:0] 7000/85028 queries | 700000 pairs scored | 71 pairs/s | 9928.5s
+22:23:57 | INFO | [cuda:1] 7200/85027 queries | 720000 pairs scored | 71 pairs/s | 10144.4s
+22:25:20 | INFO | [cuda:0] 7200/85028 queries | 720000 pairs scored | 70 pairs/s | 10260.8s
+22:29:16 | INFO | [cuda:1] 7400/85027 queries | 740000 pairs scored | 71 pairs/s | 10462.8s
+22:30:41 | INFO | [cuda:0] 7400/85028 queries | 740000 pairs scored | 70 pairs/s | 10581.9s
+22:34:38 | INFO | [cuda:1] 7600/85027 queries | 760000 pairs scored | 70 pairs/s | 10785.3s
+22:36:04 | INFO | [cuda:0] 7600/85028 queries | 760000 pairs scored | 70 pairs/s | 10905.1s
+22:39:55 | INFO | [cuda:1] 7800/85027 queries | 780000 pairs scored | 70 pairs/s | 11102.4s
+22:41:31 | INFO | [cuda:0] 7800/85028 queries | 780000 pairs scored | 69 pairs/s | 11232.5s
+22:45:23 | INFO | [cuda:1] 8000/85027 queries | 800000 pairs scored | 70 pairs/s | 11429.6s
+22:46:55 | INFO | [cuda:0] 8000/85028 queries | 800000 pairs scored | 69 pairs/s | 11556.4s
+22:50:36 | INFO | [cuda:1] 8200/85027 queries | 820000 pairs scored | 70 pairs/s | 11743.4s
+22:52:20 | INFO | [cuda:0] 8200/85028 queries | 820000 pairs scored | 69 pairs/s | 11881.3s
+22:55:57 | INFO | [cuda:1] 8400/85027 queries | 840000 pairs scored | 70 pairs/s | 12064.1s
+22:57:49 | INFO | [cuda:0] 8400/85028 queries | 840000 pairs scored | 69 pairs/s | 12210.3s
+23:01:23 | INFO | [cuda:1] 8600/85027 queries | 860000 pairs scored | 69 pairs/s | 12389.6s
+23:03:13 | INFO | [cuda:0] 8600/85028 queries | 860000 pairs scored | 69 pairs/s | 12534.1s
+23:06:44 | INFO | [cuda:1] 8800/85027 queries | 880000 pairs scored | 69 pairs/s | 12710.6s
+23:08:45 | INFO | [cuda:0] 8800/85028 queries | 880000 pairs scored | 68 pairs/s | 12866.5s
+23:12:16 | INFO | [cuda:1] 9000/85027 queries | 900000 pairs scored | 69 pairs/s | 13043.1s
+23:14:20 | INFO | [cuda:0] 9000/85028 queries | 900000 pairs scored | 68 pairs/s | 13201.1s
+/home/jmendoza/miniconda3/envs/proyecto/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 2 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
