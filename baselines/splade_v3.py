@@ -112,8 +112,16 @@ def load_sparse_cached(embedding_dir: Path):
 
 
 def save_sparse_chunk(matrix: sp.csr_matrix, path: Path):
+    """Save a sparse chunk atomically so an interrupted run never leaves a corrupt .npz."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    sp.save_npz(path, matrix)
+    tmp = path.with_name(path.stem + "_tmp.npz")
+    try:
+        sp.save_npz(tmp, matrix)
+        os.replace(tmp, path)
+    except BaseException:
+        if tmp.exists():
+            tmp.unlink()
+        raise
     log.info(
         "  Saved %s (%d×%d, %d nnz, %.1f MB)",
         path.name, *matrix.shape, matrix.nnz,
