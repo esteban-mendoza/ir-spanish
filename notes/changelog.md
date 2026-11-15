@@ -23,6 +23,21 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-11-14 — Figuras de RBO y ganancia por categoría de par
+- **Cambios:** `analysis/rbo_gain_category_figure.py` nuevo; lee `results/e5/rbo_gain*.csv` y `results/rbo/rbo_pairs.csv` y genera `analysis/figures/rbo-ganancia-categorias-ndcg.pdf` y `-recall.pdf`, con una cuadrícula de 4 × 4: un algoritmo por fila y una categoría de par por columna (léxico–disperso, léxico–denso, disperso–denso y denso–denso).
+- **Decisiones:** la unidad sigue siendo la combinación, pero el eje x promedia solo los pares de la categoría y la ganancia es la de la combinación; la fila identifica el algoritmo y el color codifica el número de modelos de la combinación, con la misma escala blanco→azul que las otras figuras del experimento; la recta es gris y cada panel lleva su coeficiente de Pearson en la esquina superior derecha. La categoría léxico–disperso tiene un solo par (BM25–SPLADE) y su RBO es constante, así que el encabezado de la columna lo indica y no hay coeficiente.
+- **Estado / pendientes:** pendientes de aprobación antes de incorporarlas a §5.5; dentro de cada categoría la correlación es negativa, lo que invierte el signo agregado y habrá que decidir cómo se declara.
+
+## 2026-11-14 — Figura resumen de longitudes
+- **Cambios:** `analysis/length_figure.py` nuevo; dibuja las cinco filas de la tabla 4.2 de la tesis y escribe `analysis/figures/messirve-longitudes-resumen.pdf` (más una vista previa PNG). Se borraron de `analysis/figures/` las cinco figuras individuales de longitud.
+- **Decisiones:** una sola gráfica con las distribuciones resumidas en cuantiles (mínimo, P50, P95, P99 y máximo) porque las cinco figuras separadas no dejaban comparar entre filas; el cuaderno `distributions.ipynb` queda intacto como respaldo de las cifras.
+- **Estado / pendientes:** copiada a `tesis/figuras/` e incluida en §4.1; si se vuelve a ejecutar el cuaderno, regenerará las figuras retiradas.
+
+## 2026-11-14 — Figuras de RBO y ganancia
+- **Cambios:** `analysis/rbo_gain_figure.py` nuevo; lee `results/e5/rbo_gain*.csv` y genera `analysis/figures/rbo-ganancia-ndcg.pdf` y `rbo-ganancia-recall.pdf`.
+- **Decisiones:** tipografía y ancho de la tesis (Latin Modern Roman, 10 pt, caja de 15.59 cm); una figura por métrica, un panel por algoritmo y color por tamaño de la combinación; sin título interno porque el pie lo pone LaTeX.
+- **Estado / pendientes:** copiadas a `tesis/figuras/`; falta su inclusión en el capítulo 5.
+
 ## 2026-11-07 — Costo de codificar documentos e índices
 - **Cambios:** `evaluation/encoding_cost.py` mide la codificación de una muestra estratificada de 20 000 documentos con `e5-large`, `bge-m3` y `jina-v5-small`, el tamaño de un índice plano construido con esos vectores y la codificación de las 500 consultas; `scripts/run_encoding_cost.sh` orquesta piloto y corrida completa.
 - **Decisiones:** la muestra se estratifica por deciles de longitud y se codifica con los lotes y prompts de producción en una sola GPU; el costo de documentos e índices es fuera de línea y se reporta separado del costo por consulta. Las horas a 14 M son extrapolación lineal; no se vuelve a medir la búsqueda.
