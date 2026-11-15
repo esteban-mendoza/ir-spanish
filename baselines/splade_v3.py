@@ -9,7 +9,6 @@ then retrieves via GPU-accelerated sparse matmul (PyTorch CUDA).
 
 from __future__ import annotations
 
-import argparse
 import gc
 import logging
 import os
@@ -31,7 +30,6 @@ log = logging.getLogger(__name__)
 # Configuration
 # ---------------------------------------------------------------------------
 MODEL_NAME = "naver/splade-v3"
-MODEL_ALIAS = MODEL_NAME
 MODEL_MAX_LENGTH = 512
 QUERY_BATCH_SIZE = 256
 DOC_BATCH_SIZE = 128
@@ -46,37 +44,16 @@ MATMUL_SUB_BATCH = 64
 
 CACHE_DIR = Path.home() / ".cache" / "messirve_embeddings"
 
-MODEL_CACHE_BASE: Path
-DOC_EMB_DIR: Path
-QUERY_EMB_DIR: Path
-RUN_PATH: Path
-DATASET_CACHE_DIR: Path
-
-
-def configure(model_name: str = MODEL_NAME, alias: str | None = None) -> None:
-    """Point the pipeline at a checkpoint and its cache directories.
-
-    The checkpoint only changes the model slug, so a different model never
-    reads another one's embeddings or run.
-    """
-    global MODEL_NAME, MODEL_ALIAS, MODEL_CACHE_BASE
-    global DOC_EMB_DIR, QUERY_EMB_DIR, RUN_PATH, DATASET_CACHE_DIR
-
-    MODEL_NAME = model_name
-    MODEL_ALIAS = alias or model_name
-    MODEL_CACHE_BASE = cache.cache_base(
-        CACHE_DIR, model_name, data.COUNTRY, data.DATASET_VERSION,
-        MODEL_MAX_LENGTH, MODEL_MAX_LENGTH, data.MAX_WORD_COUNT,
-    )
-    DOC_EMB_DIR = cache.emb_dir(MODEL_CACHE_BASE, "doc")
-    QUERY_EMB_DIR = cache.emb_dir(MODEL_CACHE_BASE, "query")
-    RUN_PATH = cache.run_cache_path(MODEL_CACHE_BASE)
-    DATASET_CACHE_DIR = cache.dataset_cache_base(
-        CACHE_DIR, data.COUNTRY, data.DATASET_VERSION, data.MAX_WORD_COUNT,
-    )
-
-
-configure()
+MODEL_CACHE_BASE = cache.cache_base(
+    CACHE_DIR, MODEL_NAME, data.COUNTRY, data.DATASET_VERSION,
+    MODEL_MAX_LENGTH, MODEL_MAX_LENGTH, data.MAX_WORD_COUNT,
+)
+DOC_EMB_DIR = cache.emb_dir(MODEL_CACHE_BASE, "doc")
+QUERY_EMB_DIR = cache.emb_dir(MODEL_CACHE_BASE, "query")
+RUN_PATH = cache.run_cache_path(MODEL_CACHE_BASE)
+DATASET_CACHE_DIR = cache.dataset_cache_base(
+    CACHE_DIR, data.COUNTRY, data.DATASET_VERSION, data.MAX_WORD_COUNT,
+)
 
 
 def _to_scipy_csr(tensor: torch.Tensor) -> sp.csr_matrix:
@@ -112,16 +89,8 @@ def load_sparse_cached(embedding_dir: Path):
 
 
 def save_sparse_chunk(matrix: sp.csr_matrix, path: Path):
-    """Save a sparse chunk atomically so an interrupted run never leaves a corrupt .npz."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    tmp = path.with_name(path.stem + "_tmp.npz")
-    try:
-        sp.save_npz(tmp, matrix)
-        os.replace(tmp, path)
-    except BaseException:
-        if tmp.exists():
-            tmp.unlink()
-        raise
+    sp.save_npz(path, matrix)
     log.info(
         "  Saved %s (%d×%d, %d nnz, %.1f MB)",
         path.name, *matrix.shape, matrix.nnz,
@@ -311,9 +280,7 @@ def sparse_retrieve(
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
-def run(model_name: str = MODEL_NAME, alias: str | None = None) -> dict[str, float]:
-    """Encode, retrieve and evaluate one sparse checkpoint on MessIRve."""
-    configure(model_name, alias)
+if __name__ == "__main__":
     torch.manual_seed(SEED)
 
     need_retrieval_run = not RUN_PATH.exists()
@@ -383,7 +350,7 @@ def run(model_name: str = MODEL_NAME, alias: str | None = None) -> dict[str, flo
         retrieval_run = sparse_retrieve(query_ids, query_sparse, doc_ids, doc_sparse, TOP_K)
 
         RUN_PATH.parent.mkdir(parents=True, exist_ok=True)
-        ranx_run = retrieval.save_run(retrieval_run, MODEL_ALIAS, RUN_PATH)
+        ranx_run = retrieval.save_run(retrieval_run, MODEL_NAME, RUN_PATH)
         log.info("Saved retrieval run to %s", RUN_PATH)
     else:
         log.info("Loading cached retrieval run from %s", RUN_PATH)
@@ -395,18 +362,4 @@ def run(model_name: str = MODEL_NAME, alias: str | None = None) -> dict[str, flo
             num_workers=NUM_WORKERS,
         )
 
-    return retrieval.run_evaluation(qrels, ranx_run, MODEL_ALIAS)
-
-
-def main() -> None:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--model", default="naver/splade-v3",
-                        help="HuggingFace checkpoint to encode with")
-    parser.add_argument("--alias", default=None,
-                        help="Run name used in the evaluation table")
-    args = parser.parse_args()
-    run(args.model, args.alias)
-
-
-if __name__ == "__main__":
-    main()
+    retrieval.run_evaluation(qrels, ranx_run, MODEL_NAME)
