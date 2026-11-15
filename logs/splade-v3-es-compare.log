@@ -1,0 +1,31 @@
+22:21:41 | INFO | Loading faiss with AVX512 support.
+22:21:41 | INFO | Successfully loaded faiss with AVX512 support.
+22:21:44 | INFO | ⏱  START: Loading cached pruned qrels
+22:21:44 | INFO | ⏱  DONE:  Loading cached pruned qrels (0.3s)
+22:21:49 | INFO | Loading run for bm25 from /home/jmendoza/.cache/messirve_embeddings/bm25_pyserini/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+22:22:16 | INFO | Loading run for splade-v3 from /home/jmendoza/.cache/messirve_embeddings/naver__splade-v3/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+22:22:40 | INFO | Loading run for qwen3-0.6b from /home/jmendoza/.cache/messirve_embeddings/Qwen__Qwen3-Embedding-0.6B/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+22:23:03 | INFO | Loading run for e5-large from /home/jmendoza/.cache/messirve_embeddings/intfloat__multilingual-e5-large-instruct/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+22:23:27 | INFO | Loading run for bge-m3 from /home/jmendoza/.cache/messirve_embeddings/BAAI__bge-m3/full_v1.2_q8192_d8192_nofilter/retrieval_run.lz4
+22:23:50 | INFO | Loading run for jina-v5-small from /home/jmendoza/.cache/messirve_embeddings/jinaai__jina-embeddings-v5-text-small-retrieval/full_v1.2_q32768_d32768_nofilter/retrieval_run.lz4
+22:24:14 | INFO | Loading run for splade-v3-es from /home/jmendoza/.cache/messirve_embeddings/alrolo3__splade-v3-spanish-vllm/full_v1.2_q512_d512_nofilter/retrieval_run.lz4
+22:26:31 | INFO |  1  jina-v5-small          0.5115   0.9039
+22:26:31 | INFO |  2  bge-m3                 0.4818   0.8741
+22:26:31 | INFO |  3  e5-large               0.4675   0.8666
+22:26:31 | INFO |  4  qwen3-0.6b             0.4468   0.8423
+22:26:31 | INFO |  5  splade-v3-es           0.2886   0.6872
+22:26:31 | INFO |  6  splade-v3              0.1956   0.5725
+22:26:31 | INFO |  7  bm25                   0.1848   0.5725
+22:29:59 | INFO | ndcg@10   bm25                 Δ=+0.1038 IC=[+0.1023, +0.1054] p_holm=0 sig=True
+22:29:59 | INFO | ndcg@10   splade-v3            Δ=+0.0931 IC=[+0.0918, +0.0943] p_holm=0 sig=True
+22:29:59 | INFO | ndcg@10   qwen3-0.6b           Δ=-0.1582 IC=[-0.1600, -0.1564] p_holm=0 sig=True
+22:29:59 | INFO | ndcg@10   e5-large             Δ=-0.1789 IC=[-0.1808, -0.1770] p_holm=0 sig=True
+22:29:59 | INFO | ndcg@10   bge-m3               Δ=-0.1932 IC=[-0.1950, -0.1913] p_holm=0 sig=True
+22:29:59 | INFO | ndcg@10   jina-v5-small        Δ=-0.2229 IC=[-0.2247, -0.2210] p_holm=0 sig=True
+22:30:00 | INFO | recall@100 bm25                 Δ=+0.1147 IC=[+0.1126, +0.1169] p_holm=0 sig=True
+22:30:00 | INFO | recall@100 splade-v3            Δ=+0.1147 IC=[+0.1130, +0.1165] p_holm=0 sig=True
+22:30:00 | INFO | recall@100 qwen3-0.6b           Δ=-0.1551 IC=[-0.1573, -0.1529] p_holm=0 sig=True
+22:30:00 | INFO | recall@100 e5-large             Δ=-0.1795 IC=[-0.1817, -0.1772] p_holm=0 sig=True
+22:30:00 | INFO | recall@100 bge-m3               Δ=-0.1869 IC=[-0.1891, -0.1847] p_holm=0 sig=True
+22:30:00 | INFO | recall@100 jina-v5-small        Δ=-0.2167 IC=[-0.2188, -0.2145] p_holm=0 sig=True
+22:30:00 | INFO | Escrito en /home/jmendoza/ir-spanish/results/splade_v3_spanish
