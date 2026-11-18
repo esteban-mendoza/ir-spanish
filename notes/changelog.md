@@ -23,6 +23,16 @@ Protocolo obligatorio para todo agente:
 
 ---
 
+## 2026-11-16 — Orden y nota del bloque de BordaFuse
+- **Cambios:** `analysis/generar-tablas-apendice.py` ordena el bloque de BordaFuse por nDCG@10 y añade la nota marginal de B2; se regeneró la tabla A.3 de la tesis.
+- **Decisiones:** la nota usa `\rlap` en el margen derecho porque `longtable` no admite `\marginpar`; el pie y la prosa de A.3 explican el orden.
+- **Estado / pendientes:** tablas regeneradas; la tesis compiló (117 páginas).
+
+## 2026-11-16 — Generador de tablas del apéndice A de la tesis
+- **Cambios:** `analysis/generar-tablas-apendice.py` nuevo; lee `results/fuse_sweep`, `results/fuse_stage_b*`, `results/evaluation` y `results/e5` y reescribe las tablas A.3 y A.5–A.9 del apéndice de la tesis (`../tesis/apendices/resultados.tex`) entre marcadores.
+- **Decisiones:** el generador vive junto a los artefactos que consume y resuelve las rutas desde `__file__`, sin depender del directorio de trabajo; las tablas A.1, A.2 y A.4 se redactan a mano en la tesis. Las 235 filas de A.3 se validaron contra los CSV y las tablas A.5–A.9 contra los resultados de evaluación.
+- **Estado / pendientes:** la tesis compiló con el apéndice (117 páginas); el script es de apoyo y no forma parte de la compilación.
+
 ## 2026-11-14 — Figuras de RBO y ganancia por categoría de par
 - **Cambios:** `analysis/rbo_gain_category_figure.py` nuevo; lee `results/e5/rbo_gain*.csv` y `results/rbo/rbo_pairs.csv` y genera `analysis/figures/rbo-ganancia-categorias-ndcg.pdf` y `-recall.pdf`, con una cuadrícula de 4 × 4: un algoritmo por fila y una categoría de par por columna (léxico–disperso, léxico–denso, disperso–denso y denso–denso).
 - **Decisiones:** la unidad sigue siendo la combinación, pero el eje x promedia solo los pares de la categoría y la ganancia es la de la combinación; la fila identifica el algoritmo y el color codifica el número de modelos de la combinación, con la misma escala blanco→azul que las otras figuras del experimento; la recta es gris y cada panel lleva su coeficiente de Pearson en la esquina superior derecha. La categoría léxico–disperso tiene un solo par (BM25–SPLADE) y su RBO es constante, así que el encabezado de la columna lo indica y no hay coeficiente.
